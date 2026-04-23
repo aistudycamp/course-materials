@@ -26,253 +26,338 @@
     <section class="guide-hero">
       <div class="guide-badge">Guide 14</div>
       <h1 class="guide-title">Which AI Tool Should I Use?</h1>
-      <p class="guide-subtitle">A practical guide to no-code builders, code assistants, and automation platforms — and when to use each one.</p>
+      <p class="guide-subtitle">A practical, use-case-first map of the AI tool landscape — organized by what you're trying to do, not by the logo on the box.</p>
     </section>
 
-    <!-- THE THREE TYPES -->
+    <!-- HOW TO USE THIS GUIDE -->
     <div class="intro-section">
-      <h2>The Three Types</h2>
-      <p>There are three types of AI building tools. Knowing which type you need saves hours of frustration.</p>
-      <ol>
-        <li><strong>No-code app builders</strong> — you describe what you want, they generate a working app</li>
-        <li><strong>AI code assistants</strong> — you write code alongside AI, with more control over every detail</li>
-        <li><strong>Automation platforms</strong> — you connect existing tools and build workflows between them</li>
-      </ol>
-      <p>Most confusion comes from picking a tool in the wrong category. A no-code builder won't help you automate your email workflow. An automation platform won't build you a landing page. Match the category first, then pick the tool.</p>
+      <h2>How to Use This Guide</h2>
+      <p>Most students get stuck because they pick a tool before they pick a job. The fix is boring but effective: <strong>figure out what you're trying to do, then find the section below.</strong></p>
+      <p>Each section covers one use case, lists 2–4 tools worth knowing, and tells you when each is the right pick (and when it isn't). Tools change fast. The categories don't.</p>
+      <p>If you're brand new and don't know where to start, skip to the bottom — there's a starter trio.</p>
     </div>
 
     <hr class="section-divider">
 
-    <!-- NO-CODE APP BUILDERS -->
+    <!-- 1. CHATBOTS / CONVERSATIONAL UIs -->
     <div class="intro-section">
-      <h2>No-Code App Builders</h2>
-      <p>You describe what you want in plain English, and the tool generates a working app. No terminal, no code files, no setup.</p>
-      <p><strong>Best for:</strong> Quick MVPs, landing pages, simple CRUD apps, validating an idea fast.</p>
+      <h2>1. Chatbots &amp; Conversational UIs</h2>
+      <p>Talking to an AI in a chat window. This is the front door for 90% of people and, honestly, still the most useful category for most daily work.</p>
       <table style="width:100%; font-size:14px; border-collapse:collapse; color: var(--text-secondary); margin-top:16px;">
         <thead>
           <tr style="border-bottom: 1px solid var(--border);">
             <th style="text-align:left; padding:8px 12px; font-weight:600; color:var(--text);">Tool</th>
-            <th style="text-align:left; padding:8px 12px; font-weight:600; color:var(--text);">What it does</th>
-            <th style="text-align:left; padding:8px 12px; font-weight:600; color:var(--text);">Good at</th>
-            <th style="text-align:left; padding:8px 12px; font-weight:600; color:var(--text);">Skill level</th>
+            <th style="text-align:left; padding:8px 12px; font-weight:600; color:var(--text);">Best for</th>
+            <th style="text-align:left; padding:8px 12px; font-weight:600; color:var(--text);">Avoid when</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding:8px 12px; font-weight:600; color:var(--text); white-space:nowrap;">Claude.ai</td>
+            <td style="padding:8px 12px;">Writing, thinking, analysis, long documents. Projects feature is excellent for recurring context (one client, one book, one course).</td>
+            <td style="padding:8px 12px;">You need live web search without turning it on, or real-time voice.</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding:8px 12px; font-weight:600; color:var(--text); white-space:nowrap;">ChatGPT</td>
+            <td style="padding:8px 12px;">Voice conversations, image generation inline, the broadest ecosystem of plugins and custom GPTs.</td>
+            <td style="padding:8px 12px;">Heavy long-form writing or careful reasoning — Claude tends to feel better here.</td>
+          </tr>
+          <tr>
+            <td style="padding:8px 12px; font-weight:600; color:var(--text); white-space:nowrap;">Custom via API</td>
+            <td style="padding:8px 12px;">You're embedding a chatbot into your own product, or need full control over the system prompt and guardrails.</td>
+            <td style="padding:8px 12px;">You just want to talk to an AI — use the hosted apps, don't build your own.</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="tip-box" style="margin-top:20px;">
+        <span class="tip-label">Student tip</span>
+        <p>Pick one chat app and actually live in it for two weeks before judging. Most "I don't get AI" problems are "I tried three tools for ten minutes each" problems.</p>
+      </div>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- 2. VIBE CODING / APP BUILDERS -->
+    <div class="intro-section">
+      <h2>2. Vibe Coding &amp; App Builders</h2>
+      <p>Describe an app in plain English, get a working app back. You barely see code. Great for MVPs, landing pages, and "I just want to see if this idea has legs."</p>
+      <table style="width:100%; font-size:14px; border-collapse:collapse; color: var(--text-secondary); margin-top:16px;">
+        <thead>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <th style="text-align:left; padding:8px 12px; font-weight:600; color:var(--text);">Tool</th>
+            <th style="text-align:left; padding:8px 12px; font-weight:600; color:var(--text);">Best for</th>
+            <th style="text-align:left; padding:8px 12px; font-weight:600; color:var(--text);">Avoid when</th>
           </tr>
         </thead>
         <tbody>
           <tr style="border-bottom: 1px solid var(--border);">
             <td style="padding:8px 12px; font-weight:600; color:var(--text); white-space:nowrap;">Lovable</td>
-            <td style="padding:8px 12px;">Generates full-stack apps from text prompts. Handles UI, database, and deployment in one flow.</td>
-            <td style="padding:8px 12px;">Beautiful UI, landing pages, quick MVPs. Great first tool for non-technical builders.</td>
-            <td style="padding:8px 12px;">Beginner</td>
+            <td style="padding:8px 12px;">Full-stack apps with real UI, auth, and a database. Best polish of the category. Our Week 1 tool.</td>
+            <td style="padding:8px 12px;">You need deep custom backend logic or want to own/host the code yourself from day one.</td>
           </tr>
           <tr style="border-bottom: 1px solid var(--border);">
             <td style="padding:8px 12px; font-weight:600; color:var(--text); white-space:nowrap;">Bolt.new</td>
-            <td style="padding:8px 12px;">Similar to Lovable. Generates apps from prompts, runs entirely in the browser.</td>
-            <td style="padding:8px 12px;">Fast prototyping, trying ideas quickly. Good if you want to see results in seconds.</td>
-            <td style="padding:8px 12px;">Beginner</td>
+            <td style="padding:8px 12px;">Throwaway prototypes in seconds. Great for demos and spikes.</td>
+            <td style="padding:8px 12px;">You want to ship and maintain the app long-term.</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding:8px 12px; font-weight:600; color:var(--text); white-space:nowrap;">Replit</td>
+            <td style="padding:8px 12px;">Prototyping with a little more control — you can see the code, run servers, learn as you go.</td>
+            <td style="padding:8px 12px;">You want a purely no-code experience.</td>
           </tr>
           <tr>
-            <td style="padding:8px 12px; font-weight:600; color:var(--text); white-space:nowrap;">Replit</td>
-            <td style="padding:8px 12px;">Browser-based coding environment with an AI assistant built in. More hands-on than Lovable.</td>
-            <td style="padding:8px 12px;">Collaborative projects, learning to code, prototyping with more control.</td>
-            <td style="padding:8px 12px;">Beginner to intermediate</td>
+            <td style="padding:8px 12px; font-weight:600; color:var(--text); white-space:nowrap;">v0 (Vercel)</td>
+            <td style="padding:8px 12px;">Generating React/Next.js components and UIs you'll drop into a real codebase later.</td>
+            <td style="padding:8px 12px;">You don't already know you want React — v0 assumes that stack.</td>
           </tr>
         </tbody>
       </table>
       <div class="tip-box" style="margin-top:20px;">
-        <span class="tip-label">When to use this category</span>
-        <p>You have an idea and you want a working prototype today. You don't need custom logic, complex integrations, or fine-grained control. You want to see something on screen fast.</p>
+        <span class="tip-label">Student tip</span>
+        <p>These tools are magic for day one and frustrating by day ten. The moment you find yourself fighting the tool to make a small change, that's your signal to graduate to a coding agent.</p>
       </div>
     </div>
 
     <hr class="section-divider">
 
-    <!-- AI CODE ASSISTANTS -->
+    <!-- 3. CODING AGENTS -->
     <div class="intro-section">
-      <h2>AI Code Assistants</h2>
-      <p>You write code alongside AI. The AI suggests, edits, and generates code — but you're in the driver's seat. More control, more power, steeper learning curve.</p>
-      <p><strong>Best for:</strong> Real applications, multi-file projects, anything that needs custom logic or will grow over time.</p>
+      <h2>3. Coding Agents</h2>
+      <p>AI that reads your whole codebase, edits multiple files, runs commands, and debugs. More power than an app builder, more complexity too. You'll work in a terminal or a real editor.</p>
       <table style="width:100%; font-size:14px; border-collapse:collapse; color: var(--text-secondary); margin-top:16px;">
         <thead>
           <tr style="border-bottom: 1px solid var(--border);">
             <th style="text-align:left; padding:8px 12px; font-weight:600; color:var(--text);">Tool</th>
-            <th style="text-align:left; padding:8px 12px; font-weight:600; color:var(--text);">What it does</th>
-            <th style="text-align:left; padding:8px 12px; font-weight:600; color:var(--text);">Good at</th>
-            <th style="text-align:left; padding:8px 12px; font-weight:600; color:var(--text);">Skill level</th>
+            <th style="text-align:left; padding:8px 12px; font-weight:600; color:var(--text);">Best for</th>
+            <th style="text-align:left; padding:8px 12px; font-weight:600; color:var(--text);">Avoid when</th>
           </tr>
         </thead>
         <tbody>
           <tr style="border-bottom: 1px solid var(--border);">
             <td style="padding:8px 12px; font-weight:600; color:var(--text); white-space:nowrap;">Claude Code</td>
-            <td style="padding:8px 12px;">Terminal-based AI assistant that reads your whole project. You give it instructions and it writes, edits, and debugs across multiple files.</td>
-            <td style="padding:8px 12px;">Complex multi-file apps, refactoring, debugging, working with existing codebases. The most powerful option when you need full project awareness.</td>
-            <td style="padding:8px 12px;">Intermediate</td>
+            <td style="padding:8px 12px;">Serious multi-file work, debugging, refactoring, scripting, automation via CLI. Our Week 2 tool and the one you'll use the most.</td>
+            <td style="padding:8px 12px;">You're allergic to the terminal and refuse to use one.</td>
           </tr>
           <tr style="border-bottom: 1px solid var(--border);">
-            <td style="padding:8px 12px; font-weight:600; color:var(--text); white-space:nowrap;">Cursor</td>
-            <td style="padding:8px 12px;">AI-powered code editor (IDE). Inline suggestions + chat sidebar. Built on VS Code.</td>
-            <td style="padding:8px 12px;">Editing code with AI help, getting suggestions as you type, asking questions about your codebase. Good middle ground between control and ease.</td>
-            <td style="padding:8px 12px;">Beginner to intermediate</td>
+            <td style="padding:8px 12px; font-weight:600; color:var(--text); white-space:nowrap;">Cursor (Agent)</td>
+            <td style="padding:8px 12px;">You want an editor-native experience — see the file, tab-complete, chat in a side panel. Smooth on-ramp from "I've opened VS Code before."</td>
+            <td style="padding:8px 12px;">You want to run agents from CI, scripts, or across many projects.</td>
           </tr>
           <tr style="border-bottom: 1px solid var(--border);">
-            <td style="padding:8px 12px; font-weight:600; color:var(--text); white-space:nowrap;">Windsurf</td>
-            <td style="padding:8px 12px;">Similar to Cursor. AI-powered IDE with chat and inline editing.</td>
-            <td style="padding:8px 12px;">Same strengths as Cursor — inline AI help while you code. Different UI preferences.</td>
-            <td style="padding:8px 12px;">Beginner to intermediate</td>
+            <td style="padding:8px 12px; font-weight:600; color:var(--text); white-space:nowrap;">Windsurf (Cascade)</td>
+            <td style="padding:8px 12px;">Similar niche to Cursor. Some students prefer its flow and UI. Worth trying if Cursor didn't click.</td>
+            <td style="padding:8px 12px;">You've already paid for Cursor and it's working fine.</td>
           </tr>
           <tr>
-            <td style="padding:8px 12px; font-weight:600; color:var(--text); white-space:nowrap;">GitHub Copilot</td>
-            <td style="padding:8px 12px;">Autocomplete plugin for your existing editor. Suggests the next line of code as you type.</td>
-            <td style="padding:8px 12px;">Writing code faster if you already know how to code. Best for people with programming experience.</td>
-            <td style="padding:8px 12px;">Intermediate to advanced</td>
+            <td style="padding:8px 12px; font-weight:600; color:var(--text); white-space:nowrap;">Codex / Copilot</td>
+            <td style="padding:8px 12px;">Inline autocomplete inside your editor while you already code. Low-key, always-on assist.</td>
+            <td style="padding:8px 12px;">You want the AI to own the whole task, not just autocomplete the next line.</td>
           </tr>
         </tbody>
       </table>
       <div class="tip-box" style="margin-top:20px;">
-        <span class="tip-label">When to use this category</span>
-        <p>You're building something real that will grow. You need control over the code, want to deploy it yourself, or the no-code tools hit their limits.</p>
+        <span class="tip-label">Student tip</span>
+        <p>Don't pick based on vibes — pick based on where you want to live. Terminal-first → Claude Code. Editor-first → Cursor. Don't learn all three. Pick one and get deep.</p>
       </div>
     </div>
 
     <hr class="section-divider">
 
-    <!-- AUTOMATION PLATFORMS -->
+    <!-- 4. RESEARCH / SYNTHESIS -->
     <div class="intro-section">
-      <h2>Automation Platforms</h2>
-      <p>You connect existing tools (Gmail, Slack, Google Sheets, APIs) and build workflows that run automatically. No app UI — these work behind the scenes.</p>
-      <p><strong>Best for:</strong> Connecting tools you already use, automating repetitive tasks, building workflows that trigger on events.</p>
+      <h2>4. Research &amp; Synthesis</h2>
+      <p>You have a pile of sources — papers, docs, transcripts, PDFs — and you want to understand them, compare them, or answer questions grounded in them. These tools beat a general chatbot because they cite and they don't drift.</p>
       <table style="width:100%; font-size:14px; border-collapse:collapse; color: var(--text-secondary); margin-top:16px;">
         <thead>
           <tr style="border-bottom: 1px solid var(--border);">
             <th style="text-align:left; padding:8px 12px; font-weight:600; color:var(--text);">Tool</th>
-            <th style="text-align:left; padding:8px 12px; font-weight:600; color:var(--text);">What it does</th>
-            <th style="text-align:left; padding:8px 12px; font-weight:600; color:var(--text);">Good at</th>
-            <th style="text-align:left; padding:8px 12px; font-weight:600; color:var(--text);">Skill level</th>
+            <th style="text-align:left; padding:8px 12px; font-weight:600; color:var(--text);">Best for</th>
+            <th style="text-align:left; padding:8px 12px; font-weight:600; color:var(--text);">Avoid when</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding:8px 12px; font-weight:600; color:var(--text); white-space:nowrap;">NotebookLM</td>
+            <td style="padding:8px 12px;">Grounded Q&amp;A over your own sources. Bonkers-good audio overviews. Great for book clubs, course prep, legal docs, company knowledge.</td>
+            <td style="padding:8px 12px;">You need it to pull in fresh info from the open web.</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding:8px 12px; font-weight:600; color:var(--text); white-space:nowrap;">Perplexity</td>
+            <td style="padding:8px 12px;">Web research with citations. Replaces a lot of "open five tabs, skim, synthesize."</td>
+            <td style="padding:8px 12px;">You need deep reasoning over your own long documents — NotebookLM or Claude Projects win there.</td>
+          </tr>
+          <tr>
+            <td style="padding:8px 12px; font-weight:600; color:var(--text); white-space:nowrap;">Claude Projects</td>
+            <td style="padding:8px 12px;">Ongoing work against a stable set of files (a thesis, a product spec, a legal matter). The context sticks.</td>
+            <td style="padding:8px 12px;">You want source-by-source citations — the chat format blurs them.</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="tip-box" style="margin-top:20px;">
+        <span class="tip-label">Student tip</span>
+        <p>If you've never used NotebookLM, go try it right now with 3 PDFs you've been meaning to read. The audio overview alone will sell you.</p>
+      </div>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- 5. DATA / SPREADSHEETS -->
+    <div class="intro-section">
+      <h2>5. Data &amp; Spreadsheets</h2>
+      <p>Upload a CSV, ask questions, get charts and analysis. Modern AI is genuinely good at this, and it's the category most non-technical people underestimate.</p>
+      <table style="width:100%; font-size:14px; border-collapse:collapse; color: var(--text-secondary); margin-top:16px;">
+        <thead>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <th style="text-align:left; padding:8px 12px; font-weight:600; color:var(--text);">Tool</th>
+            <th style="text-align:left; padding:8px 12px; font-weight:600; color:var(--text);">Best for</th>
+            <th style="text-align:left; padding:8px 12px; font-weight:600; color:var(--text);">Avoid when</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding:8px 12px; font-weight:600; color:var(--text); white-space:nowrap;">ChatGPT Advanced Data Analysis</td>
+            <td style="padding:8px 12px;">Drop a CSV or Excel file, get charts, summaries, cleaning, joins. The most mature option.</td>
+            <td style="padding:8px 12px;">Very large datasets (hundreds of MB) or anything that needs to stay local.</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding:8px 12px; font-weight:600; color:var(--text); white-space:nowrap;">Claude with files</td>
+            <td style="padding:8px 12px;">Careful, explainable analysis. Good reasoning about what the data means, not just the code.</td>
+            <td style="padding:8px 12px;">You want polished, styled charts by default — ChatGPT is more opinionated.</td>
+          </tr>
+          <tr>
+            <td style="padding:8px 12px; font-weight:600; color:var(--text); white-space:nowrap;">Julius</td>
+            <td style="padding:8px 12px;">Spreadsheet-native analysis with a data-analyst-y UI. Nice if you live in Excel/Sheets already.</td>
+            <td style="padding:8px 12px;">You're already comfortable in ChatGPT — Julius' moat is thin for power users.</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="tip-box" style="margin-top:20px;">
+        <span class="tip-label">Student tip</span>
+        <p>Never paste sensitive data (customer info, PII, financials) into a consumer chatbot. Use the API, a local tool, or redact first.</p>
+      </div>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- 6. DESIGN / UI MOCKUPS -->
+    <div class="intro-section">
+      <h2>6. Design &amp; UI Mockups</h2>
+      <p>Going from "I have an idea" to "I have something to show." Great for founders, PMs, and anyone who needs a visual to pressure-test an idea before building.</p>
+      <table style="width:100%; font-size:14px; border-collapse:collapse; color: var(--text-secondary); margin-top:16px;">
+        <thead>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <th style="text-align:left; padding:8px 12px; font-weight:600; color:var(--text);">Tool</th>
+            <th style="text-align:left; padding:8px 12px; font-weight:600; color:var(--text);">Best for</th>
+            <th style="text-align:left; padding:8px 12px; font-weight:600; color:var(--text);">Avoid when</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding:8px 12px; font-weight:600; color:var(--text); white-space:nowrap;">v0 (Vercel)</td>
+            <td style="padding:8px 12px;">High-fidelity UI components from a prompt. Best when the end state will be real code.</td>
+            <td style="padding:8px 12px;">You want to stay in a design tool forever — v0's output is code.</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding:8px 12px; font-weight:600; color:var(--text); white-space:nowrap;">Figma Make</td>
+            <td style="padding:8px 12px;">You already work in Figma and want AI to bootstrap designs inside it.</td>
+            <td style="padding:8px 12px;">You're not on Figma — don't start there just for this.</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding:8px 12px; font-weight:600; color:var(--text); white-space:nowrap;">Lovable</td>
+            <td style="padding:8px 12px;">The fastest path from "mock" to "actually clickable app" — the mock runs as a real site.</td>
+            <td style="padding:8px 12px;">You want a static design artifact to iterate on visually.</td>
+          </tr>
+          <tr>
+            <td style="padding:8px 12px; font-weight:600; color:var(--text); white-space:nowrap;">Claude with design prompts</td>
+            <td style="padding:8px 12px;">Single HTML files, slide decks, quick visual artifacts. No stack, no setup, just a file.</td>
+            <td style="padding:8px 12px;">You need a multi-screen product mock — the tools above do that better.</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="tip-box" style="margin-top:20px;">
+        <span class="tip-label">Student tip</span>
+        <p>The best mock is one you'd be embarrassed to show. Ship the ugly version to two people before polishing. AI makes this cheap enough that "show it early" beats "get it right."</p>
+      </div>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- 7. AUTOMATION / WORKFLOWS -->
+    <div class="intro-section">
+      <h2>7. Automation &amp; Workflows</h2>
+      <p>No app UI — these run behind the scenes, connecting tools you already use (Gmail, Slack, Sheets, APIs) and triggering on events.</p>
+      <table style="width:100%; font-size:14px; border-collapse:collapse; color: var(--text-secondary); margin-top:16px;">
+        <thead>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <th style="text-align:left; padding:8px 12px; font-weight:600; color:var(--text);">Tool</th>
+            <th style="text-align:left; padding:8px 12px; font-weight:600; color:var(--text);">Best for</th>
+            <th style="text-align:left; padding:8px 12px; font-weight:600; color:var(--text);">Avoid when</th>
           </tr>
         </thead>
         <tbody>
           <tr style="border-bottom: 1px solid var(--border);">
             <td style="padding:8px 12px; font-weight:600; color:var(--text); white-space:nowrap;">n8n</td>
-            <td style="padding:8px 12px;">Open-source visual workflow builder. Drag-and-drop nodes to connect services. Self-hostable.</td>
-            <td style="padding:8px 12px;">Complex automations, AI-powered workflows (built-in Claude/OpenAI nodes), full control over your data. Most flexible option.</td>
-            <td style="padding:8px 12px;">Beginner to intermediate</td>
+            <td style="padding:8px 12px;">AI-heavy workflows, complex branching, self-hosting. The most flexible of the category. Our Week 3 tool.</td>
+            <td style="padding:8px 12px;">You want to connect two SaaS apps in 3 minutes with zero learning curve.</td>
           </tr>
           <tr style="border-bottom: 1px solid var(--border);">
             <td style="padding:8px 12px; font-weight:600; color:var(--text); white-space:nowrap;">Zapier</td>
-            <td style="padding:8px 12px;">The most popular automation tool. Connect 5,000+ apps with simple triggers and actions.</td>
-            <td style="padding:8px 12px;">Simple automations — "when this happens, do that." Easiest to start with. Most integrations available.</td>
-            <td style="padding:8px 12px;">Beginner</td>
+            <td style="padding:8px 12px;">Simple "when X, do Y" across 5,000+ apps. Fastest onboarding.</td>
+            <td style="padding:8px 12px;">Your workflow has real branching, loops, or heavy AI — you'll out-grow it.</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding:8px 12px; font-weight:600; color:var(--text); white-space:nowrap;">Make</td>
+            <td style="padding:8px 12px;">A middle ground — more power than Zapier, more visual than n8n.</td>
+            <td style="padding:8px 12px;">You already know n8n — there's no reason to switch.</td>
           </tr>
           <tr>
-            <td style="padding:8px 12px; font-weight:600; color:var(--text); white-space:nowrap;">Gumloop</td>
-            <td style="padding:8px 12px;">AI-native automation platform. Built specifically for AI workflows.</td>
-            <td style="padding:8px 12px;">Workflows that heavily involve AI (summarize, classify, extract, generate). Newer tool, smaller community.</td>
-            <td style="padding:8px 12px;">Beginner to intermediate</td>
+            <td style="padding:8px 12px; font-weight:600; color:var(--text); white-space:nowrap;">Claude Code + CLI</td>
+            <td style="padding:8px 12px;">One-off or scripted automations that live on your machine — "every morning, pull these files and summarize." Dev-flavored.</td>
+            <td style="padding:8px 12px;">Someone non-technical needs to maintain it.</td>
           </tr>
         </tbody>
       </table>
       <div class="tip-box" style="margin-top:20px;">
-        <span class="tip-label">When to use this category</span>
-        <p>You don't need to build an app — you need to connect tools you already use. "When an email arrives, summarize it and post to Slack." "Every Monday, pull data from Sheets and send a report."</p>
+        <span class="tip-label">Student tip</span>
+        <p>Automate something that bugs you weekly, not something impressive. The goal is to feel the magic loop once — then you'll see automation opportunities everywhere.</p>
       </div>
     </div>
 
     <hr class="section-divider">
 
-    <!-- WHICH SHOULD I USE? -->
+    <!-- 8. WRITING / CONTENT -->
     <div class="intro-section">
-      <h2>Which Should I Use?</h2>
-      <p>Ask yourself three questions:</p>
-    </div>
-
-    <!-- Question 1 -->
-    <div class="intro-section">
-      <h2>1. What are you building?</h2>
-      <table style="width:100%; font-size:14px; border-collapse:collapse; color: var(--text-secondary);">
+      <h2>8. Writing &amp; Content</h2>
+      <p>Drafts, edits, outlines, transcripts into essays, essays into scripts. The oldest use case and still the most underrated one.</p>
+      <table style="width:100%; font-size:14px; border-collapse:collapse; color: var(--text-secondary); margin-top:16px;">
+        <thead>
+          <tr style="border-bottom: 1px solid var(--border);">
+            <th style="text-align:left; padding:8px 12px; font-weight:600; color:var(--text);">Tool</th>
+            <th style="text-align:left; padding:8px 12px; font-weight:600; color:var(--text);">Best for</th>
+            <th style="text-align:left; padding:8px 12px; font-weight:600; color:var(--text);">Avoid when</th>
+          </tr>
+        </thead>
         <tbody>
           <tr style="border-bottom: 1px solid var(--border);">
-            <td style="padding:8px 12px; font-weight:600; color:var(--text);">A visible app with a UI</td>
-            <td style="padding:8px 12px;">No-code builder or code assistant</td>
+            <td style="padding:8px 12px; font-weight:600; color:var(--text); white-space:nowrap;">Claude.ai</td>
+            <td style="padding:8px 12px;">Long-form writing, editing, voice-matching. The most "writerly" of the chat tools.</td>
+            <td style="padding:8px 12px;">You want image/voice generation in the same turn.</td>
           </tr>
           <tr style="border-bottom: 1px solid var(--border);">
-            <td style="padding:8px 12px; font-weight:600; color:var(--text);">A behind-the-scenes workflow</td>
-            <td style="padding:8px 12px;">Automation platform</td>
+            <td style="padding:8px 12px; font-weight:600; color:var(--text); white-space:nowrap;">ChatGPT</td>
+            <td style="padding:8px 12px;">Short-form content, social copy, brainstorming in voice mode.</td>
+            <td style="padding:8px 12px;">Careful, nuanced long-form — Claude tends to have better taste.</td>
           </tr>
           <tr>
-            <td style="padding:8px 12px; font-weight:600; color:var(--text);">Not sure yet, just exploring</td>
-            <td style="padding:8px 12px;">Start with a no-code builder</td>
+            <td style="padding:8px 12px; font-weight:600; color:var(--text); white-space:nowrap;">NotebookLM</td>
+            <td style="padding:8px 12px;">Writing <em>from</em> a big pile of sources — research-backed essays, reports, summaries.</td>
+            <td style="padding:8px 12px;">You're writing from a blank page — it needs sources to shine.</td>
           </tr>
         </tbody>
       </table>
-    </div>
-
-    <!-- Question 2 -->
-    <div class="intro-section">
-      <h2>2. How technical are you?</h2>
-      <table style="width:100%; font-size:14px; border-collapse:collapse; color: var(--text-secondary);">
-        <tbody>
-          <tr style="border-bottom: 1px solid var(--border);">
-            <td style="padding:8px 12px; font-weight:600; color:var(--text);">Never touched code, don't want to</td>
-            <td style="padding:8px 12px;">No-code builder (Lovable) or automation (Zapier)</td>
-          </tr>
-          <tr style="border-bottom: 1px solid var(--border);">
-            <td style="padding:8px 12px; font-weight:600; color:var(--text);">Comfortable with a terminal, willing to learn</td>
-            <td style="padding:8px 12px;">Code assistant (Claude Code)</td>
-          </tr>
-          <tr>
-            <td style="padding:8px 12px; font-weight:600; color:var(--text);">Already writing code</td>
-            <td style="padding:8px 12px;">Code assistant (Cursor, Claude Code, or Copilot)</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Question 3 -->
-    <div class="intro-section">
-      <h2>3. Do you need it fast or flexible?</h2>
-      <table style="width:100%; font-size:14px; border-collapse:collapse; color: var(--text-secondary);">
-        <tbody>
-          <tr style="border-bottom: 1px solid var(--border);">
-            <td style="padding:8px 12px; font-weight:600; color:var(--text);">Fast</td>
-            <td style="padding:8px 12px;">No-code builder — working in hours, good enough is fine</td>
-          </tr>
-          <tr style="border-bottom: 1px solid var(--border);">
-            <td style="padding:8px 12px; font-weight:600; color:var(--text);">Flexible</td>
-            <td style="padding:8px 12px;">Code assistant — custom logic, will grow over time, production-quality</td>
-          </tr>
-          <tr>
-            <td style="padding:8px 12px; font-weight:600; color:var(--text);">Both</td>
-            <td style="padding:8px 12px;">Automation platform — quick to set up, runs reliably</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <hr class="section-divider">
-
-    <!-- DECISION FLOWCHART -->
-    <div class="intro-section">
-      <h2>Quick Decision Flowchart</h2>
-      <div class="terminal">
-        <div class="term-bar">
-          <span class="term-dot r"></span>
-          <span class="term-dot y"></span>
-          <span class="term-dot g"></span>
-          <span class="term-title">pick your tool</span>
-        </div>
-        <div class="term-body">
-<span class="cmd">Are you connecting existing tools (email, Slack, Sheets)?</span>
-<span class="out">  YES --> Do you need complex logic or AI in the workflow?</span>
-<span class="out">           YES --> n8n</span>
-<span class="out">           NO  --> Zapier</span>
-<span class="out">  NO  --> Are you building something with a user interface?</span>
-<span class="out">           YES --> Do you need custom code or complex features?</span>
-<span class="out">                    YES --> Do you know how to use a terminal?</span>
-<span class="out">                             YES --> Claude Code</span>
-<span class="out">                             NO  --> Cursor</span>
-<span class="out">                    NO  --> Lovable</span>
-<span class="out">           NO  --> What are you actually trying to do?</span>
-<span class="out">                    (Ask in office hours)</span>
-        </div>
+      <div class="tip-box" style="margin-top:20px;">
+        <span class="tip-label">Student tip</span>
+        <p>Never publish the first draft. The interesting thing AI can do for writers isn't "write the post" — it's "interview you, then help you see what you actually think."</p>
       </div>
     </div>
 
@@ -288,23 +373,28 @@
       <div class="trouble-list">
 
         <div class="trouble-item">
-          <p class="trouble-error">Using Lovable for something that needs Claude Code</p>
-          <p class="trouble-fix">Lovable is great for MVPs, but if you need multi-file logic, API integrations, or custom backends, you'll hit walls fast. Switch to a code assistant.</p>
+          <p class="trouble-error">Picking the tool before picking the job</p>
+          <p class="trouble-fix">"Which tool should I use?" is the wrong question. Ask "what am I actually trying to do?" first, then look at this guide.</p>
         </div>
 
         <div class="trouble-item">
-          <p class="trouble-error">Using Claude Code when Zapier would do</p>
-          <p class="trouble-fix">If all you need is "when X happens, do Y," you don't need to write code. Use an automation platform.</p>
+          <p class="trouble-error">Using an app builder for something that needs a coding agent</p>
+          <p class="trouble-fix">Lovable and Bolt are amazing for day one. By day ten, if you're fighting the tool to make small changes, it's time to graduate to Claude Code or Cursor.</p>
+        </div>
+
+        <div class="trouble-item">
+          <p class="trouble-error">Using a coding agent when Zapier would do</p>
+          <p class="trouble-fix">If the job is "when X happens, do Y," you don't need to write code. Use automation.</p>
         </div>
 
         <div class="trouble-item">
           <p class="trouble-error">Trying to learn all of them at once</p>
-          <p class="trouble-fix">Pick one tool in one category. Get good at it. You can always switch later.</p>
+          <p class="trouble-fix">Pick one per category. Get comfortable. You can always switch later — the concepts transfer.</p>
         </div>
 
         <div class="trouble-item">
           <p class="trouble-error">Confusing the product with the model</p>
-          <p class="trouble-fix">Claude is the AI model. Claude Code, claude.ai, and the Claude API are different products that use that model. Lovable also uses Claude under the hood. The model is the brain; the product is the interface.</p>
+          <p class="trouble-fix">Claude is the model. Claude.ai, Claude Code, the Claude API, and Lovable (which uses Claude under the hood) are different products. The model is the brain; the product is the interface.</p>
         </div>
 
       </div>
@@ -312,41 +402,36 @@
 
     <hr class="section-divider">
 
-    <!-- WHAT WE USE IN THIS COURSE -->
+    <!-- IF YOU'RE OVERWHELMED -->
     <div class="intro-section">
-      <h2>What We Use in This Course</h2>
-      <p>The course is designed to give you hands-on experience across all three categories so you can make this choice yourself for your own projects.</p>
+      <h2>If You're Overwhelmed, Start Here</h2>
+      <p>Too many boxes on this page. Don't worry about it. Here's the starter trio — if you learn these three, you can fake the rest of the landscape.</p>
       <table style="width:100%; font-size:14px; border-collapse:collapse; color: var(--text-secondary); margin-top:16px;">
         <thead>
           <tr style="border-bottom: 1px solid var(--border);">
-            <th style="text-align:left; padding:8px 12px; font-weight:600; color:var(--text);">Week</th>
             <th style="text-align:left; padding:8px 12px; font-weight:600; color:var(--text);">Tool</th>
-            <th style="text-align:left; padding:8px 12px; font-weight:600; color:var(--text);">Category</th>
+            <th style="text-align:left; padding:8px 12px; font-weight:600; color:var(--text);">Why start here</th>
           </tr>
         </thead>
         <tbody>
           <tr style="border-bottom: 1px solid var(--border);">
-            <td style="padding:8px 12px;">Week 1</td>
-            <td style="padding:8px 12px; font-weight:600; color:var(--text);">Lovable</td>
-            <td style="padding:8px 12px;">No-code builder</td>
+            <td style="padding:8px 12px; font-weight:600; color:var(--text); white-space:nowrap;">Claude.ai</td>
+            <td style="padding:8px 12px;">Your thinking partner. Writing, research, analysis, most of your daily AI use. Live here first.</td>
           </tr>
           <tr style="border-bottom: 1px solid var(--border);">
-            <td style="padding:8px 12px;">Week 2</td>
-            <td style="padding:8px 12px; font-weight:600; color:var(--text);">Claude Code</td>
-            <td style="padding:8px 12px;">AI code assistant</td>
-          </tr>
-          <tr style="border-bottom: 1px solid var(--border);">
-            <td style="padding:8px 12px;">Week 3</td>
-            <td style="padding:8px 12px; font-weight:600; color:var(--text);">n8n</td>
-            <td style="padding:8px 12px;">Automation platform</td>
+            <td style="padding:8px 12px; font-weight:600; color:var(--text); white-space:nowrap;">Lovable</td>
+            <td style="padding:8px 12px;">Your "idea → clickable app in an afternoon" tool. Unlocks the feeling that you can build things.</td>
           </tr>
           <tr>
-            <td style="padding:8px 12px;">Week 3</td>
-            <td style="padding:8px 12px; font-weight:600; color:var(--text);">Claude Code + Claude API</td>
-            <td style="padding:8px 12px;">AI code assistant</td>
+            <td style="padding:8px 12px; font-weight:600; color:var(--text); white-space:nowrap;">Claude Code</td>
+            <td style="padding:8px 12px;">The one that actually changes your career. Worth the discomfort of a terminal.</td>
           </tr>
         </tbody>
       </table>
+      <div class="tip-box" style="margin-top:20px;">
+        <span class="tip-label">Rule of thumb</span>
+        <p>Get 10 hours into each of these before touching anything else on this page. Depth in three tools beats surface in thirty.</p>
+      </div>
     </div>
 
   </main>

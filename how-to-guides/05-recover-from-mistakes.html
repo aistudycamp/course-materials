@@ -26,7 +26,7 @@
     <section class="guide-hero">
       <div class="guide-badge">Guide 05</div>
       <h1 class="guide-title">How to Recover When Things Break</h1>
-      <p class="guide-subtitle">How to undo mistakes — starting with asking Claude directly, and falling back to terminal commands when needed.</p>
+      <p class="guide-subtitle">Undo mistakes — ask Claude first, drop to terminal when needed.</p>
     </section>
 
     <!-- PREREQUISITES -->
@@ -41,7 +41,7 @@
     <!-- BEFORE YOU PANIC -->
     <section class="intro-section">
       <h2>Before You Panic</h2>
-      <p>Almost nothing is truly lost. Claude Code works with Git underneath, which means there are save points to go back to. Take a breath and pick the right approach below.</p>
+      <p>Almost nothing is truly lost. Claude Code works with Git underneath, so there are save points to go back to. Take a breath and pick the right approach below.</p>
     </section>
 
     <hr class="section-divider">
@@ -49,7 +49,7 @@
     <!-- THE CLAUDE WAY -->
     <section class="intro-section">
       <h2>The Easy Way: Ask Claude</h2>
-      <p>If you're already in a Claude Code session, just ask. Claude can run Git commands for you — you don't need to know the exact command.</p>
+      <p>If you're in a Claude Code session, just ask. Claude runs the Git commands for you.</p>
     </section>
 
     <section class="steps-section">
@@ -57,90 +57,57 @@
 
         <!-- Step 1 -->
         <div class="step">
-          <div class="step-header">
-            <div class="step-circle">1</div>
-            <h2 class="step-title">Undo the last set of changes</h2>
-          </div>
+          <div class="step-header"><div class="step-circle">1</div><h2 class="step-title">Undo the last set of changes</h2></div>
           <div class="step-body">
-            <p>Type this directly into Claude Code:</p>
             <div class="terminal">
-              <div class="term-bar">
-                <span class="term-dot r"></span>
-                <span class="term-dot y"></span>
-                <span class="term-dot g"></span>
-                <span class="term-title">claude</span>
-              </div>
+              <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span><span class="term-title">claude</span></div>
               <div class="term-body">
 <span class="cmd">Undo the changes you just made</span>
-              </div>
+</div>
             </div>
           </div>
         </div>
 
         <!-- Step 2 -->
         <div class="step">
-          <div class="step-header">
-            <div class="step-circle">2</div>
-            <h2 class="step-title">Revert a specific file</h2>
-          </div>
+          <div class="step-header"><div class="step-circle">2</div><h2 class="step-title">Revert a specific file</h2></div>
           <div class="step-body">
             <div class="terminal">
-              <div class="term-bar">
-                <span class="term-dot r"></span>
-                <span class="term-dot y"></span>
-                <span class="term-dot g"></span>
-                <span class="term-title">claude</span>
-              </div>
+              <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span><span class="term-title">claude</span></div>
               <div class="term-body">
 <span class="cmd">Revert App.tsx to how it was before</span>
-              </div>
+</div>
             </div>
           </div>
         </div>
 
         <!-- Step 3 -->
         <div class="step">
-          <div class="step-header">
-            <div class="step-circle">3</div>
-            <h2 class="step-title">Go back to a specific point</h2>
-          </div>
+          <div class="step-header"><div class="step-circle">3</div><h2 class="step-title">Go back to a specific point</h2></div>
           <div class="step-body">
             <div class="terminal">
-              <div class="term-bar">
-                <span class="term-dot r"></span>
-                <span class="term-dot y"></span>
-                <span class="term-dot g"></span>
-                <span class="term-title">claude</span>
-              </div>
+              <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span><span class="term-title">claude</span></div>
               <div class="term-body">
-<span class="cmd">Can you show me recent commits? I want to go back to before we added authentication.</span>
-              </div>
+<span class="cmd">Show me recent commits — I want to go back to before we added authentication.</span>
+</div>
             </div>
           </div>
         </div>
 
         <!-- Step 4 -->
         <div class="step">
-          <div class="step-header">
-            <div class="step-circle">4</div>
-            <h2 class="step-title">When the whole thing is a mess</h2>
-          </div>
+          <div class="step-header"><div class="step-circle">4</div><h2 class="step-title">When the whole thing is a mess</h2></div>
           <div class="step-body">
             <div class="terminal">
-              <div class="term-bar">
-                <span class="term-dot r"></span>
-                <span class="term-dot y"></span>
-                <span class="term-dot g"></span>
-                <span class="term-title">claude</span>
-              </div>
+              <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span><span class="term-title">claude</span></div>
               <div class="term-body">
-<span class="cmd">Something went wrong and I want to start fresh from the last commit. What should we do?</span>
-              </div>
+<span class="cmd">Something went wrong — I want to start fresh from the last commit. What should we do?</span>
+</div>
             </div>
-            <p>Claude will figure out the right Git commands and run them. If it's not sure, it'll ask you before doing anything destructive.</p>
+            <p>Claude picks the right Git commands and asks before anything destructive.</p>
             <div class="tip-box">
               <span class="tip-label">Tip</span>
-              <p>Claude keeps a running history of the changes it made in a session. If something went wrong, telling it "that broke something, undo the last change" is often enough.</p>
+              <p>Claude tracks changes it made in the session — "that broke something, undo the last change" is often enough.</p>
             </div>
           </div>
         </div>
@@ -152,8 +119,8 @@
 
     <!-- THE TERMINAL WAY -->
     <section class="intro-section">
-      <h2>The Terminal Way (if you're outside Claude)</h2>
-      <p>If you're not in a Claude session or want to do it yourself, here are the commands.</p>
+      <h2>The Terminal Way</h2>
+      <p>Outside a Claude session, or doing it yourself:</p>
     </section>
 
     <section class="steps-section">
@@ -161,118 +128,64 @@
 
         <!-- Step 1 -->
         <div class="step">
-          <div class="step-header">
-            <div class="step-circle">1</div>
-            <h2 class="step-title">Undo everything — changes not committed yet</h2>
-          </div>
+          <div class="step-header"><div class="step-circle">1</div><h2 class="step-title">Undo uncommitted changes (safely)</h2></div>
           <div class="step-body">
-            <p>This saves your changes in a hidden stash and reverts your files to the last commit. Your work isn't gone — it's tucked away.</p>
+            <p>Stashes your changes and reverts files to the last commit. Run <code>git stash pop</code> to bring them back.</p>
             <div class="terminal">
-              <div class="term-bar">
-                <span class="term-dot r"></span>
-                <span class="term-dot y"></span>
-                <span class="term-dot g"></span>
-                <span class="term-title">zsh</span>
-              </div>
+              <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span><span class="term-title">zsh</span></div>
               <div class="term-body">
 <span class="cmd">$ git stash</span>
-              </div>
-            </div>
-            <p>To bring it back:</p>
-            <div class="terminal">
-              <div class="term-bar">
-                <span class="term-dot r"></span>
-                <span class="term-dot y"></span>
-                <span class="term-dot g"></span>
-                <span class="term-title">zsh</span>
-              </div>
-              <div class="term-body">
-<span class="cmd">$ git stash pop</span>
-              </div>
+<span class="cmd">$ git stash pop   # to bring it back</span>
+</div>
             </div>
           </div>
         </div>
 
         <!-- Step 2 -->
         <div class="step">
-          <div class="step-header">
-            <div class="step-circle">2</div>
-            <h2 class="step-title">Undo changes to one specific file</h2>
-          </div>
+          <div class="step-header"><div class="step-circle">2</div><h2 class="step-title">Undo changes to one file</h2></div>
           <div class="step-body">
-            <p>This resets that one file to the last commit. Everything else stays the same.</p>
+            <p>Resets just that file to the last commit.</p>
             <div class="terminal">
-              <div class="term-bar">
-                <span class="term-dot r"></span>
-                <span class="term-dot y"></span>
-                <span class="term-dot g"></span>
-                <span class="term-title">zsh</span>
-              </div>
+              <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span><span class="term-title">zsh</span></div>
               <div class="term-body">
 <span class="cmd">$ git checkout -- src/App.tsx</span>
-              </div>
+</div>
             </div>
           </div>
         </div>
 
         <!-- Step 3 -->
         <div class="step">
-          <div class="step-header">
-            <div class="step-circle">3</div>
-            <h2 class="step-title">Undo a bad commit</h2>
-          </div>
+          <div class="step-header"><div class="step-circle">3</div><h2 class="step-title">Undo a bad commit</h2></div>
           <div class="step-body">
-            <p>This undoes your last commit but keeps your file changes. Fix things and commit again.</p>
+            <p>Undoes the last commit, keeps your file changes. Fix and commit again.</p>
             <div class="terminal">
-              <div class="term-bar">
-                <span class="term-dot r"></span>
-                <span class="term-dot y"></span>
-                <span class="term-dot g"></span>
-                <span class="term-title">zsh</span>
-              </div>
+              <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span><span class="term-title">zsh</span></div>
               <div class="term-body">
 <span class="cmd">$ git reset --soft HEAD~1</span>
-              </div>
+</div>
             </div>
           </div>
         </div>
 
         <!-- Step 4 -->
         <div class="step">
-          <div class="step-header">
-            <div class="step-circle">4</div>
-            <h2 class="step-title">Go back to an older commit</h2>
-          </div>
+          <div class="step-header"><div class="step-circle">4</div><h2 class="step-title">Go back to an older commit</h2></div>
           <div class="step-body">
-            <p>First, find the short hash (like <code>abc1234</code>) from before things broke:</p>
+            <p>Find the short hash (e.g. <code>abc1234</code>) from before things broke, then branch from it:</p>
             <div class="terminal">
-              <div class="term-bar">
-                <span class="term-dot r"></span>
-                <span class="term-dot y"></span>
-                <span class="term-dot g"></span>
-                <span class="term-title">zsh</span>
-              </div>
+              <div class="term-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span><span class="term-title">zsh</span></div>
               <div class="term-body">
 <span class="cmd">$ git log --oneline</span>
-              </div>
+<span class="cmd">$ git checkout -b recovery abc1234</span>
+</div>
             </div>
             <div class="visual-placeholder">
               <span class="visual-icon">⬚</span>
               <span class="visual-label">Screenshot or screen recording</span>
             </div>
             <p class="visual-caption">Terminal showing git log with commit hashes</p>
-            <p>Then create a recovery branch from that point:</p>
-            <div class="terminal">
-              <div class="term-bar">
-                <span class="term-dot r"></span>
-                <span class="term-dot y"></span>
-                <span class="term-dot g"></span>
-                <span class="term-title">zsh</span>
-              </div>
-              <div class="term-body">
-<span class="cmd">$ git checkout -b recovery abc1234</span>
-              </div>
-            </div>
           </div>
         </div>
 
@@ -284,7 +197,7 @@
     <!-- THE GOLDEN RULE -->
     <section class="intro-section">
       <h2>The Golden Rule</h2>
-      <p><strong>Commit often.</strong> The more commits you have, the more save points you can go back to. Commit every time something works — even small things. If you do that, recovery is always easy.</p>
+      <p><strong>Commit often.</strong> More commits = more save points. Commit every time something works — recovery stays easy.</p>
     </section>
 
     <!-- TROUBLESHOOTING -->
@@ -294,7 +207,7 @@
 
         <div class="trouble-item">
           <p class="trouble-error">Not sure what happened</p>
-          <p class="trouble-fix">Ask Claude "show me what changed since the last commit" or run <code>git status</code> in the terminal.</p>
+          <p class="trouble-fix">Ask Claude "show me what changed since the last commit" or run <code>git status</code>.</p>
         </div>
 
         <div class="trouble-item">

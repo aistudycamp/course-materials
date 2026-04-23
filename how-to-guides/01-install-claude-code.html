@@ -33,8 +33,9 @@
     <aside class="prereq-box">
       <p class="prereq-label">Prerequisites</p>
       <ul class="prereq-list">
-        <li>A computer with macOS, Windows, or Linux</li>
-        <li>An Anthropic account — sign up at <a href="https://console.anthropic.com">console.anthropic.com</a></li>
+        <li>macOS, Windows, or Linux</li>
+        <li>Node.js v18+ — download the LTS from <a href="https://nodejs.org">nodejs.org</a></li>
+        <li>An Anthropic account — <a href="https://console.anthropic.com">console.anthropic.com</a></li>
       </ul>
     </aside>
 
@@ -46,44 +47,13 @@
         <div class="step">
           <div class="step-header">
             <div class="step-circle">1</div>
-            <h2 class="step-title">Install Node.js</h2>
-          </div>
-          <div class="step-body">
-            <p>Go to <a href="https://nodejs.org">nodejs.org</a> and download the <strong>LTS</strong> version. Run the installer.</p>
-            <p>Verify it worked:</p>
-            <div class="terminal">
-              <div class="term-bar">
-                <span class="term-dot r"></span>
-                <span class="term-dot y"></span>
-                <span class="term-dot g"></span>
-                <span class="term-title">zsh</span>
-              </div>
-              <div class="term-body">
-<span class="cmd">$ node --version</span>
-<span class="out">v20.11.0</span>
-              </div>
-            </div>
-            <p>You should see something like <code>v20.x.x</code> or higher.</p>
-            <div class="visual-placeholder">
-              <span class="visual-icon">⬚</span>
-              <span class="visual-label">Screenshot or screen recording</span>
-            </div>
-            <p class="visual-caption">Terminal showing node --version output</p>
-          </div>
-        </div>
-
-        <!-- Step 2 -->
-        <div class="step">
-          <div class="step-header">
-            <div class="step-circle">2</div>
             <h2 class="step-title">Install Claude Code</h2>
           </div>
           <div class="step-body">
+            <p>With Node installed, run:</p>
             <div class="terminal">
               <div class="term-bar">
-                <span class="term-dot r"></span>
-                <span class="term-dot y"></span>
-                <span class="term-dot g"></span>
+                <span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
                 <span class="term-title">zsh</span>
               </div>
               <div class="term-body">
@@ -92,24 +62,22 @@
             </div>
             <div class="tip-box">
               <span class="tip-label">Tip</span>
-              <p>If you get a permissions error, try <code>sudo npm install -g @anthropic-ai/claude-code</code> and enter your password.</p>
+              <p>Permissions error? Prefix with <code>sudo</code>.</p>
             </div>
           </div>
         </div>
 
-        <!-- Step 3 -->
+        <!-- Step 2 -->
         <div class="step">
           <div class="step-header">
-            <div class="step-circle">3</div>
+            <div class="step-circle">2</div>
             <h2 class="step-title">Start Claude Code</h2>
           </div>
           <div class="step-body">
-            <p>Navigate to any project folder — or just your Desktop to test:</p>
+            <p>Navigate to any folder and run <code>claude</code>. The first run opens your browser to authenticate with Anthropic — follow the prompts and return to your terminal.</p>
             <div class="terminal">
               <div class="term-bar">
-                <span class="term-dot r"></span>
-                <span class="term-dot y"></span>
-                <span class="term-dot g"></span>
+                <span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
                 <span class="term-title">zsh</span>
               </div>
               <div class="term-body">
@@ -120,35 +88,17 @@
           </div>
         </div>
 
-        <!-- Step 4 -->
+        <!-- Step 3 -->
         <div class="step">
           <div class="step-header">
-            <div class="step-circle">4</div>
-            <h2 class="step-title">Authenticate</h2>
-          </div>
-          <div class="step-body">
-            <p>The first time you run <code>claude</code>, it will open your browser to log in with your Anthropic account. Follow the prompts and come back to your terminal.</p>
-            <div class="visual-placeholder">
-              <span class="visual-icon">⬚</span>
-              <span class="visual-label">Screenshot or screen recording</span>
-            </div>
-            <p class="visual-caption">Browser authentication flow and terminal waiting for login</p>
-          </div>
-        </div>
-
-        <!-- Step 5 -->
-        <div class="step">
-          <div class="step-header">
-            <div class="step-circle">5</div>
+            <div class="step-circle">3</div>
             <h2 class="step-title">Verify it works</h2>
           </div>
           <div class="step-body">
-            <p>Once authenticated, type something in the Claude Code prompt:</p>
+            <p>At the Claude Code prompt, ask:</p>
             <div class="terminal">
               <div class="term-bar">
-                <span class="term-dot r"></span>
-                <span class="term-dot y"></span>
-                <span class="term-dot g"></span>
+                <span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
                 <span class="term-title">claude</span>
               </div>
               <div class="term-body">
@@ -156,11 +106,6 @@
               </div>
             </div>
             <p>If Claude responds with a list of files, you're all set.</p>
-            <div class="visual-placeholder">
-              <span class="visual-icon">⬚</span>
-              <span class="visual-label">Screenshot or screen recording</span>
-            </div>
-            <p class="visual-caption">Claude Code responding to a simple prompt in the terminal</p>
           </div>
         </div>
 
@@ -171,22 +116,14 @@
     <section class="troubleshooting-section">
       <h2 class="troubleshooting-label">Troubleshooting</h2>
       <div class="trouble-list">
-
         <div class="trouble-item">
           <p class="trouble-error">"command not found: claude"</p>
-          <p class="trouble-fix">Close your terminal and open a new one. The install needs a fresh terminal session to register the new command.</p>
+          <p class="trouble-fix">Open a fresh terminal window so the new command registers.</p>
         </div>
-
         <div class="trouble-item">
           <p class="trouble-error">"npm not found"</p>
-          <p class="trouble-fix">Node.js didn't install correctly. Re-download the LTS version from <a href="https://nodejs.org">nodejs.org</a> and run the installer again.</p>
+          <p class="trouble-fix">Reinstall Node.js LTS from <a href="https://nodejs.org">nodejs.org</a>.</p>
         </div>
-
-        <div class="trouble-item">
-          <p class="trouble-error">Authentication loop</p>
-          <p class="trouble-fix">Make sure you're logged into your Anthropic account in the browser that opens. Try a different browser if it keeps looping.</p>
-        </div>
-
       </div>
     </section>
 
