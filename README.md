@@ -36,13 +36,10 @@ Step-by-step guides for common pain points. Open the HTML files in your browser.
 | 06 | [Keep Claude Focused](how-to-guides/06-keep-claude-focused.html) |
 | 07 | [Debug with Claude](how-to-guides/07-debug-with-claude.html) |
 | 08 | [Deploy with Vercel](how-to-guides/08-deploy-with-vercel.html) |
-| 09 | [Connect InstantDB](how-to-guides/09-connect-instant-db.html) |
 | 10 | [Break Down Big Ideas](how-to-guides/10-break-down-big-ideas.html) |
-| 11 | [Write a Spec](how-to-guides/11-write-a-spec.html) |
 | 12 | [Manage API Keys](how-to-guides/12-manage-api-keys.html) |
 | 13 | [Connect Google Workspace CLI](how-to-guides/13-connect-google-workspace-cli.html) |
 | 14 | [Tool Landscape](how-to-guides/14-tool-landscape.html) |
-| 15 | [Understanding Models](how-to-guides/15-understanding-models.html) |
 | 16 | [Claude Products Explained](how-to-guides/16-claude-products-explained.html) |
 
 ## Decks
