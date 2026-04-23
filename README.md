@@ -26,21 +26,19 @@ claude
 
 Step-by-step guides for common pain points. Open the HTML files in your browser.
 
-| # | Guide |
-|---|-------|
-| 01 | [Install Claude Code](how-to-guides/01-install-claude-code.html) |
-| 02 | [Install a Skill](how-to-guides/02-install-a-skill.html) |
-| 03 | [Write a CLAUDE.md](how-to-guides/03-write-a-claude-md.html) |
-| 04 | [Git Basics](how-to-guides/04-git-basics.html) |
-| 05 | [Recover from Mistakes](how-to-guides/05-recover-from-mistakes.html) |
-| 06 | [Keep Claude Focused](how-to-guides/06-keep-claude-focused.html) |
-| 07 | [Debug with Claude](how-to-guides/07-debug-with-claude.html) |
-| 08 | [Deploy with Vercel](how-to-guides/08-deploy-with-vercel.html) |
-| 10 | [Break Down Big Ideas](how-to-guides/10-break-down-big-ideas.html) |
-| 12 | [Manage API Keys](how-to-guides/12-manage-api-keys.html) |
-| 13 | [Connect Google Workspace CLI](how-to-guides/13-connect-google-workspace-cli.html) |
-| 14 | [Tool Landscape](how-to-guides/14-tool-landscape.html) |
-| 16 | [Claude Products Explained](how-to-guides/16-claude-products-explained.html) |
+- [Install Claude Code](how-to-guides/install-claude-code.html)
+- [Install a Skill](how-to-guides/install-a-skill.html)
+- [Write a CLAUDE.md](how-to-guides/write-a-claude-md.html)
+- [Git Basics](how-to-guides/git-basics.html)
+- [Recover from Mistakes](how-to-guides/recover-from-mistakes.html)
+- [Keep Claude Focused](how-to-guides/keep-claude-focused.html)
+- [Debug with Claude](how-to-guides/debug-with-claude.html)
+- [Deploy with Vercel](how-to-guides/deploy-with-vercel.html)
+- [Break Down Big Ideas](how-to-guides/break-down-big-ideas.html)
+- [Manage API Keys](how-to-guides/manage-api-keys.html)
+- [Connect Google Workspace CLI](how-to-guides/connect-google-workspace-cli.html)
+- [Tool Landscape](how-to-guides/tool-landscape.html)
+- [Claude Products Explained](how-to-guides/claude-products-explained.html)
 
 ## Decks
 
