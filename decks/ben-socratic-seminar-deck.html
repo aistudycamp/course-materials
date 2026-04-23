@@ -155,7 +155,32 @@
     <p style="margin-top:28px;font-size:15px;color:var(--text2);max-width:900px;line-height:1.6;font-style:italic;">This is why Claude and ChatGPT <i>feel</i> different — different RLHF preferences = different personalities.</p>
   </section>
 
-  <!-- 6. Context window -->
+  <!-- 6. Memory model — 50 First Dates (NEW) -->
+  <section class="slide">
+    <div class="eyebrow">The memory problem</div>
+    <h2>It has <em style="font-style:italic;color:var(--accent);">50 First Dates</em> memory.</h2>
+    <p class="lede">Every session is a restart. The model doesn't remember yesterday. You bridge the gap by handing it notes — every time.</p>
+    <div class="grid-3" style="margin-top:32px;">
+      <div class="card" style="border-top:3px solid var(--accent);">
+        <div class="stage-name" style="color:var(--accent);">Weights</div>
+        <div style="font-size:13px;color:var(--text2);margin-top:4px;font-family:var(--font-mono);">hazy long-term memory</div>
+        <div class="stage-desc" style="margin-top:14px;">Compressed patterns from training. It "remembers" how Python works — not what you told it last week.</div>
+      </div>
+      <div class="card" style="border-top:3px solid #f59e0b;">
+        <div class="stage-name" style="color:#b45309;">Context window</div>
+        <div style="font-size:13px;color:var(--text2);margin-top:4px;font-family:var(--font-mono);">working memory</div>
+        <div class="stage-desc" style="margin-top:14px;">What the model can see <i>right now</i>. Your prompt, your files, this conversation. Resets every session.</div>
+      </div>
+      <div class="card" style="border-top:3px solid #8b5cf6;">
+        <div class="stage-name" style="color:#7c3aed;">CLAUDE.md</div>
+        <div style="font-size:13px;color:var(--text2);margin-top:4px;font-family:var(--font-mono);">the notes Adam Sandler writes</div>
+        <div class="stage-desc" style="margin-top:14px;">You re-inject context at the start of every session. Project docs, skills, memory files — continuity the model can't keep on its own.</div>
+      </div>
+    </div>
+    <p style="margin-top:28px;font-size:15px;color:var(--text2);font-style:italic;max-width:900px;line-height:1.6;">Karpathy calls this <i>anterograde amnesia</i>. The whole craft of working with Claude Code is managing which memory you're writing to.</p>
+  </section>
+
+  <!-- 7. Context window -->
   <section class="slide">
     <div class="eyebrow">Its working memory</div>
     <h2>The context window is a whiteboard.</h2>
@@ -172,7 +197,27 @@
     </div>
   </section>
 
-  <!-- 7. Hallucination + how to avoid -->
+  <!-- 8. Lossy zip (NEW) -->
+  <section class="slide">
+    <div class="eyebrow">What training leaves behind</div>
+    <h2>The model is a <em style="font-style:italic;color:var(--accent);">lossy zip file</em> of the internet.</h2>
+    <p class="lede">Training doesn't <i>store</i> the internet — it compresses it into patterns. Common patterns survive. Rare details get smudged.</p>
+    <div class="grid-2" style="margin-top:32px;">
+      <div class="card" style="border-left:3px solid var(--accent);">
+        <div class="stage-name" style="color:var(--accent);">Well-compressed</div>
+        <div class="stage-desc" style="margin-top:10px;">Python syntax. Common idioms. Writing patterns. Widely-discussed facts. Seen millions of times.</div>
+      </div>
+      <div class="card" style="border-left:3px solid #f59e0b;">
+        <div class="stage-name" style="color:#b45309;">Lossy / smudged</div>
+        <div class="stage-desc" style="margin-top:10px;">Obscure dates. Niche facts. Precise numbers. Rare names. Seen rarely — compressed away.</div>
+      </div>
+    </div>
+    <div style="margin-top:28px;padding:20px 24px;background:var(--accent-bg);border-radius:10px;border:1px solid rgba(13,148,136,.25);">
+      <p style="font-size:17px;line-height:1.55;color:var(--text);"><b>Hallucination isn't a bug — it's the compression artifact.</b> When the model hits a gap, it doesn't say "I don't know." It generates the most statistically plausible completion. Sometimes that's right. Sometimes it isn't. The model can't tell the difference.</p>
+    </div>
+  </section>
+
+  <!-- 9. Hallucination + how to avoid -->
   <section class="slide dark">
     <div class="eyebrow" style="color:var(--accent-light);">Why it hallucinates — and how to stop it</div>
     <p class="quote dark" style="margin-top:24px;">It isn't lying.<br>It's predicting the next token.</p>
