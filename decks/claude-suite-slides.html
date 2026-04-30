@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Claude Suite — AISC Week 3</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:     #F5F0EB;
+      --fg:     #1C1917;
+      --accent: #0D9488;
+      --muted:  #78716C;
+      --dark:   #292524;
+    }
+
+    html, body {
+      background: var(--bg);
+      font-family: 'Geist', system-ui, sans-serif;
+      color: var(--fg);
+    }
+
+    /* Each slide = one full-viewport section */
+    .slide {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: 13vh 0 8vh;
+      position: relative;
+    }
+
+    /* Slide divider */
+    .slide + .slide {
+      border-top: 1px solid rgba(28,25,23,0.1);
+    }
+
+    /* Content wrapper — matches the deck's content column width */
+    .content {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+
+    /* ── Typography ── */
+    .slide-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 44px;
+      font-weight: 700;
+      line-height: 1.05;
+      color: var(--fg);
+      margin-bottom: 8px;
+    }
+
+    .slide-subtitle {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-style: italic;
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-bottom: 28px;
+    }
+
+    /* ════════════════════════════════
+       SLIDE 1 — Product stack rows
+    ════════════════════════════════ */
+
+    .product-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .product-row {
+      background: var(--dark);
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: start;
+      gap: 16px;
+      padding: 14px 20px;
+      border-radius: 3px;
+    }
+
+    .product-row.is-course {
+      border-left: 3px solid var(--accent);
+    }
+
+    .product-row-info {
+      display: flex;
+      align-items: baseline;
+      white-space: nowrap;
+      padding-top: 2px;
+    }
+
+    .product-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      white-space: nowrap;
+    }
+
+    .product-dash {
+      color: rgba(255,255,255,0.28);
+      margin: 0 8px;
+      font-size: 14px;
+    }
+
+    .product-desc {
+      font-size: 12.5px;
+      color: rgba(255,255,255,0.42);
+      font-style: italic;
+      white-space: nowrap;
+    }
+
+    .product-pills {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .pill {
+      background: rgba(255,255,255,0.09);
+      color: rgba(255,255,255,0.72);
+      padding: 4px 11px;
+      border-radius: 3px;
+      font-size: 11px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .pill-teal {
+      background: rgba(13,148,136,0.18);
+      color: #5EEAD4;
+      border: 1px solid rgba(13,148,136,0.28);
+    }
+
+    /* Built-in bar */
+    .builtin-bar {
+      margin-top: 10px;
+      padding: 10px 16px;
+      background: rgba(13,148,136,0.05);
+      border: 1px solid rgba(13,148,136,0.16);
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .builtin-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      color: var(--accent);
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .builtin-sep {
+      width: 1px;
+      height: 14px;
+      background: rgba(13,148,136,0.22);
+      flex-shrink: 0;
+    }
+
+    .builtin-pills {
+      display: flex;
+      gap: 5px;
+    }
+
+    .builtin-pill {
+      background: rgba(13,148,136,0.09);
+      color: var(--accent);
+      border: 1px solid rgba(13,148,136,0.2);
+      padding: 3px 9px;
+      border-radius: 3px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    /* Vertical right label */
+    .vert-label {
+      position: absolute;
+      right: calc((100vw - 900px) / 2 - 20px);
+      top: 0;
+      bottom: 0;
+      width: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      pointer-events: none;
+    }
+
+    .vert-label-text {
+      writing-mode: vertical-lr;
+      font-size: 7.5px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: rgba(28,25,23,0.2);
+      text-transform: uppercase;
+      user-select: none;
+    }
+
+    .vert-arrow {
+      font-size: 9px;
+      color: rgba(28,25,23,0.18);
+    }
+
+    /* ════════════════════════════════
+       SLIDE 2 — Comparison table
+    ════════════════════════════════ */
+
+    /* Column header cards */
+    .comp-header-row {
+      display: grid;
+      grid-template-columns: 180px 1fr 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .col-card {
+      background: rgba(255,255,255,0.5);
+      border: 1px solid rgba(28,25,23,0.1);
+      border-radius: 4px;
+      padding: 11px 14px 12px;
+    }
+
+    .col-card-eyebrow {
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+
+    .col-card-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--fg);
+      margin-bottom: 2px;
+      line-height: 1.2;
+    }
+
+    .col-card-desc {
+      font-size: 10px;
+      color: var(--muted);
+      font-style: italic;
+      line-height: 1.35;
+    }
+
+    /* Teal rule */
+    .comp-rule {
+      height: 2px;
+      background: var(--accent);
+      margin-bottom: 0;
+    }
+
+    /* Rows */
+    .comp-row {
+      display: grid;
+      grid-template-columns: 180px 1fr 1fr 1fr;
+      border-bottom: 1px dashed rgba(28,25,23,0.12);
+      padding: 13px 0 10px;
+    }
+
+    .comp-row:last-child {
+      border-bottom: none;
+    }
+
+    .row-meta {
+      padding-right: 12px;
+    }
+
+    .row-num {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 2px;
+    }
+
+    .row-product-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--fg);
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+
+    .row-tags {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    .row-tag {
+      background: rgba(28,25,23,0.07);
+      color: var(--muted);
+      padding: 2px 7px;
+      border-radius: 3px;
+      font-size: 9.5px;
+      font-weight: 500;
+    }
+
+    .comp-cell {
+      padding: 0 10px 0 16px;
+      border-left: 1px solid rgba(28,25,23,0.08);
+    }
+
+    .cell-col-label {
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .cell-value {
+      font-size: 12px;
+      color: var(--fg);
+      line-height: 1.5;
+    }
+
+    .cell-note {
+      font-size: 10.5px;
+      color: var(--muted);
+      font-style: italic;
+      margin-top: 3px;
+      line-height: 1.35;
+    }
+
+    .footnote {
+      font-size: 11px;
+      color: var(--muted);
+      font-style: italic;
+      padding-top: 12px;
+      border-top: 1px solid rgba(28,25,23,0.1);
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════════
+       SLIDE 1 — Three products. One model.
+  ══════════════════════════════════════════════ -->
+  <section class="slide">
+    <div class="content">
+
+      <h1 class="slide-title">Three products. One model.</h1>
+      <p class="slide-subtitle">Chat, Cowork, and Code all run the same Claude — different interfaces, different permissions, completely different jobs.</p>
+
+      <div class="product-stack">
+
+        <div class="product-row">
+          <div class="product-row-info">
+            <span class="product-name">Claude Chat</span>
+            <span class="product-dash">—</span>
+            <span class="product-desc">Conversational AI for everyone</span>
+          </div>
+          <div class="product-pills">
+            <span class="pill">claude.ai</span>
+            <span class="pill">Web · Desktop · Mobile</span>
+            <span class="pill">Web search</span>
+            <span class="pill">Gmail · Calendar · Notion · Slack</span>
+            <span class="pill">Free plan</span>
+          </div>
+        </div>
+
+        <div class="product-row">
+          <div class="product-row-info">
+            <span class="product-name">Claude Cowork</span>
+            <span class="product-dash">—</span>
+            <span class="product-desc">Autonomous agent for office work</span>
+          </div>
+          <div class="product-pills">
+            <span class="pill">Word · Excel · PowerPoint</span>
+            <span class="pill">Microsoft 365 · SharePoint</span>
+            <span class="pill">Browser automation</span>
+            <span class="pill">Scheduled automations</span>
+            <span class="pill">11 role plugins</span>
+          </div>
+        </div>
+
+        <div class="product-row is-course">
+          <div class="product-row-info">
+            <span class="product-name">Claude Code</span>
+            <span class="product-dash">—</span>
+            <span class="product-desc">Agentic AI for building software</span>
+          </div>
+          <div class="product-pills">
+            <span class="pill pill-teal">Full codebase + git</span>
+            <span class="pill pill-teal">Terminal · Deploy</span>
+            <span class="pill pill-teal">MCP servers</span>
+            <span class="pill pill-teal">Sub-agents · Routines</span>
+            <span class="pill pill-teal">CLI · Desktop · Web · VS Code</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="builtin-bar">
+        <span class="builtin-label">Built into Claude Code</span>
+        <div class="builtin-sep"></div>
+        <div class="builtin-pills">
+          <span class="builtin-pill">CLAUDE.md</span>
+          <span class="builtin-pill">Skills</span>
+          <span class="builtin-pill">MCP Servers</span>
+          <span class="builtin-pill">Sub-agents</span>
+          <span class="builtin-pill">Hooks</span>
+          <span class="builtin-pill">Routines</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Vertical right-edge label -->
+    <div class="vert-label">
+      <span class="vert-label-text">More power &amp; control</span>
+      <span class="vert-arrow">▼</span>
+    </div>
+
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════
+       SLIDE 2 — Same brain. Different superpowers.
+  ══════════════════════════════════════════════ -->
+  <section class="slide">
+    <div class="content">
+
+      <h1 class="slide-title">Same brain. Different capabilities.</h1>
+      <p class="slide-subtitle">And different ceilings — knowing which tool to reach for saves hours.</p>
+
+      <!-- Column header cards -->
+      <div class="comp-header-row">
+        <div></div>
+        <div class="col-card">
+          <div class="col-card-eyebrow">Good at</div>
+          <div class="col-card-title">What it does best</div>
+          <div class="col-card-desc">Where to reach first</div>
+        </div>
+        <div class="col-card">
+          <div class="col-card-eyebrow">Can't do</div>
+          <div class="col-card-title">Hard limits</div>
+          <div class="col-card-desc">Fundamentally out of scope</div>
+        </div>
+        <div class="col-card">
+          <div class="col-card-eyebrow">Worth knowing</div>
+          <div class="col-card-title">Key caveats</div>
+          <div class="col-card-desc">Surprises that trip people up</div>
+        </div>
+      </div>
+      <div class="comp-rule"></div>
+
+      <!-- Row 1: Chat -->
+      <div class="comp-row">
+        <div class="row-meta">
+          <div class="row-num">01</div>
+          <div class="row-product-name">Claude Chat</div>
+          <div class="row-tags">
+            <span class="row-tag">claude.ai</span>
+            <span class="row-tag">Desktop · Mobile</span>
+          </div>
+        </div>
+        <div class="comp-cell">
+          <div class="cell-col-label">Good at</div>
+          <div class="cell-value">Q&amp;A, writing, research, brainstorming, web search, document analysis</div>
+        </div>
+        <div class="comp-cell">
+          <div class="cell-col-label">Can't do</div>
+          <div class="cell-value">Read or write files on your computer, run commands, autonomous multi-step tasks</div>
+        </div>
+        <div class="comp-cell">
+          <div class="cell-col-label">Worth knowing</div>
+          <div class="cell-value">Connects to Gmail, Calendar, Notion, Slack via integrations. Only product with a free plan.</div>
+        </div>
+      </div>
+
+      <!-- Row 2: Cowork -->
+      <div class="comp-row">
+        <div class="row-meta">
+          <div class="row-num">02</div>
+          <div class="row-product-name">Claude Cowork</div>
+          <div class="row-tags">
+            <span class="row-tag">Desktop app only</span>
+          </div>
+        </div>
+        <div class="comp-cell">
+          <div class="cell-col-label">Good at</div>
+          <div class="cell-value">Native Office docs with real formulas, M365 + SharePoint integration, browser automation, scheduled recurring tasks, 11 role plugins (Sales, Legal, Finance…)</div>
+        </div>
+        <div class="comp-cell">
+          <div class="cell-col-label">Can't do</div>
+          <div class="cell-value">Git, package managers, full filesystem access, MCP servers, custom skills or hooks</div>
+        </div>
+        <div class="comp-cell">
+          <div class="cell-col-label">Worth knowing</div>
+          <div class="cell-value">Computer must stay awake; tasks pause if machine sleeps. Eats message quota fast. Desktop app only. Still beta (Apr 2026).</div>
+        </div>
+      </div>
+
+      <!-- Row 3: Code -->
+      <div class="comp-row">
+        <div class="row-meta">
+          <div class="row-num">03</div>
+          <div class="row-product-name">Claude Code</div>
+          <div class="row-tags">
+            <span class="row-tag">CLI</span>
+            <span class="row-tag">Desktop</span>
+            <span class="row-tag">Web</span>
+            <span class="row-tag">VS Code</span>
+          </div>
+        </div>
+        <div class="comp-cell">
+          <div class="cell-col-label">Good at</div>
+          <div class="cell-value">Full codebase + git, terminal, deploy, MCP servers, skills, sub-agents, Routines — cloud-scheduled agents triggered by time, API call, or GitHub event</div>
+        </div>
+        <div class="comp-cell">
+          <div class="cell-col-label">Can't do</div>
+          <div class="cell-value">Native Office documents. Screen control limited in CLI. No visual diffs without Desktop app.</div>
+        </div>
+        <div class="comp-cell">
+          <div class="cell-col-label">Worth knowing</div>
+          <div class="cell-value">Context fills fast — clear at 40–50%. Routines run in the cloud; laptop can sleep.</div>
+        </div>
+      </div>
+
+      <p class="footnote">All three products run the same underlying Claude model. What differs is the permission model, interface, and what actions Claude is allowed to take on your behalf.</p>
+
+    </div>
+  </section>
+
+</body>
+</html>
