@@ -47,6 +47,10 @@
       padding: 0 48px;
     }
 
+    .content--wide {
+      max-width: 1200px;
+    }
+
     /* ── Typography ── */
     .slide-title {
       font-family: 'Playfair Display', Georgia, serif;
@@ -73,7 +77,7 @@
     .product-stack {
       display: flex;
       flex-direction: column;
-      gap: 3px;
+      gap: 6px;
     }
 
     .product-row {
@@ -82,7 +86,7 @@
       grid-template-columns: auto 1fr;
       align-items: start;
       gap: 16px;
-      padding: 14px 20px;
+      padding: 20px 24px;
       border-radius: 3px;
     }
 
@@ -98,7 +102,7 @@
     }
 
     .product-name {
-      font-size: 14px;
+      font-size: 18px;
       font-weight: 600;
       color: #fff;
       white-space: nowrap;
@@ -106,12 +110,12 @@
 
     .product-dash {
       color: rgba(255,255,255,0.28);
-      margin: 0 8px;
-      font-size: 14px;
+      margin: 0 10px;
+      font-size: 18px;
     }
 
     .product-desc {
-      font-size: 12.5px;
+      font-size: 15px;
       color: rgba(255,255,255,0.42);
       font-style: italic;
       white-space: nowrap;
@@ -127,9 +131,9 @@
     .pill {
       background: rgba(255,255,255,0.09);
       color: rgba(255,255,255,0.72);
-      padding: 4px 11px;
+      padding: 6px 14px;
       border-radius: 3px;
-      font-size: 11px;
+      font-size: 13px;
       font-weight: 500;
       white-space: nowrap;
     }
@@ -142,8 +146,8 @@
 
     /* Built-in bar */
     .builtin-bar {
-      margin-top: 10px;
-      padding: 10px 16px;
+      margin-top: 12px;
+      padding: 12px 20px;
       background: rgba(13,148,136,0.05);
       border: 1px solid rgba(13,148,136,0.16);
       border-radius: 3px;
@@ -153,7 +157,7 @@
     }
 
     .builtin-label {
-      font-size: 9px;
+      font-size: 11px;
       font-weight: 700;
       letter-spacing: 0.13em;
       color: var(--accent);
@@ -177,9 +181,9 @@
       background: rgba(13,148,136,0.09);
       color: var(--accent);
       border: 1px solid rgba(13,148,136,0.2);
-      padding: 3px 9px;
+      padding: 5px 12px;
       border-radius: 3px;
-      font-size: 11px;
+      font-size: 13px;
       font-weight: 500;
     }
 
@@ -214,139 +218,282 @@
     }
 
     /* ════════════════════════════════
-       SLIDE 2 — Comparison table
+       SLIDE 2 — Capability matrix
     ════════════════════════════════ */
 
-    /* Column header cards */
-    .comp-header-row {
-      display: grid;
-      grid-template-columns: 180px 1fr 1fr 1fr;
-      gap: 8px;
-      margin-bottom: 10px;
-    }
-
-    .col-card {
-      background: rgba(255,255,255,0.5);
-      border: 1px solid rgba(28,25,23,0.1);
+    .matrix {
+      width: 100%;
       border-radius: 4px;
-      padding: 11px 14px 12px;
+      overflow: hidden;
+      border: 1px solid rgba(28,25,23,0.1);
     }
 
-    .col-card-eyebrow {
+    .matrix-header {
+      display: grid;
+      grid-template-columns: 200px 1fr 1fr 1fr;
+      background: var(--dark);
+    }
+
+    .matrix-header-cap {
+      padding: 14px 16px;
+    }
+
+    .matrix-header-col {
+      padding: 14px 16px;
+      border-left: 1px solid rgba(255,255,255,0.08);
+      text-align: center;
+    }
+
+    .matrix-header-col.is-code {
+      border-left-color: rgba(13,148,136,0.4);
+      background: rgba(13,148,136,0.08);
+    }
+
+    .matrix-header-eyebrow {
       font-size: 8px;
       font-weight: 700;
       letter-spacing: 0.14em;
-      color: var(--accent);
+      color: rgba(255,255,255,0.35);
       text-transform: uppercase;
-      margin-bottom: 3px;
+      margin-bottom: 2px;
     }
 
-    .col-card-title {
+    .matrix-header-name {
       font-size: 13px;
       font-weight: 700;
-      color: var(--fg);
-      margin-bottom: 2px;
+      color: #fff;
       line-height: 1.2;
     }
 
-    .col-card-desc {
+    .matrix-header-name.is-code {
+      color: #5EEAD4;
+    }
+
+    .matrix-header-tag {
+      font-size: 9.5px;
+      color: rgba(255,255,255,0.35);
+      margin-top: 2px;
+      font-style: italic;
+    }
+
+    .matrix-row {
+      display: grid;
+      grid-template-columns: 200px 1fr 1fr 1fr;
+      border-top: 1px solid rgba(28,25,23,0.08);
+      background: rgba(255,255,255,0.35);
+    }
+
+    .matrix-row:nth-child(even) {
+      background: rgba(255,255,255,0.6);
+    }
+
+    .matrix-cap {
+      padding: 11px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .matrix-cap-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--fg);
+      line-height: 1.3;
+    }
+
+    .matrix-cap-sub {
       font-size: 10px;
       color: var(--muted);
-      font-style: italic;
-      line-height: 1.35;
+      margin-top: 2px;
+      line-height: 1.3;
     }
 
-    /* Teal rule */
-    .comp-rule {
-      height: 2px;
-      background: var(--accent);
-      margin-bottom: 0;
-    }
-
-    /* Rows */
-    .comp-row {
+    .matrix-cell {
+      padding: 9px 8px;
+      border-left: 1px solid rgba(28,25,23,0.08);
       display: grid;
-      grid-template-columns: 180px 1fr 1fr 1fr;
-      border-bottom: 1px dashed rgba(28,25,23,0.12);
-      padding: 13px 0 10px;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
     }
 
-    .comp-row:last-child {
-      border-bottom: none;
+    .matrix-cell.is-code-col {
+      border-left-color: rgba(13,148,136,0.15);
+      background: rgba(13,148,136,0.03);
     }
 
-    .row-meta {
-      padding-right: 12px;
+    .matrix-emoji {
+      grid-column: 2;
+      font-size: 18px;
+      line-height: 1;
+      text-align: center;
     }
 
-    .row-num {
+    .matrix-note {
+      grid-column: 3;
+      font-size: 9.5px;
+      color: var(--muted);
+      font-style: italic;
+      line-height: 1.3;
+      padding-left: 5px;
+      text-align: left;
+    }
+
+    .matrix-legend {
+      margin-top: 14px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 9px 14px;
+      background: rgba(255,255,255,0.5);
+      border: 1px solid rgba(28,25,23,0.1);
+      border-radius: 3px;
+    }
+
+    .legend-label {
       font-size: 9px;
       font-weight: 700;
-      letter-spacing: 0.1em;
-      color: var(--accent);
-      margin-bottom: 2px;
-    }
-
-    .row-product-name {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--fg);
-      line-height: 1.2;
-      margin-bottom: 6px;
-    }
-
-    .row-tags {
-      display: flex;
-      gap: 4px;
-      flex-wrap: wrap;
-    }
-
-    .row-tag {
-      background: rgba(28,25,23,0.07);
-      color: var(--muted);
-      padding: 2px 7px;
-      border-radius: 3px;
-      font-size: 9.5px;
-      font-weight: 500;
-    }
-
-    .comp-cell {
-      padding: 0 10px 0 16px;
-      border-left: 1px solid rgba(28,25,23,0.08);
-    }
-
-    .cell-col-label {
-      font-size: 8px;
-      font-weight: 700;
       letter-spacing: 0.12em;
-      color: var(--accent);
       text-transform: uppercase;
-      margin-bottom: 5px;
+      color: var(--muted);
+      white-space: nowrap;
     }
 
-    .cell-value {
-      font-size: 12px;
+    .legend-sep {
+      width: 1px;
+      height: 14px;
+      background: rgba(28,25,23,0.12);
+      flex-shrink: 0;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
       color: var(--fg);
-      line-height: 1.5;
     }
 
-    .cell-note {
+    .legend-emoji {
+      font-size: 14px;
+    }
+
+    .dispatch-note {
+      margin-top: 10px;
+      padding: 9px 14px;
+      background: rgba(13,148,136,0.05);
+      border: 1px solid rgba(13,148,136,0.16);
+      border-radius: 3px;
       font-size: 10.5px;
       color: var(--muted);
       font-style: italic;
-      margin-top: 3px;
-      line-height: 1.35;
-    }
-
-    .footnote {
-      font-size: 11px;
-      color: var(--muted);
-      font-style: italic;
-      padding-top: 12px;
-      border-top: 1px solid rgba(28,25,23,0.1);
-      margin-top: 8px;
       line-height: 1.5;
     }
+
+    /* ════════════════════════════════
+       SLIDE 3 — When to use each
+    ════════════════════════════════ */
+
+    .use-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+    }
+
+    .use-card {
+      background: rgba(255,255,255,0.5);
+      border: 1px solid rgba(28,25,23,0.1);
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .use-card.is-code {
+      border-color: rgba(13,148,136,0.3);
+      background: rgba(13,148,136,0.04);
+    }
+
+    .use-card-header {
+      padding: 18px 20px 16px;
+      border-bottom: 1px solid rgba(28,25,23,0.08);
+      background: var(--dark);
+    }
+
+    .use-card.is-code .use-card-header {
+      background: rgba(13,148,136,0.15);
+      border-bottom-color: rgba(13,148,136,0.2);
+    }
+
+    .use-card-eyebrow {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .use-card.is-code .use-card-eyebrow {
+      color: rgba(13,148,136,0.7);
+    }
+
+    .use-card-name {
+      font-size: 19px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+    }
+
+    .use-card.is-code .use-card-name {
+      color: var(--fg);
+    }
+
+    .use-card-body {
+      padding: 18px 20px;
+    }
+
+    .use-section-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .use-section-label.green { color: #16a34a; }
+    .use-section-label.red   { color: #dc2626; }
+
+    .use-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      margin-bottom: 16px;
+    }
+
+    .use-list:last-child {
+      margin-bottom: 0;
+    }
+
+    .use-list li {
+      font-size: 13.5px;
+      color: var(--fg);
+      line-height: 1.45;
+      display: flex;
+      gap: 8px;
+    }
+
+    .use-list li::before {
+      content: attr(data-marker);
+      flex-shrink: 0;
+      font-size: 13px;
+      margin-top: 1px;
+    }
+
+    .use-divider {
+      height: 1px;
+      background: rgba(28,25,23,0.08);
+      margin: 14px 0;
+    }
+
   </style>
 </head>
 <body>
@@ -369,11 +516,8 @@
             <span class="product-desc">Conversational AI for everyone</span>
           </div>
           <div class="product-pills">
-            <span class="pill">claude.ai</span>
             <span class="pill">Web · Desktop · Mobile</span>
-            <span class="pill">Web search</span>
-            <span class="pill">Gmail · Calendar · Notion · Slack</span>
-            <span class="pill">Free plan</span>
+            <span class="pill">Free plan available</span>
           </div>
         </div>
 
@@ -384,11 +528,8 @@
             <span class="product-desc">Autonomous agent for office work</span>
           </div>
           <div class="product-pills">
-            <span class="pill">Word · Excel · PowerPoint</span>
-            <span class="pill">Microsoft 365 · SharePoint</span>
-            <span class="pill">Browser automation</span>
-            <span class="pill">Scheduled automations</span>
-            <span class="pill">11 role plugins</span>
+            <span class="pill">Desktop only</span>
+            <span class="pill">Pro plan or above</span>
           </div>
         </div>
 
@@ -399,27 +540,11 @@
             <span class="product-desc">Agentic AI for building software</span>
           </div>
           <div class="product-pills">
-            <span class="pill pill-teal">Full codebase + git</span>
-            <span class="pill pill-teal">Terminal · Deploy</span>
-            <span class="pill pill-teal">MCP servers</span>
-            <span class="pill pill-teal">Sub-agents · Routines</span>
             <span class="pill pill-teal">CLI · Desktop · Web · VS Code</span>
+            <span class="pill pill-teal">Pro plan or above</span>
           </div>
         </div>
 
-      </div>
-
-      <div class="builtin-bar">
-        <span class="builtin-label">Built into Claude Code</span>
-        <div class="builtin-sep"></div>
-        <div class="builtin-pills">
-          <span class="builtin-pill">CLAUDE.md</span>
-          <span class="builtin-pill">Skills</span>
-          <span class="builtin-pill">MCP Servers</span>
-          <span class="builtin-pill">Sub-agents</span>
-          <span class="builtin-pill">Hooks</span>
-          <span class="builtin-pill">Routines</span>
-        </div>
       </div>
 
     </div>
@@ -434,109 +559,322 @@
 
 
   <!-- ══════════════════════════════════════════════
-       SLIDE 2 — Same brain. Different superpowers.
+       SLIDE 2 — Capability matrix
   ══════════════════════════════════════════════ -->
   <section class="slide">
-    <div class="content">
+    <div class="content content--wide">
 
-      <h1 class="slide-title">Same brain. Different capabilities.</h1>
-      <p class="slide-subtitle">And different ceilings — knowing which tool to reach for saves hours.</p>
+      <h1 class="slide-title">Same brain. Different powers.</h1>
+      <p class="slide-subtitle">What each product can actually do — and where it hits a wall.</p>
 
-      <!-- Column header cards -->
-      <div class="comp-header-row">
-        <div></div>
-        <div class="col-card">
-          <div class="col-card-eyebrow">Good at</div>
-          <div class="col-card-title">What it does best</div>
-          <div class="col-card-desc">Where to reach first</div>
-        </div>
-        <div class="col-card">
-          <div class="col-card-eyebrow">Can't do</div>
-          <div class="col-card-title">Hard limits</div>
-          <div class="col-card-desc">Fundamentally out of scope</div>
-        </div>
-        <div class="col-card">
-          <div class="col-card-eyebrow">Worth knowing</div>
-          <div class="col-card-title">Key caveats</div>
-          <div class="col-card-desc">Surprises that trip people up</div>
-        </div>
-      </div>
-      <div class="comp-rule"></div>
 
-      <!-- Row 1: Chat -->
-      <div class="comp-row">
-        <div class="row-meta">
-          <div class="row-num">01</div>
-          <div class="row-product-name">Claude Chat</div>
-          <div class="row-tags">
-            <span class="row-tag">claude.ai</span>
-            <span class="row-tag">Desktop · Mobile</span>
+      <div class="matrix">
+
+        <!-- Header -->
+        <div class="matrix-header">
+          <div class="matrix-header-cap"></div>
+          <div class="matrix-header-col">
+            <div class="matrix-header-eyebrow">01</div>
+            <div class="matrix-header-name">Claude Chat</div>
+            <div class="matrix-header-tag">claude.ai · mobile · web</div>
+          </div>
+          <div class="matrix-header-col">
+            <div class="matrix-header-eyebrow">02</div>
+            <div class="matrix-header-name">Claude Cowork</div>
+            <div class="matrix-header-tag">desktop app</div>
+          </div>
+          <div class="matrix-header-col is-code">
+            <div class="matrix-header-eyebrow">03</div>
+            <div class="matrix-header-name is-code">Claude Code</div>
+            <div class="matrix-header-tag">CLI · desktop · web · VS Code</div>
           </div>
         </div>
-        <div class="comp-cell">
-          <div class="cell-col-label">Good at</div>
-          <div class="cell-value">Q&amp;A, writing, research, brainstorming, web search, document analysis</div>
-        </div>
-        <div class="comp-cell">
-          <div class="cell-col-label">Can't do</div>
-          <div class="cell-value">Read or write files on your computer, run commands, autonomous multi-step tasks</div>
-        </div>
-        <div class="comp-cell">
-          <div class="cell-col-label">Worth knowing</div>
-          <div class="cell-value">Connects to Gmail, Calendar, Notion, Slack via integrations. Only product with a free plan.</div>
-        </div>
-      </div>
 
-      <!-- Row 2: Cowork -->
-      <div class="comp-row">
-        <div class="row-meta">
-          <div class="row-num">02</div>
-          <div class="row-product-name">Claude Cowork</div>
-          <div class="row-tags">
-            <span class="row-tag">Desktop app only</span>
+        <!-- Row: Select model -->
+        <div class="matrix-row">
+          <div class="matrix-cap">
+            <div class="matrix-cap-name">Select model</div>
+          </div>
+          <div class="matrix-cell"><span class="matrix-emoji">✅</span></div>
+          <div class="matrix-cell"><span class="matrix-emoji">✅</span></div>
+          <div class="matrix-cell is-code-col"><span class="matrix-emoji">✅</span></div>
+        </div>
+
+        <!-- Row: Web search -->
+        <div class="matrix-row">
+          <div class="matrix-cap">
+            <div class="matrix-cap-name">Web search</div>
+          </div>
+          <div class="matrix-cell"><span class="matrix-emoji">✅</span></div>
+          <div class="matrix-cell"><span class="matrix-emoji">✅</span></div>
+          <div class="matrix-cell is-code-col"><span class="matrix-emoji">✅</span></div>
+        </div>
+
+        <!-- Row: Connectors -->
+        <div class="matrix-row">
+          <div class="matrix-cap">
+            <div class="matrix-cap-name">Connectors</div>
+            <div class="matrix-cap-sub">Gmail, Calendar, Notion, Slack</div>
+          </div>
+          <div class="matrix-cell">
+            <span class="matrix-emoji">🟡</span>
+            <span class="matrix-note">basic lookup tools</span>
+          </div>
+          <div class="matrix-cell"><span class="matrix-emoji">✅</span></div>
+          <div class="matrix-cell is-code-col">
+            <span class="matrix-emoji">🟡</span>
+            <span class="matrix-note">requires MCP config</span>
           </div>
         </div>
-        <div class="comp-cell">
-          <div class="cell-col-label">Good at</div>
-          <div class="cell-value">Native Office docs with real formulas, M365 + SharePoint integration, browser automation, scheduled recurring tasks, 11 role plugins (Sales, Legal, Finance…)</div>
-        </div>
-        <div class="comp-cell">
-          <div class="cell-col-label">Can't do</div>
-          <div class="cell-value">Git, package managers, full filesystem access, MCP servers, custom skills or hooks</div>
-        </div>
-        <div class="comp-cell">
-          <div class="cell-col-label">Worth knowing</div>
-          <div class="cell-value">Computer must stay awake; tasks pause if machine sleeps. Eats message quota fast. Desktop app only. Still beta (Apr 2026).</div>
-        </div>
-      </div>
 
-      <!-- Row 3: Code -->
-      <div class="comp-row">
-        <div class="row-meta">
-          <div class="row-num">03</div>
-          <div class="row-product-name">Claude Code</div>
-          <div class="row-tags">
-            <span class="row-tag">CLI</span>
-            <span class="row-tag">Desktop</span>
-            <span class="row-tag">Web</span>
-            <span class="row-tag">VS Code</span>
+        <!-- Row: File access -->
+        <div class="matrix-row">
+          <div class="matrix-cap">
+            <div class="matrix-cap-name">File access</div>
+            <div class="matrix-cap-sub">read &amp; write local files</div>
+          </div>
+          <div class="matrix-cell"><span class="matrix-emoji">❌</span></div>
+          <div class="matrix-cell"><span class="matrix-emoji">✅</span></div>
+          <div class="matrix-cell is-code-col"><span class="matrix-emoji">✅</span></div>
+        </div>
+
+        <!-- Row: Code execution -->
+        <div class="matrix-row">
+          <div class="matrix-cap">
+            <div class="matrix-cap-name">Code execution</div>
+            <div class="matrix-cap-sub">run scripts, servers, tests</div>
+          </div>
+          <div class="matrix-cell"><span class="matrix-emoji">❌</span></div>
+          <div class="matrix-cell"><span class="matrix-emoji">❌</span></div>
+          <div class="matrix-cell is-code-col"><span class="matrix-emoji">✅</span></div>
+        </div>
+
+        <!-- Row: Office docs -->
+        <div class="matrix-row">
+          <div class="matrix-cap">
+            <div class="matrix-cap-name">Office docs</div>
+            <div class="matrix-cap-sub">Word, Excel, PowerPoint, PDF</div>
+          </div>
+          <div class="matrix-cell">
+            <span class="matrix-emoji">🟡</span>
+            <span class="matrix-note">paid plans only</span>
+          </div>
+          <div class="matrix-cell"><span class="matrix-emoji">✅</span></div>
+          <div class="matrix-cell is-code-col">
+            <span class="matrix-emoji">🟡</span>
+            <span class="matrix-note">writes code to generate them</span>
           </div>
         </div>
-        <div class="comp-cell">
-          <div class="cell-col-label">Good at</div>
-          <div class="cell-value">Full codebase + git, terminal, deploy, MCP servers, skills, sub-agents, Routines — cloud-scheduled agents triggered by time, API call, or GitHub event</div>
+
+        <!-- Row: Scheduling -->
+        <div class="matrix-row">
+          <div class="matrix-cap">
+            <div class="matrix-cap-name">Scheduling</div>
+            <div class="matrix-cap-sub">recurring automated tasks</div>
+          </div>
+          <div class="matrix-cell"><span class="matrix-emoji">❌</span></div>
+          <div class="matrix-cell">
+            <span class="matrix-emoji">🟡</span>
+            <span class="matrix-note">laptop must stay awake</span>
+          </div>
+          <div class="matrix-cell is-code-col">
+            <span class="matrix-emoji">✅</span>
+            <span class="matrix-note">cloud-based, laptop can sleep</span>
+          </div>
         </div>
-        <div class="comp-cell">
-          <div class="cell-col-label">Can't do</div>
-          <div class="cell-value">Native Office documents. Screen control limited in CLI. No visual diffs without Desktop app.</div>
+
+        <!-- Row: Interactive visuals -->
+        <div class="matrix-row">
+          <div class="matrix-cap">
+            <div class="matrix-cap-name">Interactive visuals</div>
+            <div class="matrix-cap-sub">dashboards, filters, checklists</div>
+          </div>
+          <div class="matrix-cell"><span class="matrix-emoji">✅</span></div>
+          <div class="matrix-cell"><span class="matrix-emoji">✅</span></div>
+          <div class="matrix-cell is-code-col">
+            <span class="matrix-emoji">🟡</span>
+            <span class="matrix-note">build a real app yourself</span>
+          </div>
         </div>
-        <div class="comp-cell">
-          <div class="cell-col-label">Worth knowing</div>
-          <div class="cell-value">Context fills fast — clear at 40–50%. Routines run in the cloud; laptop can sleep.</div>
+
+        <!-- Row: Skills -->
+        <div class="matrix-row">
+          <div class="matrix-cap">
+            <div class="matrix-cap-name">Skills</div>
+            <div class="matrix-cap-sub">reusable saved tasks</div>
+          </div>
+          <div class="matrix-cell"><span class="matrix-emoji">❌</span></div>
+          <div class="matrix-cell">
+            <span class="matrix-emoji">✅</span>
+            <span class="matrix-note">conversational builder, save to Drive / local / VS Code</span>
+          </div>
+          <div class="matrix-cell is-code-col">
+            <span class="matrix-emoji">✅</span>
+            <span class="matrix-note">conversational builder, lands in .claude/skills/ automatically</span>
+          </div>
         </div>
+
+        <!-- Row: Sub-agents -->
+        <div class="matrix-row">
+          <div class="matrix-cap">
+            <div class="matrix-cap-name">Sub-agents</div>
+            <div class="matrix-cap-sub">parallel / delegated work</div>
+          </div>
+          <div class="matrix-cell"><span class="matrix-emoji">❌</span></div>
+          <div class="matrix-cell"><span class="matrix-emoji">✅</span></div>
+          <div class="matrix-cell is-code-col"><span class="matrix-emoji">✅</span></div>
+        </div>
+
+        <!-- Row: Git / version control -->
+        <div class="matrix-row">
+          <div class="matrix-cap">
+            <div class="matrix-cap-name">Git / version control</div>
+            <div class="matrix-cap-sub">commit, push, PRs</div>
+          </div>
+          <div class="matrix-cell"><span class="matrix-emoji">❌</span></div>
+          <div class="matrix-cell">
+            <span class="matrix-emoji">❌</span>
+            <span class="matrix-note">read-only GitHub sync</span>
+          </div>
+          <div class="matrix-cell is-code-col"><span class="matrix-emoji">✅</span></div>
+        </div>
+
+        <!-- Row: Team sharing -->
+        <div class="matrix-row">
+          <div class="matrix-cap">
+            <div class="matrix-cap-name">Team sharing</div>
+            <div class="matrix-cap-sub">share setup with teammates</div>
+          </div>
+          <div class="matrix-cell"><span class="matrix-emoji">❌</span></div>
+          <div class="matrix-cell">
+            <span class="matrix-emoji">🟡</span>
+            <span class="matrix-note">ZIP or Drive share; no live sync</span>
+          </div>
+          <div class="matrix-cell is-code-col">
+            <span class="matrix-emoji">✅</span>
+            <span class="matrix-note">Git — everyone always has the latest</span>
+          </div>
+        </div>
+
+        <!-- Row: Mobile / remote -->
+        <div class="matrix-row">
+          <div class="matrix-cap">
+            <div class="matrix-cap-name">Mobile / remote</div>
+            <div class="matrix-cap-sub">use away from your desk</div>
+          </div>
+          <div class="matrix-cell">
+            <span class="matrix-emoji">✅</span>
+            <span class="matrix-note">mobile app</span>
+          </div>
+          <div class="matrix-cell">
+            <span class="matrix-emoji">✅</span>
+            <span class="matrix-note">Dispatch — send tasks from phone</span>
+          </div>
+          <div class="matrix-cell is-code-col">
+            <span class="matrix-emoji">🟡</span>
+            <span class="matrix-note">Remote Control — continue sessions; can't start new</span>
+          </div>
+        </div>
+
       </div>
 
-      <p class="footnote">All three products run the same underlying Claude model. What differs is the permission model, interface, and what actions Claude is allowed to take on your behalf.</p>
+      <!-- Legend -->
+      <div class="matrix-legend">
+        <span class="legend-label">Legend</span>
+        <div class="legend-sep"></div>
+        <div class="legend-item"><span class="legend-emoji">✅</span> Works great</div>
+        <div class="legend-item"><span class="legend-emoji">🟡</span> Works, with caveats</div>
+        <div class="legend-item"><span class="legend-emoji">❌</span> Not available</div>
+      </div>
+
+      <div class="dispatch-note">
+        <strong>Dispatch vs Remote Control:</strong> Cowork Dispatch sends new tasks from your phone to your running desktop — fire and forget. Claude Code Remote Control lets you continue and monitor an already-running CLI session from another device, but can't start new sessions.
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════
+       SLIDE 3 — When to reach for each
+  ══════════════════════════════════════════════ -->
+  <section class="slide">
+    <div class="content content--wide">
+
+      <h1 class="slide-title">Which one, when.</h1>
+      <p class="slide-subtitle">Three products, three distinct jobs. Picking the wrong one costs time.</p>
+
+      <div class="use-grid">
+
+        <!-- Claude Chat -->
+        <div class="use-card">
+          <div class="use-card-header">
+            <div class="use-card-eyebrow">01</div>
+            <div class="use-card-name">Claude Chat</div>
+          </div>
+          <div class="use-card-body">
+            <div class="use-section-label green">Reach for this when</div>
+            <ul class="use-list">
+              <li data-marker="→">You need a quick answer, draft, or research — right now, on your phone</li>
+              <li data-marker="→">You're brainstorming or iterating on writing and want back-and-forth</li>
+              <li data-marker="→">You want web search without any setup or configuration</li>
+            </ul>
+            <div class="use-divider"></div>
+            <div class="use-section-label red">Skip it when</div>
+            <ul class="use-list">
+              <li data-marker="→">You need to work with files on your computer</li>
+              <li data-marker="→">You want the same task to repeat automatically</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Claude Cowork -->
+        <div class="use-card">
+          <div class="use-card-header">
+            <div class="use-card-eyebrow">02</div>
+            <div class="use-card-name">Claude Cowork</div>
+          </div>
+          <div class="use-card-body">
+            <div class="use-section-label green">Reach for this when</div>
+            <ul class="use-list">
+              <li data-marker="→">You need a real Office document — Word report, Excel tracker, PowerPoint deck</li>
+              <li data-marker="→">You want a recurring workflow (daily briefing, weekly summary) with no coding</li>
+              <li data-marker="→">You're handing a system to a non-technical teammate — ZIP the folder, they open it and go</li>
+            </ul>
+            <div class="use-divider"></div>
+            <div class="use-section-label red">Skip it when</div>
+            <ul class="use-list">
+              <li data-marker="→">You need to run, test, or ship code</li>
+              <li data-marker="→">You need scheduled tasks that run when your laptop is closed</li>
+              <li data-marker="→">You need version control — outputs save locally only, no git, no backup</li>
+              <li data-marker="→">Your team needs to stay in sync — sharing is manual ZIP or Drive, not a live repo</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Claude Code -->
+        <div class="use-card is-code">
+          <div class="use-card-header">
+            <div class="use-card-eyebrow">03</div>
+            <div class="use-card-name">Claude Code</div>
+          </div>
+          <div class="use-card-body">
+            <div class="use-section-label green">Reach for this when</div>
+            <ul class="use-list">
+              <li data-marker="→">You're writing, debugging, or shipping software — this is what it was built for</li>
+              <li data-marker="→">You need full git — commits, PRs, push to GitHub, everyone on the team always has the latest</li>
+              <li data-marker="→">You need automation that runs in the cloud on a schedule, even when your laptop is off</li>
+            </ul>
+            <div class="use-divider"></div>
+            <div class="use-section-label red">Skip it when</div>
+            <ul class="use-list">
+              <li data-marker="→">You need native Office document output</li>
+              <li data-marker="→">You're building something for a teammate who doesn't use a terminal — use Cowork instead</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
 
     </div>
   </section>
