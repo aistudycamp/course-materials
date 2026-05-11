@@ -1,0 +1,3679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent Sprint · Visualization</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F5F0EB;
+    --canvas: #EBE5DE;
+    --panel: #FFFFFF;
+    --panel-soft: #FAF7F4;
+    --code-bg: #1C1917;
+    --code-text: #F5F3EF;
+    --ink: #1C1917;
+    --ink-2: #78716C;
+    --ink-3: #A8A29E;
+    --ink-4: #D6D3D1;
+    --line: rgba(28, 25, 23, 0.1);
+    --line-strong: rgba(28, 25, 23, 0.18);
+
+    --orch: #0D9488;
+    --orch-soft: rgba(13, 148, 136, 0.1);
+    --orch-glow: rgba(13, 148, 136, 0.3);
+
+    --sub: #0F766E;
+    --sub-soft: rgba(15, 118, 110, 0.1);
+    --sub-glow: rgba(15, 118, 110, 0.3);
+
+    --extr: #78716C;
+    --extr-soft: rgba(120, 113, 108, 0.1);
+    --extr-glow: rgba(120, 113, 108, 0.3);
+
+    --input: #1C1917;
+    --input-soft: #EBE5DE;
+    --output: #0D9488;
+    --output-soft: rgba(13, 148, 136, 0.1);
+
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans: 'Geist', system-ui, sans-serif;
+    --mono: 'Geist Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    height: 100vh;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .app { display: grid; grid-template-rows: 64px 1fr; height: 100vh; }
+
+  /* TOP BAR */
+  .topbar {
+    background: var(--panel);
+    border-bottom: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    padding: 0 24px;
+    gap: 32px;
+    z-index: 10;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-mark {
+    width: 30px; height: 30px;
+    background: var(--ink); border-radius: 6px;
+    display: grid; place-items: center;
+    color: var(--bg);
+    font-family: var(--mono); font-style: normal;
+    font-size: 9px; font-weight: 600; letter-spacing: 0.02em;
+  }
+  .brand-text { font-family: var(--mono); font-size: 13px; font-weight: 600; line-height: 1; letter-spacing: 0.02em; }
+  .brand-text em { font-style: normal; color: var(--orch); }
+  .brand-sub { font-family: var(--mono); font-size: 10.5px; color: var(--ink-3); letter-spacing: 0.06em; margin-top: 2px; text-transform: uppercase; }
+  .top-tabs { display: flex; gap: 4px; margin-left: 20px; }
+  .top-tab {
+    font-family: var(--mono); font-size: 11.5px;
+    color: var(--ink-3); padding: 7px 14px;
+    border-radius: 6px; cursor: pointer;
+    transition: all 0.15s;
+    user-select: none;
+  }
+  .top-tab:hover { color: var(--ink); background: #F0EDE6; }
+  .top-tab.active { color: var(--ink); background: #F0EDE6; font-weight: 500; }
+  .top-tab .num { font-size: 9px; color: var(--ink-4); margin-right: 6px; }
+  .top-tab.active .num { color: var(--orch); }
+  .top-actions { display: flex; gap: 8px; align-items: center; }
+  .icon-btn {
+    width: 34px; height: 34px;
+    border: 1px solid var(--line); background: var(--panel);
+    border-radius: 8px; color: var(--ink-2);
+    font-family: var(--mono); font-size: 13px;
+    cursor: pointer; display: grid; place-items: center;
+  }
+  .icon-btn:hover { background: #F0EDE6; color: var(--ink); }
+  .run-btn {
+    background: var(--ink); color: var(--bg);
+    border: none; padding: 0 22px; height: 38px;
+    border-radius: 8px;
+    font-family: var(--sans); font-weight: 500; font-size: 13.5px;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 10px;
+    transition: all 0.2s;
+  }
+  .run-btn::before {
+    content: ""; width: 0; height: 0;
+    border-left: 7px solid var(--bg);
+    border-top: 4.5px solid transparent;
+    border-bottom: 4.5px solid transparent;
+  }
+  .run-btn:hover { background: var(--orch); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(212, 71, 26, 0.35); }
+  .run-btn:disabled { background: var(--ink-3); cursor: wait; transform: none; box-shadow: none; }
+  .run-btn .kbd {
+    font-family: var(--mono); font-size: 10.5px;
+    background: rgba(255,255,255,0.15);
+    padding: 2px 6px; border-radius: 4px; margin-left: 4px;
+  }
+
+  .main { display: grid; grid-template-columns: 1fr 420px; overflow: hidden; }
+
+  /* CANVAS */
+  .canvas-wrap {
+    position: relative;
+    background:
+      radial-gradient(circle, var(--ink-4) 1px, transparent 1px) 0 0 / 24px 24px,
+      var(--canvas);
+    overflow: hidden;
+  }
+  .canvas-wrap::before {
+    content: ""; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 600px 400px at 50% 30%, rgba(212, 71, 26, 0.05), transparent 60%),
+      radial-gradient(ellipse 500px 350px at 50% 80%, rgba(45, 122, 110, 0.04), transparent 60%);
+    pointer-events: none;
+  }
+
+  .stage-banner {
+    position: absolute;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    background: var(--canvas);
+    padding: 4px 14px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-3);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .stage-banner em {
+    font-family: var(--serif);
+    font-style: italic;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--ink-2);
+    font-size: 13px;
+  }
+
+  .sub-label {
+    position: absolute;
+    top: 64%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-3);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    z-index: 1;
+    background: var(--canvas);
+    padding: 4px 14px;
+  }
+  .sub-label em { font-style: italic; text-transform: none; letter-spacing: 0; color: var(--ink-2); font-family: var(--serif); font-size: 13px; }
+
+  .canvas-meta {
+    position: absolute; top: 16px; right: 16px;
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: 8px; padding: 12px 16px;
+    font-family: var(--mono); font-size: 11px; color: var(--ink-2);
+    min-width: 220px; z-index: 5;
+  }
+  .meta-row { display: flex; justify-content: space-between; padding: 3px 0; }
+  .meta-row .l { color: var(--ink-3); }
+  .meta-row .v { color: var(--ink); font-weight: 500; }
+  .meta-row .v.live { color: var(--orch); }
+
+  .canvas-controls {
+    position: absolute; top: 16px; left: 16px;
+    display: flex; gap: 6px; z-index: 5;
+  }
+  .canvas-controls .ctrl {
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: 6px; padding: 6px 10px;
+    font-family: var(--mono); font-size: 11px; color: var(--ink-2);
+    cursor: pointer;
+  }
+
+  .canvas-svg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
+
+  .conn-path {
+    fill: none;
+    stroke: var(--ink-4);
+    stroke-width: 2;
+    transition: stroke 0.3s, stroke-width 0.3s;
+  }
+  .conn-path.main { stroke-width: 2.5; }
+  .conn-path.dashed { stroke-dasharray: 4 4; }
+  .conn-path.active { stroke: var(--orch); stroke-width: 3; stroke-dasharray: 0; }
+  .conn-path.complete { stroke: var(--ink-3); stroke-width: 2; stroke-dasharray: 0; }
+
+  /* NODES — base */
+  .node {
+    position: absolute;
+    background: var(--panel);
+    border: 1.5px solid var(--line-strong);
+    border-radius: 14px;
+    z-index: 3;
+    transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s, opacity 0.3s;
+    cursor: pointer;
+    overflow: hidden;
+  }
+  .node:hover {
+    border-color: var(--ink-3);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+  }
+  .node.selected {
+    border-color: var(--ink) !important;
+    box-shadow: 0 0 0 4px rgba(26, 24, 23, 0.08), 0 12px 32px rgba(0,0,0,0.1);
+  }
+
+  .node.active.orch { border-color: var(--orch); box-shadow: 0 0 0 4px var(--orch-glow), 0 12px 32px rgba(0,0,0,0.08); }
+  .node.active.sub { border-color: var(--sub); box-shadow: 0 0 0 4px var(--sub-glow), 0 12px 32px rgba(0,0,0,0.08); }
+  .node.active.extr { border-color: var(--extr); box-shadow: 0 0 0 4px var(--extr-glow), 0 12px 32px rgba(0,0,0,0.08); }
+  .node.active.input { border-color: var(--input); box-shadow: 0 0 0 4px rgba(74, 85, 104, 0.3), 0 12px 32px rgba(0,0,0,0.08); }
+  .node.active.output { border-color: var(--output); box-shadow: 0 0 0 4px rgba(92, 122, 46, 0.3), 0 12px 32px rgba(0,0,0,0.08); }
+
+  /* Stage visibility — body[data-stage="N"] shows .stage-N nodes only */
+  .node[data-stages]              { display: none; }
+  body[data-stage="1"] .node[data-stages~="1"] { display: block; }
+  body[data-stage="2"] .node[data-stages~="2"] { display: block; }
+  body[data-stage="3"] .node[data-stages~="3"] { display: block; }
+
+  /* Router node — reused Stage 2 style */
+  .node-sub-agent.router .sa-header { align-items: flex-start; }
+  .node-sub-agent.router .sa-icon { background: rgba(13, 148, 136, 0.08); color: var(--orch); }
+  .node-sub-agent.router .sa-name em { color: var(--orch); }
+  .node-sub-agent.active.router .sa-tag { color: var(--orch); }
+  .node-sub-agent.active.router .sa-dot { background: var(--orch); box-shadow: 0 0 0 4px var(--orch-glow); animation: dotPulse 1.4s ease-in-out infinite; }
+  .router-badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 2px 7px;
+    border-radius: 4px;
+    background: var(--orch-soft);
+    color: var(--orch);
+    font-weight: 600;
+    margin-top: 2px;
+  }
+
+  /* Same for stage labels */
+  .stage-banner[data-stages]      { display: none; }
+  body[data-stage="1"] .stage-banner[data-stages~="1"] { display: block; }
+  body[data-stage="2"] .stage-banner[data-stages~="2"] { display: block; }
+  body[data-stage="3"] .stage-banner[data-stages~="3"] { display: block; }
+
+  .sub-label[data-stages]         { display: none; }
+  body[data-stage="3"] .sub-label[data-stages~="3"] { display: block; }
+
+  /* IO NODES */
+  .node-io { width: 180px; }
+  .node-io .io-header {
+    padding: 14px 16px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .node-io .io-icon {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .node-io.input .io-icon { background: var(--input-soft); color: var(--input); }
+  .node-io.output .io-icon { background: var(--output-soft); color: var(--output); }
+  .node-io .io-text { flex: 1; min-width: 0; }
+  .node-io .io-tag {
+    font-family: var(--mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--ink-3);
+    margin-bottom: 3px;
+  }
+  .node-io.active.input .io-tag { color: var(--input); }
+  .node-io.active.output .io-tag { color: var(--output); }
+  .node-io .io-name {
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .node-io .io-name em { font-style: italic; }
+  .node-io .io-status-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--ink-4);
+    flex-shrink: 0;
+    transition: all 0.3s;
+  }
+  .node-io.active.input .io-status-dot { background: var(--input); animation: dotPulse 1.4s ease-in-out infinite; }
+  .node-io.active.output .io-status-dot { background: var(--output); animation: dotPulse 1.4s ease-in-out infinite; }
+  .node-io.complete .io-status-dot { background: var(--sub); }
+
+  .node-io .io-foot {
+    border-top: 1px dashed var(--line);
+    padding: 9px 16px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-2);
+  }
+
+  /* AGENT NODE (chat assistant for Stage 1/2, orchestrator for Stage 3) */
+  .node-agent { width: 280px; background: var(--panel); }
+  .node-agent .ag-header {
+    padding: 16px 18px 14px;
+    border-bottom: 1px solid var(--line);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .ag-icon {
+    width: 44px; height: 44px;
+    border-radius: 11px;
+    background: var(--orch-soft);
+    color: var(--orch);
+    display: grid; place-items: center;
+    font-family: var(--serif); font-style: italic;
+    font-size: 24px; padding-bottom: 3px;
+    flex-shrink: 0;
+  }
+  .ag-info { flex: 1; min-width: 0; }
+  .ag-tag {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--ink-3);
+    margin-bottom: 3px;
+  }
+  .node-agent.active .ag-tag { color: var(--orch); }
+  .ag-name {
+    font-family: var(--serif);
+    font-size: 24px;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+  }
+  .ag-name em { font-style: italic; color: var(--orch); }
+  .ag-dot {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--ink-4);
+    flex-shrink: 0;
+    transition: all 0.3s;
+  }
+  .node-agent.active .ag-dot { background: var(--orch); box-shadow: 0 0 0 4px var(--orch-glow); animation: dotPulse 1.4s ease-in-out infinite; }
+  .node-agent.complete .ag-dot { background: var(--sub); }
+
+  .ag-body {
+    padding: 12px 18px;
+    background: var(--panel-soft);
+  }
+  .ag-desc {
+    font-family: var(--sans);
+    font-size: 13px;
+    color: var(--ink);
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+  .ag-desc ul { list-style: none; padding: 0; margin: 0; }
+  .ag-desc ul li { padding: 2px 0 2px 14px; position: relative; }
+  .ag-desc ul li::before { content: ""; position: absolute; left: 0; top: 10px; width: 6px; height: 1px; background: var(--orch); }
+  .ag-desc em { font-style: italic; color: var(--ink-2); }
+  .ag-meta-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 14px;
+    font-family: var(--mono);
+    font-size: 10.5px;
+  }
+  .ag-meta-grid .k { color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; font-size: 9px; }
+  .ag-meta-grid .v { color: var(--ink); font-weight: 500; }
+
+  .ag-foot {
+    padding: 8px 18px;
+    border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--mono); font-size: 10px; color: var(--ink-3);
+  }
+
+  .ag-attach {
+    position: absolute;
+    left: 50%; bottom: -16px;
+    transform: translateX(-50%);
+    width: 1.5px;
+    height: 16px;
+    background: var(--ink-4);
+    z-index: 0;
+  }
+  body[data-stage="3"] .ag-attach { display: block; }
+  body:not([data-stage="3"]) .ag-attach { display: none; }
+
+  /* SUB-AGENTS (Stage 3 only) */
+  .node-sub-agent { width: 220px; }
+  .node-sub-agent .sa-header {
+    padding: 12px 14px 10px;
+    border-bottom: 1px solid var(--line);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .sa-icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: grid; place-items: center;
+    font-family: var(--serif); font-style: italic;
+    font-size: 16px; padding-bottom: 2px;
+    flex-shrink: 0;
+  }
+  .node-sub-agent.sub .sa-icon { background: var(--sub-soft); color: var(--sub); }
+  .node-sub-agent.extr .sa-icon { background: var(--extr-soft); color: var(--extr); }
+  .node-sub-agent.reflect .sa-icon { background: rgba(13, 148, 136, 0.08); color: var(--orch); font-weight: 600; }
+  .node-sub-agent.reflect .sa-name em { color: var(--orch); }
+  .sa-info { flex: 1; min-width: 0; }
+  .sa-tag {
+    font-family: var(--mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--ink-3);
+    margin-bottom: 2px;
+  }
+  .node-sub-agent.active.sub .sa-tag { color: var(--sub); }
+  .node-sub-agent.active.extr .sa-tag { color: var(--extr); }
+  .sa-name {
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+  }
+  .sa-name em { font-style: italic; }
+  .node-sub-agent.sub .sa-name em { color: var(--sub); }
+  .node-sub-agent.extr .sa-name em { color: var(--extr); }
+  .sa-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--ink-4);
+    flex-shrink: 0;
+    transition: all 0.3s;
+  }
+  .node-sub-agent.active.sub .sa-dot { background: var(--sub); box-shadow: 0 0 0 4px var(--sub-glow); animation: dotPulse 1.4s ease-in-out infinite; }
+  .node-sub-agent.active.extr .sa-dot { background: var(--extr); box-shadow: 0 0 0 4px var(--extr-glow); animation: dotPulse 1.4s ease-in-out infinite; }
+  .node-sub-agent.complete .sa-dot { background: var(--sub); }
+
+  .sa-body {
+    padding: 10px 14px;
+    font-family: var(--sans);
+    font-size: 12.5px;
+    color: var(--ink);
+    line-height: 1.6;
+  }
+  .sa-body em { font-style: italic; color: var(--ink-2); }
+
+  .sa-foot {
+    padding: 7px 14px;
+    border-top: 1px dashed var(--line);
+    background: var(--panel-soft);
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--mono); font-size: 10px; color: var(--ink-3);
+  }
+
+  @keyframes dotPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.4); }
+  }
+
+  /* POSITIONS — Stage 1 (3 horizontal nodes) */
+  body[data-stage="1"] #s1-input  { left: 80px;       top: 50%; transform: translateY(-50%); }
+  body[data-stage="1"] #s1-agent  { left: 50%;        top: 50%; transform: translate(-50%, -50%); }
+  body[data-stage="1"] #s1-output { right: 80px;      top: 50%; transform: translateY(-50%); }
+
+  /* POSITIONS — Stage 2 (branching pipeline) */
+  body[data-stage="2"] #s2-input    { left: 30px;     top: 50%; transform: translateY(-50%); }
+  body[data-stage="2"] #s2-agent    { left: 22%;      top: 50%; transform: translateY(-50%); }
+  body[data-stage="2"] #s2-standup  { left: 50%;      top: 15%; }
+  body[data-stage="2"] #s2-client   { left: 50%;      top: 50%; transform: translateY(-50%); }
+  body[data-stage="2"] #s2-planning { left: 50%;      top: 77%; }
+  body[data-stage="2"] #s2-notify   { right: 30px;    top: 50%; transform: translateY(-50%); }
+
+  /* POSITIONS — Stage 3 (7 nodes — orchestrator + 4 specialists + io) */
+  /* Conductor + I/O sit higher; specialists sit lower so they don't overlap on tall screens. */
+  body[data-stage="3"] #s3-input   { left: 32px;       top: 30%; }
+  body[data-stage="3"] #s3-agent   { left: 50%;        top: 8%;  transform: translateX(-50%); }
+  body[data-stage="3"] #s3-output  { right: 32px;      top: 30%; }
+  body[data-stage="3"] #s3-summ    { left: 2%;         top: 70%; }
+  body[data-stage="3"] #s3-extr    { left: 21%;        top: 70%; }
+  body[data-stage="3"] #s3-route   { left: 40%;        top: 70%; }
+  body[data-stage="3"] #s3-router  { left: 59%;        top: 70%; }
+  body[data-stage="3"] #s3-reflect { right: 2%;        top: 70%; }
+
+  /* PARTICLES */
+  .particle {
+    position: absolute;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    z-index: 4;
+    pointer-events: none;
+    opacity: 0;
+    will-change: transform, left, top;
+  }
+  .particle.flying { opacity: 1; }
+  .particle.c-orch { background: var(--orch); box-shadow: 0 0 12px var(--orch); }
+  .particle.c-sub { background: var(--sub); box-shadow: 0 0 12px var(--sub); }
+  .particle.c-extr { background: var(--extr); box-shadow: 0 0 12px var(--extr); }
+  .particle.c-input { background: var(--input); box-shadow: 0 0 12px var(--input); }
+  .particle.c-output { background: var(--output); box-shadow: 0 0 12px var(--output); }
+
+  /* RIGHT PANEL */
+  .right {
+    background: var(--panel);
+    border-left: 1px solid var(--line);
+    overflow: hidden;
+    display: grid;
+    grid-template-rows: auto 1fr;
+  }
+
+  .right-header {
+    padding: 18px 22px 14px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .rh-block { flex: 1; min-width: 0; }
+  .rh-eyebrow {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--ink-3);
+    margin-bottom: 6px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .rh-eyebrow.live::before {
+    content: ""; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--orch);
+    animation: livePulse 1.6s ease-in-out infinite;
+  }
+  @keyframes livePulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  .rh-title {
+    font-family: var(--serif);
+    font-size: 26px;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+  .rh-title em { font-style: italic; color: var(--orch); }
+  .rh-back {
+    font-family: var(--mono); font-size: 11px;
+    color: var(--ink-3); cursor: pointer;
+    border: 1px solid var(--line);
+    padding: 6px 10px; border-radius: 6px;
+    background: var(--panel);
+    flex-shrink: 0; display: none;
+  }
+  .rh-back.visible { display: inline-flex; align-items: center; gap: 6px; }
+  .rh-back:hover { background: #F0EDE6; color: var(--ink); }
+
+  .right-body { overflow-y: auto; }
+  .right-body::-webkit-scrollbar { width: 8px; }
+  .right-body::-webkit-scrollbar-thumb { background: var(--ink-4); border-radius: 4px; }
+
+  /* LIVE FEED */
+  .live-section { padding: 14px 22px; }
+  .feed-empty {
+    font-family: var(--serif); font-style: italic;
+    color: var(--ink-3); text-align: center;
+    padding: 36px 8px; font-size: 16px; line-height: 1.5;
+  }
+  .feed-hint {
+    font-family: var(--sans); font-size: 13px;
+    color: var(--ink-3);
+    text-align: center; margin-top: 16px;
+    padding: 14px;
+    border: 1px dashed var(--line-strong);
+    border-radius: 8px;
+    line-height: 1.5;
+  }
+  .feed-hint b { color: var(--ink); font-weight: 500; }
+
+  .feed-item {
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--line);
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.4s, transform 0.4s;
+  }
+  .feed-item.visible { opacity: 1; transform: translateY(0); }
+  .feed-item:last-child { border-bottom: none; }
+  .feed-meta {
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 6px;
+  }
+  .feed-source {
+    font-family: var(--mono); font-size: 9.5px;
+    text-transform: uppercase; letter-spacing: 0.12em;
+    font-weight: 600;
+    padding: 2px 8px; border-radius: 4px;
+  }
+  .feed-source.orch { color: var(--orch); background: var(--orch-soft); }
+  .feed-source.sub { color: var(--sub); background: var(--sub-soft); }
+  .feed-source.extr { color: var(--extr); background: var(--extr-soft); }
+  .feed-source.input { color: var(--input); background: var(--input-soft); }
+  .feed-source.output { color: var(--output); background: var(--output-soft); }
+  .feed-time {
+    font-family: var(--mono); font-size: 10px; color: var(--ink-3);
+    margin-left: auto;
+  }
+  .feed-msg {
+    font-family: var(--sans);
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+  .feed-msg .arrow { color: var(--orch); }
+  .feed-msg em { font-style: italic; color: var(--ink-2); }
+  .feed-msg code {
+    font-family: var(--mono); font-size: 11.5px;
+    background: #F0EDE6;
+    padding: 1px 6px; border-radius: 3px;
+    color: var(--ink);
+  }
+
+  .output-section {
+    padding: 14px 22px 22px;
+    border-top: 1px solid var(--line);
+    background: linear-gradient(to bottom, var(--panel), var(--panel-soft));
+  }
+  .output-empty {
+    font-family: var(--serif); font-style: italic;
+    font-size: 14px; color: var(--ink-3);
+    text-align: center; padding: 18px 12px;
+  }
+  .output-content { display: none; }
+  .output-content.visible { display: block; animation: outIn 0.5s ease; }
+  @keyframes outIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .out-block { margin-top: 14px; }
+  .out-block:first-child { margin-top: 6px; }
+  .out-label {
+    font-family: var(--mono); font-size: 9.5px;
+    text-transform: uppercase; letter-spacing: 0.18em;
+    color: var(--orch); font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .out-list { list-style: none; font-size: 12.5px; line-height: 1.5; }
+  .out-list li { padding: 3px 0 3px 14px; position: relative; color: var(--ink); }
+  .out-list li::before {
+    content: ""; position: absolute; left: 0; top: 11px;
+    width: 6px; height: 1px; background: var(--orch);
+  }
+  .out-list li b { font-weight: 600; }
+  .next-step {
+    font-family: var(--serif); font-style: italic;
+    font-size: 16px; line-height: 1.45;
+    color: var(--ink);
+    padding: 12px 14px;
+    background: var(--orch-soft);
+    border-left: 3px solid var(--orch);
+    border-radius: 0 6px 6px 0;
+    margin-top: 4px;
+  }
+
+  /* INTERACTIVE LIVE PANELS */
+  .server-banner {
+    margin: 14px 22px 0;
+    padding: 12px 14px;
+    background: #FEF3C7;
+    border: 1px solid #F59E0B;
+    border-radius: 8px;
+    font-size: 12.5px;
+    color: #92400E;
+    line-height: 1.5;
+  }
+  .server-banner code {
+    font-family: var(--mono);
+    font-size: 11px;
+    background: rgba(0,0,0,0.08);
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+
+  .live-panel {
+    padding: 14px 22px 18px;
+    border-bottom: 1px solid var(--line);
+  }
+  .panel-eyebrow {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--orch);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .panel-textarea {
+    width: 100%;
+    min-height: 80px;
+    max-height: 130px;
+    padding: 9px 11px;
+    border: 1px solid var(--line-strong);
+    border-radius: 8px;
+    background: var(--panel-soft);
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink);
+    resize: vertical;
+    outline: none;
+    margin-bottom: 6px;
+    display: block;
+  }
+  .panel-textarea:focus {
+    border-color: var(--orch);
+    box-shadow: 0 0 0 3px var(--orch-glow);
+  }
+  .panel-textarea.drag-over {
+    border-color: var(--orch);
+    background: color-mix(in srgb, var(--orch-glow) 30%, transparent);
+  }
+  .panel-input {
+    width: 100%;
+    padding: 8px 11px;
+    border: 1px solid var(--line-strong);
+    border-radius: 8px;
+    background: var(--panel-soft);
+    font-family: var(--sans);
+    font-size: 13px;
+    color: var(--ink);
+    outline: none;
+    margin-bottom: 6px;
+    display: block;
+  }
+  .panel-input:focus {
+    border-color: var(--orch);
+    box-shadow: 0 0 0 3px var(--orch-glow);
+  }
+  .panel-row {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+  .panel-hint {
+    font-size: 12px;
+    color: var(--sub);
+    background: var(--panel-soft);
+    border-left: 3px solid var(--line-strong);
+    padding: 8px 10px;
+    margin: 6px 0 8px 0;
+    border-radius: 4px;
+    line-height: 1.5;
+  }
+  .panel-hint b { color: var(--ink-2); }
+  .panel-hint em { color: var(--ink-2); font-style: italic; }
+  .panel-sample-btn {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--ink-2);
+    background: var(--panel-soft);
+    border: 1px solid var(--line-strong);
+    border-radius: 6px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .panel-sample-btn:hover { color: var(--ink); background: #F0EDE6; }
+  .panel-sample-btn.selected {
+    color: var(--ink); background: var(--ink); color: #F7F4ED;
+    border-color: var(--ink);
+  }
+  .panel-sample-btn.selected:hover { background: var(--ink); color: #F7F4ED; }
+  .panel-btn {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--panel);
+    background: var(--orch);
+    border: none;
+    border-radius: 8px;
+    padding: 9px 16px;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.15s;
+    margin-bottom: 10px;
+    display: block;
+  }
+  .panel-btn:hover:not(:disabled) { background: var(--sub); }
+  .panel-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .panel-chat { display: flex; flex-direction: column; gap: 8px; }
+  .chat-bubble {
+    padding: 9px 12px;
+    border-radius: 8px;
+    font-size: 12.5px;
+    line-height: 1.5;
+    animation: outIn 0.3s ease;
+  }
+  .chat-bubble.user {
+    background: var(--ink);
+    color: var(--bg);
+    font-family: var(--mono);
+    font-size: 11px;
+    align-self: flex-end;
+    max-width: 90%;
+  }
+  .chat-bubble.assistant {
+    background: var(--orch-soft);
+    color: var(--ink);
+    font-family: var(--sans);
+    white-space: pre-wrap;
+  }
+
+  .chat-thinking {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 12px;
+    border-radius: 8px;
+    background: var(--orch-soft);
+    font-family: var(--sans);
+    font-size: 12.5px;
+    color: var(--ink-3);
+    font-style: italic;
+    animation: outIn 0.3s ease;
+  }
+  .thinking-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--orch);
+    animation: dotPulse 1.1s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+
+  .chat-log-strip {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-2);
+    padding: 4px 4px 0 2px;
+    line-height: 1.3;
+  }
+
+  /* Chat JSON view — lives in the right panel on stage 0 */
+  .chat-json-view {
+    display: none;
+    padding: 16px 20px 20px 20px;
+  }
+  .chat-json-section { margin-bottom: 18px; }
+  .chat-json-section .chat-json-eyebrow {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-2);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .chat-json-block {
+    background: #FBF9F4;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-family: var(--mono);
+    font-size: 11px;
+    line-height: 1.5;
+    color: var(--ink);
+    white-space: pre-wrap;
+    word-break: break-word;
+    max-height: 360px;
+    overflow-y: auto;
+    margin: 0;
+  }
+
+  .panel-result { font-size: 13px; line-height: 1.5; animation: outIn 0.35s ease; }
+  .json-toggle-row { margin-top: 10px; }
+  .json-toggle-btn {
+    font-family: var(--mono); font-size: 11px;
+    background: none; border: 1px solid var(--border); border-radius: 4px;
+    padding: 3px 8px; cursor: pointer; color: var(--muted);
+  }
+  .json-toggle-btn:hover { color: var(--ink); border-color: var(--ink); }
+  .json-block {
+    margin-top: 8px; padding: 10px 12px;
+    background: #1a1a1a; color: #a8d1a8;
+    font-family: var(--mono); font-size: 11px; line-height: 1.5;
+    border-radius: 6px; overflow-x: auto; white-space: pre-wrap;
+  }
+  .chat-context-status {
+    font-family: var(--mono); font-size: 11px;
+    color: var(--orch); margin-bottom: 8px; min-height: 16px;
+  }
+  .chat-history {
+    display: flex; flex-direction: column; gap: 8px;
+    min-height: 100px; max-height: 280px; overflow-y: auto;
+    margin-bottom: 10px; padding: 2px 0;
+  }
+  .chat-input-row {
+    display: flex; gap: 8px; align-items: center; margin-bottom: 0;
+  }
+  .chat-input-row .panel-input { margin-bottom: 0; flex: 1; }
+  .chat-send-btn {
+    font-family: var(--mono); font-size: 12px; font-weight: 600;
+    color: var(--panel); background: var(--orch);
+    border: none; border-radius: 8px; padding: 9px 16px;
+    cursor: pointer; white-space: nowrap; transition: all 0.15s;
+    flex-shrink: 0;
+  }
+  .chat-send-btn:hover:not(:disabled) { background: var(--sub); }
+  .chat-send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .class-badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 5px;
+    color: var(--orch);
+    background: var(--orch-soft);
+    margin-bottom: 5px;
+  }
+  .result-meta { font-family: var(--mono); font-size: 11px; color: var(--ink-3); }
+  .result-report {
+    font-family: var(--sans);
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: var(--ink);
+    white-space: pre-wrap;
+    padding: 12px;
+    background: var(--panel-soft);
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    margin-top: 10px;
+  }
+
+  .run-report {
+    margin-top: 14px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    overflow: hidden;
+  }
+  .run-report-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-variant: small-caps;
+    letter-spacing: 0.12em;
+    color: var(--ink-3);
+    background: #F0EDE9;
+    padding: 6px 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  .run-report-content {
+    font-family: var(--sans);
+    font-size: 12px;
+    line-height: 1.65;
+    color: var(--ink);
+    white-space: pre-wrap;
+    padding: 12px;
+    background: #FAF8F5;
+  }
+
+  .orch-steps { display: flex; flex-direction: column; gap: 5px; margin-bottom: 4px; }
+  .orch-steps-note {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-2);
+    line-height: 1.4;
+    padding: 0 2px 10px 2px;
+  }
+  .orch-step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-3);
+    padding: 7px 10px;
+    border-radius: 6px;
+    border: 1px solid var(--line);
+    transition: all 0.3s;
+  }
+  .orch-step.running { color: var(--orch); border-color: var(--orch-soft); background: var(--orch-soft); }
+  .orch-step.done { color: var(--ink); border-color: var(--line); background: var(--panel-soft); }
+  .step-check { font-size: 13px; flex-shrink: 0; width: 16px; text-align: center; }
+
+  .panel-instruction {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px 10px;
+    font-family: var(--mono);
+    font-size: 12px;
+    border: 1px solid #D4CFC7;
+    border-radius: 6px;
+    background: #FDFCFA;
+    color: var(--ink);
+    resize: vertical;
+    min-height: 48px;
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+  .panel-instruction:focus { outline: none; border-color: #8B8074; }
+
+  .conductor-plan {
+    padding: 6px 10px;
+    background: #F5F2EE;
+    border-radius: 6px;
+    font-size: 12px;
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+  .conductor-label { color: #8B8074; margin-right: 6px; }
+  .conductor-tools { font-family: var(--mono); font-weight: 600; color: var(--ink); }
+  .conductor-reason { color: #8B8074; margin-left: 8px; font-style: italic; }
+
+  /* CHAT-IN-CANVAS (stage 0 / chat tab) */
+  .chat-canvas {
+    display: none;
+    position: absolute;
+    inset: 56px 24px 24px 24px;
+    flex-direction: column;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+    z-index: 5;
+  }
+  body[data-stage="0"] .chat-canvas { display: flex; }
+  body[data-stage="0"] .canvas-svg,
+  body[data-stage="0"] .canvas-meta,
+  body[data-stage="0"] .canvas-controls,
+  body[data-stage="0"] .stage-banner { display: none; }
+  /* On stage 0, the right panel hosts the chat JSON view (request + response). */
+  body[data-stage="0"] #defaultView,
+  body[data-stage="0"] #inspectView,
+  body[data-stage="0"] .rh-block,
+  body[data-stage="0"] .rh-back { display: none !important; }
+  body[data-stage="0"] #chatJsonView { display: block; }
+  body[data-stage="0"] .right-header { border-bottom: none; padding-bottom: 0; }
+
+  .chat-canvas-header {
+    padding: 16px 20px 8px 20px;
+    border-bottom: 1px solid var(--line);
+    background: #FBF9F4;
+  }
+  .chat-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: #8B8074;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .chat-system-prompt {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: #fff;
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--ink);
+    resize: vertical;
+    margin-bottom: 10px;
+  }
+  .chat-system-prompt:focus { outline: none; border-color: #8B8074; }
+  .chat-sample-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .chat-history-label {
+    padding: 12px 20px 4px 20px;
+  }
+  .chat-canvas-history {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px 20px 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .chat-canvas-empty {
+    color: #B5AFA1;
+    font-style: italic;
+    font-size: 13px;
+    padding: 20px 0;
+  }
+  .chat-canvas-input-row {
+    display: flex;
+    gap: 8px;
+    padding: 12px 20px 14px 20px;
+    border-top: 1px solid var(--line);
+    background: #FBF9F4;
+  }
+  .chat-canvas-input {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: #fff;
+    font-size: 14px;
+    font-family: var(--sans, inherit);
+  }
+  .chat-canvas-input:focus { outline: none; border-color: #8B8074; }
+  .chat-canvas-send {
+    padding: 0 18px;
+    border: 1px solid var(--ink);
+    background: var(--ink);
+    color: #fff;
+    font-family: var(--mono);
+    font-size: 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+  }
+  .chat-canvas-send:hover { background: #2a2a2a; }
+  .chat-canvas-send:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  /* TOAST */
+  .app-toast {
+    position: fixed;
+    top: 18px;
+    right: 18px;
+    background: var(--ink);
+    color: #fff;
+    font-family: var(--mono);
+    font-size: 12px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    z-index: 1000;
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity 0.25s, transform 0.25s;
+    pointer-events: none;
+    max-width: 320px;
+    line-height: 1.4;
+  }
+  .app-toast.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .panel-meta-help {
+    color: #8B8074;
+    font-size: 12px;
+    line-height: 1.5;
+    padding: 8px 0 12px 0;
+  }
+
+  .chat-canvas-json-row {
+    padding: 0 20px 12px 20px;
+    background: #FBF9F4;
+    border-top: 1px solid var(--line);
+  }
+  .chat-canvas-json-row .json-toggle-btn {
+    margin-top: 8px;
+  }
+  .chat-canvas-json-row .json-block {
+    margin-top: 8px;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  /* INSPECT MODE */
+  .inspect { display: none; }
+  .inspect.visible { display: block; animation: outIn 0.4s ease; }
+
+  .inspect-section {
+    padding: 18px 22px;
+    border-bottom: 1px solid var(--line);
+  }
+  .inspect-section:last-child { border-bottom: none; }
+  .inspect-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--ink-3);
+    margin-bottom: 12px;
+  }
+
+  .inspect-desc {
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+  .inspect-desc em { font-style: italic; color: var(--ink-2); }
+
+  .io-flow {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 10px;
+    align-items: center;
+  }
+  .io-box {
+    background: #F0EDE6;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink);
+  }
+  .io-box .io-box-label {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-3);
+    margin-bottom: 4px;
+  }
+  .io-arrow {
+    font-family: var(--serif);
+    font-size: 26px;
+    color: var(--orch);
+    line-height: 1;
+  }
+
+  .prompt-block {
+    background: var(--code-bg);
+    color: var(--code-text);
+    border-radius: 8px;
+    padding: 16px 18px;
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 1.7;
+    max-height: 300px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .prompt-block::-webkit-scrollbar { width: 6px; }
+  .prompt-block::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
+  .prompt-block .role { color: #FF9A6E; font-weight: 600; }
+  .prompt-block .key { color: #FBBF77; }
+  .prompt-block .str { color: #A8D5A0; }
+  .prompt-block .num { color: #FF9A6E; }
+  .prompt-block .com { color: #6B6660; font-style: italic; }
+  .prompt-block .em { color: #FFD89C; font-style: italic; }
+
+  .connection-list {
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .connection-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 14px;
+    background: #F0EDE6;
+    border-radius: 8px;
+    font-family: var(--sans);
+    font-size: 13px;
+    color: var(--ink);
+  }
+  .connection-row .arrow {
+    font-family: var(--serif);
+    font-size: 22px;
+    color: var(--orch);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .connection-row .target { font-weight: 500; }
+  .connection-row .note { color: var(--ink-3); margin-left: auto; font-size: 12px; font-style: italic; font-family: var(--serif); }
+
+  .file-list { display: flex; flex-direction: column; gap: 6px; }
+  .file-row {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 12px;
+    background: #F0EDE6;
+    border-radius: 6px;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--ink-2);
+  }
+  .file-row .file-icon { color: var(--ink-3); }
+  .file-row .file-name { color: var(--ink); font-weight: 500; }
+  .file-row .file-meta { margin-left: auto; color: var(--ink-3); font-size: 10.5px; font-family: var(--sans); }
+
+  /* RESPONSIVE */
+  @media (max-width: 1200px) {
+    .main { grid-template-columns: 1fr; grid-template-rows: 1fr 360px; }
+    .right { border-left: none; border-top: 1px solid var(--line); }
+  }
+</style>
+</head>
+<body data-stage="0">
+
+<div class="app">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="brand">
+      <div class="brand-mark">[ ]</div>
+      <div>
+        <div class="brand-text">[ ai study camp ]</div>
+        <div class="brand-sub">Agent Sprint · Visualization</div>
+      </div>
+      <div class="top-tabs" id="topTabs">
+        <span class="top-tab active" data-tab="0"><span class="num">01</span>chat</span>
+        <span class="top-tab" data-tab="2"><span class="num">02</span>workflow</span>
+        <span class="top-tab" data-tab="3"><span class="num">03</span>agentic system</span>
+      </div>
+    </div>
+    <div></div>
+    <div class="top-actions">
+      <button class="run-btn" id="clearBtn">Clear <span class="kbd">⌘K</span></button>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <div class="canvas-wrap">
+
+      <div class="canvas-controls">
+        <div class="ctrl">100%</div>
+        <div class="ctrl">⤢ fit</div>
+      </div>
+
+      <div class="canvas-meta">
+        <div class="meta-row"><span class="l">workflow</span><span class="v">transcripts → insights</span></div>
+        <div class="meta-row"><span class="l">stage</span><span class="v" id="metaStage">1 · chat assistant</span></div>
+        <div class="meta-row"><span class="l">nodes</span><span class="v" id="metaNodes">3</span></div>
+        <div class="meta-row"><span class="l">status</span><span class="v live" id="canvasStatus">● ready</span></div>
+      </div>
+
+      <!-- Stage banners -->
+      <div class="stage-banner" data-stages="1">— Stage 1 · <em>Chat assistant — one call, one conversation</em> —</div>
+      <div class="stage-banner" data-stages="2">— Stage 2 · <em>Workflow — file drops in, AI classifies, routes to folder, sends notification</em> —</div>
+      <div class="stage-banner" data-stages="3">— Stage 3 · <em>Agentic system — Analyst + Extractor (parallel) → Synthesizer → Router → Reflect</em> —</div>
+
+      <div class="sub-label" data-stages="3">— Orchestrator's <em>building blocks</em> —</div>
+
+      <svg class="canvas-svg" id="svg"></svg>
+
+      <!-- =============== STAGE 1 NODES =============== -->
+
+      <div class="node node-io input" id="s1-input" data-stages="1" data-node="s1-input">
+        <div class="io-header">
+          <div class="io-icon">↗</div>
+          <div class="io-text">
+            <div class="io-tag">Input</div>
+            <div class="io-name">A <em>transcript</em></div>
+          </div>
+          <div class="io-status-dot"></div>
+        </div>
+        <div class="io-foot">you paste it in</div>
+      </div>
+
+      <div class="node node-agent orch" id="s1-agent" data-stages="1" data-node="s1-agent">
+        <div class="ag-header">
+          <div class="ag-icon">a</div>
+          <div class="ag-info">
+            <div class="ag-tag">Chat assistant</div>
+            <div class="ag-name">The <em>Analyst</em></div>
+          </div>
+          <div class="ag-dot"></div>
+        </div>
+        <div class="ag-body">
+          <div class="ag-desc"><ul><li>Reads the transcript</li><li>Finds themes and action items</li><li>Writes the full report</li><li><em>All in one API call — one job, one agent</em></li></ul></div>
+          <div class="ag-meta-grid">
+            <div><div class="k">brain</div><div class="v">Claude</div></div>
+            <div><div class="k">runs</div><div class="v">once per call</div></div>
+          </div>
+        </div>
+        <div class="ag-foot">
+          <span id="s1-agentState">idle</span>
+          <span id="s1-agentTime">—</span>
+        </div>
+      </div>
+
+      <div class="node node-io output" id="s1-output" data-stages="1" data-node="s1-output">
+        <div class="io-header">
+          <div class="io-icon">↘</div>
+          <div class="io-text">
+            <div class="io-tag">Output</div>
+            <div class="io-name">A <em>report</em></div>
+          </div>
+          <div class="io-status-dot"></div>
+        </div>
+        <div class="io-foot">printed to terminal</div>
+      </div>
+
+      <!-- =============== STAGE 2 NODES =============== -->
+
+      <div class="node node-io input" id="s2-input" data-stages="2" data-node="s2-input">
+        <div class="io-header">
+          <div class="io-icon">⇡</div>
+          <div class="io-text">
+            <div class="io-tag">Trigger</div>
+            <div class="io-name"><em>incoming/</em></div>
+          </div>
+          <div class="io-status-dot"></div>
+        </div>
+        <div class="io-foot">file drops here</div>
+      </div>
+
+      <div class="node node-agent orch" id="s2-agent" data-stages="2" data-node="s2-agent">
+        <div class="ag-header">
+          <div class="ag-icon">c</div>
+          <div class="ag-info">
+            <div class="ag-tag">AI Decision · step 2 of 4</div>
+            <div class="ag-name">The <em>Classifier</em></div>
+          </div>
+          <div class="ag-dot"></div>
+        </div>
+        <div class="ag-body">
+          <div class="ag-desc"><ul><li>Reads the transcript</li><li>Decides: team-standup, client-call, or planning-session</li><li>Returns the decision — pipeline routes accordingly</li></ul></div>
+          <div class="ag-meta-grid">
+            <div><div class="k">brain</div><div class="v">Claude</div></div>
+            <div><div class="k">prompt</div><div class="v">classifier.md</div></div>
+          </div>
+        </div>
+        <div class="ag-foot">
+          <span id="s2-agentState">idle</span>
+          <span id="s2-agentTime">—</span>
+        </div>
+      </div>
+
+      <div class="node node-io output" id="s2-standup" data-stages="2" data-node="s2-standup">
+        <div class="io-header">
+          <div class="io-icon">📁</div>
+          <div class="io-text">
+            <div class="io-tag">Path A</div>
+            <div class="io-name"><em>team-standup/</em></div>
+          </div>
+          <div class="io-status-dot"></div>
+        </div>
+        <div class="io-foot">daily standups go here</div>
+      </div>
+
+      <div class="node node-io output" id="s2-client" data-stages="2" data-node="s2-client">
+        <div class="io-header">
+          <div class="io-icon">📁</div>
+          <div class="io-text">
+            <div class="io-tag">Path B</div>
+            <div class="io-name"><em>client-call/</em></div>
+          </div>
+          <div class="io-status-dot"></div>
+        </div>
+        <div class="io-foot">client calls go here</div>
+      </div>
+
+      <div class="node node-io output" id="s2-planning" data-stages="2" data-node="s2-planning">
+        <div class="io-header">
+          <div class="io-icon">📁</div>
+          <div class="io-text">
+            <div class="io-tag">Path C</div>
+            <div class="io-name"><em>planning-session/</em></div>
+          </div>
+          <div class="io-status-dot"></div>
+        </div>
+        <div class="io-foot">planning sessions go here</div>
+      </div>
+
+      <div class="node node-io output" id="s2-notify" data-stages="2" data-node="s2-notify">
+        <div class="io-header">
+          <div class="io-icon">📄</div>
+          <div class="io-text">
+            <div class="io-tag">Saved + Notified</div>
+            <div class="io-name"><em>Document</em> + banner</div>
+          </div>
+          <div class="io-status-dot"></div>
+        </div>
+        <div class="io-foot">file written, macOS banner fired</div>
+      </div>
+
+      <!-- =============== STAGE 3 NODES =============== -->
+
+      <div class="node node-io input" id="s3-input" data-stages="3" data-node="s3-input">
+        <div class="io-header">
+          <div class="io-icon">⇡</div>
+          <div class="io-text">
+            <div class="io-tag">Input</div>
+            <div class="io-name">A <em>transcript</em></div>
+          </div>
+          <div class="io-status-dot"></div>
+        </div>
+        <div class="io-foot">comes from a file</div>
+      </div>
+
+      <div class="node node-agent orch" id="s3-agent" data-stages="3" data-node="s3-agent">
+        <div class="ag-header">
+          <div class="ag-icon">o</div>
+          <div class="ag-info">
+            <div class="ag-tag">Orchestrator · sequential dispatch</div>
+            <div class="ag-name">The <em>Conductor</em></div>
+          </div>
+          <div class="ag-dot"></div>
+        </div>
+        <div class="ag-body">
+          <div class="ag-desc"><ul><li>Dispatches Analyst + Extractor <em>in parallel</em> — both run at the same time</li><li>Waits for both to return, then sends themes + actions to the Synthesizer</li><li>Synthesizer returns the final report — Conductor passes it to the Router</li><li>Router (Stage 2 reused) classifies, saves, and notifies</li></ul></div>
+          <div class="ag-meta-grid">
+            <div><div class="k">brain</div><div class="v">Claude</div></div>
+            <div><div class="k">steps</div><div class="v">parallel → synthesize → route</div></div>
+          </div>
+        </div>
+        <div class="ag-foot">
+          <span id="s3-agentState">idle</span>
+          <span id="s3-agentTime">—</span>
+        </div>
+        <div class="ag-attach"></div>
+      </div>
+
+      <div class="node node-io output" id="s3-output" data-stages="3" data-node="s3-output">
+        <div class="io-header">
+          <div class="io-icon">↘</div>
+          <div class="io-text">
+            <div class="io-tag">Output</div>
+            <div class="io-name">A <em>report</em></div>
+          </div>
+          <div class="io-status-dot"></div>
+        </div>
+        <div class="io-foot">saved as a file</div>
+      </div>
+
+      <div class="node node-sub-agent sub" id="s3-summ" data-stages="3" data-node="s3-summ">
+        <div class="sa-header">
+          <div class="sa-icon">a</div>
+          <div class="sa-info">
+            <div class="sa-tag">Specialist 1 · parallel</div>
+            <div class="sa-name">The <em>Analyst</em></div>
+          </div>
+          <div class="sa-dot"></div>
+        </div>
+        <div class="sa-body">Reads the transcript. Finds key themes and decisions — <em>same API call as Stage 1, just analyst.md as the system prompt instead.</em></div>
+        <div class="sa-foot">
+          <span id="s3-summState">idle</span>
+          <span id="s3-summTime">—</span>
+        </div>
+      </div>
+
+      <div class="node node-sub-agent extr" id="s3-extr" data-stages="3" data-node="s3-extr">
+        <div class="sa-header">
+          <div class="sa-icon">e</div>
+          <div class="sa-info">
+            <div class="sa-tag">Specialist 2</div>
+            <div class="sa-name">The <em>Extractor</em></div>
+          </div>
+          <div class="sa-dot"></div>
+        </div>
+        <div class="sa-body">Reads the transcript. Pulls out every commitment, owner, and deadline — <em>same API call as Stage 1, just extractor.md as the system prompt. Runs in parallel with the Analyst.</em></div>
+        <div class="sa-foot">
+          <span id="s3-extrState">idle</span>
+          <span id="s3-extrTime">—</span>
+        </div>
+      </div>
+
+      <div class="node node-sub-agent extr" id="s3-route" data-stages="3" data-node="s3-route">
+        <div class="sa-header">
+          <div class="sa-icon">s</div>
+          <div class="sa-info">
+            <div class="sa-tag">Specialist 3</div>
+            <div class="sa-name">The <em>Synthesizer</em></div>
+          </div>
+          <div class="sa-dot"></div>
+        </div>
+        <div class="sa-body">Gets themes from the Analyst and actions from the Extractor. Combines them into the final structured insights report.</div>
+        <div class="sa-foot">
+          <span id="s3-routeState">idle</span>
+          <span id="s3-routeTime">—</span>
+        </div>
+      </div>
+
+      <div class="node node-sub-agent router" id="s3-router" data-stages="3" data-node="s3-router">
+        <div class="sa-header">
+          <div class="sa-icon">r</div>
+          <div class="sa-info">
+            <div class="sa-tag">Step 4</div>
+            <div class="sa-name">The <em>Router</em></div>
+            <div class="router-badge">Stage 2 · Reused</div>
+          </div>
+          <div class="sa-dot"></div>
+        </div>
+        <div class="sa-body">Classifies meeting type from transcript. Saves transcript + report to typed folder. Sends notification.</div>
+        <div class="sa-foot">
+          <span id="s3-routerState">idle</span>
+          <span id="s3-routerTime">—</span>
+        </div>
+      </div>
+
+      <div class="node node-sub-agent reflect" id="s3-reflect" data-stages="3" data-node="s3-reflect">
+        <div class="sa-header">
+          <div class="sa-icon">⟲</div>
+          <div class="sa-info">
+            <div class="sa-tag">Step 5 · After-action</div>
+            <div class="sa-name">The <em>Reflect</em></div>
+          </div>
+          <div class="sa-dot"></div>
+        </div>
+        <div class="sa-body">Reads the entire run — themes, actions, report, classification — and writes a self-eval report. The agent grading its own work.</div>
+        <div class="sa-foot">
+          <span id="s3-reflectState">idle</span>
+          <span id="s3-reflectTime">—</span>
+        </div>
+      </div>
+
+      <!-- particles -->
+      <div class="particle c-input" id="p1"></div>
+      <div class="particle c-orch" id="p2"></div>
+      <div class="particle c-sub" id="p3"></div>
+      <div class="particle c-orch" id="p4"></div>
+      <div class="particle c-extr" id="p5"></div>
+      <div class="particle c-output" id="p6"></div>
+      <div class="particle c-orch" id="p7"></div>
+      <div class="particle c-orch" id="p8"></div>
+
+      <!-- Chat-in-canvas (Stage 1 / chat tab) -->
+      <div class="chat-canvas" id="chatCanvas">
+        <div class="chat-canvas-header">
+          <div class="chat-eyebrow">SYSTEM PROMPT (pick one)</div>
+          <select id="demoSystemPromptSelect" style="width:100%;padding:8px 10px;font-family:var(--mono);font-size:13px;background:#F0EDE6;border:1px solid #D8D2C3;border-radius:4px;color:var(--ink);margin-bottom:6px;">
+            <option value="helpful">Helpful assistant (default)</option>
+            <option value="pirate">Pirate captain</option>
+            <option value="shakespeare">Shakespearean bard</option>
+          </select>
+          <textarea class="chat-system-prompt" id="chatSystemPrompt" rows="4" readonly></textarea>
+          <div class="chat-sample-row">
+            <button class="panel-sample-btn" id="chatLoadStandup">Load standup transcript</button>
+            <button class="panel-sample-btn" id="chatLoadClient">Load client call</button>
+            <button class="panel-sample-btn" id="chatLoadPlanning">Load planning</button>
+            <span class="chat-context-status" id="chatCanvasContextStatus"></span>
+          </div>
+        </div>
+        <div class="chat-eyebrow chat-history-label">CONVERSATION</div>
+        <div class="chat-canvas-history" id="chatCanvasHistory">
+          <div class="chat-canvas-empty">Pick a system prompt above, optionally load a transcript, then click a question below.</div>
+        </div>
+        <div class="chat-canvas-input-row" style="flex-wrap:wrap;gap:6px;">
+          <input class="chat-canvas-input" id="chatCanvasInput" style="display:none;" />
+          <button class="chat-canvas-send" id="chatCanvasSend" style="display:none;">Send →</button>
+          <button class="panel-sample-btn demoChatQBtn" data-q="actions">What are the action items?</button>
+          <button class="panel-sample-btn demoChatQBtn" data-q="blocked">Who is blocked?</button>
+          <button class="panel-sample-btn demoChatQBtn" data-q="decisions">What were the key decisions?</button>
+          <button class="panel-sample-btn demoChatQBtn" data-q="summary">Summarize in one sentence.</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Toast notification (in-app fallback) -->
+    <div class="app-toast" id="appToast"></div>
+
+    <!-- RIGHT PANEL -->
+    <div class="right">
+
+      <div class="right-header">
+        <div class="rh-block" id="rhDefault">
+          <div class="rh-eyebrow live">Live · Run Detail</div>
+          <div class="rh-title" id="rhTitle">What's <em>happening?</em></div>
+        </div>
+        <div class="rh-block" id="rhInspect" style="display:none;">
+          <div class="rh-eyebrow" id="inspectEyebrow">Inspecting</div>
+          <div class="rh-title" id="inspectTitle">Node</div>
+        </div>
+        <button class="rh-back" id="backBtn">← Back to live</button>
+      </div>
+
+      <div class="right-body" id="rightBody">
+
+        <div id="defaultView">
+
+          <!-- Server offline banner -->
+          <div class="server-banner" id="serverBanner" style="display:none">
+            Start the server to use the live interface — run <code>npm run server</code> in <code>student-output/</code>, then reload the page.
+          </div>
+
+          <!-- Stage 1 (chat) lives entirely in the main canvas; no right-panel content. -->
+
+          <!-- Stage 2: Workflow panel -->
+          <div class="live-panel" id="panel2" style="display:none">
+            <div class="panel-eyebrow">Try it live — Workflow Pipeline</div>
+            <textarea class="panel-textarea" id="workflowTranscript" style="display:none;"></textarea>
+            <!-- Hidden stubs — the existing script's init code references these IDs.
+                 Removing them would crash the script and kill all other handlers. -->
+            <button id="workflowSampleBtn" style="display:none;"></button>
+            <button id="workflowClientBtn" style="display:none;"></button>
+            <button id="workflowPlanningBtn" style="display:none;"></button>
+            <div style="font-size:11px;color:var(--sub);letter-spacing:.08em;text-transform:uppercase;margin:4px 0 6px 0;">1. Pick a transcript</div>
+            <div class="panel-row">
+              <button class="panel-sample-btn demoWfPick" data-tx="standup">Team standup</button>
+              <button class="panel-sample-btn demoWfPick" data-tx="client-call">Client call</button>
+              <button class="panel-sample-btn demoWfPick" data-tx="planning">Planning session</button>
+            </div>
+            <div class="panel-hint" style="margin:8px 0;">The classification badge and the saved file path will change with the input.</div>
+            <div style="font-size:11px;color:var(--sub);letter-spacing:.08em;text-transform:uppercase;margin:8px 0 6px 0;">2. Run it</div>
+            <button class="panel-btn" id="workflowSubmit">Run Workflow →</button>
+            <div class="panel-result" id="workflowResult"></div>
+          </div>
+
+          <!-- Stage 3: Orchestrator panel -->
+          <div class="live-panel" id="panel3" style="display:none">
+            <div class="panel-eyebrow">Try it live — Agentic System</div>
+            <textarea class="panel-textarea" id="orchTranscript" style="display:none;"></textarea>
+            <textarea class="panel-instruction" id="orchInstruction" style="display:none;"></textarea>
+            <!-- Hidden stubs — see workflow panel note. -->
+            <button id="orchSampleBtn" style="display:none;"></button>
+            <button id="orchClientBtn" style="display:none;"></button>
+            <button id="orchPlanningBtn" style="display:none;"></button>
+            <div style="font-size:11px;color:var(--sub);letter-spacing:.08em;text-transform:uppercase;margin:4px 0 6px 0;">1. Pick a transcript</div>
+            <div class="panel-row">
+              <button class="panel-sample-btn demoOrchPickTx" data-tx="standup">Team standup</button>
+              <button class="panel-sample-btn demoOrchPickTx" data-tx="client-call">Client call</button>
+              <button class="panel-sample-btn demoOrchPickTx" data-tx="planning">Planning session</button>
+            </div>
+            <div style="font-size:11px;color:var(--sub);letter-spacing:.08em;text-transform:uppercase;margin:10px 0 6px 0;">2. Pick a run mode</div>
+            <div class="panel-row" style="flex-wrap:wrap;">
+              <button class="panel-sample-btn demoOrchPickMode" data-mode="full">Full pipeline (all 5 specialists)</button>
+              <button class="panel-sample-btn demoOrchPickMode" data-mode="actions">Just action items (skip Analyst + Synthesizer)</button>
+              <button class="panel-sample-btn demoOrchPickMode" data-mode="route">Just route it (Router only)</button>
+            </div>
+            <div class="panel-hint" style="margin:8px 0;"><em>Same code, different behavior.</em> The Conductor adapts which specialists run based on the mode you pick.</div>
+            <div style="font-size:11px;color:var(--sub);letter-spacing:.08em;text-transform:uppercase;margin:8px 0 6px 0;">3. Run it</div>
+            <button class="panel-btn" id="orchSubmit">Run Orchestrator →</button>
+            <div id="orchConductorPlan" style="display:none" class="conductor-plan">
+              <span class="conductor-label">Conductor chose:</span>
+              <span id="orchConductorTools" class="conductor-tools"></span>
+              <span id="orchConductorReason" class="conductor-reason"></span>
+            </div>
+            <div class="orch-steps" id="orchSteps">
+              <div class="orch-step" id="orchStep1"><span class="step-check">○</span><span>Step 1 — Analyst: find themes + decisions</span></div>
+              <div class="orch-step" id="orchStep2"><span class="step-check">○</span><span>Step 2 — Extractor: pull action items</span></div>
+              <div class="orch-step" id="orchStep3"><span class="step-check">○</span><span>Step 3 — Synthesizer: combine results</span></div>
+              <div class="orch-step" id="orchStep4"><span class="step-check">○</span><span>Step 4 — Router: classify + save + notify</span></div>
+              <div class="orch-step" id="orchStep5"><span class="step-check">○</span><span>Step 5 — Conductor reflects on the run</span></div>
+            </div>
+            <div class="orch-steps-note">When both Analyst and Extractor run, they fire in parallel — same start, same finish. Listed separately so you can see which one ran.</div>
+            <div class="panel-result" id="orchResult"></div>
+            <div id="s3RunReport" class="run-report" style="display:none">
+              <div class="run-report-label">Run Report</div>
+              <div id="s3RunReportContent" class="run-report-content"></div>
+            </div>
+          </div>
+
+          <div class="live-section" id="feed">
+            <div class="feed-empty" id="feedEmpty">Press <em>Run Orchestrator →</em> to begin.</div>
+            <div class="feed-hint">
+              <b>Try this:</b> click any node on the left to peek inside.<br>
+              You'll see exactly what's making it tick — including the actual instructions it follows.
+            </div>
+          </div>
+
+          <div class="output-section">
+            <div class="rh-eyebrow" style="margin-bottom: 4px;">The Final Report</div>
+            <div class="output-empty" id="outEmpty">Will show up here when the agent finishes…</div>
+            <div class="output-content" id="outContent"></div>
+          </div>
+        </div>
+
+        <div class="inspect" id="inspectView"></div>
+
+        <!-- Stage 0 / Chat tab: live JSON of the last /api/chat call -->
+        <div id="chatJsonView" class="chat-json-view">
+          <div class="chat-json-section">
+            <div class="chat-json-eyebrow">Request sent → /api/chat</div>
+            <pre class="chat-json-block" id="chatJsonRequest">No requests yet. Load a transcript or send a message to see the JSON sent to /api/chat.</pre>
+          </div>
+          <div class="chat-json-section">
+            <div class="chat-json-eyebrow">Response from Claude</div>
+            <pre class="chat-json-block" id="chatJsonResponse">—</pre>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- STATIC DEMO MODE — fetch interceptor + canned fixtures.       -->
+<!-- This block runs BEFORE the main inline script so window.fetch -->
+<!-- is overridden in time for the initial /api/health check.      -->
+<!-- ============================================================ -->
+<script>
+(function(){
+  const SYSTEM_PROMPTS = {
+    helpful: "You are a helpful assistant. Be clear, concise, and friendly. When given a transcript, ground your answer in what was actually said.",
+    pirate: "You are a pirate captain. Speak with 'arrr', 'matey', 'aye', and nautical metaphors. Stay in character no matter what.",
+    shakespeare: "Thou art a Shakespearean playwright. Reply in iambic pentameter with lofty diction, as a 16th-century bard would."
+  };
+
+  const TRANSCRIPTS = {
+    'standup': `[Tuesday team standup, 9:05am — Sarah, James, Priya, Diego]
+Sarah: Quick updates. I'm wrapping the API rate-limiting work — branch should be in review by Thursday.
+James: I'm blocked on the migration review. I need staging environment access from DevOps and I've been waiting since Friday.
+Priya: I'll escalate to the DevOps lead today, James. Can you ping me by EOD with the ticket number?
+James: Will do.
+Diego: Design sent over the new dashboard layouts. We have a cross-functional sync Friday at 2pm — everyone should be there.
+Sarah: Adding it to the calendar. Anything else? Okay, see everyone Friday.`,
+    'client-call': `[Acme Corp onboarding call, Wednesday 11am — Ben (us), Maria (Acme PM), Alex (Acme Eng Lead)]
+Maria: Thanks for jumping on. We're going to need to push the launch by two weeks — our security review took longer than expected.
+Ben: Understood. So we're targeting May 25 instead of May 11?
+Maria: Yes. Also — we want to discuss pricing. Month-to-month doesn't work for us; we'd like an annual contract with a discount.
+Ben: I'll need to check with our team. Standard annual discount is in the 10% range — I'll confirm by end of week.
+Alex: On scope — we need SSO and Slack in v1. Salesforce integration would be nice but it's not a blocker.
+Ben: SSO and Slack are in. I'll confirm with engineering that the May 25 date holds with that scope. Salesforce we can scope as a follow-on.
+Maria: Perfect. Send over a revised SOW reflecting the new date and we'll get it signed.`,
+    'planning': `[Q3 planning session, Thursday — leadership + product]
+Diego: Top of mind — we need to pick a single Q3 north star. I'm proposing agentic systems v2.
+Priya: Agreed. Customer-facing dashboards are the other big push, but I think we hold those at reduced pace until we have headcount.
+Sarah: That means we open a senior eng req and a PM contractor req. Both this week.
+James: We also have an operational risk — our LLM provider's rate limits are going to bite us at scale. We need a fallback in the gateway.
+Priya: How long?
+James: I can have it in production by end of June if we start now.
+Diego: Decision: agentic v2 is the north star. Dashboards continue at reduced pace. DevOps owns the rate-limit fallback by end of June. Product to draft the agentic v2 milestone plan by next Monday.`
+  };
+
+  const TRANSCRIPT_FILE_TO_KEY = {
+    'sample-transcript.txt': 'standup',
+    'sample-client-call.txt': 'client-call',
+    'sample-planning-session.txt': 'planning'
+  };
+
+  // CHAT_RESPONSES[systemPromptId][questionId]
+  const CHAT_RESPONSES = {
+    helpful: {
+      actions: "Three action items came out of this meeting:\n\n1. Sarah will finish the API rate-limiting branch and have it in review by Thursday.\n2. Priya will escalate James's staging-access block to the DevOps lead today; James pings her with the ticket number by EOD.\n3. The whole team attends Friday's 2pm cross-functional design sync on the new dashboard.",
+      blocked: "James is blocked on the migration review — he's been waiting since Friday for staging environment access from DevOps. Priya took the action to escalate it today, and James will follow up with the ticket number by end of day.",
+      decisions: "Three decisions came out of this standup:\n\n1. Sarah's rate-limiting branch is on track for Thursday review — no scope changes.\n2. Priya owns the escalation on James's staging-access block; James will share the ticket number by EOD.\n3. The new dashboard layouts move to a full cross-functional review at Friday's 2pm sync — Design, Eng, and Product all attending.",
+      summary: "The team aligned on three deliverables — Sarah's rate-limiting branch, Priya unblocking James on staging access, and a Friday design sync — with clear owners and deadlines for each."
+    },
+    pirate: {
+      actions: "Arrr, three duties be set upon the crew, matey!\n\n• Sarah be patchin' up the rate-limitin' riggin' afore Thursday's tide.\n• Priya be hailin' the DevOps cap'n to free James from the doldrums of stagin' access — James to send back the ticket number by sundown.\n• The whole crew be musterin' Friday at two bells for a design parley.",
+      blocked: "Aye, James be marooned, matey! Since Friday last he's waited on the DevOps crew for the keys to the stagin' harbor. Priya be sailin' out to the DevOps cap'n today to break the becalm.",
+      decisions: "Three decisions be struck at this gatherin', matey!\n\n• Sarah's rate-limitin' riggin' sails on schedule — Thursday be the day.\n• Priya be takin' charge of breakin' the becalm round James's stagin' access — that ticket number be in her hands by sundown.\n• The whole crew musters Friday at two bells for the design council — Design, Eng, and Product, all hands on deck.",
+      summary: "Three tasks, one Friday parley, and a freed sailor by sundown — that be the gist of it, matey."
+    },
+    shakespeare: {
+      actions: "Three tasks fall heavy on the crew this week:\nFair Sarah mends the gates of rate ere Thursday's eve;\nGood Priya doth approach the DevOps lord,\nThat James, long stalled, may break his idle yoke;\nAnd all shall meet the Designer Friday next,\nWhen dashboards new shall to the table come.",
+      blocked: "Good James, alas, doth wait in vain — bereft\nOf staging keys the DevOps clerks withhold.\nSince Friday last hath he no answer found;\nNow Priya rides to plead his cause this day.",
+      decisions: "Three rulings doth this morning's council yield:\nFair Sarah's work upon the rates proceeds —\nThursday she vows to bring the branch for view;\nPriya assumes the charge for James's plight,\nThe DevOps lord she seeks ere set of sun;\nAnd all the crew, when Friday's bell doth toll,\nShall sit with Design's drafts in fair review.",
+      summary: "Three deeds appointed, one fair council met, and Friday's gathering yet to come — thus stand we."
+    }
+  };
+
+  // Per-transcript orchestrator content.
+  const ORCH_FIXTURES = {
+    'standup': {
+      themes: "KEY THEMES\n- API rate limiting: branch nearing review this week\n- Migration review: blocked on staging access from DevOps\n- Design sync: cross-functional Friday meeting on new dashboard\n\nKEY DECISIONS\n- Sarah to push rate-limiting branch by Thursday\n- Priya to escalate staging access to DevOps lead today\n- Whole team attends Friday design sync",
+      actions: '[\n  {"owner": "Sarah", "task": "Finish API rate-limiting branch and open PR", "deadline": "Thursday"},\n  {"owner": "Priya", "task": "Escalate James\'s staging access to DevOps lead", "deadline": "Today"},\n  {"owner": "James", "task": "Send Priya the staging access ticket number", "deadline": "EOD today"},\n  {"owner": "Whole team", "task": "Attend Friday design sync re: new dashboard", "deadline": "Friday 2pm"}\n]',
+      report: "---\n**KEY THEMES**\n- API rate limiting: shipping this week\n- Migration review: blocked on staging access\n- Design sync: cross-functional Friday meeting\n\n**ACTION ITEMS**\n- Sarah: Finish API rate-limiting branch and open PR by Thursday\n- Priya: Escalate James's staging access to DevOps lead by Today\n- James: Send Priya the staging access ticket number by EOD today\n- Whole team: Attend Friday design sync re: new dashboard by Friday 2pm\n\n**RECOMMENDED NEXT STEP**\nJames's staging-access block is the riskiest item. Resolve it first so the migration review isn't still blocked when Friday's sync happens.\n---",
+      classification: "team-standup",
+      runReportFull: "After-action — team-standup run\n\nWhat the system did:\n- Conductor selected the full pipeline (analyst, extractor, synthesizer, router, reflect).\n- Analyst pulled three themes; Extractor pulled four action items in parallel.\n- Synthesizer combined them into one insights report and flagged the staging-access block.\n- Router classified the meeting as team-standup and saved the report.\n\nWhat went well:\n- Parallel call to Analyst and Extractor kept latency low — both finished in roughly one second.\n- Action items came back cleanly structured (owner + task + deadline).\n\nWhere it could improve:\n- Some 'blocked' theme content overlaps with action items — a future Synthesizer prompt could de-dupe.\n- 'Friday 2pm' is the only specific time; other deadlines are day-level.\n\nRecommended next step:\n- Add an explicit 'blocker escalation' field to the schema so the next run can flag time-sensitive items at the top.",
+      runReportActions: "After-action — abbreviated team-standup run\n\nWhat the system did:\n- You asked for just the action items, so the Conductor skipped Analyst and Synthesizer.\n- Extractor pulled four action items directly from the transcript.\n- Router classified the meeting as team-standup so the items land in the right folder.\n\nWhy this matters:\n- Same code as the full run — fewer specialists called. The Conductor adapted the pipeline to the request. That's the whole point of an agentic system.",
+      runReportRoute: "After-action — route-only team-standup run\n\nWhat the system did:\n- You asked the Conductor to just route it. The plan was the shortest possible: Router only.\n- Router read the transcript, classified it as team-standup, and filed it to the team-standup folder.\n- No themes, no action items, no synthesized report — by design.\n\nWhy this matters:\n- The same orchestrator code that ran 5 specialists a moment ago just ran 1. The Conductor's job is to pick the right shape of pipeline for the input. Route-only is the smallest useful shape — pure classification, nothing else."
+    },
+    'client-call': {
+      themes: "KEY THEMES\n- Onboarding timeline: pushed two weeks at customer's request (May 25)\n- Pricing: customer wants annual contract with a discount\n- Integration scope: SSO + Slack required in v1; Salesforce deferred\n\nKEY DECISIONS\n- Honor the timeline shift; revised launch is May 25\n- Standard annual discount in the 10% range; Ben to confirm by EOW\n- SSO + Slack in v1; Salesforce as a follow-on",
+      actions: '[\n  {"owner": "Ben", "task": "Send Acme revised SOW reflecting May 25 launch", "deadline": "Tomorrow"},\n  {"owner": "Ben", "task": "Confirm 10% annual discount with team and get back to Maria", "deadline": "EOW"},\n  {"owner": "Eng", "task": "Confirm SSO + Slack integration capacity for May 25", "deadline": "Wednesday"}\n]',
+      report: "---\n**KEY THEMES**\n- Onboarding timeline: pushed to May 25 at customer's request\n- Pricing: annual discount under negotiation\n- Integration scope: SSO + Slack in v1; Salesforce deferred\n\n**ACTION ITEMS**\n- Ben: Send Acme revised SOW reflecting May 25 launch by Tomorrow\n- Ben: Confirm 10% annual discount with team and get back to Maria by EOW\n- Eng: Confirm SSO + Slack integration capacity for May 25 by Wednesday\n\n**RECOMMENDED NEXT STEP**\nThe pricing decision is the gating item. Once the annual discount is approved, the SOW can ship and Eng can lock the May 25 date.\n---",
+      classification: "client-call",
+      runReportFull: "After-action — client-call run\n\nWhat the system did:\n- Conductor ran the full pipeline (analyst, extractor, synthesizer, router, reflect).\n- Three themes surfaced (timeline, pricing, integrations); three action items extracted.\n- Synthesizer flagged the pricing decision as the gating item.\n- Router classified as client-call and routed accordingly.\n\nWhat went well:\n- The Synthesizer's recommended-next-step pointed at the right bottleneck (pricing) without being told to.\n- Extractor handled multi-owner deadlines cleanly — same owner ('Ben') with two distinct deadlines.\n\nWhere it could improve:\n- No follow-up cadence captured — when do we re-engage Acme if pricing slips?\n- Integration scope changes (Salesforce deferred) could trigger a separate roadmap update event.\n\nRecommended next step:\n- Add a 'follow-up date' field so client-call outputs auto-populate the CRM next-touch field.",
+      runReportActions: "After-action — abbreviated client-call run\n\nWhat the system did:\n- You asked for just the action items, so the Conductor skipped Analyst and Synthesizer.\n- Extractor pulled three action items directly from the transcript.\n- Router classified the meeting as client-call so the items land in the right folder.\n\nWhy this matters:\n- Same code as the full run — fewer specialists called. The Conductor adapted the pipeline to the request.",
+      runReportRoute: "After-action — route-only client-call run\n\nWhat the system did:\n- You asked the Conductor to just route it. The plan was the shortest possible: Router only.\n- Router classified the transcript as client-call and filed it to the client-call folder.\n- No themes, no action items, no synthesized report — by design.\n\nWhy this matters:\n- One transcript, one classification, one file move. The Conductor stripped the pipeline down to exactly what the request needed."
+    },
+    'planning': {
+      themes: "KEY THEMES\n- Q3 single north star: agentic systems v2\n- Customer-facing dashboards: continue at reduced pace until headcount lands\n- Operational risk: LLM provider rate limits at scale\n\nKEY DECISIONS\n- Agentic v2 is the single Q3 north star\n- Open a senior eng req and a PM contractor req this week\n- DevOps owns the rate-limit fallback by end of June",
+      actions: '[\n  {"owner": "Sarah", "task": "Open senior eng req and PM contractor req", "deadline": "This week"},\n  {"owner": "James", "task": "Implement LLM rate-limit fallback in gateway", "deadline": "End of June"},\n  {"owner": "Product", "task": "Draft agentic v2 milestone plan with concrete checkpoints", "deadline": "Next Monday"}\n]',
+      report: "---\n**KEY THEMES**\n- Q3 single north star: agentic systems v2\n- Dashboard scope: held at reduced pace until headcount lands\n- Operational risk: LLM rate-limit fallback needed before scale\n\n**ACTION ITEMS**\n- Sarah: Open senior eng req and PM contractor req by This week\n- James: Implement LLM rate-limit fallback in gateway by End of June\n- Product: Draft agentic v2 milestone plan with concrete checkpoints by Next Monday\n\n**RECOMMENDED NEXT STEP**\nThe milestone plan unblocks everything else — without it, hiring criteria are vague and DevOps timing is hard to set. Land it first.\n---",
+      classification: "planning-session",
+      runReportFull: "After-action — planning-session run\n\nWhat the system did:\n- Full pipeline ran (analyst, extractor, synthesizer, router, reflect).\n- Three Q3 themes identified; three action items extracted with owners and deadlines.\n- Synthesizer surfaced the milestone plan as the gating item — correct call.\n- Router classified as planning-session.\n\nWhat went well:\n- The 'single north star' framing came through clearly — Synthesizer didn't dilute it.\n- All three action items have clear owners; none ambiguous.\n\nWhere it could improve:\n- 'End of June' is fuzzier than the other deadlines — could be normalized to a specific date.\n- No explicit decision-author captured (who owns the agentic-v2 call long-term?).\n\nRecommended next step:\n- Add a 'decision owner' field to the schema so future planning runs surface accountability, not just tasks.",
+      runReportActions: "After-action — abbreviated planning-session run\n\nWhat the system did:\n- You asked for just the action items, so the Conductor skipped Analyst and Synthesizer.\n- Extractor pulled three action items directly from the transcript.\n- Router classified the meeting as planning-session so the items land in the right folder.\n\nWhy this matters:\n- Same code as the full run — fewer specialists called. The Conductor adapted the pipeline to the request.",
+      runReportRoute: "After-action — route-only planning-session run\n\nWhat the system did:\n- You asked the Conductor to just route it. The plan was the shortest possible: Router only.\n- Router classified the transcript as planning-session and filed it to the planning-session folder.\n- No themes, no action items, no synthesized report — by design.\n\nWhy this matters:\n- The same orchestrator that ran the full Q3 analysis a moment ago just ran one specialist. The Conductor picks the shape of the pipeline based on the ask."
+    }
+  };
+
+  // Demo state — set by the new buttons before triggering existing handlers.
+  window.__demo = {
+    systemPromptId: 'helpful',
+    questionId: null,
+    transcriptKey: 'standup',
+    mode: 'full'
+  };
+
+  function makeResponse(body, opts = {}) {
+    const init = Object.assign({ status: 200, headers: { 'Content-Type': 'application/json' } }, opts);
+    const text = typeof body === 'string' ? body : JSON.stringify(body);
+    return new Response(text, init);
+  }
+
+  const realFetch = window.fetch.bind(window);
+  window.fetch = async function(input, init) {
+    const url = (typeof input === 'string') ? input : (input && input.url) || '';
+    // Small artificial delay so the canvas animation has time to breathe.
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+
+    // ---- /api/health ----
+    if (url.includes('/api/health')) {
+      return makeResponse({ ok: true });
+    }
+
+    // ---- /api/system-prompt ----
+    if (url.includes('/api/system-prompt')) {
+      const id = window.__demo.systemPromptId || 'helpful';
+      return makeResponse(SYSTEM_PROMPTS[id], { headers: { 'Content-Type': 'text/plain' } });
+    }
+
+    // ---- /api/sample-transcript/:filename or /api/sample-transcript ----
+    // Returns raw text (matches the live server) — callers use r.text().
+    const txMatch = url.match(/\/api\/sample-transcript(?:\/([^?#]+))?/);
+    if (txMatch) {
+      const filename = txMatch[1] || 'sample-transcript.txt';
+      const key = TRANSCRIPT_FILE_TO_KEY[filename] || 'standup';
+      window.__demo.transcriptKey = key;
+      return makeResponse(TRANSCRIPTS[key], { headers: { 'Content-Type': 'text/plain' } });
+    }
+
+    // ---- /api/chat ----
+    if (url.includes('/api/chat')) {
+      await wait(450);
+      const id = window.__demo.systemPromptId || 'helpful';
+      const q = window.__demo.questionId || 'summary';
+      const responses = CHAT_RESPONSES[id] || CHAT_RESPONSES.helpful;
+      const text = responses[q] || responses.summary;
+      return makeResponse({ response: text });
+    }
+
+    // ---- /api/workflow ----
+    if (url.includes('/api/workflow')) {
+      await wait(350);
+      const key = window.__demo.transcriptKey || 'standup';
+      const fx = ORCH_FIXTURES[key];
+      const cls = fx.classification;
+      const filename = ({
+        'team-standup': '2026-05-11-team-standup-summary.md',
+        'client-call': '2026-05-11-acme-client-call-summary.md',
+        'planning-session': '2026-05-11-q3-planning-summary.md'
+      })[cls];
+      return makeResponse({
+        classification: cls,
+        outputPath: `student-output/transcripts/${cls}/${filename}`,
+        steps: [
+          { step: 'Sent transcript + classifier prompt to Claude' },
+          { step: `Claude returned classification: ${cls}` },
+          { step: 'Generated a one-paragraph summary' },
+          { step: `Saved to ${cls}/${filename}` },
+          { step: 'Sent #notifications a heads-up' }
+        ]
+      });
+    }
+
+    // ---- /api/orchestrate/conductor ----
+    if (url.includes('/api/orchestrate/conductor')) {
+      await wait(450);
+      const mode = window.__demo.mode || 'full';
+      if (mode === 'actions') {
+        return makeResponse({
+          plan: {
+            tools: ['extractor', 'router', 'reflect'],
+            reasoning: 'Instruction was "just give me the action items" — skipping Analyst and Synthesizer; running Extractor → Router → Reflect.'
+          }
+        });
+      }
+      if (mode === 'route') {
+        return makeResponse({
+          plan: {
+            tools: ['router', 'reflect'],
+            reasoning: 'Instruction was "just route it" — no analysis or extraction needed; running only the Router (and Reflect to log the run).'
+          }
+        });
+      }
+      return makeResponse({
+        plan: {
+          tools: ['analyst', 'extractor', 'synthesizer', 'router', 'reflect'],
+          reasoning: 'Running the full pipeline.'
+        }
+      });
+    }
+
+    // ---- /api/orchestrate/step1 (analyst + extractor) ----
+    if (url.includes('/api/orchestrate/step1')) {
+      await wait(700);
+      const key = window.__demo.transcriptKey || 'standup';
+      const fx = ORCH_FIXTURES[key];
+      const mode = window.__demo.mode || 'full';
+      const body = (init && init.body) ? (() => { try { return JSON.parse(init.body); } catch { return {}; } })() : {};
+      const tools = body.tools || [];
+      const out = {};
+      if (tools.includes('analyst')) out.themes = fx.themes;
+      if (tools.includes('extractor')) out.actions = fx.actions;
+      // If neither analyst nor extractor were in tools (shouldn't happen), default to actions only.
+      if (!('themes' in out) && !('actions' in out)) out.actions = fx.actions;
+      return makeResponse(out);
+    }
+
+    // ---- /api/orchestrate/step2 (synthesizer) ----
+    if (url.includes('/api/orchestrate/step2')) {
+      await wait(550);
+      const key = window.__demo.transcriptKey || 'standup';
+      return makeResponse({ report: ORCH_FIXTURES[key].report });
+    }
+
+    // ---- /api/orchestrate/step3 (router) ----
+    if (url.includes('/api/orchestrate/step3')) {
+      await wait(400);
+      const key = window.__demo.transcriptKey || 'standup';
+      return makeResponse({ classification: ORCH_FIXTURES[key].classification });
+    }
+
+    // ---- /api/orchestrate/step4 (reflect) ----
+    if (url.includes('/api/orchestrate/step4')) {
+      await wait(500);
+      const key = window.__demo.transcriptKey || 'standup';
+      const fx = ORCH_FIXTURES[key];
+      const mode = window.__demo.mode || 'full';
+      let runReport;
+      if (mode === 'actions') runReport = fx.runReportActions;
+      else if (mode === 'route') runReport = fx.runReportRoute;
+      else runReport = fx.runReportFull;
+      return makeResponse({ runReport });
+    }
+
+    // Fallback — let any non-/api call through (none expected in this demo).
+    return realFetch(input, init);
+  };
+
+  // ===== Wire up the new demo controls once DOM is parsed enough =====
+  document.addEventListener('DOMContentLoaded', () => {
+    // System prompt dropdown — keeps the existing textarea (and the chat handler)
+    // happy by always populating its .value.
+    const sel = document.getElementById('demoSystemPromptSelect');
+    const ta = document.getElementById('chatSystemPrompt');
+    function applyPrompt() {
+      window.__demo.systemPromptId = sel.value;
+      ta.value = SYSTEM_PROMPTS[sel.value];
+    }
+    if (sel && ta) {
+      sel.addEventListener('change', applyPrompt);
+      applyPrompt();
+    }
+
+    // Canned chat-question buttons → fill hidden input and click Send.
+    const QUESTION_TEXT = {
+      actions: 'What are the action items?',
+      blocked: 'Who is blocked?',
+      decisions: 'What were the key decisions?',
+      summary: 'Summarize in one sentence.'
+    };
+    document.querySelectorAll('.demoChatQBtn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const q = btn.getAttribute('data-q');
+        window.__demo.questionId = q;
+        const input = document.getElementById('chatCanvasInput');
+        const send = document.getElementById('chatCanvasSend');
+        if (input && send) {
+          input.value = QUESTION_TEXT[q] || q;
+          send.click();
+        }
+      });
+    });
+
+    // Helper — apply a "selected" visual to one button in a group.
+    function selectInGroup(groupSelector, clicked) {
+      document.querySelectorAll(groupSelector).forEach(b => {
+        b.classList.toggle('selected', b === clicked);
+      });
+    }
+
+    // Workflow: pick a transcript (radio-style). Run button stays the existing one.
+    document.querySelectorAll('.demoWfPick').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tx = btn.getAttribute('data-tx');
+        window.__demo.transcriptKey = tx;
+        const ta = document.getElementById('workflowTranscript');
+        if (ta) ta.value = TRANSCRIPTS[tx];
+        selectInGroup('.demoWfPick', btn);
+      });
+    });
+
+    // Orchestrator: pick a transcript + pick a mode. Run button is the existing one.
+    document.querySelectorAll('.demoOrchPickTx').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tx = btn.getAttribute('data-tx');
+        window.__demo.transcriptKey = tx;
+        const ta = document.getElementById('orchTranscript');
+        if (ta) ta.value = TRANSCRIPTS[tx];
+        selectInGroup('.demoOrchPickTx', btn);
+      });
+    });
+    const MODE_INSTRUCTION = {
+      full: '',
+      actions: 'Just give me the action items.',
+      route: 'Just route it.'
+    };
+    document.querySelectorAll('.demoOrchPickMode').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const mode = btn.getAttribute('data-mode');
+        window.__demo.mode = mode;
+        const inst = document.getElementById('orchInstruction');
+        if (inst) inst.value = MODE_INSTRUCTION[mode] || '';
+        selectInGroup('.demoOrchPickMode', btn);
+      });
+    });
+
+    // Force the right-panel content to show regardless of the existing
+    // serverOnline check — the existing code hides panel2/panel3 until the
+    // /api/health Promise resolves, which can race with the user clicking a
+    // tab. In a static demo there's no real server, so we just make sure the
+    // panel for the current stage is always visible.
+    function forcePanelVisible() {
+      const stage = document.body.dataset.stage || '0';
+      ['panel2','panel3'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = (id === 'panel' + stage) ? 'block' : 'none';
+      });
+    }
+    document.querySelectorAll('.top-tab').forEach(tab => {
+      // Run after the existing switchStage handler (which may hide panels).
+      tab.addEventListener('click', () => setTimeout(forcePanelVisible, 0));
+    });
+    // Also run on initial load + a beat later in case the existing checkServer
+    // resolves and hides things.
+    setTimeout(forcePanelVisible, 0);
+    setTimeout(forcePanelVisible, 200);
+    setTimeout(forcePanelVisible, 1000);
+
+    // Default selections so the user can click Run immediately if they want.
+    const firstWf = document.querySelector('.demoWfPick[data-tx="standup"]');
+    if (firstWf) firstWf.click();
+    const firstOrchTx = document.querySelector('.demoOrchPickTx[data-tx="standup"]');
+    if (firstOrchTx) firstOrchTx.click();
+    const firstOrchMode = document.querySelector('.demoOrchPickMode[data-mode="full"]');
+    if (firstOrchMode) firstOrchMode.click();
+
+    // Guard the existing Run handlers: if the user clicks Run before picking,
+    // make sure the textareas are populated with the default fixture.
+    const wfRun = document.getElementById('workflowSubmit');
+    if (wfRun) wfRun.addEventListener('click', () => {
+      const ta = document.getElementById('workflowTranscript');
+      if (ta && !ta.value.trim()) ta.value = TRANSCRIPTS[window.__demo.transcriptKey || 'standup'];
+    }, true);  // capture phase — runs before the existing handler
+    const orchRun = document.getElementById('orchSubmit');
+    if (orchRun) orchRun.addEventListener('click', () => {
+      const ta = document.getElementById('orchTranscript');
+      const inst = document.getElementById('orchInstruction');
+      if (ta && !ta.value.trim()) ta.value = TRANSCRIPTS[window.__demo.transcriptKey || 'standup'];
+      if (inst && !inst.value.trim()) {
+        const m = window.__demo.mode || 'full';
+        if (m !== 'full') inst.value = MODE_INSTRUCTION[m] || '';
+      }
+    }, true);
+  });
+})();
+</script>
+
+<script>
+  // ============ NODE INSPECT DATA (per stage) ============
+
+  // system.md — the chat assistant's conversational prompt (Stage 1 + Module 3)
+  const promptSystem = `<span class="role">You are a meeting analyst.</span>
+
+Answer questions about this transcript
+directly and naturally.
+
+Be specific. Reference exact names,
+decisions, and numbers from the transcript
+when relevant. If you're not sure about
+something, say so.`;
+
+  // analyst.md — Specialist 1 (parallel with Extractor)
+  const promptAnalyst = `<span class="role">You are a meeting analyst.</span>
+
+Read this transcript and identify the
+key themes and decisions.
+
+<span class="key">KEY THEMES</span>
+- <span class="str">[Theme]: [one-sentence description]</span>
+(list 2–5 themes)
+
+<span class="key">KEY DECISIONS</span>
+- <span class="str">[Decision made, with context]</span>
+
+<span class="com">// Use names from the transcript.</span>
+<span class="com">// Be specific. Don't pad with filler.</span>`;
+
+  // extractor.md — Specialist 2 (parallel with Analyst)
+  const promptExtractor = `<span class="role">You are an action item extractor.</span>
+
+Given a transcript, find every commitment,
+task, or next step mentioned.
+
+Return ONLY a valid JSON object:
+
+{
+  <span class="key">"actions"</span>: [
+    {
+      <span class="key">"owner"</span>: <span class="str">"Name or Unknown"</span>,
+      <span class="key">"task"</span>: <span class="str">"Description"</span>,
+      <span class="key">"deadline"</span>: <span class="str">"Date or null"</span>
+    }
+  ]
+}
+
+<span class="com">// Use exact wording from transcript.</span>`;
+
+  // synthesizer.md — Specialist 3 (combines Analyst + Extractor outputs)
+  const promptSynthesizer = `<span class="role">You are a report synthesizer.</span>
+
+You receive themes from the Analyst and
+action items from the Extractor. Combine
+them into a final structured report.
+
+<span class="key">**KEY THEMES**</span>
+<span class="str">[From the Analyst — reformat lightly]</span>
+
+<span class="key">**ACTION ITEMS**</span>
+- <span class="str">[Owner]: [task] (by [deadline])</span>
+
+<span class="key">**RECOMMENDED NEXT STEP**</span>
+<span class="str">[One sentence synthesis]</span>
+
+<span class="com">// Synthesize, don't just copy.</span>
+<span class="com">// No filler, no padding.</span>`;
+
+  // classifier.md — Stage 2 workflow
+  const promptClassifier = `<span class="role">You are a meeting classifier.</span>
+
+Given a transcript, determine the meeting type.
+
+Return ONLY a JSON object:
+
+{
+  "type": <span class="str">"team-standup"</span> | <span class="str">"client-call"</span>
+       | <span class="str">"planning-session"</span> | <span class="str">"other"</span>,
+  "suggested_filename": <span class="str">"YYYY-MM-DD-[type].txt"</span>,
+  "confidence": <span class="str">"high"</span> | <span class="str">"low"</span>
+}`;
+
+  // reflect.md — Stage 3 after-action report (runs last)
+  const promptReflect = `<span class="role">You are the after-action report.</span>
+
+You receive everything that just happened — the
+transcript, the analyst's themes, the extractor's
+actions, the synthesizer's report, and the router's
+classification.
+
+Produce a structured run review:
+
+<span class="key">RUN REPORT</span>
+
+<span class="key">What happened</span>
+2-3 sentences on the run.
+
+<span class="key">What went well</span>
+- <span class="str">Specific observation about output quality</span>
+
+<span class="key">What was ambiguous</span>
+- <span class="str">Specific gap, low-confidence result</span>
+
+<span class="key">Recommendations</span>
+- <span class="str">Each ends with: Tell Claude: "[paste-ready
+  instruction to improve a prompt file]"</span>
+
+<span class="com">// You won't be acted on automatically — your job</span>
+<span class="com">// is to make the next iteration possible.</span>`;
+
+  // conductor.md — Stage 3 planning step
+  const promptConductor = `<span class="role">You are the Conductor — an orchestrator
+that decides which specialists to call.</span>
+
+Tools available: analyst, extractor, synthesizer,
+router, reflect.
+
+Rules:
+- synthesizer requires analyst AND extractor first
+- reflect requires synthesizer first
+- "just route" / "classify" → router only
+- "action items" / "tasks" → extractor only
+- "themes" / "summary" → analyst only
+- "how it went" / "after-action report" → include reflect
+- no instruction → run all five in order
+
+Respond with a single JSON object, no fences:
+
+{
+  <span class="key">"tools"</span>: [<span class="str">"extractor"</span>, <span class="str">"router"</span>],
+  <span class="key">"reasoning"</span>: <span class="str">"one sentence why"</span>
+}`;
+
+  const nodeData = {
+    // --- Stage 1 ---
+    's1-input': {
+      eyebrow: "Inspecting · Input",
+      title: "A <em>transcript</em>",
+      sections: [
+        { label: "What this is", type: "desc",
+          content: `The starting point. <em>You paste a meeting transcript and the agent runs once. Stage 1 is manual — Stage 2 will automate it.</em>` },
+        { label: "What goes in / out", type: "ioflow",
+          content: { in: "📝 raw text", out: "📝 the transcript text" } },
+        { label: "Connects to", type: "connections",
+          content: [{ arrow: "→", target: "The Analyst", note: "passes the transcript" }] }
+      ]
+    },
+    's1-agent': {
+      eyebrow: "Inspecting · Chat assistant",
+      title: "The <em>Analyst</em>",
+      sections: [
+        { label: "What this is", type: "desc",
+          content: `The whole agent. <em>One Claude API call with a system prompt. It reads the transcript, finds themes, finds actions, and writes the final report all by itself.</em>` },
+        { label: "What goes in / out", type: "ioflow",
+          content: { in: "📝 a transcript", out: "📊 a final report" } },
+        { label: "Its instructions (system prompt)", type: "prompt", content: promptSystem },
+        { label: "Connects to", type: "connections",
+          content: [
+            { arrow: "←", target: "The transcript", note: "reads input" },
+            { arrow: "→", target: "The report", note: "writes output" }
+          ] }
+      ]
+    },
+    's1-output': {
+      eyebrow: "Inspecting · Output",
+      title: "A <em>report</em>",
+      sections: [
+        { label: "What this is", type: "desc",
+          content: `The result. <em>Stage 1 just prints it to your terminal. In Stage 2 we'll save it to a file automatically.</em>` },
+        { label: "What goes in / out", type: "ioflow",
+          content: { in: "📊 the analyst's report", out: "📺 printed to terminal" } },
+        { label: "Connects from", type: "connections",
+          content: [{ arrow: "←", target: "The Analyst", note: "receives the report" }] }
+      ]
+    },
+
+    // --- Stage 2 ---
+    's2-input': {
+      eyebrow: "Inspecting · Trigger",
+      title: "<em>incoming/</em>",
+      sections: [
+        { label: "What this is", type: "desc",
+          content: `The watch folder. A folder watcher (chokidar) sits in the background. When a <code style="font-family:var(--mono);font-size:12px;background:#EBE5DE;padding:1px 6px;border-radius:3px;color:var(--ink);">.txt</code> file lands in <code style="font-family:var(--mono);font-size:12px;background:#EBE5DE;padding:1px 6px;border-radius:3px;color:var(--ink);">transcripts/incoming/</code>, the pipeline wakes up automatically. You never type anything.` },
+        { label: "What goes in / out", type: "ioflow",
+          content: { in: "📁 file appears", out: "📝 transcript text" } },
+        { label: "Recent files", type: "files",
+          content: [
+            { name: "test-1746000000.txt", meta: "just now" },
+            { name: "test-1745913600.txt", meta: "yesterday" },
+            { name: "test-1745827200.txt", meta: "2 days ago" }
+          ] },
+        { label: "Connects to", type: "connections",
+          content: [{ arrow: "→", target: "The Classifier", note: "triggers on every new file" }] }
+      ]
+    },
+    's2-agent': {
+      eyebrow: "Inspecting · AI Decision",
+      title: "The <em>Classifier</em>",
+      sections: [
+        { label: "What this is", type: "desc",
+          content: `The only LLM call in Stage 2. Reads the transcript and decides what kind of meeting it was — returning a JSON answer: the meeting type and a suggested filename. <em>This is the intelligence inside the pipeline.</em>` },
+        { label: "What goes in / out", type: "ioflow",
+          content: { in: "📝 a transcript", out: "🏷️ { type, suggested_filename }" } },
+        { label: "Its instructions (system prompt)", type: "prompt", content: promptClassifier },
+        { label: "Connects to", type: "connections",
+          content: [
+            { arrow: "←", target: "incoming/ (step 1)", note: "receives the transcript" },
+            { arrow: "→", target: "Routed folder (step 3)", note: "returns type + filename" }
+          ] }
+      ]
+    },
+    's2-standup': {
+      eyebrow: "Inspecting · Path A",
+      title: "<em>team-standup/</em>",
+      sections: [
+        { label: "What this is", type: "desc",
+          content: `One of three possible destinations. If the Classifier decides it's a team standup, the file lands here. <em>The Classifier picks the path — the pipeline just follows the decision.</em>` },
+        { label: "What goes in / out", type: "ioflow",
+          content: { in: "📝 the transcript", out: "📁 file saved here" } },
+        { label: "Connects to", type: "connections",
+          content: [
+            { arrow: "←", target: "The Classifier", note: "chosen if type = team-standup" },
+            { arrow: "→", target: "Notification", note: "then fires macOS banner" }
+          ] }
+      ]
+    },
+    's2-client': {
+      eyebrow: "Inspecting · Path B",
+      title: "<em>client-call/</em>",
+      sections: [
+        { label: "What this is", type: "desc",
+          content: `One of three possible destinations. If the Classifier decides it's a client call, the file lands here instead.` },
+        { label: "What goes in / out", type: "ioflow",
+          content: { in: "📝 the transcript", out: "📁 file saved here" } },
+        { label: "Connects to", type: "connections",
+          content: [
+            { arrow: "←", target: "The Classifier", note: "chosen if type = client-call" },
+            { arrow: "→", target: "Notification", note: "then fires macOS banner" }
+          ] }
+      ]
+    },
+    's2-planning': {
+      eyebrow: "Inspecting · Path C",
+      title: "<em>planning-session/</em>",
+      sections: [
+        { label: "What this is", type: "desc",
+          content: `One of three possible destinations. If the Classifier decides it's a planning session, the file lands here instead.` },
+        { label: "What goes in / out", type: "ioflow",
+          content: { in: "📝 the transcript", out: "📁 file saved here" } },
+        { label: "Connects to", type: "connections",
+          content: [
+            { arrow: "←", target: "The Classifier", note: "chosen if type = planning-session" },
+            { arrow: "→", target: "Notification", note: "then fires macOS banner" }
+          ] }
+      ]
+    },
+    's2-notify': {
+      eyebrow: "Inspecting · Notification",
+      title: "macOS <em>banner</em>",
+      sections: [
+        { label: "What this is", type: "desc",
+          content: `The last step. After routing the file, the pipeline fires a macOS notification: <em>"Routed to: team-standup"</em>. You see it in the top-right corner without looking at the terminal.` },
+        { label: "What goes in / out", type: "ioflow",
+          content: { in: "🏷️ meeting type", out: "🔔 macOS banner" } },
+        { label: "Connects from", type: "connections",
+          content: [{ arrow: "←", target: "Routed file (step 3)", note: "fires after routing completes" }] }
+      ]
+    },
+
+    // --- Stage 3 ---
+    's3-input': {
+      eyebrow: "Inspecting · Input",
+      title: "A <em>transcript</em>",
+      sections: [
+        { label: "What this is", type: "desc",
+          content: `The starting point. <em>Same trigger as Stage 2 — a file landing in </em><code style="font-family:var(--mono);font-size:12px;background:#F0EDE6;padding:1px 6px;border-radius:3px;color:var(--ink);">transcripts/</code><em>. What changes is what happens next.</em>` },
+        { label: "What goes in / out", type: "ioflow",
+          content: { in: "📁 file appears", out: "📝 the transcript text" } },
+        { label: "Connects to", type: "connections",
+          content: [{ arrow: "→", target: "The Conductor", note: "passes the transcript" }] }
+      ]
+    },
+    's3-agent': {
+      eyebrow: "Inspecting · Orchestrator",
+      title: "The <em>Conductor</em>",
+      sections: [
+        { label: "What this is", type: "desc",
+          content: `The planner. Reads the user's instruction (or runs the full pipeline if none was given), then returns JSON saying which specialists to call. The orchestrator code reads that plan and dispatches accordingly.<br><br>The Conductor is what crosses the line from <em>workflow</em> (fixed steps every time) to <em>agentic system</em> (planner decides). Same pattern as every other specialist in this sprint: a system prompt with a job. Its job is to plan, not to do.` },
+        { label: "What goes in / out", type: "ioflow",
+          content: { in: "📝 transcript + instruction", out: "📋 JSON plan: which tools to call" } },
+        { label: "Its instructions (conductor.md)", type: "prompt", content: promptConductor },
+        { label: "Connects to", type: "connections",
+          content: [
+            { arrow: "←", target: "The transcript + instruction", note: "receives input" },
+            { arrow: "↓‖", target: "The Analyst + Extractor", note: "dispatches in parallel (if planned)" },
+            { arrow: "↓", target: "The Synthesizer", note: "dispatches after Analyst + Extractor return" },
+            { arrow: "↓", target: "The Router", note: "dispatches Stage 2's runWorkflow() to classify + save" },
+            { arrow: "↓", target: "Reflect", note: "after-action report on the run (optional)" }
+          ] }
+      ]
+    },
+    's3-output': {
+      eyebrow: "Inspecting · Output",
+      title: "A <em>report</em>",
+      sections: [
+        { label: "What this is", type: "desc",
+          content: `Same destination as Stage 2 — a saved markdown file. <em>The difference is the report itself is now synthesized from two specialist sub-agents instead of written in one shot.</em>` },
+        { label: "What goes in / out", type: "ioflow",
+          content: { in: "📊 the synthesized report", out: "📄 saved markdown" } },
+        { label: "Recent reports", type: "files",
+          content: [
+            { name: "2026-04-27-1042.md", meta: "just now" },
+            { name: "2026-04-26-0915.md", meta: "yesterday" }
+          ] },
+        { label: "Connects from", type: "connections",
+          content: [{ arrow: "←", target: "The Conductor", note: "receives the synthesis" }] }
+      ]
+    },
+    's3-summ': {
+      eyebrow: "Inspecting · Specialist 1 · Analyst",
+      title: "The <em>Analyst</em>",
+      sections: [
+        { label: "What this is", type: "desc",
+          content: `One of two specialists running in parallel. Does one thing: reads the transcript, identifies key themes and decisions, returns them as plain text.<br><br>This is the <em>exact same API call</em> as Stage 1 — the only difference is the system prompt file (<code style="font-family:var(--mono);font-size:12px;background:#F0EDE6;padding:1px 6px;border-radius:3px;color:var(--ink);">analyst.md</code> instead of <code style="font-family:var(--mono);font-size:12px;background:#F0EDE6;padding:1px 6px;border-radius:3px;color:var(--ink);">system.md</code>). Same function, different specialist.` },
+        { label: "What goes in / out", type: "ioflow",
+          content: { in: "📝 a transcript", out: "📝 themes + decisions" } },
+        { label: "Its instructions (analyst.md)", type: "prompt", content: promptAnalyst },
+        { label: "Connects to", type: "connections",
+          content: [{ arrow: "↑", target: "The Conductor", note: "called by, returns themes to" }] }
+      ]
+    },
+    's3-extr': {
+      eyebrow: "Inspecting · Specialist 2 · Extractor",
+      title: "The <em>Extractor</em>",
+      sections: [
+        { label: "What this is", type: "desc",
+          content: `The second of two specialists running in parallel with the Analyst. Does one thing: reads the transcript, pulls out every commitment, owner, and deadline as JSON.<br><br>Same API call as Stage 1 — different system prompt (<code style="font-family:var(--mono);font-size:12px;background:#F0EDE6;padding:1px 6px;border-radius:3px;color:var(--ink);">extractor.md</code>). Same function, different specialist.` },
+        { label: "What goes in / out", type: "ioflow",
+          content: { in: "📝 a transcript", out: "✅ action items (JSON)" } },
+        { label: "Its instructions (extractor.md)", type: "prompt", content: promptExtractor },
+        { label: "Connects to", type: "connections",
+          content: [{ arrow: "↑", target: "The Conductor", note: "called by, returns actions to" }] }
+      ]
+    },
+    's3-route': {
+      eyebrow: "Inspecting · Specialist 3 · Synthesizer",
+      title: "The <em>Synthesizer</em>",
+      sections: [
+        { label: "What this is", type: "desc",
+          content: `The third specialist. Receives themes from the Analyst and action items from the Extractor. Combines them into a clean, structured insights report.<br><br>Same API call as Stage 1 — different system prompt (<code style="font-family:var(--mono);font-size:12px;background:#F0EDE6;padding:1px 6px;border-radius:3px;color:var(--ink);">synthesizer.md</code>). Returns the final report to the Conductor, which then calls the Router.` },
+        { label: "What goes in / out", type: "ioflow",
+          content: { in: "📝 themes + actions", out: "📄 final report" } },
+        { label: "Its instructions (synthesizer.md)", type: "prompt", content: promptSynthesizer },
+        { label: "Connects to", type: "connections",
+          content: [
+            { arrow: "↑", target: "The Conductor", note: "called by, returns report to" },
+            { arrow: "→", target: "The Router", note: "Conductor passes report + transcript here next" }
+          ] }
+      ]
+    },
+    's3-router': {
+      eyebrow: "Inspecting · Step 4 · Router",
+      title: "The <em>Router</em>",
+      sections: [
+        { label: "What this is", type: "desc",
+          content: `Step 4 — and <em>the exact same code as Stage 2</em>. Classifies the meeting type from the transcript, saves both the transcript and the synthesized report to the correct typed folder, then fires the macOS notification.<br><br>This is Stage 2's <code style="font-family:var(--mono);font-size:12px;background:#F0EDE6;padding:1px 6px;border-radius:3px;color:var(--ink);">runWorkflow()</code> function called directly — zero new code. Stage 3 <em>reuses</em> Stage 2.<br><br>After the Router completes, <strong>Step 5: Reflect</strong> runs — the after-action report on the entire run.` },
+        { label: "What goes in / out", type: "ioflow",
+          content: { in: "📝 transcript + 📄 report", out: "📁 saved files + 🔔 notification" } },
+        { label: "File", type: "files",
+          content: [{ name: "stage-2/workflow.js", meta: "reused" }] },
+        { label: "Connects to", type: "connections",
+          content: [
+            { arrow: "←", target: "The Conductor", note: "called after Synthesizer completes" },
+            { arrow: "→", target: "Saved report", note: "routes, saves, notifies" },
+            { arrow: "→", target: "Reflect (Step 5)", note: "Conductor passes the full run trace next" }
+          ] }
+      ]
+    },
+    's3-reflect': {
+      eyebrow: "Inspecting · Step 5 · After-action report",
+      title: "The <em>Reflect</em>",
+      sections: [
+        { label: "What this is", type: "desc",
+          content: `The <em>self-eval / after-action report</em>. Runs after the Router. Reads everything that just happened — the transcript, themes from the Analyst, actions from the Extractor, the Synthesizer's report, the Router's classification — and writes a structured review.<br><br>Output has 4 sections: <strong>What happened</strong>, <strong>What went well</strong>, <strong>What was ambiguous</strong>, and <strong>Recommendations</strong>. Each recommendation ends with a paste-ready <code style="font-family:var(--mono);font-size:12px;background:#F0EDE6;padding:1px 6px;border-radius:3px;color:var(--ink);">Tell Claude:</code> instruction to improve a prompt file.<br><br>You won't act on this in the sprint. The pattern matters: in production you'd feed Reflect's output into a manual review queue, OR wire up another Claude call to apply a recommendation automatically — closing the loop.` },
+        { label: "What goes in / out", type: "ioflow",
+          content: { in: "📋 the full run trace", out: "📊 structured run report" } },
+        { label: "Its instructions (reflect.md)", type: "prompt", content: promptReflect },
+        { label: "Connects to", type: "connections",
+          content: [
+            { arrow: "←", target: "The Conductor", note: "called after Router completes" },
+            { arrow: "↓", target: "Run Report panel", note: "output rendered below" }
+          ] }
+      ]
+    }
+  };
+
+  // ============ STAGE-SPECIFIC ANIMATION SEQUENCES ============
+
+  // Stage 2 events are built per-run from the actual classifier result so
+  // the narration matches whichever path the Classifier picked. See
+  // buildStage2Events() below — the workflow handler passes the resulting
+  // array into playAnimation() as an override.
+  const STAGE2_TYPE_META = {
+    'team-standup':     { node: 'standup',  label: 'team standup' },
+    'client-call':      { node: 'client',   label: 'client call' },
+    'planning-session': { node: 'planning', label: 'planning session' }
+  };
+
+  function buildStage2Events(type, filename) {
+    const meta = STAGE2_TYPE_META[type] || { node: 'standup', label: type };
+    const nodeId = `s2-${meta.node}`;
+    return [
+      { t: 0,    src: 'input', srcLabel: 'incoming/',      msg: `File detected: <code>${filename}</code> dropped into the watch folder.`, node: 's2-input', state: 'active' },
+      { t: 700,  src: 'input', srcLabel: 'incoming/',      msg: 'Transcript read. Sending to the Classifier to identify the meeting type.', particle: 's2-input>s2-agent', complete: 's2-input' },
+      { t: 1400, src: 'orch',  srcLabel: 'The Classifier', msg: 'Got it. Reading the transcript…', node: 's2-agent', state: 'active' },
+      { t: 2600, src: 'orch',  srcLabel: 'The Classifier', msg: `This is a ${meta.label}. Three possible paths — routing to <em>${type}/</em>.`, complete: 's2-agent', particle: `s2-agent>${nodeId}` },
+      { t: 3500, src: 'output',srcLabel: `${type}/`,       msg: `Path chosen: ${type}. Writing document as <code>${filename}</code>.`, node: nodeId, state: 'active', complete: nodeId, particle: `${nodeId}>s2-notify` },
+      { t: 4500, src: 'output',srcLabel: 'Saved + Notified', msg: `Document written to <code>transcripts/${type}/</code>. macOS banner fired: "Routed to: ${type}". <em>Pipeline complete.</em>`, node: 's2-notify', state: 'active', report: true, complete: 's2-notify' }
+    ];
+  }
+
+  const sequences = {
+    1: [
+      { t: 0,    src: 'input', srcLabel: 'A transcript', msg: 'Pasted a transcript · 442 words.', node: 's1-input', state: 'active' },
+      { t: 600,  src: 'input', srcLabel: 'A transcript', msg: 'Sending <span class="arrow">→</span> The Analyst.', particle: 's1-input>s1-agent', complete: 's1-input' },
+      { t: 1200, src: 'orch',  srcLabel: 'The Analyst',  msg: 'Got it. Reading the transcript…', node: 's1-agent', state: 'active' },
+      { t: 2200, src: 'orch',  srcLabel: 'The Analyst',  msg: 'Finding themes, action items, recommended next step.' },
+      { t: 3400, src: 'orch',  srcLabel: 'The Analyst',  msg: 'Done. <span class="arrow">→</span> Sending the report.', particle: 's1-agent>s1-output', complete: 's1-agent' },
+      { t: 4200, src: 'output',srcLabel: 'A report',     msg: 'Printed to terminal. <em>Stage 1 done.</em>', node: 's1-output', state: 'active', report: true, complete: 's1-output' }
+    ],
+    // Stage 2 is built per-run from the classifier result — see buildStage2Events().
+    // Stage 3 — events tagged with `tools` so playAnimation can filter by the
+    // Conductor's plan. An event with no `tools` always shows; an event with
+    // `tools: [...]` only shows if at least one of those tools is in the active
+    // plan (e.g., "extractor only" hides Analyst events but keeps the Conductor
+    // dispatch + return path).
+    3: [
+      { t: 0,    src: 'input', srcLabel: 'A transcript',    msg: 'Transcript received. Sending to the Conductor.', node: 's3-input', state: 'active' },
+      { t: 800,  src: 'input', srcLabel: 'A transcript',    msg: 'On its way.', particle: 's3-input>s3-agent', complete: 's3-input' },
+      { t: 1500, src: 'orch',  srcLabel: 'The Conductor',   msg: 'Reading the instruction. Picking which tools to call.', node: 's3-agent', state: 'active' },
+      { t: 2100, src: 'orch',  srcLabel: 'The Conductor',   msg: 'Dispatching Analyst — find the key themes.', particle: 's3-agent>s3-summ', tools: ['analyst'] },
+      { t: 2200, src: 'orch',  srcLabel: 'The Conductor',   msg: 'Dispatching Extractor — pull out every action item.', particle: 's3-agent>s3-extr', tools: ['extractor'] },
+      { t: 2500, src: 'sub',   srcLabel: 'The Analyst',     msg: 'Reading the transcript. Identifying key themes and decisions…', node: 's3-summ', state: 'active', tools: ['analyst'] },
+      { t: 2600, src: 'extr',  srcLabel: 'The Extractor',   msg: 'Reading the transcript. Pulling out every commitment, owner, and deadline.', node: 's3-extr', state: 'active', tools: ['extractor'] },
+      { t: 3800, src: 'sub',   srcLabel: 'The Analyst',     msg: '3 themes + 2 decisions found. Returning to Conductor.', particle: 's3-summ>s3-agent', complete: 's3-summ', tools: ['analyst'] },
+      { t: 4300, src: 'extr',  srcLabel: 'The Extractor',   msg: '4 action items with owners and deadlines. Returning to Conductor.', particle: 's3-extr>s3-agent', complete: 's3-extr', tools: ['extractor'] },
+      { t: 5100, src: 'orch',  srcLabel: 'The Conductor',   msg: 'Sending themes + actions to the Synthesizer.', particle: 's3-agent>s3-route', tools: ['synthesizer'] },
+      { t: 5900, src: 'extr',  srcLabel: 'The Synthesizer', msg: 'Combining themes and action items into the final insights report…', node: 's3-route', state: 'active', tools: ['synthesizer'] },
+      { t: 7000, src: 'extr',  srcLabel: 'The Synthesizer', msg: 'Report complete. Returning to Conductor.', particle: 's3-route>s3-agent', complete: 's3-route', tools: ['synthesizer'] },
+      { t: 7800, src: 'orch',  srcLabel: 'The Conductor',   msg: 'Handing off to the Router — Stage 2\'s runWorkflow(), reused as-is.', particle: 's3-agent>s3-router', tools: ['router'] },
+      { t: 8600, src: 'orch',  srcLabel: 'The Router',      msg: 'Classifying transcript… team-standup. Saving to typed folder. Firing macOS notification.', node: 's3-router', state: 'active', tools: ['router'] },
+      { t: 9700, src: 'orch',  srcLabel: 'The Router',      msg: 'Saved. Notification sent. Returning to Conductor.', particle: 's3-router>s3-agent', complete: 's3-router', tools: ['router'] },
+      { t: 10400,src: 'orch',  srcLabel: 'The Conductor',   msg: 'Done. <span class="arrow">→</span> Sending the final result.', particle: 's3-agent>s3-output', complete: 's3-agent' },
+      { t: 11100,src: 'output',srcLabel: 'Result',          msg: 'Run complete.', node: 's3-output', state: 'active', report: true, complete: 's3-output' }
+    ]
+  };
+
+  // ============ STAGE-SPECIFIC SVG CONNECTIONS ============
+
+  function buildConnections() {
+    const svg = $('svg');
+    svg.innerHTML = '';
+    const wrap = svg.parentElement.getBoundingClientRect();
+    const stage = document.body.dataset.stage;
+    const pathRefs = {};
+    const anchors = [];
+
+    function rect(id) { return $(id).getBoundingClientRect(); }
+    function ptR(r) { return { x: r.right - wrap.left, y: r.top + r.height/2 - wrap.top }; }
+    function ptL(r) { return { x: r.left - wrap.left,  y: r.top + r.height/2 - wrap.top }; }
+    function ptB(r) { return { x: r.left + r.width/2 - wrap.left, y: r.bottom - wrap.top }; }
+    function ptT(r) { return { x: r.left + r.width/2 - wrap.left, y: r.top - wrap.top }; }
+
+    let paths = [];
+
+    if (stage === '1') {
+      const inR = rect('s1-input'), agR = rect('s1-agent'), outR = rect('s1-output');
+      const inputRight = ptR(inR), agentLeft = ptL(agR), agentRight = ptR(agR), outputLeft = ptL(outR);
+      paths = [
+        { id: 's1-input>s1-agent',  d: `M ${inputRight.x} ${inputRight.y} C ${inputRight.x + 80} ${inputRight.y}, ${agentLeft.x - 80} ${agentLeft.y}, ${agentLeft.x} ${agentLeft.y}`, cls: 'main' },
+        { id: 's1-agent>s1-output', d: `M ${agentRight.x} ${agentRight.y} C ${agentRight.x + 80} ${agentRight.y}, ${outputLeft.x - 80} ${outputLeft.y}, ${outputLeft.x} ${outputLeft.y}`, cls: 'main' }
+      ];
+      anchors.push(inputRight, agentLeft, agentRight, outputLeft);
+    } else if (stage === '2') {
+      const inR = rect('s2-input'), agR = rect('s2-agent');
+      const stdR = rect('s2-standup'), cliR = rect('s2-client'), plnR = rect('s2-planning');
+      const notR = rect('s2-notify');
+      const inputRight = ptR(inR), agentLeft = ptL(agR), agentRight = ptR(agR);
+      const standupLeft = ptL(stdR), standupRight = ptR(stdR);
+      const clientLeft = ptL(cliR), clientRight = ptR(cliR);
+      const planningLeft = ptL(plnR), planningRight = ptR(plnR);
+      const notifyLeft = ptL(notR);
+      function bez(a, b, off) { return `M ${a.x} ${a.y} C ${a.x + off} ${a.y}, ${b.x - off} ${b.y}, ${b.x} ${b.y}`; }
+      paths = [
+        { id: 's2-input>s2-agent',    d: bez(inputRight,   agentLeft,    60),  cls: 'main' },
+        { id: 's2-agent>s2-standup',  d: bez(agentRight,   standupLeft,  50),  cls: 'main' },
+        { id: 's2-agent>s2-client',   d: bez(agentRight,   clientLeft,   50),  cls: 'dashed' },
+        { id: 's2-agent>s2-planning', d: bez(agentRight,   planningLeft, 50),  cls: 'dashed' },
+        { id: 's2-standup>s2-notify', d: bez(standupRight, notifyLeft,   50),  cls: 'main' },
+        { id: 's2-client>s2-notify',  d: bez(clientRight,  notifyLeft,   50),  cls: 'dashed' },
+        { id: 's2-planning>s2-notify',d: bez(planningRight,notifyLeft,   50),  cls: 'dashed' }
+      ];
+      anchors.push(inputRight, agentLeft, agentRight, standupLeft, standupRight, clientLeft, clientRight, planningLeft, planningRight, notifyLeft);
+    } else if (stage === '3') {
+      const inR = rect('s3-input'), agR = rect('s3-agent'), outR = rect('s3-output');
+      const summR = rect('s3-summ'), extrR = rect('s3-extr'), routeR = rect('s3-route'), routerR = rect('s3-router');
+      const reflectR = rect('s3-reflect');
+      const inputRight = ptR(inR), agentLeft = ptL(agR), agentRight = ptR(agR), agentBot = ptB(agR), outputLeft = ptL(outR);
+      const summTop = ptT(summR), extrTop = ptT(extrR), routeTop = ptT(routeR), routerTop = ptT(routerR);
+      const reflectTop = ptT(reflectR);
+      paths = [
+        { id: 's3-input>s3-agent',   d: `M ${inputRight.x} ${inputRight.y} C ${inputRight.x + 80} ${inputRight.y}, ${agentLeft.x - 80} ${agentLeft.y}, ${agentLeft.x} ${agentLeft.y}`, cls: 'main' },
+        { id: 's3-agent>s3-output',  d: `M ${agentRight.x} ${agentRight.y} C ${agentRight.x + 80} ${agentRight.y}, ${outputLeft.x - 80} ${outputLeft.y}, ${outputLeft.x} ${outputLeft.y}`, cls: 'main' },
+        { id: 's3-agent>s3-summ',    d: `M ${agentBot.x} ${agentBot.y} C ${agentBot.x} ${agentBot.y + 40}, ${summTop.x} ${summTop.y - 40}, ${summTop.x} ${summTop.y}`, cls: 'dashed' },
+        { id: 's3-agent>s3-extr',    d: `M ${agentBot.x} ${agentBot.y} C ${agentBot.x} ${agentBot.y + 40}, ${extrTop.x} ${extrTop.y - 40}, ${extrTop.x} ${extrTop.y}`, cls: 'dashed' },
+        { id: 's3-agent>s3-route',   d: `M ${agentBot.x} ${agentBot.y} C ${agentBot.x} ${agentBot.y + 40}, ${routeTop.x} ${routeTop.y - 40}, ${routeTop.x} ${routeTop.y}`, cls: 'dashed' },
+        { id: 's3-agent>s3-router',  d: `M ${agentBot.x} ${agentBot.y} C ${agentBot.x} ${agentBot.y + 40}, ${routerTop.x} ${routerTop.y - 40}, ${routerTop.x} ${routerTop.y}`, cls: 'dashed' },
+        { id: 's3-agent>s3-reflect', d: `M ${agentBot.x} ${agentBot.y} C ${agentBot.x} ${agentBot.y + 40}, ${reflectTop.x} ${reflectTop.y - 40}, ${reflectTop.x} ${reflectTop.y}`, cls: 'dashed' }
+      ];
+      anchors.push(inputRight, agentLeft, agentRight, outputLeft, agentBot, summTop, extrTop, routeTop, routerTop, reflectTop);
+    }
+
+    paths.forEach(p => {
+      const el = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      el.setAttribute('d', p.d);
+      el.setAttribute('class', 'conn-path ' + p.cls);
+      svg.appendChild(el);
+      pathRefs[p.id] = el;
+    });
+
+    // arrowheads on main paths
+    paths.filter(p => p.cls === 'main').forEach(p => {
+      const points = p.d.match(/[\d.]+/g);
+      const endX = parseFloat(points[points.length - 2]);
+      const endY = parseFloat(points[points.length - 1]);
+      const arrow = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+      arrow.setAttribute('points', `${endX},${endY} ${endX-8},${endY-4} ${endX-8},${endY+4}`);
+      arrow.setAttribute('fill', '#95908A');
+      svg.appendChild(arrow);
+    });
+
+    anchors.forEach(pt => {
+      const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      c.setAttribute('cx', pt.x); c.setAttribute('cy', pt.y); c.setAttribute('r', 3);
+      c.setAttribute('fill', '#FAF8F4');
+      c.setAttribute('stroke', '#95908A');
+      c.setAttribute('stroke-width', 1.5);
+      svg.appendChild(c);
+    });
+
+    return pathRefs;
+  }
+
+  // ============ DOM HELPERS ============
+  const $ = (id) => document.getElementById(id);
+
+  let currentStage = '0';
+  let pathRefs = {};
+
+  // ============ INSPECT RENDERING ============
+  function renderInspect(nodeKey) {
+    const data = nodeData[nodeKey];
+    if (!data) return;
+
+    $('rhDefault').style.display = 'none';
+    $('rhInspect').style.display = 'block';
+    $('inspectEyebrow').textContent = data.eyebrow;
+    $('inspectTitle').innerHTML = data.title;
+    $('backBtn').classList.add('visible');
+
+    $('defaultView').style.display = 'none';
+    const inspectView = $('inspectView');
+    inspectView.classList.add('visible');
+
+    let html = '';
+    for (const section of data.sections) {
+      html += `<div class="inspect-section">`;
+      html += `<div class="inspect-label">${section.label}</div>`;
+
+      if (section.type === 'desc') {
+        html += `<div class="inspect-desc">${section.content}</div>`;
+      } else if (section.type === 'ioflow') {
+        html += `<div class="io-flow">
+                   <div class="io-box"><div class="io-box-label">In</div>${section.content.in}</div>
+                   <div class="io-arrow">→</div>
+                   <div class="io-box"><div class="io-box-label">Out</div>${section.content.out}</div>
+                 </div>`;
+      } else if (section.type === 'prompt') {
+        html += `<div class="prompt-block">${section.content}</div>`;
+      } else if (section.type === 'files') {
+        html += `<div class="file-list">`;
+        for (const f of section.content) {
+          html += `<div class="file-row"><span class="file-icon">📄</span><span class="file-name">${f.name}</span><span class="file-meta">${f.meta}</span></div>`;
+        }
+        html += `</div>`;
+      } else if (section.type === 'connections') {
+        html += `<div class="connection-list">`;
+        for (const c of section.content) {
+          html += `<div class="connection-row"><span class="arrow">${c.arrow}</span><span class="target">${c.target}</span><span class="note">${c.note}</span></div>`;
+        }
+        html += `</div>`;
+      }
+      html += `</div>`;
+    }
+    inspectView.innerHTML = html;
+
+    document.querySelectorAll('.node').forEach(n => n.classList.remove('selected'));
+    const target = document.querySelector(`[data-node="${nodeKey}"]`);
+    if (target) target.classList.add('selected');
+  }
+
+  function exitInspect() {
+    $('rhDefault').style.display = 'block';
+    $('rhInspect').style.display = 'none';
+    $('backBtn').classList.remove('visible');
+    $('defaultView').style.display = 'block';
+    $('inspectView').classList.remove('visible');
+    document.querySelectorAll('.node').forEach(n => n.classList.remove('selected'));
+  }
+
+  // ============ STAGE SWITCHING ============
+  function switchStage(stageNum) {
+    currentStage = String(stageNum);
+    document.body.dataset.stage = currentStage;
+    document.querySelectorAll('.top-tab').forEach(t => {
+      t.classList.toggle('active', t.dataset.tab === currentStage);
+    });
+    const labels = { '0': '1 · chat assistant', '2': '2 · workflow pipeline', '3': '3 · agentic system' };
+    const titles = { '0': 'Chat · <em>multi-turn conversation</em>', '2': 'What\'s <em>happening?</em>', '3': 'What\'s <em>happening?</em>' };
+    const nodeCounts = { '0': '—', '2': '6', '3': '7' };
+    const clearLabels = { '0': 'Clear Chat', '2': 'Clear', '3': 'Clear' };
+    const clearBtn = $('clearBtn');
+    if (clearBtn) clearBtn.innerHTML = (clearLabels[currentStage] || 'Clear') + ' <span class="kbd">⌘K</span>';
+    $('metaStage').textContent = labels[currentStage];
+    $('metaNodes').textContent = nodeCounts[currentStage];
+    $('rhTitle').innerHTML = titles[currentStage];
+
+    exitInspect();
+    fullReset();
+    pathRefs = buildConnections();
+    updatePanelForStage(currentStage);
+  }
+
+  // ============ ANIMATION ============
+  function fmt(ms) { return (ms / 1000).toFixed(2) + 's'; }
+
+  function fullReset() {
+    $('feed').innerHTML = `
+      <div class="feed-empty">Pick a transcript above, then press <em>Run</em> to begin.</div>
+      <div class="feed-hint">
+        <b>Try this:</b> click any node on the left to peek inside.<br>
+        You'll see exactly what's making it tick — including the actual instructions it follows.
+      </div>
+    `;
+    document.querySelectorAll('.node').forEach(n => n.classList.remove('active','complete'));
+    document.querySelectorAll('[id$="State"], [id$="StateLabel"]').forEach(el => el.textContent = 'idle');
+    document.querySelectorAll('[id$="Time"]').forEach(el => el.textContent = '—');
+    Object.keys(pathRefs).forEach(p => pathRefs[p].classList.remove('active','complete'));
+    $('outEmpty').style.display = '';
+    $('outContent').classList.remove('visible');
+    $('canvasStatus').textContent = '● ready';
+    $('canvasStatus').style.color = 'var(--orch)';
+    if ($('workflowResult')) $('workflowResult').innerHTML = '';
+    if ($('orchResult')) $('orchResult').innerHTML = '';
+    if ($('orchTranscript')) $('orchTranscript').value = '';
+    if ($('workflowTranscript')) $('workflowTranscript').value = '';
+    if ($('orchInstruction')) $('orchInstruction').value = '';
+    if ($('s3RunReport')) $('s3RunReport').style.display = 'none';
+    if ($('orchConductorPlan')) $('orchConductorPlan').style.display = 'none';
+    ['orchStep1','orchStep2','orchStep3','orchStep4','orchStep5'].forEach(id => { if ($(id)) setStep(id, 'idle'); });
+  }
+
+  // ── Toast (in-app notification fallback) ──
+  let toastTimer = null;
+  function toast(msg) {
+    const el = $('appToast');
+    if (!el) return;
+    el.textContent = msg;
+    el.classList.add('visible');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => el.classList.remove('visible'), 4000);
+  }
+
+  // ── Friendly error decoder ──
+  // Anthropic SDK error messages start with the HTTP status code (e.g. "529 {...}").
+  // Map common status codes to a friendly inline message + a short toast.
+  function describeApiError(message) {
+    const m = String(message || '');
+    const codeMatch = m.match(/^(\d{3})\b/);
+    const code = codeMatch ? parseInt(codeMatch[1], 10) : null;
+    if (code === 529 || /overloaded/i.test(m)) {
+      return { friendly: '⚠ Anthropic is overloaded right now. Try again in a moment.', toast: 'Anthropic overloaded — try again' };
+    }
+    if (code === 503) {
+      return { friendly: '⚠ Anthropic API is temporarily unavailable. Try again in a moment.', toast: 'API unavailable — try again' };
+    }
+    if (code === 429 || /rate.?limit/i.test(m)) {
+      return { friendly: '⚠ Rate limited. Wait a few seconds, then try again.', toast: 'Rate limited — wait a moment' };
+    }
+    if (code === 401) {
+      return { friendly: '⚠ API key issue. Check student-output/.env has a valid ANTHROPIC_API_KEY.', toast: 'API key issue — check .env' };
+    }
+    if (/Unexpected token|JSON|not valid JSON/i.test(m)) {
+      return { friendly: '⚠ A specialist returned malformed JSON (probably wrapped in markdown fences). Try running again — the retry helper usually clears it.', toast: 'Malformed JSON from specialist — try again' };
+    }
+    if (/ECONN|ETIMEDOUT|ENOTFOUND|fetch/i.test(m)) {
+      return { friendly: '⚠ Network error talking to the server. Make sure `npm run server` is still running in your terminal.', toast: 'Network error — is the server running?' };
+    }
+    // Default: surface the actual error message in the toast (truncated) so the
+    // student doesn't have to dig into the raw output for a hint.
+    const snippet = m.length > 80 ? m.slice(0, 77) + '…' : m;
+    return { friendly: '⚠ Something went wrong. Try again, or check the browser console for details.', toast: `Error: ${snippet}` };
+  }
+
+  function addFeed(e) {
+    const feed = $('feed');
+    if (feed.querySelector('.feed-empty')) feed.innerHTML = '';
+    const div = document.createElement('div');
+    div.className = 'feed-item';
+    div.innerHTML = `
+      <div class="feed-meta">
+        <span class="feed-source ${e.src}">${e.srcLabel}</span>
+        <span class="feed-time">${fmt(e.t)}</span>
+      </div>
+      <div class="feed-msg">${e.msg}</div>
+    `;
+    feed.appendChild(div);
+    requestAnimationFrame(() => div.classList.add('visible'));
+    const body = $('rightBody');
+    body.scrollTop = body.scrollHeight;
+  }
+
+  function setNode(nodeId, state) {
+    const node = $(nodeId);
+    if (!node) return;
+    node.classList.remove('active','complete');
+    if (state) node.classList.add(state);
+    const stateLabel = $(nodeId + 'State');
+    if (stateLabel) {
+      stateLabel.textContent = state === 'active' ? 'working…' : state === 'complete' ? 'done' : 'idle';
+    }
+  }
+
+  function flyParticle(particleId, fromNodeId, toNodeId) {
+    const svg = $('svg');
+    const wrap = svg.parentElement.getBoundingClientRect();
+    const fromRect = $(fromNodeId).getBoundingClientRect();
+    const toRect = $(toNodeId).getBoundingClientRect();
+
+    let fromX, fromY, toX, toY;
+    if (Math.abs(fromRect.left - toRect.left) > 50) {
+      // horizontal
+      if (fromRect.left < toRect.left) {
+        fromX = fromRect.right - wrap.left;
+        toX = toRect.left - wrap.left;
+      } else {
+        fromX = fromRect.left - wrap.left;
+        toX = toRect.right - wrap.left;
+      }
+      fromY = fromRect.top + fromRect.height/2 - wrap.top;
+      toY = toRect.top + toRect.height/2 - wrap.top;
+    } else {
+      // vertical
+      fromX = fromRect.left + fromRect.width/2 - wrap.left;
+      toX = toRect.left + toRect.width/2 - wrap.left;
+      if (fromRect.top < toRect.top) {
+        fromY = fromRect.bottom - wrap.top;
+        toY = toRect.top - wrap.top;
+      } else {
+        fromY = fromRect.top - wrap.top;
+        toY = toRect.bottom - wrap.top;
+      }
+    }
+
+    const p = $(particleId);
+    p.style.transition = '';
+    p.style.left = (fromX - 6) + 'px';
+    p.style.top = (fromY - 6) + 'px';
+    p.classList.remove('flying');
+    void p.offsetWidth;
+
+    requestAnimationFrame(() => {
+      p.style.transition = 'opacity 0.15s, left 0.85s cubic-bezier(0.4, 0, 0.2, 1), top 0.85s cubic-bezier(0.4, 0, 0.2, 1)';
+      p.classList.add('flying');
+      p.style.left = (toX - 6) + 'px';
+      p.style.top = (toY - 6) + 'px';
+    });
+    setTimeout(() => { p.classList.remove('flying'); p.style.transition = ''; }, 1000);
+  }
+
+  function setPath(id, state) {
+    const path = pathRefs[id];
+    if (!path) return;
+    path.classList.remove('active','complete');
+    if (state) path.classList.add(state);
+  }
+
+  // pick a particle id appropriate for the source color
+  function pickParticleFor(fromNodeId) {
+    if (fromNodeId.includes('input')) return 'p1';
+    if (fromNodeId.includes('summ')) return 'p3';
+    if (fromNodeId === 's3-extr') return 'p5';
+    if (fromNodeId === 's3-route') return 'p4';
+    if (fromNodeId === 's3-router') return 'p7';
+    if (fromNodeId === 's3-reflect') return 'p8';
+    if (fromNodeId.includes('extr')) return 'p5';
+    if (fromNodeId.includes('route')) return 'p4';
+    if (fromNodeId.includes('standup') || fromNodeId.includes('client') || fromNodeId.includes('planning')) return 'p6';
+    if (fromNodeId.includes('output')) return 'p6';
+    return 'p2'; // default: orch color
+  }
+
+  // Plays the animation for the current stage. Called by per-panel Run buttons.
+  // Runs in parallel with the API call so the visualization feels alive.
+  async function playAnimation(activeTools = null, overrideSequence = null) {
+    const sourceEvents = overrideSequence || sequences[currentStage];
+    if (!sourceEvents) return;
+    document.querySelectorAll('.node').forEach(n => n.classList.remove('active','complete'));
+    Object.keys(pathRefs).forEach(p => pathRefs[p].classList.remove('active','complete'));
+    $('canvasStatus').textContent = '● running';
+
+    // If the caller passed an active tools list (e.g., the Conductor's plan
+    // limited the run to just ['router']), drop any event whose `tools` tag
+    // doesn't intersect. Untagged events always play.
+    const allEvents = sourceEvents;
+    const sequence = activeTools
+      ? allEvents.filter(e => !e.tools || e.tools.some(t => activeTools.includes(t)))
+      : allEvents;
+    const startTimes = {};
+    const start = performance.now();
+
+    for (const e of sequence) {
+      const wait = e.t - (performance.now() - start);
+      if (wait > 0) await new Promise(r => setTimeout(r, wait));
+      addFeed(e);
+
+      if (e.node && e.state === 'active') {
+        setNode(e.node, 'active');
+        startTimes[e.node] = e.t;
+      }
+      if (e.complete) {
+        setNode(e.complete, 'complete');
+        const elapsed = e.t - (startTimes[e.complete] || 0);
+        const tm = $(e.complete + 'Time');
+        if (tm) tm.textContent = fmt(elapsed);
+      }
+      if (e.particle) {
+        const [from, to] = e.particle.split('>');
+        const pid = pickParticleFor(from);
+        flyParticle(pid, from, to);
+        setPath(e.particle, 'active');
+        setTimeout(() => setPath(e.particle, 'complete'), 1000);
+      }
+      if (e.report) {
+        $('outEmpty').style.display = 'none';
+        $('outContent').classList.add('visible');
+      }
+    }
+
+    $('canvasStatus').textContent = '● complete';
+    $('canvasStatus').style.color = 'var(--sub)';
+  }
+
+  // ============ EVENT WIRING ============
+  document.querySelectorAll('.top-tab').forEach(tab => {
+    tab.addEventListener('click', () => switchStage(tab.dataset.tab));
+  });
+
+  document.addEventListener('click', (e) => {
+    const node = e.target.closest('.node');
+    if (node && node.dataset.node) {
+      renderInspect(node.dataset.node);
+    }
+  });
+
+  $('backBtn').addEventListener('click', exitInspect);
+
+  // Top button = Clear (tab-aware). Wipes everything for the active tab.
+  $('clearBtn').addEventListener('click', () => {
+    exitInspect();
+    if (currentStage === '0') {
+      clearChatCanvas();
+    } else {
+      fullReset();
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      $('clearBtn').click();
+    }
+    if (e.key === 'Escape') exitInspect();
+    if (e.key === '1' && !e.metaKey && !e.ctrlKey && !e.altKey) {
+      if (document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') switchStage('0');
+    }
+    if (e.key === '2' && !e.metaKey && !e.ctrlKey && !e.altKey) {
+      if (document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') switchStage('2');
+    }
+    if (e.key === '3' && !e.metaKey && !e.ctrlKey && !e.altKey) {
+      if (document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') switchStage('3');
+    }
+  });
+
+  // ============ INTERACTIVE PANELS ============
+  let serverOnline = false;
+
+  async function checkServer() {
+    try {
+      const r = await fetch('/api/health', { signal: AbortSignal.timeout(1500) });
+      if (r.ok) {
+        serverOnline = true;
+        $('serverBanner').style.display = 'none';
+        updatePanelForStage(currentStage);
+      } else {
+        showOfflineBanner();
+      }
+    } catch {
+      showOfflineBanner();
+    }
+  }
+
+  function showOfflineBanner() {
+    serverOnline = false;
+    $('serverBanner').style.display = 'block';
+    ['panel2','panel3'].forEach(id => { const el = $(id); if (el) el.style.display = 'none'; });
+  }
+
+  function updatePanelForStage(s) {
+    ['panel2','panel3'].forEach(id => { const el = $(id); if (el) el.style.display = 'none'; });
+    // Stage 0 (chat) lives in the main canvas, no right-panel content.
+    if (serverOnline && $('panel' + s)) $('panel' + s).style.display = 'block';
+  }
+
+  async function loadSample(targetId, filename) {
+    try {
+      const url = filename ? `/api/sample-transcript/${filename}` : '/api/sample-transcript';
+      const r = await fetch(url);
+      $(targetId).value = await r.text();
+    } catch {}
+  }
+
+  // ── File drop support — drag a .txt file onto any transcript textarea ──
+  ['workflowTranscript', 'orchTranscript'].forEach(id => {
+    const el = $(id);
+    if (!el) return;
+    el.addEventListener('dragover', e => { e.preventDefault(); el.classList.add('drag-over'); });
+    el.addEventListener('dragleave', () => el.classList.remove('drag-over'));
+    el.addEventListener('drop', e => {
+      e.preventDefault();
+      el.classList.remove('drag-over');
+      const file = e.dataTransfer.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = ev => { el.value = ev.target.result; };
+      reader.readAsText(file);
+    });
+  });
+
+  // ── Chat tab (multi-turn, in main canvas) ──
+  // Conversation state — these messages grow as you send each turn.
+  // The full array is sent to /api/chat on every turn, so Claude sees the
+  // whole conversation. THIS is what module-3 means by "the messages[] array."
+  let chatMessages = [];
+  let chatSystemPromptDefault = '';
+
+  async function initChatCanvas() {
+    if (chatSystemPromptDefault) return; // only init once
+    const FALLBACK_PROMPT = 'You are a meeting analyst. Read the meeting transcript and produce a structured report with KEY THEMES, ACTION ITEMS, and a RECOMMENDED NEXT STEP.';
+    try {
+      const r = await fetch('/api/system-prompt');
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      const txt = await r.text();
+      // Defense: if server returned an HTML error page despite 200, don't dump it.
+      if (txt.trim().toLowerCase().startsWith('<!doctype') || txt.trim().toLowerCase().startsWith('<html')) {
+        throw new Error('Got HTML response from /api/system-prompt');
+      }
+      chatSystemPromptDefault = txt;
+      $('chatSystemPrompt').value = txt;
+    } catch (err) {
+      chatSystemPromptDefault = FALLBACK_PROMPT;
+      $('chatSystemPrompt').value = FALLBACK_PROMPT;
+      $('chatSystemPrompt').placeholder = 'Using default prompt — couldn\'t load from server.';
+      toast('⚠ Couldn\'t load system prompt — using default. Make sure `npm run server` is running.');
+    }
+  }
+
+  function renderChatMessages() {
+    const hist = $('chatCanvasHistory');
+    if (!chatMessages.length) {
+      hist.innerHTML = '<div class="chat-canvas-empty">No messages yet. Edit the system prompt above, load a transcript, then send a message.</div>';
+      return;
+    }
+    hist.innerHTML = '';
+    chatMessages.forEach(m => {
+      const bubble = document.createElement('div');
+      bubble.className = 'chat-bubble ' + (m.role === 'user' ? 'user' : 'assistant');
+      bubble.textContent = m.content;
+      hist.appendChild(bubble);
+    });
+    hist.scrollTop = hist.scrollHeight;
+  }
+
+  function updateChatJsonPanel(requestBody, responseObj, status) {
+    if (requestBody) $('chatJsonRequest').textContent = JSON.stringify(requestBody, null, 2);
+    if (responseObj != null) $('chatJsonResponse').textContent = JSON.stringify({ status, body: responseObj }, null, 2);
+  }
+
+  function clearChatCanvas() {
+    chatMessages = [];
+    renderChatMessages();
+    $('chatCanvasContextStatus').textContent = '';
+    $('chatCanvasInput').value = '';
+    if (chatSystemPromptDefault) $('chatSystemPrompt').value = chatSystemPromptDefault;
+    $('chatJsonRequest').textContent = 'No requests yet. Load a transcript or send a message to see the JSON sent to /api/chat.';
+    $('chatJsonResponse').textContent = '—';
+    toast('Chat cleared.');
+  }
+
+  // Shared chat-turn helper: assumes chatMessages already has the latest user
+  // message. Sends the conversation to /api/chat with the current system
+  // prompt, appends Claude's reply, updates the side-panel JSON and log strip.
+  async function runChatTurn() {
+    $('chatCanvasSend').disabled = true;
+    $('chatCanvasSend').textContent = '…';
+
+    const hist = $('chatCanvasHistory');
+    const thinkingEl = document.createElement('div');
+    thinkingEl.className = 'chat-thinking';
+    thinkingEl.innerHTML = '<div class="thinking-dot"></div>Thinking…';
+    hist.appendChild(thinkingEl);
+    hist.scrollTop = hist.scrollHeight;
+
+    const callStart = performance.now();
+    const systemPrompt = $('chatSystemPrompt').value;
+    const requestBody = { messages: chatMessages, system: systemPrompt };
+    // Show the outgoing JSON in the side panel even before the response arrives
+    updateChatJsonPanel(requestBody, { pending: true }, null);
+
+    try {
+      const r = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(requestBody),
+      });
+      const elapsed = ((performance.now() - callStart) / 1000).toFixed(2);
+      const data = await r.json();
+      const { response, usage, error } = data;
+      thinkingEl.remove();
+      if (error) throw new Error(error);
+
+      chatMessages.push({ role: 'assistant', content: response });
+      renderChatMessages();
+
+      const logStrip = document.createElement('div');
+      logStrip.className = 'chat-log-strip';
+      if (usage && usage.input_tokens != null) {
+        const total = (usage.input_tokens || 0) + (usage.output_tokens || 0);
+        logStrip.textContent = `[messages: ${chatMessages.length} · ~${total} tokens · ${elapsed}s]`;
+      } else {
+        logStrip.textContent = `[messages: ${chatMessages.length} · ${elapsed}s]`;
+      }
+      hist.appendChild(logStrip);
+      hist.scrollTop = hist.scrollHeight;
+
+      updateChatJsonPanel(requestBody, { response, usage }, r.status);
+      toast('Chat reply received.');
+    } catch (err) {
+      thinkingEl.remove();
+      const { friendly, toast: toastMsg } = describeApiError(err.message);
+      const errBubble = document.createElement('div');
+      errBubble.className = 'chat-bubble assistant';
+      errBubble.textContent = friendly + '\n\nRaw: ' + err.message;
+      hist.appendChild(errBubble);
+      updateChatJsonPanel(requestBody, { error: err.message }, null);
+      toast(toastMsg);
+    } finally {
+      $('chatCanvasSend').disabled = false;
+      $('chatCanvasSend').textContent = 'Send →';
+    }
+  }
+
+  async function loadChatTranscript(filename, label) {
+    try {
+      const url = filename ? `/api/sample-transcript/${filename}` : '/api/sample-transcript';
+      const r = await fetch(url);
+      const text = await r.text();
+      // Push the transcript as the first user message and let Claude generate
+      // the acknowledgement using the *current* system prompt. This is what
+      // makes the prompt edits in Module 3 land — the very first reply
+      // changes voice when the prompt changes.
+      chatMessages.push({
+        role: 'user',
+        content: `Here's a transcript I want to discuss:\n\n${text}`,
+      });
+      renderChatMessages();
+      $('chatCanvasContextStatus').textContent = `loaded: ${label} — asking Claude…`;
+      await runChatTurn();
+      $('chatCanvasContextStatus').textContent = `loaded: ${label}`;
+    } catch {
+      $('chatCanvasContextStatus').textContent = 'Failed to load transcript.';
+    }
+  }
+
+  async function sendChatMessage() {
+    const text = $('chatCanvasInput').value.trim();
+    if (!text) return;
+    chatMessages.push({ role: 'user', content: text });
+    renderChatMessages();
+    $('chatCanvasInput').value = '';
+    await runChatTurn();
+  }
+
+  $('chatLoadStandup').addEventListener('click', () => loadChatTranscript(null, 'sample-transcript.txt'));
+  $('chatLoadClient').addEventListener('click', () => loadChatTranscript('sample-client-call.txt', 'client call'));
+  $('chatLoadPlanning').addEventListener('click', () => loadChatTranscript('sample-planning-session.txt', 'planning'));
+  $('chatCanvasSend').addEventListener('click', sendChatMessage);
+  $('chatCanvasInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendChatMessage(); }
+  });
+
+  // ── Stage 2: Workflow ──
+  $('workflowSampleBtn').addEventListener('click', () => loadSample('workflowTranscript'));
+  $('workflowClientBtn').addEventListener('click', () => loadSample('workflowTranscript', 'sample-client-call.txt'));
+  $('workflowPlanningBtn').addEventListener('click', () => loadSample('workflowTranscript', 'sample-planning-session.txt'));
+
+  $('workflowSubmit').addEventListener('click', async () => {
+    const transcript = $('workflowTranscript').value.trim();
+    if (!transcript) return;
+    $('workflowSubmit').disabled = true;
+    $('workflowSubmit').textContent = 'Running…';
+    $('workflowResult').innerHTML = '';
+    $('canvasStatus').textContent = '● classifying…';
+    try {
+      // Step 1 — call the workflow API. We need the actual classification
+      // and filename back before driving the animation so the narration
+      // matches the real run (instead of always saying "team-standup").
+      const r = await fetch('/api/workflow', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ transcript }),
+      });
+      const { steps, classification, outputPath, error } = await r.json();
+      if (error) throw new Error(error);
+
+      // Step 2 — build the Stage 2 animation events from the real result
+      // and kick the animation off. Result panel renders in parallel.
+      const filename = outputPath ? outputPath.split('/').pop() : 'meeting-notes.txt';
+      const animPromise = playAnimation(null, buildStage2Events(classification, filename));
+
+      const esc = s => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      const wordCount = transcript.split(/\s+/).filter(Boolean).length;
+      const preview = transcript.length > 140 ? transcript.slice(0, 140).replace(/\s+/g, ' ').trim() + '…' : transcript;
+      const savedPath = outputPath ? outputPath.replace(/^.*\/transcripts\//, 'transcripts/') : `transcripts/${classification}/`;
+      let html = `<span class="class-badge">${esc(classification)}</span>`;
+      html += `<div class="out-block"><div class="out-label">📄 Source transcript</div><p style="font-size:13px;color:var(--sub);margin:4px 0 6px 0;">${wordCount} words</p><p style="font-style:italic;color:var(--sub);">"${esc(preview)}"</p></div>`;
+      html += `<div class="out-block"><div class="out-label">📁 Saved as</div><p><code>${esc(savedPath)}</code></p></div>`;
+      html += '<div class="out-block"><div class="out-label">⚙️ What happened</div><div class="orch-steps">';
+      if (steps && steps.length) {
+        for (const step of steps) {
+          html += `<div class="orch-step done"><span class="step-check">✓</span><span>${esc(step.step)}</span></div>`;
+        }
+      }
+      html += '</div></div>';
+      $('workflowResult').innerHTML = html;
+      await animPromise;
+      toast(`Workflow complete — routed to ${classification}.`);
+    } catch (err) {
+      const { friendly, toast: toastMsg } = describeApiError(err.message);
+      $('workflowResult').textContent = friendly + '\n\nRaw: ' + err.message;
+      toast(toastMsg);
+    } finally {
+      $('workflowSubmit').disabled = false;
+      $('workflowSubmit').textContent = 'Run Workflow →';
+    }
+  });
+
+  // ── Stage 3: Orchestrator ──
+  $('orchSampleBtn').addEventListener('click', () => loadSample('orchTranscript'));
+  $('orchClientBtn').addEventListener('click', () => loadSample('orchTranscript', 'sample-client-call.txt'));
+  $('orchPlanningBtn').addEventListener('click', () => loadSample('orchTranscript', 'sample-planning-session.txt'));
+
+  function setStep(stepId, state) {
+    const el = $(stepId);
+    el.classList.remove('running', 'done');
+    const check = el.querySelector('.step-check');
+    if (state === 'running') { el.classList.add('running'); check.textContent = '◌'; }
+    else if (state === 'done') { el.classList.add('done'); check.textContent = '✓'; }
+    else { check.textContent = '○'; }
+  }
+
+  function buildOutputHTML(themes, actions, report, classification) {
+    const esc = s => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    const labelMap = {
+      'KEY THEMES': 'Key Themes', 'DECISIONS': 'Decisions',
+      'KEY DECISIONS': 'Key Decisions', 'ACTION ITEMS': 'Action Items',
+      'RECOMMENDED NEXT STEP': 'Recommended Next Step',
+    };
+    let html = classification ? `<span class="class-badge">${esc(classification)}</span>` : '';
+
+    if (report) {
+      // Synthesizer output — **SECTION** bold headers, bullet/prose content, wrapped in ---
+      const lines = report.split('\n');
+      let current = null;
+      const sections = [];
+      for (const line of lines) {
+        const t = line.trim();
+        if (!t) continue;
+        if (t === '---') { if (current) { sections.push(current); current = null; } continue; }
+        const m = t.match(/^\*\*([^*]+)\*\*\s*$/);
+        if (m) { if (current) sections.push(current); current = { label: m[1].trim(), lines: [] }; }
+        else if (current) current.lines.push(t);
+      }
+      if (current) sections.push(current);
+
+      for (const { label, lines: body } of sections) {
+        if (!body.length) continue;
+        const display = labelMap[label] || label;
+        if (label === 'RECOMMENDED NEXT STEP') {
+          html += `<div class="out-block"><div class="out-label">${display}</div><p class="next-step">${esc(body.join(' '))}</p></div>`;
+        } else if (body[0].startsWith('-')) {
+          const items = body.map(l => { const t = esc(l.replace(/^-\s*/, '')); return `<li>${t.replace(/^([^:]+):/, '<b>$1</b>:')}</li>`; }).join('');
+          html += `<div class="out-block"><div class="out-label">${display}</div><ul class="out-list">${items}</ul></div>`;
+        } else {
+          html += `<div class="out-block"><div class="out-label">${display}</div><p>${esc(body.join(' '))}</p></div>`;
+        }
+      }
+    } else if (themes || actions) {
+      if (themes) {
+        let sec = null;
+        const secMap = {};
+        for (const line of themes.split('\n')) {
+          const t = line.trim();
+          if (t === 'KEY THEMES' || t === 'KEY DECISIONS') { sec = t; secMap[sec] = []; }
+          else if (sec && t.startsWith('-')) secMap[sec].push(t.replace(/^-\s*/, ''));
+        }
+        for (const [key, items] of Object.entries(secMap)) {
+          if (!items.length) continue;
+          const listHTML = items.map(item => { const e = esc(item); return `<li>${e.replace(/^([^:]+):/, '<b>$1</b>:')}</li>`; }).join('');
+          html += `<div class="out-block"><div class="out-label">${labelMap[key] || key}</div><ul class="out-list">${listHTML}</ul></div>`;
+        }
+      }
+      if (actions) {
+        try {
+          const items = JSON.parse(actions.replace(/^```json?\n?|\n?```$/gm, '').trim());
+          const listHTML = items.map(({ owner, task, deadline }) =>
+            `<li><b>${esc(owner)}</b> · ${esc(task)}${deadline ? ` by ${esc(deadline)}` : ''}</li>`
+          ).join('');
+          html += `<div class="out-block"><div class="out-label">Action Items</div><ul class="out-list">${listHTML}</ul></div>`;
+        } catch {
+          html += `<div class="out-block"><div class="out-label">Action Items</div><pre style="font-size:12px;white-space:pre-wrap;margin:0">${esc(actions)}</pre></div>`;
+        }
+      }
+    }
+
+    return html || `<p style="color:var(--sub);font-size:13px;margin:0">Run complete — no output for this configuration.</p>`;
+  }
+
+  $('orchSubmit').addEventListener('click', async () => {
+    const transcript = $('orchTranscript').value.trim();
+    if (!transcript) return;
+    $('orchSubmit').disabled = true;
+    $('orchSubmit').textContent = 'Running…';
+    $('orchResult').innerHTML = '';
+    $('s3RunReport').style.display = 'none';
+    const ALL_STEPS = ['orchStep1','orchStep2','orchStep3','orchStep4','orchStep5'];
+    ALL_STEPS.forEach(id => setStep(id, 'idle'));
+
+    // ── Live visualization helpers ──
+    // Drive the canvas animation, activity feed, and step markers from the
+    // ACTUAL API completions. Previously this stage ran a scripted ~11-second
+    // timeline alongside the real API calls, which finished out of sync —
+    // logs went fast, steps lagged. Now everything advances together.
+    document.querySelectorAll('.node').forEach(n => n.classList.remove('active','complete'));
+    Object.keys(pathRefs).forEach(p => pathRefs[p].classList.remove('active','complete'));
+    $('outEmpty').style.display = 'block';
+    $('outContent').classList.remove('visible');
+    $('canvasStatus').textContent = '● running';
+    $('canvasStatus').style.color = '';
+
+    const t0 = performance.now();
+    const now = () => performance.now() - t0;
+    const sleep = ms => new Promise(r => setTimeout(r, ms));
+    const startTimes = {};
+    const begin = (id) => { setNode(id, 'active'); startTimes[id] = now(); };
+    const finish = (id) => {
+      setNode(id, 'complete');
+      const elapsed = now() - (startTimes[id] || 0);
+      const tm = $(id + 'Time');
+      if (tm) tm.textContent = fmt(elapsed);
+    };
+    const fire = (from, to) => {
+      const pid = pickParticleFor(from);
+      flyParticle(pid, from, to);
+      const key = `${from}>${to}`;
+      setPath(key, 'active');
+      setTimeout(() => setPath(key, 'complete'), 1000);
+    };
+    const log = (src, label, msg) => addFeed({ t: now(), src, srcLabel: label, msg });
+
+    try {
+      $('orchConductorPlan').style.display = 'none';
+
+      const instruction = $('orchInstruction') ? $('orchInstruction').value.trim() : '';
+      let tools = ['analyst', 'extractor', 'synthesizer', 'router', 'reflect'];
+
+      // Intro: transcript arrives at the Conductor.
+      // The pacing rule throughout: a particle takes ~1s to fly. After it
+      // lands we let the Conductor "dwell" before its next move so the
+      // student sees a discrete handoff (transcript arrives → think →
+      // dispatch), not a simultaneous swap.
+      const PARTICLE_MS = 1000;     // matches the setPath complete timeout in fire()
+      const DWELL_AFTER_RETURN = 700;
+      const DWELL_BEFORE_DISPATCH = 500;
+
+      begin('s3-input');
+      log('input', 'A transcript', 'Transcript received. Sending to the Conductor.');
+      await sleep(400);
+      fire('s3-input', 's3-agent');
+      finish('s3-input');
+      await sleep(PARTICLE_MS);     // wait for the particle to actually arrive
+      begin('s3-agent');
+
+      // Conductor planning (only if instruction given)
+      if (instruction) {
+        log('orch', 'The Conductor', 'Reading the instruction. Picking which tools to call.');
+        const rPlan = await fetch('/api/orchestrate/conductor', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ transcript, instruction }),
+        });
+        const { plan, error: ePlan } = await rPlan.json();
+        if (ePlan) throw new Error(ePlan);
+        tools = plan.tools;
+        $('orchConductorTools').textContent = plan.tools.join(' → ');
+        $('orchConductorReason').textContent = plan.reasoning;
+        $('orchConductorPlan').style.display = 'block';
+        log('orch', 'The Conductor', `Plan: <code>[${plan.tools.join(', ')}]</code>. ${plan.reasoning}`);
+      } else {
+        // Default run (no instruction): show a synthetic plan badge so the
+        // student always sees what's about to fire and why. The Conductor
+        // isn't actually called here — its rule "no instruction → run all
+        // five" is implicit and we surface it as the plan.
+        $('orchConductorTools').textContent = tools.join(' → ');
+        $('orchConductorReason').textContent = 'No instruction given — running the full pipeline.';
+        $('orchConductorPlan').style.display = 'block';
+        log('orch', 'The Conductor', 'No instruction — running the full pipeline (default plan).');
+        await sleep(DWELL_BEFORE_DISPATCH);
+      }
+      await sleep(DWELL_BEFORE_DISPATCH);
+
+      let themes = null, actions = null, report = null, classification = null;
+
+      // Steps 1 + 2: Analyst + Extractor — fire in parallel server-side.
+      // Stagger the visual dispatch by ~250ms so the two outgoing balls are
+      // distinguishable rather than overlapping into one trail.
+      const needsAnalyst = tools.includes('analyst');
+      const needsExtractor = tools.includes('extractor');
+      if (needsAnalyst || needsExtractor) {
+        if (needsAnalyst) {
+          fire('s3-agent', 's3-summ');
+          begin('s3-summ');
+          log('sub', 'The Analyst', 'Reading the transcript. Identifying key themes and decisions…');
+          setStep('orchStep1', 'running');
+        }
+        if (needsExtractor) {
+          if (needsAnalyst) await sleep(250);
+          fire('s3-agent', 's3-extr');
+          begin('s3-extr');
+          log('extr', 'The Extractor', 'Reading the transcript. Pulling action items, owners, deadlines.');
+          setStep('orchStep2', 'running');
+        }
+        const r1 = await fetch('/api/orchestrate/step1', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ transcript, tools }),
+        });
+        const { themes: t, actions: a, error: e1 } = await r1.json();
+        if (e1) throw new Error(e1);
+        if (t != null) {
+          themes = t;
+          finish('s3-summ');
+          fire('s3-summ', 's3-agent');
+          log('sub', 'The Analyst', 'Themes complete. Returning to Conductor.');
+          setStep('orchStep1', 'done');
+        }
+        if (a != null) {
+          actions = a;
+          if (t != null) await sleep(250);   // stagger the returns too
+          finish('s3-extr');
+          fire('s3-extr', 's3-agent');
+          log('extr', 'The Extractor', 'Action items complete. Returning to Conductor.');
+          setStep('orchStep2', 'done');
+        }
+        // Wait for return particles to land + a beat of Conductor dwell
+        // before firing the next dispatch.
+        await sleep(PARTICLE_MS + DWELL_AFTER_RETURN);
+        if (tools.includes('synthesizer')) {
+          log('orch', 'The Conductor', 'Got themes and actions back. Sending them to the Synthesizer.');
+        }
+      }
+
+      // Step 3: Synthesizer
+      if (tools.includes('synthesizer') && themes && actions) {
+        fire('s3-agent', 's3-route');
+        begin('s3-route');
+        log('extr', 'The Synthesizer', 'Combining themes + action items into the final insights report…');
+        setStep('orchStep3', 'running');
+        const r2 = await fetch('/api/orchestrate/step2', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ themes, actions }),
+        });
+        const { report: rpt, error: e2 } = await r2.json();
+        if (e2) throw new Error(e2);
+        report = rpt;
+        finish('s3-route');
+        fire('s3-route', 's3-agent');
+        log('extr', 'The Synthesizer', 'Report complete. Returning to Conductor.');
+        setStep('orchStep3', 'done');
+        await sleep(PARTICLE_MS + DWELL_AFTER_RETURN);
+        if (tools.includes('router')) {
+          log('orch', 'The Conductor', 'Got the report. Sending transcript + report to the Router.');
+        }
+      }
+
+      // Step 4: Router (Stage 2 reused)
+      if (tools.includes('router')) {
+        fire('s3-agent', 's3-router');
+        begin('s3-router');
+        log('orch', 'The Router', 'Stage 2\'s runWorkflow() — classifying, saving, notifying.');
+        setStep('orchStep4', 'running');
+        const r3 = await fetch('/api/orchestrate/step3', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ transcript, report }),
+        });
+        const { classification: cls, error: e3 } = await r3.json();
+        if (e3) throw new Error(e3);
+        classification = cls;
+        finish('s3-router');
+        fire('s3-router', 's3-agent');
+        log('orch', 'The Router', `Classified as <em>${cls}</em>. Saved + notified.`);
+        setStep('orchStep4', 'done');
+        await sleep(PARTICLE_MS + DWELL_AFTER_RETURN);
+        if (tools.includes('reflect')) {
+          log('orch', 'The Conductor', 'Router done. Sending the full run trace to Reflect for an after-action report.');
+        }
+      }
+
+      // Step 5: Reflect — run report
+      if (tools.includes('reflect')) {
+        fire('s3-agent', 's3-reflect');
+        begin('s3-reflect');
+        log('sub', 'The Reflect', 'Reading the full run — themes, actions, report, classification. Writing the after-action report…');
+        setStep('orchStep5', 'running');
+        const r4 = await fetch('/api/orchestrate/step4', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ transcript, themes, actions, report, classification }),
+        });
+        const { runReport, error: e4 } = await r4.json();
+        if (e4) throw new Error(e4);
+        setStep('orchStep5', 'done');
+        finish('s3-reflect');
+        fire('s3-reflect', 's3-agent');
+        $('s3RunReportContent').textContent = runReport;
+        $('s3RunReport').style.display = 'block';
+        log('sub', 'The Reflect', 'After-action report complete. Returning to Conductor.');
+        await sleep(DWELL_BEFORE_DISPATCH);
+      }
+
+      // Outro: hand off to output
+      fire('s3-agent', 's3-output');
+      finish('s3-agent');
+      await sleep(PARTICLE_MS);
+      begin('s3-output');
+      log('output', 'Result', 'Run complete.');
+      $('outEmpty').style.display = 'none';
+      $('outContent').classList.add('visible');
+      finish('s3-output');
+      $('canvasStatus').textContent = '● complete';
+      $('canvasStatus').style.color = 'var(--sub)';
+
+      // Show results
+      $('outContent').innerHTML = buildOutputHTML(themes, actions, report, classification);
+      $('orchResult').innerHTML = '';
+      $('rightBody').scrollTop = $('rightBody').scrollHeight;
+      toast(`Orchestrator complete — ${tools.length} specialists ran${classification ? ', routed to ' + classification : ''}.`);
+    } catch (err) {
+      const { friendly, toast: toastMsg } = describeApiError(err.message);
+      $('orchResult').textContent = friendly + '\n\nRaw: ' + err.message;
+      toast(toastMsg);
+      ALL_STEPS.forEach(id => setStep(id, 'idle'));
+      $('canvasStatus').textContent = '● error';
+    } finally {
+      $('orchSubmit').disabled = false;
+      $('orchSubmit').textContent = 'Run Orchestrator →';
+    }
+  });
+
+  // initial build (must come before switchStage so paths exist)
+  pathRefs = buildConnections();
+  window.addEventListener('resize', () => { pathRefs = buildConnections(); });
+
+  // Check server on load + init the chat canvas (default tab is "chat")
+  checkServer();
+  initChatCanvas();
+  switchStage('0');
+</script>
+</body>
+</html>
