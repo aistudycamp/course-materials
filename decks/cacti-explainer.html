@@ -390,51 +390,54 @@ h3 { font-size: 17px; font-weight: 600; margin-bottom: 6px; }
       </div>
     </div>
 
-    <!-- Two-zone hub diagram -->
-    <div style="position:relative;height:390px;flex-shrink:0">
+    <!-- Two-zone hub diagram — CSS flex, no absolute positioning -->
+    <div style="display:flex;align-items:center;gap:0;width:100%">
 
-      <!-- Cacti center -->
-      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-52%);width:76px;height:76px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-direction:column;z-index:3;box-shadow:0 0 0 10px rgba(13,148,136,0.12)">
-        <div style="font-size:22px">🌵</div>
-        <div style="font-size:9px;font-weight:700;color:white;letter-spacing:1px">CACTI</div>
+      <!-- YOU node -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:6px;margin-right:10px">
+        <div style="background:var(--surface2);border:2px solid var(--text);border-radius:10px;padding:7px 13px;font-size:13px;font-weight:700;white-space:nowrap">👤 You</div>
+        <div style="font-size:10px;color:var(--text2)">talks to</div>
+      </div>
+      <!-- arrow to cacti -->
+      <div style="height:2px;width:22px;background:var(--text);flex-shrink:0;position:relative">
+        <div style="position:absolute;right:-1px;top:-4px;border:5px solid transparent;border-left:6px solid var(--text)"></div>
       </div>
 
-      <!-- YOU (far left) -->
-      <div style="position:absolute;top:49%;left:0;transform:translateY(-50%);background:var(--surface2);border:2px solid var(--text);border-radius:10px;padding:7px 12px;font-size:13px;font-weight:700;z-index:2;white-space:nowrap">👤 You</div>
-      <div style="position:absolute;top:49.5%;left:72px;transform:translateY(-50%);width:52px;height:2px;background:var(--text)"></div>
-      <div style="position:absolute;top:49.5%;left:122px;transform:translateY(-50%) translateX(-1px);border:5px solid transparent;border-left:6px solid var(--text)"></div>
+      <!-- CACTI center node -->
+      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;width:74px;height:74px;background:var(--accent);border-radius:50%;flex-shrink:0;box-shadow:0 0 0 10px rgba(13,148,136,0.1);z-index:2;margin:0 4px">
+        <div style="font-size:22px;line-height:1">🌵</div>
+        <div style="font-size:9px;font-weight:700;color:white;letter-spacing:1px;margin-top:2px">CACTI</div>
+      </div>
 
-      <!-- SVG lines (blue for tools left, green for folders right) -->
-      <svg style="position:absolute;top:0;left:0;width:100%;height:100%;overflow:visible;pointer-events:none;z-index:1">
-        <!-- Blue tool lines (left of center ~50%=220px, center Y ~48%=188px) -->
-        <line x1="190" y1="42" x2="220" y2="185" stroke="rgba(37,99,235,0.4)" stroke-width="1.5" stroke-dasharray="5,3"/>
-        <line x1="162" y1="100" x2="208" y2="181" stroke="rgba(37,99,235,0.4)" stroke-width="1.5" stroke-dasharray="5,3"/>
-        <line x1="155" y1="175" x2="207" y2="190" stroke="rgba(37,99,235,0.4)" stroke-width="1.5" stroke-dasharray="5,3"/>
-        <line x1="162" y1="254" x2="210" y2="200" stroke="rgba(37,99,235,0.4)" stroke-width="1.5" stroke-dasharray="5,3"/>
-        <line x1="190" y1="322" x2="220" y2="210" stroke="rgba(37,99,235,0.4)" stroke-width="1.5" stroke-dasharray="5,3"/>
-        <!-- Green folder lines (right of center) -->
-        <line x1="310" y1="52" x2="262" y2="180" stroke="rgba(22,163,74,0.45)" stroke-width="1.5" stroke-dasharray="5,3"/>
-        <line x1="320" y1="130" x2="264" y2="186" stroke="rgba(22,163,74,0.45)" stroke-width="1.5" stroke-dasharray="5,3"/>
-        <line x1="320" y1="220" x2="264" y2="200" stroke="rgba(22,163,74,0.45)" stroke-width="1.5" stroke-dasharray="5,3"/>
-        <line x1="310" y1="306" x2="262" y2="210" stroke="rgba(22,163,74,0.45)" stroke-width="1.5" stroke-dasharray="5,3"/>
-      </svg>
+      <!-- Left bracket: tools connect to cacti -->
+      <div style="display:flex;align-items:center;gap:0;flex:1">
+        <!-- bracket arm -->
+        <div style="width:18px;flex-shrink:0;align-self:stretch;border:2px solid rgba(37,99,235,0.35);border-right:none;border-radius:8px 0 0 8px;margin:8px 0"></div>
+        <!-- tools column -->
+        <div style="flex:1;display:flex;flex-direction:column;gap:7px;padding:8px 0 8px 10px">
+          <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--blue);margin-bottom:2px">MCPs — external tools</div>
+          <div style="background:var(--surface);border:1.5px solid rgba(37,99,235,0.28);border-radius:7px;padding:5px 10px;font-size:12.5px;font-weight:600">📧 Gmail</div>
+          <div style="background:var(--surface);border:1.5px solid rgba(37,99,235,0.28);border-radius:7px;padding:5px 10px;font-size:12.5px;font-weight:600">💬 Slack</div>
+          <div style="background:var(--surface);border:1.5px solid rgba(37,99,235,0.28);border-radius:7px;padding:5px 10px;font-size:12.5px;font-weight:600">📋 Linear</div>
+          <div style="background:var(--surface);border:1.5px solid rgba(37,99,235,0.28);border-radius:7px;padding:5px 10px;font-size:12.5px;font-weight:600">📅 Calendar</div>
+          <div style="background:var(--surface);border:1.5px solid rgba(37,99,235,0.28);border-radius:7px;padding:5px 10px;font-size:12.5px;font-weight:600">🐙 GitHub ×2</div>
+        </div>
+      </div>
 
-      <!-- TOOL nodes (left side, blue) -->
-      <div style="position:absolute;top:24px;left:130px;background:var(--surface);border:1.5px solid rgba(37,99,235,0.3);border-radius:7px;padding:5px 10px;font-size:12px;font-weight:600;white-space:nowrap;z-index:2">📧 Gmail</div>
-      <div style="position:absolute;top:82px;left:118px;background:var(--surface);border:1.5px solid rgba(37,99,235,0.3);border-radius:7px;padding:5px 10px;font-size:12px;font-weight:600;z-index:2">💬 Slack</div>
-      <div style="position:absolute;top:160px;left:110px;background:var(--surface);border:1.5px solid rgba(37,99,235,0.3);border-radius:7px;padding:5px 10px;font-size:12px;font-weight:600;z-index:2">📋 Linear</div>
-      <div style="position:absolute;top:238px;left:118px;background:var(--surface);border:1.5px solid rgba(37,99,235,0.3);border-radius:7px;padding:5px 10px;font-size:12px;font-weight:600;z-index:2">📅 Calendar</div>
-      <div style="position:absolute;top:306px;left:130px;background:var(--surface);border:1.5px solid rgba(37,99,235,0.3);border-radius:7px;padding:5px 10px;font-size:12px;font-weight:600;white-space:nowrap;z-index:2">🐙 GitHub ×2</div>
+      <!-- Right bracket: folders connect to cacti -->
+      <div style="display:flex;align-items:center;gap:0;flex:1">
+        <!-- tools column -->
+        <div style="flex:1;display:flex;flex-direction:column;gap:7px;padding:8px 10px 8px 0">
+          <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--green);margin-bottom:2px">Project folders</div>
+          <div style="background:var(--surface);border:1.5px solid rgba(22,163,74,0.3);border-radius:7px;padding:5px 10px;font-size:12.5px;font-weight:600">🏢 nuvocargo/</div>
+          <div style="background:var(--surface);border:1.5px solid rgba(22,163,74,0.3);border-radius:7px;padding:5px 10px;font-size:12.5px;font-weight:600">👤 personal/</div>
+          <div style="background:var(--surface);border:1.5px solid rgba(22,163,74,0.3);border-radius:7px;padding:5px 10px;font-size:12.5px;font-weight:600">🎓 aisc/</div>
+          <div style="background:var(--surface);border:1.5px solid rgba(22,163,74,0.3);border-radius:7px;padding:5px 10px;font-size:12.5px;font-weight:600">🌵 cacti/</div>
+        </div>
+        <!-- bracket arm -->
+        <div style="width:18px;flex-shrink:0;align-self:stretch;border:2px solid rgba(22,163,74,0.35);border-left:none;border-radius:0 8px 8px 0;margin:8px 0"></div>
+      </div>
 
-      <!-- FOLDER nodes (right side, green) -->
-      <div style="position:absolute;top:34px;right:4px;background:var(--surface);border:1.5px solid rgba(22,163,74,0.35);border-radius:7px;padding:5px 10px;font-size:12px;font-weight:600;white-space:nowrap;z-index:2">🏢 nuvocargo/</div>
-      <div style="position:absolute;top:112px;right:4px;background:var(--surface);border:1.5px solid rgba(22,163,74,0.35);border-radius:7px;padding:5px 10px;font-size:12px;font-weight:600;white-space:nowrap;z-index:2">👤 personal/</div>
-      <div style="position:absolute;top:202px;right:4px;background:var(--surface);border:1.5px solid rgba(22,163,74,0.35);border-radius:7px;padding:5px 10px;font-size:12px;font-weight:600;white-space:nowrap;z-index:2">🎓 aisc/</div>
-      <div style="position:absolute;top:288px;right:4px;background:var(--surface);border:1.5px solid rgba(22,163,74,0.35);border-radius:7px;padding:5px 10px;font-size:12px;font-weight:600;white-space:nowrap;z-index:2">🌵 cacti/</div>
-
-      <!-- Zone labels -->
-      <div style="position:absolute;top:6px;left:118px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--blue);opacity:0.7">MCPs</div>
-      <div style="position:absolute;top:6px;right:4px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--green);opacity:0.7">Folders</div>
     </div>
   </div>
 </div>
