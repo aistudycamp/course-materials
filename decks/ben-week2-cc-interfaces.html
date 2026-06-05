@@ -402,11 +402,11 @@
       <div class="split-left">
         <p class="body-text" style="margin-bottom: 14px;">You can't skip this layer entirely — it's how you install things, run servers, and do anything before the AI wrapper exists.</p>
 
-        <ul class="feature-list">
-          <li><strong>Install Claude Code</strong> — <code style="font-family: var(--font-mono); font-size: 13px; background: var(--cream-dark); padding: 2px 6px; border-radius: 4px;">npm install -g @anthropic-ai/claude-code</code></li>
-          <li><strong>Run dev servers</strong> — npm, bun, python, whatever your stack needs</li>
-          <li><strong>Git, package managers</strong> — brew, npm, pip, cargo</li>
-        </ul>
+        <table class="feature-table">
+          <tr><td class="ft-name">Install Claude Code</td><td class="ft-desc"><code style="font-family: var(--font-mono); font-size: 13px;">npm install -g @anthropic-ai/claude-code</code></td></tr>
+          <tr><td class="ft-name">Dev servers</td><td class="ft-desc">npm, bun, python — run them here before any AI layer exists</td></tr>
+          <tr><td class="ft-name">Git & package managers</td><td class="ft-desc">brew, npm, pip, cargo — the foundation tooling</td></tr>
+        </table>
 
         <div class="callout-teal" style="margin-top: 24px;">
           You don't need to love the terminal. You just need to not fear it.
@@ -433,12 +433,12 @@
       <div class="split-left">
         <p class="body-text" style="margin-bottom: 14px;">Same terminal you already know — plus file tree, git, and editor all in one window. You can see everything Claude is working on as it happens.</p>
 
-        <ul class="feature-list">
-          <li><strong>File tree</strong> — every file Claude touches, visible live</li>
-          <li><strong>Integrated terminal</strong> — same bash/zsh, embedded in the IDE</li>
-          <li><strong>Git sidebar</strong> — stage, diff, commit without leaving VS Code</li>
-          <li><strong>Editor open alongside</strong> — review changes in context</li>
-        </ul>
+        <table class="feature-table">
+          <tr><td class="ft-name">File tree</td><td class="ft-desc">Every file Claude touches, visible live</td></tr>
+          <tr><td class="ft-name">Integrated terminal</td><td class="ft-desc">Same bash/zsh, embedded in the IDE</td></tr>
+          <tr><td class="ft-name">Git sidebar</td><td class="ft-desc">Stage, diff, commit without leaving VS Code</td></tr>
+          <tr><td class="ft-name">Editor alongside</td><td class="ft-desc">Review changes in context as Claude makes them</td></tr>
+        </table>
       </div>
       <div class="split-right">
         <div class="screenshot-placeholder" data-screenshot="2">
@@ -461,12 +461,12 @@
       <div class="split-left">
         <p class="body-text" style="margin-bottom: 14px;">Type <code style="font-family: var(--font-mono); font-size: 15px; background: var(--cream-dark); padding: 2px 8px; border-radius: 4px;">claude</code> in the VS Code terminal. This is our setup.</p>
 
-        <ul class="feature-list" style="margin-bottom: 14px;">
-          <li><strong>Memory, MCP, skills, hooks</strong> — full Claude Code capabilities</li>
-          <li><strong>CLAUDE.md</strong> — Claude knows your codebase across sessions</li>
-          <li><strong>Edits show up in VS Code instantly</strong> — no context switching</li>
-          <li><strong>Portable config</strong> — what you learn here works everywhere</li>
-        </ul>
+        <table class="feature-table" style="margin-bottom: 14px;">
+          <tr><td class="ft-name">Memory, MCP, skills, hooks</td><td class="ft-desc">Full Claude Code capabilities — nothing stripped out</td></tr>
+          <tr><td class="ft-name">CLAUDE.md</td><td class="ft-desc">Claude knows your codebase across every session</td></tr>
+          <tr><td class="ft-name">Edits show up in VS Code</td><td class="ft-desc">See changes in the editor as Claude makes them</td></tr>
+          <tr><td class="ft-name">Portable config</td><td class="ft-desc">What you learn here works in every other interface</td></tr>
+        </table>
 
         <div class="callout-teal">
           Everything Claude does is visible in the editor alongside you. That's the point.
@@ -522,14 +522,14 @@
       <div class="split-left" style="flex: 1.1;">
         <p class="body-text" style="margin-bottom: 14px;">April 2026 redesign. First time the Desktop app has a real terminal built in — you might not need VS Code at all.</p>
 
-        <ul class="feature-list dense">
-          <li><strong>Built-in terminal</strong> <span class="new-badge">new</span> — opens in your project directory, runs tests and builds without leaving the app</li>
-          <li><strong>File editor + viewer</strong> <span class="new-badge">new</span> — click a file path in chat to open and edit it in a pane</li>
-          <li><strong>Visual diff viewer</strong> — review all changes graphically, leave inline comments</li>
-          <li><strong>Parallel session sidebar</strong> — run multiple Claude sessions at once, each in its own git worktree</li>
-          <li><strong>Drag-drop pane layout</strong> — arrange terminal, editor, diff, and chat into any grid</li>
-          <li><strong>Side chat (⌘;)</strong> — quick question without breaking your main session's context</li>
-        </ul>
+        <table class="feature-table">
+          <tr><td class="ft-name">Built-in terminal <span class="new-badge">new</span></td><td class="ft-desc">Opens in your project dir — run tests without leaving the app</td></tr>
+          <tr><td class="ft-name">File editor + viewer <span class="new-badge">new</span></td><td class="ft-desc">Click a file path in chat to open and edit it in a pane</td></tr>
+          <tr><td class="ft-name">Visual diff viewer</td><td class="ft-desc">Review changes graphically, leave inline comments</td></tr>
+          <tr><td class="ft-name">Parallel sessions</td><td class="ft-desc">Multiple Claude sessions, each in its own git worktree</td></tr>
+          <tr><td class="ft-name">Drag-drop panes</td><td class="ft-desc">Arrange terminal, editor, diff, and chat into any grid</td></tr>
+          <tr><td class="ft-name">Side chat ⌘;</td><td class="ft-desc">Quick question without breaking your main session's context</td></tr>
+        </table>
       </div>
       <div class="split-right" style="flex: 0.9;">
         <div class="screenshot-placeholder" data-screenshot="5">
@@ -553,12 +553,12 @@
       <div class="split-left">
         <p class="body-text" style="margin-bottom: 14px;">VS Code fork built for AI-native development. If you prefer it, everything transfers — same Claude, same config.</p>
 
-        <ul class="feature-list">
-          <li><strong>Claude Code extension</strong> — same one from the VS Code Marketplace, same experience</li>
-          <li><strong>Claude as native model</strong> — set Sonnet or Opus for Cursor's ⌘K, chat, and composer</li>
-          <li><strong>Claude Code in the terminal</strong> — type <code style="font-family: var(--font-mono); font-size: 13px; background: var(--cream-dark); padding: 2px 6px; border-radius: 3px;">claude</code>, same CLI, same config</li>
-          <li><strong>CLAUDE.md follows you</strong> — project memory works the same</li>
-        </ul>
+        <table class="feature-table">
+          <tr><td class="ft-name">Claude Code extension</td><td class="ft-desc">Same one from VS Code Marketplace — installs identically in Cursor</td></tr>
+          <tr><td class="ft-name">Claude as native model</td><td class="ft-desc">Set Sonnet or Opus for Cursor's ⌘K, chat, and composer features</td></tr>
+          <tr><td class="ft-name">Claude Code in terminal</td><td class="ft-desc">Type <code style="font-family: var(--font-mono); font-size: 13px;">claude</code> in Cursor's terminal — same CLI, same config</td></tr>
+          <tr><td class="ft-name">CLAUDE.md follows you</td><td class="ft-desc">Project memory works the same regardless of IDE</td></tr>
+        </table>
 
         <div class="callout-teal" style="margin-top: 24px;">
           Cursor = different shell, same Claude brain. Pick the IDE that feels right.
@@ -575,8 +575,50 @@
   </div>
 </div>
 
-<!-- SLIDE 9: Codex CLI + Gemini CLI -->
+<!-- SLIDE 9: Codex app + Jules -->
 <div class="slide" data-slide="9">
+  <div class="slide-inner">
+    <h2 class="slide-title">OpenAI Codex &amp; Google Jules. <span class="teal">Same idea.</span></h2>
+    <div class="teal-divider"></div>
+    <p class="body-text" style="margin-bottom: 20px; max-width: 760px;">Just like Claude has a desktop app, OpenAI and Google have their own visual interfaces above the CLI. Different brains, same pattern.</p>
+
+    <div class="card-grid cols-2">
+      <div class="card" style="display: flex; flex-direction: column; gap: 12px;">
+        <div>
+          <div style="font-family: var(--font-mono); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 4px;">OpenAI</div>
+          <h3 style="font-family: var(--font-serif); font-size: 22px; font-weight: 600; color: var(--text);">Codex App</h3>
+          <div style="font-size: 13px; color: var(--teal); font-weight: 500; margin-bottom: 8px;">chatgpt.com/codex · Mac, Windows, iOS, Android</div>
+        </div>
+        <table class="feature-table">
+          <tr><td class="ft-name">Parallel agents</td><td class="ft-desc">Multiple cloud workers running tasks at once</td></tr>
+          <tr><td class="ft-name">Computer use</td><td class="ft-desc">Sees your screen, clicks, types — controls Mac apps</td></tr>
+          <tr><td class="ft-name">Scheduled work</td><td class="ft-desc">Agents wake up and continue tasks autonomously</td></tr>
+          <tr><td class="ft-name">In-app browser</td><td class="ft-desc">Comment directly on web pages to give instructions</td></tr>
+        </table>
+      </div>
+      <div class="card" style="display: flex; flex-direction: column; gap: 12px;">
+        <div>
+          <div style="font-family: var(--font-mono); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 4px;">Google</div>
+          <h3 style="font-family: var(--font-serif); font-size: 22px; font-weight: 600; color: var(--text);">Jules</h3>
+          <div style="font-size: 13px; color: var(--teal); font-weight: 500; margin-bottom: 8px;">jules.google · GA August 2025 · Gemini 3.1 Pro</div>
+        </div>
+        <table class="feature-table">
+          <tr><td class="ft-name">Async by default</td><td class="ft-desc">Assign a GitHub issue, Jules works while you're away</td></tr>
+          <tr><td class="ft-name">Cloud VM execution</td><td class="ft-desc">Runs in an isolated Google Cloud environment</td></tr>
+          <tr><td class="ft-name">Returns a PR</td><td class="ft-desc">Hands you back a finished pull request to review</td></tr>
+          <tr><td class="ft-name">Jules Tools + API</td><td class="ft-desc">CLI and programmatic access for custom pipelines</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="callout-teal" style="margin-top: 16px;">
+      The harness pattern holds at every layer — CLI, desktop app, cloud agent. New wrapper, same idea.
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 10: Codex CLI + Gemini CLI -->
+<div class="slide" data-slide="10">
   <div class="slide-inner">
     <h2 class="slide-title">Codex CLI &amp; Gemini CLI. <span class="teal">Same pattern.</span></h2>
     <div class="teal-divider"></div>
@@ -623,8 +665,8 @@
   </div>
 </div>
 
-<!-- SLIDE 10: Why we teach it this way (dark) -->
-<div class="slide dark-bg" data-slide="10">
+<!-- SLIDE 11: Why we teach it this way (dark) -->
+<div class="slide dark-bg" data-slide="11">
   <div class="slide-inner" style="max-width: 900px;">
     <span class="tag dark" style="margin-bottom: 24px;">The honest answer</span>
     <h2 class="slide-title dark">Why we teach <span class="teal">it this way.</span></h2>
