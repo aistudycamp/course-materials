@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Every Way to Talk to Claude — Week 2 Office Hours</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5F0EB; --cream-light: #FAF7F4; --cream-dark: #EBE5DE;
+    --white: #FFFFFF; --dark: #1C1917; --dark-card: #292522;
+    --text: #1C1917; --text-secondary: #78716C; --text-muted: #A8A29E;
+    --text-on-dark: #F5F3EF; --text-on-dark-muted: #A8A29E;
+    --teal: #0D9488; --teal-dark: #0F766E; --teal-light: #14B8A6;
+    --teal-muted: #5EAAA6; --teal-bg: rgba(13,148,136,0.08); --teal-border: rgba(13,148,136,0.3);
+    --warm: #8B7048; --warm-bg: rgba(139,112,72,0.1);
+    --red-soft: #DC2626; --red-bg: rgba(220,38,38,0.08); --red-border: rgba(220,38,38,0.25);
+    --border: rgba(28,25,23,0.1); --border-strong: rgba(28,25,23,0.18);
+    --font-serif: 'Playfair Display', Georgia, serif;
+    --font-sans: 'Geist', system-ui, sans-serif;
+    --font-mono: 'Geist Mono', monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: var(--cream); color: var(--text); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+  .deck { width: 100%; height: 100%; position: relative; }
+  .progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: var(--teal); transition: width 0.4s ease; z-index: 100; }
+  .logo-mark { position: fixed; bottom: 24px; left: 32px; font-family: var(--font-sans); font-size: 14px; font-weight: 600; color: var(--text-muted); z-index: 100; pointer-events: none; user-select: none; transition: color 0.4s ease; }
+  body.on-dark .logo-mark { color: var(--text-on-dark-muted); }
+  .dot-nav { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 100; }
+  .dot-nav button { width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid var(--text-muted); background: transparent; cursor: pointer; transition: all 0.3s ease; padding: 0; }
+  .dot-nav button.active { background: var(--teal); border-color: var(--teal); transform: scale(1.25); }
+  .dot-nav button:hover:not(.active) { border-color: var(--text-secondary); }
+  .slide-count { position: fixed; bottom: 28px; right: 32px; font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); z-index: 100; transition: color 0.4s ease; }
+  body.on-dark .slide-count { color: var(--text-on-dark-muted); }
+  .arrow-hint { position: fixed; bottom: 54px; left: 50%; transform: translateX(-50%); font-size: 11px; color: var(--text-muted); z-index: 100; opacity: 0.7; transition: opacity 0.8s ease; }
+  .slide { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 48px 72px; opacity: 0; pointer-events: none; transition: opacity 0.45s ease; overflow-y: auto; background: var(--cream); }
+  .slide.active { opacity: 1; pointer-events: auto; }
+  .slide.dark-bg { background: var(--dark); color: var(--text-on-dark); }
+  .slide-inner { max-width: 1100px; width: 100%; display: flex; flex-direction: column; }
+  .slide-inner.centered { align-items: center; text-align: center; }
+  .hero-title { font-family: var(--font-serif); font-weight: 700; font-size: clamp(52px,6vw,80px); line-height: 1.06; text-align: center; margin-bottom: 16px; color: var(--text-on-dark); }
+  .hero-subtitle { font-size: clamp(18px,2.2vw,24px); color: var(--text-on-dark-muted); font-weight: 400; text-align: center; font-style: italic; }
+  .slide-title { font-family: var(--font-serif); font-weight: 600; font-size: clamp(32px,3.5vw,50px); color: var(--text); line-height: 1.12; margin-bottom: 12px; }
+  .slide-title.dark { color: var(--text-on-dark); }
+  .body-text { font-family: var(--font-sans); font-size: 17px; color: var(--text-secondary); line-height: 1.6; }
+  .body-text.dark { color: var(--text-on-dark-muted); }
+  .caption { font-family: var(--font-sans); font-size: 13px; color: var(--text-muted); }
+  .teal { color: var(--teal); }
+  .tag { display: inline-block; font-family: var(--font-sans); font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 20px; background: var(--teal-bg); color: var(--teal-dark); border: 1px solid var(--teal-border); letter-spacing: 0.2px; }
+  .tag.dark { background: rgba(13,148,136,0.2); color: var(--teal-light); border-color: rgba(13,148,136,0.4); }
+  .card { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 28px 24px; box-shadow: 0 1px 4px rgba(28,25,23,0.06); }
+  .card-grid { display: grid; gap: 16px; }
+  .card-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+  .card-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .callout-teal { background: var(--teal-bg); border: 1px solid var(--teal-border); border-radius: 12px; padding: 20px 24px; color: var(--teal-dark); line-height: 1.55; }
+  .split { display: flex; gap: 48px; align-items: flex-start; }
+  .split-left { flex: 1; }
+  .split-right { flex: 1; }
+  .deck-img { border-radius: 10px; box-shadow: 0 2px 12px rgba(28,25,23,0.12); max-width: 100%; height: auto; display: block; }
+  .teal-divider { width: 64px; height: 2px; background: var(--teal); margin: 16px 0; }
+  .journey-path { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 24px; }
+  .journey-node { background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 12px 18px; font-size: 14px; color: var(--text-secondary); box-shadow: 0 1px 3px rgba(28,25,23,0.06); text-align: center; line-height: 1.4; }
+  .journey-node.highlight { background: var(--teal-bg); border-color: var(--teal-border); color: var(--teal-dark); font-weight: 600; }
+  .journey-node.current { background: var(--teal); color: var(--white); border-color: var(--teal); font-weight: 700; }
+  .journey-node.future { background: var(--cream-dark); border: 2px dashed var(--border-strong); font-style: italic; color: var(--text-muted); }
+  .journey-arrow { color: var(--text-muted); font-size: 18px; }
+
+  /* Screenshot placeholder */
+  .screenshot-placeholder {
+    border-radius: 10px;
+    border: 2px dashed var(--teal-border);
+    background: var(--teal-bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 24px;
+    gap: 10px;
+    text-align: center;
+    min-height: 220px;
+  }
+  .screenshot-placeholder .ph-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--teal-muted);
+  }
+  .screenshot-placeholder .ph-label {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--teal-dark);
+    font-weight: 500;
+    max-width: 280px;
+    line-height: 1.5;
+  }
+  .screenshot-placeholder .ph-icon {
+    font-size: 32px;
+    line-height: 1;
+  }
+
+  /* Terminal code block */
+  .term-block {
+    background: var(--dark);
+    border-radius: 10px;
+    padding: 24px 28px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--text-on-dark);
+    line-height: 1.7;
+    box-shadow: 0 4px 24px rgba(28,25,23,0.18);
+    overflow-x: auto;
+  }
+  .term-block .term-prompt { color: var(--teal-light); user-select: none; }
+  .term-block .term-comment { color: var(--text-muted); }
+  .term-block .term-cmd { color: var(--text-on-dark); }
+
+  /* Interface cards */
+  .interface-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 1px 4px rgba(28,25,23,0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .interface-card h4 {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .interface-card p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+  .interface-card .ic-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--teal);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .interface-card.highlighted {
+    border-color: var(--teal-border);
+    background: var(--teal-bg);
+  }
+  .interface-card.highlighted h4 { color: var(--teal-dark); }
+
+  /* Harness comparison */
+  .harness-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    margin-top: 24px;
+  }
+  .harness-card {
+    background: var(--dark-card);
+    border-radius: 10px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .harness-card h4 {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-on-dark);
+  }
+  .harness-card .hc-made-by {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-on-dark-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .harness-card .hc-model {
+    font-size: 13px;
+    color: var(--teal-light);
+    font-weight: 500;
+  }
+
+  /* Feature list */
+  .feature-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+  .feature-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 16px; color: var(--text-secondary); line-height: 1.5; }
+  .feature-list li::before { content: ''; width: 6px; height: 6px; background: var(--teal); border-radius: 50%; margin-top: 9px; flex-shrink: 0; }
+  .feature-list li strong { color: var(--text); }
+  .feature-list.dense li { font-size: 15px; gap: 8px; }
+  .feature-list.dense li::before { margin-top: 8px; }
+
+  /* New badge */
+  .new-badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: var(--teal);
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    vertical-align: middle;
+    margin-left: 6px;
+  }
+
+  /* Dark card for closing slide */
+  .dark-card {
+    background: var(--dark-card);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 28px 32px;
+  }
+  .dark-card p { font-size: 17px; color: var(--text-on-dark-muted); line-height: 1.65; }
+  .dark-card p strong { color: var(--text-on-dark); }
+
+  /* Abstraction layer diagram */
+  .layer-diagram {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin-top: 32px;
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 12px rgba(28,25,23,0.08);
+  }
+  .layer-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 14px;
+    gap: 8px;
+    border-right: 1px solid var(--border);
+    background: var(--white);
+    transition: all 0.2s;
+  }
+  .layer-col:last-child { border-right: none; }
+  .layer-col.our-pick { background: var(--teal-bg); border-color: var(--teal-border); }
+  .layer-col.upcoming { background: var(--cream-dark); }
+  .layer-num {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+  }
+  .layer-col.our-pick .layer-num { color: var(--teal-dark); }
+  .layer-icon { font-size: 28px; line-height: 1; }
+  .layer-name {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    text-align: center;
+    line-height: 1.3;
+  }
+  .layer-col.our-pick .layer-name { color: var(--teal-dark); }
+  .layer-col.upcoming .layer-name { color: var(--text-muted); font-style: italic; }
+  .layer-desc {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: center;
+    line-height: 1.45;
+  }
+  .layer-col.our-pick .layer-desc { color: var(--teal-dark); opacity: 0.8; }
+  .layer-you {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--teal);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 4px;
+  }
+</style>
+</head>
+<body>
+<div class="deck">
+
+<div class="progress-bar" id="progressBar"></div>
+<span class="logo-mark">AISC</span>
+<div class="dot-nav" id="dotNav"></div>
+<div class="slide-count" id="slideCount"></div>
+<div class="arrow-hint" id="arrowHint">&larr; &rarr;</div>
+
+<!-- SLIDE 0: Hero -->
+<div class="slide dark-bg active" data-slide="0">
+  <div class="slide-inner centered">
+    <span class="tag dark" style="margin-bottom: 24px;">Week 2 — Office Hours</span>
+    <h1 class="hero-title">Every way to<br>talk to <span class="teal">Claude.</span></h1>
+    <p class="hero-subtitle">The interfaces, the layers, and why we picked our setup.</p>
+  </div>
+</div>
+
+<!-- SLIDE 1: One model, different shells -->
+<div class="slide" data-slide="1">
+  <div class="slide-inner">
+    <h2 class="slide-title">It's all <span class="teal">one model.</span></h2>
+    <div class="teal-divider"></div>
+    <p class="body-text" style="margin-bottom: 32px; max-width: 680px;">Claude — the brain behind all of this — is one model. What changes is the <em>shell</em> around it. A new interface doesn't mean a new AI. It means a different wrapper over the same thing.</p>
+
+    <div class="card-grid cols-3" style="margin-bottom: 20px;">
+      <div class="interface-card">
+        <div class="ic-tag">Conversation</div>
+        <h4>Claude.ai Chat</h4>
+        <p>You type. Claude responds. Nothing changes on your computer. Single turn.</p>
+      </div>
+      <div class="interface-card">
+        <div class="ic-tag">Delegation</div>
+        <h4>Claude Cowork</h4>
+        <p>You give Claude a goal. It works on your files and hands you a finished document.</p>
+      </div>
+      <div class="interface-card highlighted">
+        <div class="ic-tag">Collaboration</div>
+        <h4>Claude Code</h4>
+        <p>Claude works <em>inside</em> your codebase — reads, edits, runs commands. Full access.</p>
+      </div>
+    </div>
+
+    <div class="callout-teal" style="max-width: 680px;">
+      <strong>The spectrum:</strong> Chat → Cowork → Code = increasing autonomy, power, and technical depth. <strong>Same model. Completely different permission level.</strong>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 2: Abstraction layers -->
+<div class="slide" data-slide="2">
+  <div class="slide-inner">
+    <h2 class="slide-title">The abstraction <span class="teal">layers.</span></h2>
+    <div class="teal-divider"></div>
+    <p class="body-text" style="margin-bottom: 8px; max-width: 720px;">Computing always moves toward less friction. Terminal → GUI → touch → voice. We're mid-transition right now. We teach the terminal layer because it's the most powerful and portable. The desktop app is catching up fast.</p>
+
+    <div class="layer-diagram">
+      <div class="layer-col">
+        <div class="layer-num">Layer 1</div>
+        <div class="layer-icon">⬛</div>
+        <div class="layer-name">Raw Terminal</div>
+        <div class="layer-desc">bash, zsh, powershell. Still needed for install &amp; setup.</div>
+      </div>
+      <div class="layer-col">
+        <div class="layer-num">Layer 2</div>
+        <div class="layer-icon">📁</div>
+        <div class="layer-name">VS Code + Terminal</div>
+        <div class="layer-desc">Terminal with file tree, editor, and git UI built in.</div>
+      </div>
+      <div class="layer-col our-pick">
+        <div class="layer-num">Layer 3</div>
+        <div class="layer-icon">⚡</div>
+        <div class="layer-name">Claude Code CLI</div>
+        <div class="layer-desc">Type <code>claude</code> in the terminal. Our home base.</div>
+        <div class="layer-you">← we are here</div>
+      </div>
+      <div class="layer-col">
+        <div class="layer-num">Layer 4</div>
+        <div class="layer-icon">🔲</div>
+        <div class="layer-name">VS Code Extension</div>
+        <div class="layer-desc">Sidebar panel, inline diffs, no terminal visible.</div>
+      </div>
+      <div class="layer-col">
+        <div class="layer-num">Layer 5</div>
+        <div class="layer-icon">🖥️</div>
+        <div class="layer-name">Desktop App</div>
+        <div class="layer-desc">Full visual workstation. Built-in terminal + file editor.</div>
+      </div>
+      <div class="layer-col upcoming">
+        <div class="layer-num">Coming</div>
+        <div class="layer-icon">🎙️</div>
+        <div class="layer-name">Ambient / Voice</div>
+        <div class="layer-desc">The terminal may eventually disappear entirely.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 3: The pure terminal -->
+<div class="slide" data-slide="3">
+  <div class="slide-inner">
+    <h2 class="slide-title">The terminal — <span class="teal">why you still need it.</span></h2>
+    <div class="teal-divider"></div>
+
+    <div class="split">
+      <div class="split-left">
+        <p class="body-text" style="margin-bottom: 20px;">The terminal is the foundation. Even as wrappers get better, you can't avoid this layer entirely — it's where you install things, run servers, and have the most raw control.</p>
+
+        <ul class="feature-list">
+          <li><strong>Installing Claude Code itself</strong> — <code style="font-family: var(--font-mono); font-size: 14px; background: var(--cream-dark); padding: 2px 6px; border-radius: 4px;">npm install -g @anthropic-ai/claude-code</code></li>
+          <li><strong>Running dev servers</strong> — npm, bun, python, whatever your stack needs</li>
+          <li><strong>Git on the command line</strong> — commits, branches, pushes</li>
+          <li><strong>Package managers</strong> — brew, npm, pip, cargo</li>
+          <li><strong>Anything before the AI layer exists</strong></li>
+        </ul>
+
+        <div class="callout-teal" style="margin-top: 24px;">
+          You don't need to love the terminal. You just need to not fear it.
+        </div>
+      </div>
+      <div class="split-right">
+        <div class="screenshot-placeholder" data-screenshot="1">
+          <div class="ph-icon">⬛</div>
+          <div class="ph-num">Screenshot 1</div>
+          <div class="ph-label">Terminal running: <code>npm install -g @anthropic-ai/claude-code</code> or similar install command. Show the raw terminal prompt, no IDE visible.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 4: VS Code + terminal -->
+<div class="slide" data-slide="4">
+  <div class="slide-inner">
+    <h2 class="slide-title">VS Code: a terminal with <span class="teal">context.</span></h2>
+    <div class="teal-divider"></div>
+
+    <div class="split">
+      <div class="split-left">
+        <p class="body-text" style="margin-bottom: 20px;">VS Code isn't just an editor — it's a terminal wrapper with a file tree, source control, and a live editor all in one window. You get all the terminal power, plus you can <em>see</em> everything Claude is working on.</p>
+
+        <ul class="feature-list">
+          <li><strong>File tree</strong> — see every file Claude touches, live</li>
+          <li><strong>Integrated terminal panel</strong> — same bash/zsh, embedded in the IDE</li>
+          <li><strong>Git sidebar</strong> — stage, diff, commit without leaving VS Code</li>
+          <li><strong>Editor open alongside</strong> — review changes in context</li>
+        </ul>
+
+        <p class="body-text" style="margin-top: 20px; font-size: 15px; color: var(--text-muted);">This is why "VS Code + terminal" became the default dev environment for vibe coding — it's the terminal, just more visible.</p>
+      </div>
+      <div class="split-right">
+        <div class="screenshot-placeholder" data-screenshot="2">
+          <div class="ph-icon">📁</div>
+          <div class="ph-num">Screenshot 2</div>
+          <div class="ph-label">VS Code with a file open in the editor and the terminal panel visible at the bottom. File tree shown on the left sidebar. No Claude running yet.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5: Claude Code in VS Code terminal — home base -->
+<div class="slide" data-slide="5">
+  <div class="slide-inner">
+    <h2 class="slide-title">Claude Code in the terminal. <span class="teal">Home base.</span></h2>
+    <div class="teal-divider"></div>
+
+    <div class="split">
+      <div class="split-left">
+        <p class="body-text" style="margin-bottom: 20px;">Type <code style="font-family: var(--font-mono); font-size: 15px; background: var(--cream-dark); padding: 2px 8px; border-radius: 4px;">claude</code> in the VS Code terminal and you're in. This is the setup we teach — and it gives you the most control.</p>
+
+        <ul class="feature-list" style="margin-bottom: 20px;">
+          <li><strong>Full Claude Code capabilities</strong> — memory, MCP servers, skills, hooks</li>
+          <li><strong>CLAUDE.md project memory</strong> — Claude knows your codebase</li>
+          <li><strong>File edits show up in VS Code</strong> — you see changes instantly</li>
+          <li><strong>Git runs in the same terminal</strong> — no context switching</li>
+          <li><strong>Portable config</strong> — what you learn here works everywhere</li>
+        </ul>
+
+        <div class="callout-teal">
+          Everything Claude does is visible in the editor alongside you. That's the point.
+        </div>
+      </div>
+      <div class="split-right">
+        <div class="screenshot-placeholder" data-screenshot="3">
+          <div class="ph-icon">⚡</div>
+          <div class="ph-num">Screenshot 3</div>
+          <div class="ph-label">VS Code with <code>claude</code> running in the integrated terminal panel. Ideally show Claude responding to a prompt or editing a file, with the editor and file tree visible.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 6: VS Code Claude extension -->
+<div class="slide" data-slide="6">
+  <div class="slide-inner">
+    <h2 class="slide-title">The VS Code <span class="teal">extension.</span></h2>
+    <div class="teal-divider"></div>
+
+    <div class="split">
+      <div class="split-left">
+        <p class="body-text" style="margin-bottom: 20px;">The Claude Code VS Code extension puts a chat-like sidebar inside VS Code. Same Claude Code underneath — different chrome. Great if you'd rather not look at a terminal.</p>
+
+        <ul class="feature-list">
+          <li><strong>Sidebar panel</strong> — interact with Claude without a terminal visible</li>
+          <li><strong>Inline diffs</strong> — see proposed changes highlighted in the file, accept or reject line by line</li>
+          <li><strong>@-mention files</strong> — reference specific files by name instead of describing them</li>
+          <li><strong>Diagnostic sharing</strong> — linter and TypeScript errors automatically shared with Claude</li>
+          <li><strong>Plan mode</strong> — Claude shows its plan as a markdown doc before touching anything</li>
+        </ul>
+
+        <p class="body-text" style="margin-top: 20px; font-size: 15px; color: var(--text-muted);">Also works in <strong>Cursor</strong> and <strong>Windsurf</strong> — same extension, different IDE.</p>
+      </div>
+      <div class="split-right">
+        <div class="screenshot-placeholder" data-screenshot="4">
+          <div class="ph-icon">🔲</div>
+          <div class="ph-num">Screenshot 4</div>
+          <div class="ph-label">VS Code with the Claude Code extension panel open on the right or left sidebar. Show the chat interface inside the panel. Terminal can be hidden or closed.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 7: Claude Desktop app -->
+<div class="slide" data-slide="7">
+  <div class="slide-inner">
+    <h2 class="slide-title">Claude Desktop. <span class="teal">April 2026.</span></h2>
+    <div class="teal-divider"></div>
+
+    <div class="split">
+      <div class="split-left" style="flex: 1.1;">
+        <p class="body-text" style="margin-bottom: 20px;">The April 2026 redesign turned the Desktop app into a serious visual workstation. For the first time, it has a real terminal built in — meaning you might not need VS Code at all.</p>
+
+        <ul class="feature-list dense">
+          <li><strong>Built-in terminal</strong> <span class="new-badge">new</span> — opens in your project directory, runs tests and builds without leaving the app</li>
+          <li><strong>File editor + viewer</strong> <span class="new-badge">new</span> — click a file path in chat to open and edit it in a pane</li>
+          <li><strong>Visual diff viewer</strong> — review all changes graphically, leave inline comments</li>
+          <li><strong>Parallel session sidebar</strong> — run multiple Claude sessions at once, each in its own git worktree</li>
+          <li><strong>Drag-drop pane layout</strong> — arrange terminal, editor, diff, and chat into any grid</li>
+          <li><strong>Side chat (⌘;)</strong> — quick question without breaking your main session's context</li>
+        </ul>
+      </div>
+      <div class="split-right" style="flex: 0.9;">
+        <div class="screenshot-placeholder" data-screenshot="5">
+          <div class="ph-icon">🖥️</div>
+          <div class="ph-num">Screenshot 5</div>
+          <div class="ph-label">Claude Desktop app with the terminal pane and file editor both visible. Ideally showing the multi-pane layout with chat + terminal side by side.</div>
+        </div>
+        <p class="caption" style="margin-top: 10px; text-align: center;">This is what's replacing VS Code + terminal for many people.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 8: Cursor -->
+<div class="slide" data-slide="8">
+  <div class="slide-inner">
+    <h2 class="slide-title">Cursor: different IDE, <span class="teal">same model.</span></h2>
+    <div class="teal-divider"></div>
+
+    <div class="split">
+      <div class="split-left">
+        <p class="body-text" style="margin-bottom: 20px;">Cursor is an IDE built from the ground up for AI-assisted development — it forked VS Code and added AI-native features at every layer. If you end up preferring it, everything you learned still applies.</p>
+
+        <ul class="feature-list">
+          <li><strong>Claude Code extension works in Cursor</strong> — same extension from the VS Code Marketplace, same experience</li>
+          <li><strong>Set Claude as Cursor's native AI model</strong> — Sonnet or Opus as the model powering Cursor's built-in features (⌘K, chat, composer)</li>
+          <li><strong>Run Claude Code in Cursor's terminal</strong> — type <code style="font-family: var(--font-mono); font-size: 13px; background: var(--cream-dark); padding: 2px 6px; border-radius: 3px;">claude</code>, same CLI, same config</li>
+          <li><strong>Different IDE, same CLAUDE.md</strong> — your project memory file follows you</li>
+        </ul>
+
+        <div class="callout-teal" style="margin-top: 24px;">
+          Cursor = different shell, same Claude brain. Pick the IDE that feels right.
+        </div>
+      </div>
+      <div class="split-right">
+        <div class="screenshot-placeholder" data-screenshot="6">
+          <div class="ph-icon">🖱️</div>
+          <div class="ph-num">Screenshot 6</div>
+          <div class="ph-label">Cursor IDE with the model selector showing Claude/Sonnet selected, OR the Claude Code extension panel open in Cursor. Show the Cursor interface clearly.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 9: Codex CLI + Gemini CLI -->
+<div class="slide" data-slide="9">
+  <div class="slide-inner">
+    <h2 class="slide-title">Codex CLI &amp; Gemini CLI. <span class="teal">Same pattern.</span></h2>
+    <div class="teal-divider"></div>
+
+    <p class="body-text" style="margin-bottom: 24px; max-width: 760px;">These are all <em>harnesses</em> — terminal agents that take natural language and operate on your code. Claude Code, Codex CLI, and Gemini CLI are structurally identical. When a new one comes out, you'll recognize it immediately.</p>
+
+    <div class="harness-grid">
+      <div class="harness-card" style="border: 1px solid rgba(13,148,136,0.3);">
+        <div class="hc-made-by">Anthropic</div>
+        <h4>Claude Code</h4>
+        <div class="hc-model">Claude Sonnet / Opus</div>
+        <div class="term-block" style="margin-top: 8px; padding: 12px 16px; font-size: 13px;">
+          <span class="term-comment"># install</span><br>
+          <span class="term-cmd">npm install -g @anthropic-ai/claude-code</span><br>
+          <span class="term-comment"># run</span><br>
+          <span class="term-cmd">claude</span>
+        </div>
+      </div>
+      <div class="harness-card">
+        <div class="hc-made-by">OpenAI</div>
+        <h4>Codex CLI</h4>
+        <div class="hc-model">GPT-5-Codex / GPT-5.4</div>
+        <div class="term-block" style="margin-top: 8px; padding: 12px 16px; font-size: 13px;">
+          <span class="term-comment"># install (Mac/Linux)</span><br>
+          <span class="term-cmd">curl -fsSL https://chatgpt.com/codex/install.sh | sh</span><br>
+          <span class="term-comment"># run</span><br>
+          <span class="term-cmd">codex</span>
+        </div>
+      </div>
+      <div class="harness-card">
+        <div class="hc-made-by">Google · Open Source (Apache 2.0) · June 2025</div>
+        <h4>Gemini CLI</h4>
+        <div class="hc-model">Gemini 2.5 Pro · 1M token context</div>
+        <div class="term-block" style="margin-top: 8px; padding: 12px 16px; font-size: 13px;">
+          <span class="term-comment"># install</span><br>
+          <span class="term-cmd">npm install -g @google/gemini-cli</span><br>
+          <span class="term-comment"># or run without installing</span><br>
+          <span class="term-cmd">npx @google/gemini-cli</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="caption" style="margin-top: 16px; text-align: center;">All three: install → run in terminal → natural language → reads/edits your code. The harness is the pattern. The model is just the brain inside.</p>
+  </div>
+</div>
+
+<!-- SLIDE 10: Why we teach it this way (dark) -->
+<div class="slide dark-bg" data-slide="10">
+  <div class="slide-inner" style="max-width: 760px;">
+    <span class="tag dark" style="margin-bottom: 24px;">The honest answer</span>
+    <h2 class="slide-title dark">Why we teach <span class="teal">it this way.</span></h2>
+    <div class="teal-divider"></div>
+
+    <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 8px;">
+      <div class="dark-card">
+        <p><strong>We had to pick one.</strong> VS Code + Claude Code in the terminal is the most widely used setup among working developers today. It's not the only answer — it's our answer.</p>
+      </div>
+      <div class="dark-card">
+        <p><strong>What you learn transfers.</strong> CLAUDE.md, MCP servers, skills, and hooks work across every interface. The config is portable. The interface is a preference.</p>
+      </div>
+      <div class="dark-card">
+        <p><strong>The terminal gives you the most control.</strong> You can do things in the terminal that no visual wrapper can do: pipelines, CI/CD, scripted agents. It's the floor, not the ceiling.</p>
+      </div>
+      <div class="dark-card">
+        <p><strong>The layers are converging fast.</strong> The Desktop app is catching up quickly. In a year, you might never open a terminal. Learn the terminal layer now — it makes every layer above it easier to understand.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /.deck -->
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const totalSlides = slides.length;
+  const dotNav = document.getElementById('dotNav');
+  let currentSlide = 0;
+
+  slides.forEach((_, i) => {
+    const btn = document.createElement('button');
+    btn.setAttribute('aria-label', 'Slide ' + (i + 1));
+    btn.addEventListener('click', () => goToSlide(i));
+    dotNav.appendChild(btn);
+  });
+
+  function updateUI() {
+    slides.forEach((s, i) => { s.classList.toggle('active', i === currentSlide); });
+    document.getElementById('progressBar').style.width = ((currentSlide + 1) / totalSlides * 100) + '%';
+    dotNav.querySelectorAll('button').forEach((b, i) => { b.classList.toggle('active', i === currentSlide); });
+    document.getElementById('slideCount').textContent = (currentSlide + 1) + ' / ' + totalSlides;
+    document.body.classList.toggle('on-dark', slides[currentSlide].classList.contains('dark-bg'));
+    if (currentSlide > 0) document.getElementById('arrowHint').style.opacity = '0';
+  }
+
+  function goToSlide(n) { if (n >= 0 && n < totalSlides) { currentSlide = n; updateUI(); } }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); goToSlide(currentSlide + 1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); goToSlide(currentSlide - 1); }
+    if (e.key === 'Home') { e.preventDefault(); goToSlide(0); }
+    if (e.key === 'End') { e.preventDefault(); goToSlide(totalSlides - 1); }
+  });
+
+  let touchX = 0;
+  document.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; });
+  document.addEventListener('touchend', e => { const d = touchX - e.changedTouches[0].clientX; if (Math.abs(d) > 50) d > 0 ? goToSlide(currentSlide+1) : goToSlide(currentSlide-1); });
+
+  updateUI();
+</script>
+</body>
+</html>
