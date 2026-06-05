@@ -189,12 +189,20 @@
   }
 
   /* Feature list */
-  .feature-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
-  .feature-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 16px; color: var(--text-secondary); line-height: 1.5; }
-  .feature-list li::before { content: ''; width: 6px; height: 6px; background: var(--teal); border-radius: 50%; margin-top: 9px; flex-shrink: 0; }
+  .feature-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; }
+  .feature-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 15px; color: var(--text-secondary); line-height: 1.45; }
+  .feature-list li::before { content: ''; width: 6px; height: 6px; background: var(--teal); border-radius: 50%; margin-top: 8px; flex-shrink: 0; }
   .feature-list li strong { color: var(--text); }
-  .feature-list.dense li { font-size: 15px; gap: 8px; }
-  .feature-list.dense li::before { margin-top: 8px; }
+  .feature-list.dense li { font-size: 14px; gap: 8px; }
+  .feature-list.dense li::before { margin-top: 7px; }
+
+  /* Feature table (used on extension slide) */
+  .feature-table { width: 100%; border-collapse: collapse; margin-top: 0; }
+  .feature-table tr { border-bottom: 1px solid var(--border); }
+  .feature-table tr:last-child { border-bottom: none; }
+  .feature-table td { padding: 9px 0; vertical-align: top; font-size: 15px; line-height: 1.4; }
+  .feature-table .ft-name { font-weight: 600; color: var(--text); width: 38%; padding-right: 16px; white-space: nowrap; }
+  .feature-table .ft-desc { color: var(--text-secondary); }
 
   /* New badge */
   .new-badge {
@@ -309,7 +317,7 @@
   <div class="slide-inner">
     <h2 class="slide-title">It's all <span class="teal">one model.</span></h2>
     <div class="teal-divider"></div>
-    <p class="body-text" style="margin-bottom: 32px; max-width: 680px;">Claude — the brain behind all of this — is one model. What changes is the <em>shell</em> around it. A new interface doesn't mean a new AI. It means a different wrapper over the same thing.</p>
+    <p class="body-text" style="margin-bottom: 20px; max-width: 680px;">One model. Different shells. A new interface doesn't mean a new AI — just a different wrapper around the same thing.</p>
 
     <div class="card-grid cols-3" style="margin-bottom: 20px;">
       <div class="interface-card">
@@ -392,14 +400,12 @@
 
     <div class="split">
       <div class="split-left">
-        <p class="body-text" style="margin-bottom: 20px;">The terminal is the foundation. Even as wrappers get better, you can't avoid this layer entirely — it's where you install things, run servers, and have the most raw control.</p>
+        <p class="body-text" style="margin-bottom: 14px;">You can't skip this layer entirely — it's how you install things, run servers, and do anything before the AI wrapper exists.</p>
 
         <ul class="feature-list">
-          <li><strong>Installing Claude Code itself</strong> — <code style="font-family: var(--font-mono); font-size: 14px; background: var(--cream-dark); padding: 2px 6px; border-radius: 4px;">npm install -g @anthropic-ai/claude-code</code></li>
-          <li><strong>Running dev servers</strong> — npm, bun, python, whatever your stack needs</li>
-          <li><strong>Git on the command line</strong> — commits, branches, pushes</li>
-          <li><strong>Package managers</strong> — brew, npm, pip, cargo</li>
-          <li><strong>Anything before the AI layer exists</strong></li>
+          <li><strong>Install Claude Code</strong> — <code style="font-family: var(--font-mono); font-size: 13px; background: var(--cream-dark); padding: 2px 6px; border-radius: 4px;">npm install -g @anthropic-ai/claude-code</code></li>
+          <li><strong>Run dev servers</strong> — npm, bun, python, whatever your stack needs</li>
+          <li><strong>Git, package managers</strong> — brew, npm, pip, cargo</li>
         </ul>
 
         <div class="callout-teal" style="margin-top: 24px;">
@@ -425,16 +431,14 @@
 
     <div class="split">
       <div class="split-left">
-        <p class="body-text" style="margin-bottom: 20px;">VS Code isn't just an editor — it's a terminal wrapper with a file tree, source control, and a live editor all in one window. You get all the terminal power, plus you can <em>see</em> everything Claude is working on.</p>
+        <p class="body-text" style="margin-bottom: 14px;">Same terminal you already know — plus file tree, git, and editor all in one window. You can see everything Claude is working on as it happens.</p>
 
         <ul class="feature-list">
-          <li><strong>File tree</strong> — see every file Claude touches, live</li>
-          <li><strong>Integrated terminal panel</strong> — same bash/zsh, embedded in the IDE</li>
+          <li><strong>File tree</strong> — every file Claude touches, visible live</li>
+          <li><strong>Integrated terminal</strong> — same bash/zsh, embedded in the IDE</li>
           <li><strong>Git sidebar</strong> — stage, diff, commit without leaving VS Code</li>
           <li><strong>Editor open alongside</strong> — review changes in context</li>
         </ul>
-
-        <p class="body-text" style="margin-top: 20px; font-size: 15px; color: var(--text-muted);">This is why "VS Code + terminal" became the default dev environment for vibe coding — it's the terminal, just more visible.</p>
       </div>
       <div class="split-right">
         <div class="screenshot-placeholder" data-screenshot="2">
@@ -455,13 +459,12 @@
 
     <div class="split">
       <div class="split-left">
-        <p class="body-text" style="margin-bottom: 20px;">Type <code style="font-family: var(--font-mono); font-size: 15px; background: var(--cream-dark); padding: 2px 8px; border-radius: 4px;">claude</code> in the VS Code terminal and you're in. This is the setup we teach — and it gives you the most control.</p>
+        <p class="body-text" style="margin-bottom: 14px;">Type <code style="font-family: var(--font-mono); font-size: 15px; background: var(--cream-dark); padding: 2px 8px; border-radius: 4px;">claude</code> in the VS Code terminal. This is our setup.</p>
 
-        <ul class="feature-list" style="margin-bottom: 20px;">
-          <li><strong>Full Claude Code capabilities</strong> — memory, MCP servers, skills, hooks</li>
-          <li><strong>CLAUDE.md project memory</strong> — Claude knows your codebase</li>
-          <li><strong>File edits show up in VS Code</strong> — you see changes instantly</li>
-          <li><strong>Git runs in the same terminal</strong> — no context switching</li>
+        <ul class="feature-list" style="margin-bottom: 14px;">
+          <li><strong>Memory, MCP, skills, hooks</strong> — full Claude Code capabilities</li>
+          <li><strong>CLAUDE.md</strong> — Claude knows your codebase across sessions</li>
+          <li><strong>Edits show up in VS Code instantly</strong> — no context switching</li>
           <li><strong>Portable config</strong> — what you learn here works everywhere</li>
         </ul>
 
@@ -488,17 +491,15 @@
 
     <div class="split">
       <div class="split-left">
-        <p class="body-text" style="margin-bottom: 20px;">The Claude Code VS Code extension puts a chat-like sidebar inside VS Code. Same Claude Code underneath — different chrome. Great if you'd rather not look at a terminal.</p>
+        <p class="body-text" style="margin-bottom: 14px;">Same Claude Code, no terminal visible. A sidebar panel inside VS Code — also works in Cursor and Windsurf.</p>
 
-        <ul class="feature-list">
-          <li><strong>Sidebar panel</strong> — interact with Claude without a terminal visible</li>
-          <li><strong>Inline diffs</strong> — see proposed changes highlighted in the file, accept or reject line by line</li>
-          <li><strong>@-mention files</strong> — reference specific files by name instead of describing them</li>
-          <li><strong>Diagnostic sharing</strong> — linter and TypeScript errors automatically shared with Claude</li>
-          <li><strong>Plan mode</strong> — Claude shows its plan as a markdown doc before touching anything</li>
-        </ul>
-
-        <p class="body-text" style="margin-top: 20px; font-size: 15px; color: var(--text-muted);">Also works in <strong>Cursor</strong> and <strong>Windsurf</strong> — same extension, different IDE.</p>
+        <table class="feature-table">
+          <tr><td class="ft-name">Sidebar panel</td><td class="ft-desc">Chat with Claude inside VS Code — no terminal open</td></tr>
+          <tr><td class="ft-name">Inline diffs</td><td class="ft-desc">Accept or reject each change line by line in the editor</td></tr>
+          <tr><td class="ft-name">@-mention files</td><td class="ft-desc">Reference any file by name without copy-pasting</td></tr>
+          <tr><td class="ft-name">Diagnostic sharing</td><td class="ft-desc">Linter and TS errors are automatically sent to Claude</td></tr>
+          <tr><td class="ft-name">Plan mode</td><td class="ft-desc">Claude shows its full plan before touching anything</td></tr>
+        </table>
       </div>
       <div class="split-right">
         <div class="screenshot-placeholder" data-screenshot="4">
@@ -519,7 +520,7 @@
 
     <div class="split">
       <div class="split-left" style="flex: 1.1;">
-        <p class="body-text" style="margin-bottom: 20px;">The April 2026 redesign turned the Desktop app into a serious visual workstation. For the first time, it has a real terminal built in — meaning you might not need VS Code at all.</p>
+        <p class="body-text" style="margin-bottom: 14px;">April 2026 redesign. First time the Desktop app has a real terminal built in — you might not need VS Code at all.</p>
 
         <ul class="feature-list dense">
           <li><strong>Built-in terminal</strong> <span class="new-badge">new</span> — opens in your project directory, runs tests and builds without leaving the app</li>
@@ -550,13 +551,13 @@
 
     <div class="split">
       <div class="split-left">
-        <p class="body-text" style="margin-bottom: 20px;">Cursor is an IDE built from the ground up for AI-assisted development — it forked VS Code and added AI-native features at every layer. If you end up preferring it, everything you learned still applies.</p>
+        <p class="body-text" style="margin-bottom: 14px;">VS Code fork built for AI-native development. If you prefer it, everything transfers — same Claude, same config.</p>
 
         <ul class="feature-list">
-          <li><strong>Claude Code extension works in Cursor</strong> — same extension from the VS Code Marketplace, same experience</li>
-          <li><strong>Set Claude as Cursor's native AI model</strong> — Sonnet or Opus as the model powering Cursor's built-in features (⌘K, chat, composer)</li>
-          <li><strong>Run Claude Code in Cursor's terminal</strong> — type <code style="font-family: var(--font-mono); font-size: 13px; background: var(--cream-dark); padding: 2px 6px; border-radius: 3px;">claude</code>, same CLI, same config</li>
-          <li><strong>Different IDE, same CLAUDE.md</strong> — your project memory file follows you</li>
+          <li><strong>Claude Code extension</strong> — same one from the VS Code Marketplace, same experience</li>
+          <li><strong>Claude as native model</strong> — set Sonnet or Opus for Cursor's ⌘K, chat, and composer</li>
+          <li><strong>Claude Code in the terminal</strong> — type <code style="font-family: var(--font-mono); font-size: 13px; background: var(--cream-dark); padding: 2px 6px; border-radius: 3px;">claude</code>, same CLI, same config</li>
+          <li><strong>CLAUDE.md follows you</strong> — project memory works the same</li>
         </ul>
 
         <div class="callout-teal" style="margin-top: 24px;">
@@ -624,23 +625,23 @@
 
 <!-- SLIDE 10: Why we teach it this way (dark) -->
 <div class="slide dark-bg" data-slide="10">
-  <div class="slide-inner" style="max-width: 760px;">
+  <div class="slide-inner" style="max-width: 900px;">
     <span class="tag dark" style="margin-bottom: 24px;">The honest answer</span>
     <h2 class="slide-title dark">Why we teach <span class="teal">it this way.</span></h2>
     <div class="teal-divider"></div>
 
-    <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 8px;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 8px;">
       <div class="dark-card">
-        <p><strong>We had to pick one.</strong> VS Code + Claude Code in the terminal is the most widely used setup among working developers today. It's not the only answer — it's our answer.</p>
+        <p><strong>We had to pick one.</strong> VS Code + Claude Code terminal is the most widely used dev setup. Not the only answer — our answer.</p>
       </div>
       <div class="dark-card">
-        <p><strong>What you learn transfers.</strong> CLAUDE.md, MCP servers, skills, and hooks work across every interface. The config is portable. The interface is a preference.</p>
+        <p><strong>The config is portable.</strong> CLAUDE.md, MCP servers, skills, and hooks work across every interface. The interface is a preference.</p>
       </div>
       <div class="dark-card">
-        <p><strong>The terminal gives you the most control.</strong> You can do things in the terminal that no visual wrapper can do: pipelines, CI/CD, scripted agents. It's the floor, not the ceiling.</p>
+        <p><strong>The terminal is the floor.</strong> Pipelines, CI/CD, scripted agents — no visual wrapper can do all of this. Learn the foundation layer.</p>
       </div>
       <div class="dark-card">
-        <p><strong>The layers are converging fast.</strong> The Desktop app is catching up quickly. In a year, you might never open a terminal. Learn the terminal layer now — it makes every layer above it easier to understand.</p>
+        <p><strong>The layers are converging fast.</strong> The Desktop app is catching up. In a year you might never open a terminal. Learn it now so the rest makes sense.</p>
       </div>
     </div>
   </div>
