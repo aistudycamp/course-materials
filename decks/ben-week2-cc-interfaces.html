@@ -101,6 +101,27 @@
     font-size: 32px;
     line-height: 1;
   }
+  /* Real screenshot */
+  .screenshot-img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    border: 1px solid var(--teal-border);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
+    display: block;
+  }
+  /* Two screenshots stacked in one panel */
+  .screenshot-stack { display: flex; flex-direction: column; gap: 16px; }
+  .screenshot-stack figure { margin: 0; }
+  .screenshot-stack .shot-caption {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--teal-muted);
+    margin-top: 6px;
+  }
 
   /* Terminal code block */
   .term-block {
@@ -413,11 +434,8 @@
         </div>
       </div>
       <div class="split-right">
-        <div class="screenshot-placeholder" data-screenshot="1">
-          <div class="ph-icon">⬛</div>
-          <div class="ph-num">Screenshot 1</div>
-          <div class="ph-label">Terminal running: <code>npm install -g @anthropic-ai/claude-code</code> or similar install command. Show the raw terminal prompt, no IDE visible.</div>
-        </div>
+        <img class="screenshot-img" src="img/week2-1.png" alt="Claude Code running in a raw terminal" data-screenshot="1">
+
       </div>
     </div>
   </div>
@@ -441,11 +459,8 @@
         </table>
       </div>
       <div class="split-right">
-        <div class="screenshot-placeholder" data-screenshot="2">
-          <div class="ph-icon">📁</div>
-          <div class="ph-num">Screenshot 2</div>
-          <div class="ph-label">VS Code with a file open in the editor and the terminal panel visible at the bottom. File tree shown on the left sidebar. No Claude running yet.</div>
-        </div>
+        <img class="screenshot-img" src="img/week2-2.png" alt="VS Code with a file open and the integrated terminal at the bottom" data-screenshot="2">
+
       </div>
     </div>
   </div>
@@ -473,11 +488,17 @@
         </div>
       </div>
       <div class="split-right">
-        <div class="screenshot-placeholder" data-screenshot="3">
-          <div class="ph-icon">⚡</div>
-          <div class="ph-num">Screenshot 3</div>
-          <div class="ph-label">VS Code with <code>claude</code> running in the integrated terminal panel. Ideally show Claude responding to a prompt or editing a file, with the editor and file tree visible.</div>
+        <div class="screenshot-stack" data-screenshot="3">
+          <figure>
+            <img class="screenshot-img" src="img/week2-claude-terminal.png" alt="Claude Code running in a raw terminal">
+            <figcaption class="shot-caption">Raw terminal</figcaption>
+          </figure>
+          <figure>
+            <img class="screenshot-img" src="img/week2-3.png" alt="Claude Code running in the VS Code integrated terminal">
+            <figcaption class="shot-caption">VS Code terminal — same CLI</figcaption>
+          </figure>
         </div>
+
       </div>
     </div>
   </div>
@@ -502,11 +523,8 @@
         </table>
       </div>
       <div class="split-right">
-        <div class="screenshot-placeholder" data-screenshot="4">
-          <div class="ph-icon">🔲</div>
-          <div class="ph-num">Screenshot 4</div>
-          <div class="ph-label">VS Code with the Claude Code extension panel open on the right or left sidebar. Show the chat interface inside the panel. Terminal can be hidden or closed.</div>
-        </div>
+        <img class="screenshot-img" src="img/week2-4.png" alt="Claude Code extension panel open in VS Code" data-screenshot="4">
+
       </div>
     </div>
   </div>
@@ -532,11 +550,8 @@
         </table>
       </div>
       <div class="split-right" style="flex: 0.9;">
-        <div class="screenshot-placeholder" data-screenshot="5">
-          <div class="ph-icon">🖥️</div>
-          <div class="ph-num">Screenshot 5</div>
-          <div class="ph-label">Claude Desktop app with the terminal pane and file editor both visible. Ideally showing the multi-pane layout with chat + terminal side by side.</div>
-        </div>
+        <img class="screenshot-img" src="img/week2-5.png" alt="Claude Code desktop app" data-screenshot="5">
+
         <p class="caption" style="margin-top: 10px; text-align: center;">This is what's replacing VS Code + terminal for many people.</p>
       </div>
     </div>
