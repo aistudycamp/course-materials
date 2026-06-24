@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Week 4 — Pair Programming Challenge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream:#F5F0EB; --cream-light:#FAF7F4; --white:#FFFFFF;
+    --dark:#1C1917; --text:#1C1917; --text2:#78716C; --text3:#A8A29E;
+    --accent:#0D9488; --accent-light:#14B8A6; --accent-bg:rgba(13,148,136,.08);
+    --pink:#E91E8C; --pink-bg:rgba(233,30,140,.08); --pink-border:rgba(233,30,140,.25);
+    --border:rgba(28,25,23,0.1); --border-strong:rgba(28,25,23,0.2);
+    --font-serif:'Playfair Display',Georgia,serif; --font-sans:'Geist',system-ui,sans-serif; --font-mono:'Geist Mono',monospace;
+  }
+  * {margin:0;padding:0;box-sizing:border-box;}
+  html,body {width:100%;height:100%;overflow:hidden;background:var(--cream);color:var(--text);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;}
+  .deck {width:100%;height:100%;position:relative;}
+  .slide {position:absolute;inset:0;padding:64px 88px 90px;opacity:0;transform:translateX(30px);transition:opacity .45s ease,transform .45s ease;pointer-events:none;display:flex;flex-direction:column;overflow:hidden;}
+  .slide.active {opacity:1;transform:translateX(0);pointer-events:auto;}
+  .slide.dark {background:var(--dark);color:var(--cream);}
+  .progress {position:fixed;top:0;left:0;height:3px;background:var(--accent);z-index:50;transition:width .45s ease;}
+  .nav {position:fixed;bottom:22px;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:0 32px;z-index:40;}
+  .logo {font-family:var(--font-sans);font-weight:600;font-size:13px;letter-spacing:.02em;}
+  .dots {display:flex;gap:9px;}
+  .dot {width:7px;height:7px;border-radius:50%;border:1px solid rgba(28,25,23,.25);background:transparent;cursor:pointer;transition:all .3s;padding:0;}
+  .dot.active {background:var(--accent);border-color:var(--accent);transform:scale(1.25);}
+  .counter {font-family:var(--font-mono);font-size:11px;color:var(--text2);}
+
+  h2 {font-family:var(--font-serif);font-weight:600;font-size:48px;line-height:1.1;letter-spacing:-.01em;}
+  .eyebrow {font-family:var(--font-sans);text-transform:uppercase;letter-spacing:.18em;font-size:11px;font-weight:600;color:var(--accent);margin-bottom:18px;}
+  .lede {font-size:20px;line-height:1.55;color:var(--text2);max-width:820px;margin-top:18px;}
+
+  .card {background:var(--white);border:1px solid var(--border);border-radius:12px;padding:28px;}
+
+  .stage-head {display:flex;align-items:baseline;gap:14px;margin-bottom:14px;}
+  .stage-chip {font-family:var(--font-mono);font-size:11px;color:var(--white);background:var(--accent);padding:3px 10px;border-radius:999px;letter-spacing:.06em;font-weight:500;}
+  .stage-name {font-family:var(--font-serif);font-weight:600;font-size:24px;}
+  .stage-desc {font-size:14px;color:var(--text2);line-height:1.55;}
+
+  .feature-list {display:flex;flex-direction:column;gap:0;margin-top:24px;}
+  .feature-row {display:grid;grid-template-columns:48px 1fr;gap:20px;padding:14px 0;border-top:1px solid var(--border);align-items:baseline;}
+  .feature-num {font-family:var(--font-mono);font-size:13px;color:var(--accent);letter-spacing:.06em;}
+  .feature-text {font-family:var(--font-serif);font-size:22px;line-height:1.4;color:var(--text);}
+  .feature-text b {font-weight:700;color:var(--text);}
+
+  .code {font-family:var(--font-mono);font-size:14px;background:var(--dark);color:var(--accent-light);padding:6px 12px;border-radius:6px;display:inline-block;}
+
+  .concept-pill {display:inline-block;font-family:var(--font-mono);font-size:12px;background:var(--accent-bg);color:var(--accent);padding:6px 14px;border-radius:999px;border:1px solid rgba(13,148,136,.25);margin:4px 6px 4px 0;letter-spacing:.04em;}
+  .concept-pill.pink {background:var(--pink-bg);color:var(--pink);border-color:var(--pink-border);}
+
+  .approach-card {background:var(--white);border:1px solid var(--border);border-radius:10px;padding:20px 22px;display:flex;flex-direction:column;gap:8px;}
+  .approach-num {font-family:var(--font-mono);font-size:11px;color:var(--accent);letter-spacing:.08em;}
+  .approach-title {font-family:var(--font-serif);font-weight:600;font-size:20px;line-height:1.2;}
+  .approach-body {font-size:14px;color:var(--text2);line-height:1.5;}
+  .approach-card.recommend {border-color:var(--accent);background:var(--accent-bg);}
+  .approach-card.recommend .approach-num {color:var(--accent);}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<div class="deck" id="deck">
+
+  <!-- 1. Title + Challenge -->
+  <section class="slide dark active">
+    <div style="margin:auto 0;">
+      <div class="eyebrow" style="color:var(--accent-light);">Pair Programming Challenge</div>
+      <h2 style="font-size:88px;max-width:1200px;color:var(--cream);line-height:1.05;">Re-create <em style="font-style:italic;color:var(--accent-light);">ChatGPT</em>.</h2>
+      <p class="lede" style="color:rgba(245,240,235,.7);font-size:24px;margin-top:36px;max-width:960px;"><b style="color:rgba(245,240,235,.9);">Challenge:</b> Re-create ChatGPT, but give it a cool personality <i>(think Shakespeare, Shakira, Paul Graham)</i> and give it context on our curriculum.</p>
+    </div>
+  </section>
+
+  <!-- 2. What you'll build -->
+  <section class="slide">
+    <div class="eyebrow">What you'll build</div>
+    <h2>Five pieces.</h2>
+    <div class="feature-list" style="margin-top:24px;flex:1;display:flex;flex-direction:column;justify-content:space-evenly;">
+      <div class="feature-row" style="padding:12px 0;"><div class="feature-num" style="font-size:15px;">01</div><div class="feature-text" style="font-size:22px;"><b>Clone the repo</b> &amp; create a new branch — <a href="https://github.com/ngf9/ChatAssistantPairProgramming" target="_blank" style="font-family:var(--font-mono);font-size:14px;color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(13,148,136,.35);">github.com/ngf9/ChatAssistantPairProgramming</a></div></div>
+      <div class="feature-row" style="padding:12px 0;"><div class="feature-num" style="font-size:15px;">02</div><div class="feature-text" style="font-size:22px;">Add the <b>OpenAI API key</b> <i style="color:var(--text2);font-size:17px;">(instruct Claude to use Responses API)</i>.</div></div>
+      <div class="feature-row" style="padding:12px 0;"><div class="feature-num" style="font-size:15px;">03</div><div class="feature-text" style="font-size:22px;">Build the <b>System Prompt</b> with unique persona &amp; rules.<div style="font-family:var(--font-sans);font-size:14.5px;color:var(--text2);line-height:1.5;margin-top:6px;padding-left:0;font-style:normal;"><b style="color:var(--text);font-style:italic;">Add Rule:</b> There is a file called <span class="code" style="font-size:13px;padding:3px 8px;">curriculum.md</span> (within <span class="code" style="font-size:13px;padding:3px 8px;">data/</span> folder) with info on the Vibe Coding course. Tell your assistant to send this to OpenAI <i>every time a user asks about the course</i>, so the LLM can use it in context.</div></div></div>
+      <div class="feature-row" style="padding:12px 0;"><div class="feature-num" style="font-size:15px;">04</div><div class="feature-text" style="font-size:22px;">Add <b>Search Tool</b> to the model <i style="color:var(--text2);font-size:17px;">(via Responses API)</i>.</div></div>
+      <div class="feature-row" style="padding:12px 0;"><div class="feature-num" style="font-size:15px;">05</div><div class="feature-text" style="font-size:22px;">Add <b>streaming</b> and <b>markdown styling</b> so users see output on the screen as the response forms (+ the output is styled).</div></div>
+    </div>
+    <div style="margin-top:24px;">
+      <span class="concept-pill" style="font-size:14px;padding:8px 16px;">LLM API</span>
+      <span class="concept-pill pink" style="font-size:14px;padding:8px 16px;">System Prompt</span>
+      <span class="concept-pill pink" style="font-size:14px;padding:8px 16px;">Tool Call</span>
+      <span class="concept-pill" style="font-size:14px;padding:8px 16px;">Response Streaming / Styling</span>
+      <span class="concept-pill" style="font-size:14px;padding:8px 16px;">File Reference</span>
+    </div>
+    <p style="margin-top:18px;font-size:13px;color:var(--text2);font-style:italic;line-height:1.5;max-width:1100px;">For simplicity, we are not adding memory (and thus not connecting a database). The Responses API has some built-in state functionality, so each message doesn't feel like a new conversation.</p>
+  </section>
+
+  <!-- 3. Sending Ref Files to LLM API -->
+  <section class="slide">
+    <div class="eyebrow">Concept deep-dive</div>
+    <h2>Sending Ref Files to LLM API.</h2>
+    <p class="lede" style="margin-top:12px;"><i>Example: sending the Vibe Coding Foundations curriculum via OpenAI API when a user asks about the course.</i></p>
+
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:32px;flex:1;min-height:0;">
+      <div class="approach-card">
+        <div class="approach-num">Approach 01</div>
+        <div class="approach-title">Send docs + System Prompt each time <span style="color:var(--pink);">($$)</span></div>
+        <div class="approach-body">Simplest to implement, but uses unnecessary tokens and increases costs.</div>
+      </div>
+      <div class="approach-card recommend">
+        <div class="approach-num">Approach 02 · <span style="color:var(--accent);font-weight:600;">recommended</span></div>
+        <div class="approach-title">Keyword Detection</div>
+        <div class="approach-body">Check the user's message for specific course-related keywords and include the curriculum only when a match is found. Fast, cheap, and simple — but may miss edge cases.</div>
+      </div>
+      <div class="approach-card">
+        <div class="approach-num">Approach 03</div>
+        <div class="approach-title">AI Classification</div>
+        <div class="approach-body">First ask the AI whether the user's message is about the course, then include the curriculum only if it says yes. More accurate, but adds an extra API call — more latency and cost.</div>
+      </div>
+      <div class="approach-card">
+        <div class="approach-num">Approach 04</div>
+        <div class="approach-title">Tool / Function Calling</div>
+        <div class="approach-body">Expose a <span class="code" style="font-size:12px;padding:2px 6px;">get_curriculum</span> tool and let the AI call it only when it decides it needs the curriculum. More autonomy, but more complexity and slower responses (back-and-forth).</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Instructions one-pager -->
+  <section class="slide" style="padding:48px 56px 80px;">
+    <div style="display:grid;grid-template-columns:1.25fr 1fr;gap:32px;height:100%;min-height:0;">
+      <div style="display:flex;flex-direction:column;min-width:0;overflow:hidden;">
+        <div class="eyebrow" style="margin-bottom:14px;font-size:13px;">Week 4 · Pair Programming Challenge</div>
+        <h2 style="font-size:54px;line-height:1.04;margin-bottom:14px;">Re-create <em style="font-style:italic;color:var(--accent);">ChatGPT.</em></h2>
+        <p style="font-size:17px;line-height:1.5;color:var(--text2);max-width:680px;margin-bottom:18px;"><b style="color:var(--text);">Challenge.</b> Re-create ChatGPT, but give it a cool personality <i>(Shakespeare, Shakira, Paul Graham)</i> and give it context on our curriculum.</p>
+
+        <div style="font-family:var(--font-sans);text-transform:uppercase;letter-spacing:.14em;font-size:12px;font-weight:600;color:var(--accent);margin:8px 0 10px;">What you'll build</div>
+        <div style="display:flex;flex-direction:column;flex:1;justify-content:space-around;">
+          <div style="display:grid;grid-template-columns:32px 1fr;gap:12px;padding:8px 0;border-top:1px solid var(--border);align-items:baseline;"><div style="font-family:var(--font-mono);font-size:12px;color:var(--accent);">01</div><div style="font-family:var(--font-serif);font-size:17px;line-height:1.3;"><b>Clone</b> the repo &amp; create a branch.</div></div>
+          <div style="display:grid;grid-template-columns:32px 1fr;gap:12px;padding:8px 0;border-top:1px solid var(--border);align-items:baseline;"><div style="font-family:var(--font-mono);font-size:12px;color:var(--accent);">02</div><div style="font-family:var(--font-serif);font-size:17px;line-height:1.3;">Add the <b>OpenAI API key</b> <i style="font-size:13px;color:var(--text2);">(use Responses API)</i>.</div></div>
+          <div style="display:grid;grid-template-columns:32px 1fr;gap:12px;padding:8px 0;border-top:1px solid var(--border);align-items:baseline;"><div style="font-family:var(--font-mono);font-size:12px;color:var(--accent);">03</div><div style="font-family:var(--font-serif);font-size:17px;line-height:1.3;">Build a <b>System Prompt</b> w/ persona &amp; rules — incl. reading <span style="font-family:var(--font-mono);font-size:12px;background:var(--dark);color:var(--accent-light);padding:2px 6px;border-radius:4px;">data/curriculum.md</span>.</div></div>
+          <div style="display:grid;grid-template-columns:32px 1fr;gap:12px;padding:8px 0;border-top:1px solid var(--border);align-items:baseline;"><div style="font-family:var(--font-mono);font-size:12px;color:var(--accent);">04</div><div style="font-family:var(--font-serif);font-size:17px;line-height:1.3;">Add <b>Search Tool</b> to the model.</div></div>
+          <div style="display:grid;grid-template-columns:32px 1fr;gap:12px;padding:8px 0;border-top:1px solid var(--border);align-items:baseline;"><div style="font-family:var(--font-mono);font-size:12px;color:var(--accent);">05</div><div style="font-family:var(--font-serif);font-size:17px;line-height:1.3;">Add <b>streaming</b> + <b>markdown styling</b>.</div></div>
+        </div>
+
+        <div style="margin-top:14px;">
+          <span class="concept-pill" style="font-size:12px;padding:5px 12px;">LLM API</span>
+          <span class="concept-pill pink" style="font-size:12px;padding:5px 12px;">System Prompt</span>
+          <span class="concept-pill pink" style="font-size:12px;padding:5px 12px;">Tool Call</span>
+          <span class="concept-pill" style="font-size:12px;padding:5px 12px;">Streaming</span>
+          <span class="concept-pill" style="font-size:12px;padding:5px 12px;">File Reference</span>
+        </div>
+      </div>
+
+      <div style="background:var(--dark);color:var(--cream);border-radius:14px;padding:28px 28px;display:flex;flex-direction:column;min-width:0;overflow:hidden;">
+        <div class="eyebrow" style="color:var(--accent-light);margin-bottom:10px;font-size:12px;">Instructions</div>
+        <div style="font-family:var(--font-serif);font-weight:600;font-size:32px;line-height:1.1;margin-bottom:16px;color:var(--cream);">Four <em style="font-style:italic;color:var(--accent-light);">steps.</em></div>
+
+        <div style="flex:1;display:flex;flex-direction:column;gap:14px;font-size:16px;line-height:1.45;color:rgba(245,240,235,.88);">
+          <div style="display:grid;grid-template-columns:26px 1fr;gap:12px;align-items:baseline;"><span style="font-family:var(--font-mono);color:var(--accent-light);font-size:14px;">01</span><div><b style="color:var(--cream);">Paste in any terminal</b> — clones, installs deps, opens VS Code:<div style="font-family:var(--font-mono);font-size:10.5px;background:rgba(245,240,235,.06);color:var(--accent-light);padding:8px 10px;border-radius:5px;margin-top:6px;line-height:1.5;word-break:break-all;">git clone https://github.com/tiobenito/ChatAssistantPairProgramming.git chat-asst &amp;&amp; cd chat-asst &amp;&amp; npm install &amp;&amp; cp .env.local.example .env.local &amp;&amp; code .</div></div></div>
+
+          <div style="display:grid;grid-template-columns:26px 1fr;gap:12px;align-items:baseline;"><span style="font-family:var(--font-mono);color:var(--accent-light);font-size:14px;">02</span><div>In the new VS Code window, open a terminal → run <span style="color:var(--pink);font-family:var(--font-mono);">claude</span>. First prompt:<div style="font-family:var(--font-mono);font-size:11px;background:rgba(245,240,235,.06);color:var(--accent-light);padding:9px 11px;border-radius:5px;margin-top:8px;line-height:1.45;word-break:break-all;">Set OPENAI_API_KEY in .env.local to: sk-proj-… (real key in the class chat / pinned message)</div><div style="font-size:13px;color:rgba(245,240,235,.6);margin-top:6px;font-style:italic;">Claude edits the file for you.</div></div></div>
+
+          <div style="display:grid;grid-template-columns:26px 1fr;gap:12px;align-items:baseline;"><span style="font-family:var(--font-mono);color:var(--accent-light);font-size:14px;">03</span><div>Open a <b style="color:var(--cream);">second terminal</b> → run <span style="color:var(--pink);font-family:var(--font-mono);">npm run dev</span>. Leave it running. Open <span style="font-family:var(--font-mono);background:rgba(245,240,235,.1);padding:1px 6px;border-radius:4px;font-size:13px;">localhost:3000</span> in your browser.</div></div>
+
+          <div style="display:grid;grid-template-columns:26px 1fr;gap:12px;align-items:baseline;"><span style="font-family:var(--font-mono);color:var(--accent-light);font-size:14px;">04</span><div>Back in Terminal 1 (Claude), start building. <span style="color:var(--accent-light);font-style:italic;">Rules are pre-loaded in <span style="font-family:var(--font-mono);background:rgba(245,240,235,.1);padding:1px 6px;border-radius:4px;font-size:13px;">CLAUDE.md</span>.</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Alternative: Claude Code desktop app -->
+  <section class="slide dark">
+    <div style="display:grid;grid-template-columns:1fr 1.1fr;gap:36px;height:100%;min-height:0;align-items:center;">
+      <div>
+        <div class="eyebrow" style="color:var(--accent-light);">Alternative path</div>
+        <h2 style="font-size:58px;line-height:1.05;color:var(--cream);margin-top:10px;">Zero terminals.<br/><em style="font-style:italic;color:var(--accent-light);">One prompt.</em></h2>
+        <p style="font-size:18px;line-height:1.55;color:rgba(245,240,235,.7);margin-top:24px;max-width:520px;">If you have the <b style="color:var(--cream);">Claude Code Mac desktop app</b>, the entire setup collapses into one paste. Claude runs the clone, install, env file, and dev server for you — all as background tool calls.</p>
+        <p style="font-size:15px;line-height:1.5;color:rgba(245,240,235,.55);margin-top:16px;font-style:italic;max-width:520px;">Open the app → paste the prompt → open <span style="font-family:var(--font-mono);background:rgba(245,240,235,.1);padding:1px 6px;border-radius:4px;color:var(--accent-light);">localhost:3000</span> in your browser → keep prompting features in the same chat.</p>
+      </div>
+      <div style="background:rgba(245,240,235,.04);border:1px solid rgba(245,240,235,.12);border-radius:14px;padding:24px 26px;">
+        <div style="font-family:var(--font-sans);text-transform:uppercase;letter-spacing:.14em;font-size:11px;font-weight:600;color:var(--accent-light);margin-bottom:12px;">Paste this as your first message</div>
+        <div style="font-family:var(--font-mono);font-size:11.5px;background:rgba(0,0,0,.3);color:var(--cream);padding:18px 18px;border-radius:8px;line-height:1.55;white-space:pre-wrap;word-break:break-word;">Set up the Chat Assistant project on my Desktop:
+
+1. Clone https://github.com/tiobenito/ChatAssistantPairProgramming.git into ~/Desktop as chat-asst
+2. cd into it
+3. Run npm install
+4. cp .env.local.example .env.local
+5. Edit .env.local to set OPENAI_API_KEY to: <span style="color:var(--accent-light);word-break:break-all;">sk-proj-… (real key in the class chat / pinned message)</span>
+6. Start `npm run dev` as a background process so I can keep chatting with you while it runs
+7. Confirm localhost:3000 is up</div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div class="nav">
+  <div class="logo" id="logo">[ ai study camp ]</div>
+  <div class="dots" id="dots"></div>
+  <div class="counter"><span id="cur">1</span> / <span id="total">5</span></div>
+</div>
+
+<script>
+  const slides=[...document.querySelectorAll('.slide')],dots=document.getElementById('dots'),prog=document.getElementById('progress'),cur=document.getElementById('cur'),logo=document.getElementById('logo'),counter=document.querySelector('.counter');
+  document.getElementById('total').textContent=slides.length;
+  slides.forEach((_,i)=>{const d=document.createElement('button');d.className='dot'+(i===0?' active':'');d.onclick=()=>go(i);dots.appendChild(d);});
+  let idx=0;
+  function go(n){idx=Math.max(0,Math.min(slides.length-1,n));slides.forEach((s,i)=>s.classList.toggle('active',i===idx));document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===idx));prog.style.width=((idx+1)/slides.length*100)+'%';cur.textContent=idx+1;const dark=slides[idx].classList.contains('dark');document.body.style.background=dark?'#1C1917':'#F5F0EB';logo.style.color=dark?'#F5F0EB':'#1C1917';counter.style.color=dark?'rgba(245,240,235,.6)':'#78716C';document.querySelectorAll('.dot').forEach(d=>{if(!d.classList.contains('active'))d.style.borderColor=dark?'rgba(245,240,235,.25)':'rgba(28,25,23,.25)';});}
+  prog.style.width=(1/slides.length*100)+'%';
+  document.addEventListener('keydown',e=>{if(['ArrowRight',' ','PageDown'].includes(e.key))go(idx+1);if(['ArrowLeft','PageUp'].includes(e.key))go(idx-1);});
+</script>
+</body>
+</html>
