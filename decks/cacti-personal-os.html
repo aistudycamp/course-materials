@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cacti — A Personal Operating System · AISC Week 3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,500&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+  :root{
+    --bg:#F5F0EB; --fg:#1C1917; --accent:#0D9488; --accent-soft:#0d948815;
+    --muted:#78716C; --dark:#1C1917; --dark2:#292524;
+    --line:rgba(28,25,23,0.12); --line2:rgba(28,25,23,0.22);
+    --green:#16A34A; --orange:#D97706; --blue:#2563EB; --red:#DC2626;
+    --card:#FFFFFF;
+  }
+
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);font-family:'Geist',system-ui,sans-serif;color:var(--fg);-webkit-font-smoothing:antialiased}
+
+  /* progress bar */
+  #progress{position:fixed;top:0;left:0;height:3px;background:var(--accent);width:0;z-index:100;transition:width .25s ease}
+
+  .slide{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:9vh 0 8vh;position:relative;scroll-snap-align:start}
+  .slide+.slide{border-top:1px solid var(--line)}
+  .content{width:100%;max-width:1160px;margin:0 auto;padding:0 56px}
+  .narrow{max-width:920px}
+
+  /* wordmark */
+  .wm{position:absolute;left:56px;bottom:28px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.04em;color:var(--muted)}
+  .pageno{position:absolute;right:56px;bottom:28px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted)}
+  .slide.dark .wm,.slide.dark .pageno{color:rgba(255,255,255,.5)}
+
+  /* typography */
+  .kicker{font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:18px;font-weight:600}
+  h1{font-family:'Playfair Display',serif;font-weight:700;font-size:72px;line-height:1.02;letter-spacing:-.5px}
+  h2{font-family:'Playfair Display',serif;font-weight:700;font-size:46px;line-height:1.06;margin-bottom:10px}
+  .sub{font-family:'Playfair Display',serif;font-style:italic;font-size:19px;color:var(--muted);margin-bottom:40px;font-weight:500}
+  p.lead{font-size:20px;line-height:1.6;color:var(--fg);max-width:760px}
+  .mono{font-family:'JetBrains Mono',monospace}
+
+  /* dark slides */
+  .slide.dark{background:var(--dark)}
+  .slide.dark h1,.slide.dark h2{color:#fff}
+  .slide.dark .sub{color:rgba(255,255,255,.6)}
+  .slide.dark p.lead{color:rgba(255,255,255,.82)}
+  .slide.dark .kicker{color:var(--accent)}
+
+  /* generic building blocks */
+  .node{background:var(--card);border:1px solid var(--line2);border-radius:10px;padding:16px 20px;text-align:center;font-weight:600;font-size:16px}
+  .node .nm{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);font-weight:500;margin-top:3px}
+  .pill{display:inline-flex;align-items:center;gap:7px;background:var(--card);border:1px solid var(--line2);border-radius:9999px;padding:9px 16px;font-size:15px;font-weight:500;font-family:'JetBrains Mono',monospace}
+  .pill .dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px 24px}
+  .card .ic{font-size:30px;margin-bottom:14px;display:block}
+  .card h3{font-size:20px;font-weight:700;margin-bottom:7px}
+  .card .tag{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px;display:block}
+  .card p{font-size:15.5px;line-height:1.5;color:var(--muted)}
+  .card.stripe{border-top:3px solid var(--accent)}
+
+  /* hub & spoke */
+  .arrow{color:var(--accent);font-size:24px;display:flex;align-items:center;justify-content:center;font-weight:700}
+
+  /* the registry resolve diagram */
+  .resolve{display:grid;grid-template-columns:auto auto 1fr;gap:0;align-items:stretch;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .resolve .inp{padding:22px 26px;display:flex;flex-direction:column;justify-content:center;border-right:1px solid var(--line);background:var(--accent-soft)}
+  .resolve .ar{display:flex;align-items:center;padding:0 18px;color:var(--accent);font-size:26px;font-weight:700;border-right:1px solid var(--line)}
+  .resolve .out{padding:22px 26px;display:flex;flex-direction:column;gap:8px;justify-content:center}
+  .resolve .rowi{display:flex;gap:10px;align-items:baseline;font-family:'JetBrains Mono',monospace;font-size:15px}
+  .resolve .rowi .k{color:var(--muted);width:118px;flex-shrink:0;font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+  .resolve .rowi .v{color:var(--fg);font-weight:600}
+
+  /* fan-out diagram */
+  .fan{display:grid;grid-template-columns:170px 56px 1fr;align-items:center;gap:0}
+  .fan .legs{display:flex;flex-direction:column;gap:14px}
+  .fan .leg{background:var(--card);border:1px solid var(--line2);border-left:3px solid var(--accent);border-radius:10px;padding:13px 16px;font-size:15px}
+  .fan .leg .t{font-weight:600}
+  .fan .leg .d{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);margin-top:2px}
+  .fanarrows{position:relative;height:100%}
+
+  .conn{display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:30px;font-weight:700}
+
+  /* today big flow */
+  .today-flow{display:grid;grid-template-columns:1fr 60px 1.15fr 60px 1fr;align-items:center;gap:0}
+  .col-inputs{display:flex;flex-direction:column;gap:12px}
+  .ti{background:var(--card);border:1px solid var(--line2);border-radius:10px;padding:12px 15px;font-size:14.5px;display:flex;align-items:center;gap:10px}
+  .ti .ti-ic{font-size:19px}
+  .ti .ti-sub{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted)}
+  .brain{background:var(--dark);color:#fff;border-radius:14px;padding:26px 22px;text-align:center}
+  .brain .bt{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;margin-bottom:6px}
+  .brain .bd{font-size:13.5px;color:rgba(255,255,255,.62);line-height:1.5}
+  .brief{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:12px;padding:18px 18px}
+  .brief .bl{font-size:13.5px;padding:6px 0;border-bottom:1px solid var(--line);display:flex;gap:8px;align-items:center}
+  .brief .bl:last-child{border-bottom:none}
+  .brief .bl .bd{width:7px;height:7px;border-radius:50%;background:var(--accent);flex-shrink:0}
+
+  /* three layer stack */
+  .layers{display:flex;flex-direction:column;gap:14px}
+  .layer{display:grid;grid-template-columns:230px 1fr;gap:0;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+  .layer .lh{padding:20px 22px;display:flex;flex-direction:column;justify-content:center;color:#fff}
+  .layer .lb{padding:18px 22px;background:var(--card);display:flex;align-items:center;flex-wrap:wrap;gap:9px}
+  .layer .lh .ln{font-size:19px;font-weight:700}
+  .layer .lh .lt{font-family:'JetBrains Mono',monospace;font-size:11.5px;opacity:.7;margin-top:3px}
+  .chip{font-family:'JetBrains Mono',monospace;font-size:12.5px;background:var(--bg);border:1px solid var(--line2);border-radius:6px;padding:5px 10px;color:var(--fg)}
+
+  .note{font-size:14px;color:var(--muted);margin-top:26px;font-style:italic;font-family:'Playfair Display',serif}
+
+  .big{font-family:'JetBrains Mono',monospace;font-size:52px;font-weight:600;color:var(--accent);line-height:1}
+  .statline{display:flex;gap:48px;flex-wrap:wrap}
+  .statline .s .l{font-size:14px;color:var(--muted);margin-top:6px}
+
+  .hint{position:fixed;right:18px;bottom:18px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);opacity:.6;z-index:50}
+  @media(max-width:1100px){.content{padding:0 32px}h1{font-size:54px}h2{font-size:36px}}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<div class="hint">← → to navigate</div>
+
+<!-- 1 · TITLE -->
+<section class="slide dark">
+  <div class="content">
+    <div class="kicker">AI Study Camp · Week 3 · Guest Session</div>
+    <h1>Cacti 🌵</h1>
+    <p class="sub" style="font-size:23px;margin-top:18px">One place to run your whole work + life — in plain English.</p>
+    <p class="lead" style="margin-top:14px">A personal operating system built entirely from the things you're learning this week: <b style="color:#fff">skills</b>, <b style="color:#fff">MCPs</b>, and <b style="color:#fff">sub-agents</b>.</p>
+  </div>
+  <div class="wm">[ ai study camp ]</div>
+  <div class="pageno">01</div>
+</section>
+
+<!-- 2 · THE PROBLEM -->
+<section class="slide">
+  <div class="content">
+    <div class="kicker">The problem</div>
+    <h2>Your life is scattered across a dozen tabs</h2>
+    <p class="sub">Email here, tasks there, calendar somewhere else, code in 50 folders.</p>
+    <div style="display:grid;grid-template-columns:1fr 64px 1fr;align-items:center;margin-top:20px">
+      <div class="grid3" style="gap:12px">
+        <span class="pill"><span class="dot"></span>Gmail</span>
+        <span class="pill"><span class="dot"></span>Slack</span>
+        <span class="pill"><span class="dot"></span>Linear</span>
+        <span class="pill"><span class="dot"></span>Calendar</span>
+        <span class="pill"><span class="dot"></span>Notion</span>
+        <span class="pill"><span class="dot"></span>GitHub</span>
+        <span class="pill"><span class="dot"></span>50 repos</span>
+        <span class="pill"><span class="dot"></span>Drive</span>
+        <span class="pill"><span class="dot"></span>your head</span>
+      </div>
+      <div class="arrow">→</div>
+      <div class="node" style="border-color:var(--orange);border-width:1.5px">
+        <div style="font-size:34px">😵‍💫</div>
+        <div style="margin-top:8px">You, context-switching all day</div>
+        <div class="nm">copy · paste · re-explain · repeat</div>
+      </div>
+    </div>
+    <p class="note">Every tool is its own island. You are the integration layer — and it's exhausting.</p>
+  </div>
+  <div class="wm">[ ai study camp ]</div><div class="pageno">02</div>
+</section>
+
+<!-- 3 · THE SHIFT -->
+<section class="slide">
+  <div class="content">
+    <div class="kicker">The shift</div>
+    <h2>What if you talked to one thing — and it ran the rest?</h2>
+    <div style="display:grid;grid-template-columns:200px 70px 1fr;align-items:center;margin-top:46px;gap:0">
+      <div class="node" style="background:var(--dark);color:#fff;border:none;padding:24px">
+        <div style="font-size:30px">🗣️</div>
+        <div style="margin-top:8px;font-size:18px">You</div>
+        <div class="nm" style="color:rgba(255,255,255,.55)">plain English</div>
+      </div>
+      <div class="arrow">→</div>
+      <div style="display:grid;grid-template-columns:230px 70px 1fr;align-items:center">
+        <div class="node stripe" style="border-top:3px solid var(--accent);padding:24px">
+          <div style="font-size:30px">🌵</div>
+          <div style="margin-top:8px;font-size:20px">Cacti</div>
+          <div class="nm">your chief of staff</div>
+        </div>
+        <div class="arrow">→</div>
+        <div class="grid2" style="gap:10px">
+          <span class="pill"><span class="dot"></span>email</span>
+          <span class="pill"><span class="dot"></span>calendar</span>
+          <span class="pill"><span class="dot"></span>tasks</span>
+          <span class="pill"><span class="dot"></span>slack</span>
+          <span class="pill"><span class="dot"></span>tickets</span>
+          <span class="pill"><span class="dot"></span>all your repos</span>
+        </div>
+      </div>
+    </div>
+    <p class="note">"What's on today?" · "Log this call" · "Add a task to the wedding project" · "What changed in scheduling?"</p>
+  </div>
+  <div class="wm">[ ai study camp ]</div><div class="pageno">03</div>
+</section>
+
+<!-- 4 · THE BUILDING BLOCKS (thesis) -->
+<section class="slide">
+  <div class="content">
+    <div class="kicker">The whole thing is built from 4 pieces</div>
+    <h2>You already learned three of them this week</h2>
+    <div class="grid4" style="margin-top:34px">
+      <div class="card stripe"><span class="ic">🎓</span><span class="tag">Skills</span><h3>Taught behaviors</h3><p>A saved workflow. "Every time I say <span class="mono">/today</span>, do these steps."</p></div>
+      <div class="card stripe"><span class="ic">🔌</span><span class="tag">MCPs</span><h3>Tool connections</h3><p>Plugs Claude into Slack, Notion, GitHub, Linear — your real tools.</p></div>
+      <div class="card stripe"><span class="ic">🤖</span><span class="tag">Sub-agents</span><h3>Parallel workers</h3><p>Fan one request out to many helpers, each doing a slice at once.</p></div>
+      <div class="card stripe" style="border-top-color:var(--orange)"><span class="ic">🗺️</span><span class="tag" style="color:var(--orange)">The Registry</span><h3>The map</h3><p>The glue — and it's just a text file. You already know how to make one.</p></div>
+    </div>
+    <p class="note">Skills + MCPs + Sub-agents are the Lego bricks. The map is the baseplate — and it's nothing fancier than a markdown file.</p>
+  </div>
+  <div class="wm">[ ai study camp ]</div><div class="pageno">04</div>
+</section>
+
+<!-- 5 · MCPs -->
+<section class="slide">
+  <div class="content">
+    <div class="kicker">Piece 1 · MCPs</div>
+    <h2>MCPs give Cacti hands</h2>
+    <p class="sub">Each connector is a door into a real tool. Install once, use forever.</p>
+    <div style="display:grid;grid-template-columns:240px 70px 1fr;align-items:center;margin-top:30px">
+      <div class="node stripe" style="padding:26px"><div style="font-size:28px">🌵</div><div style="margin-top:8px;font-size:19px">Cacti</div></div>
+      <div class="arrow">→</div>
+      <div class="grid3" style="gap:12px">
+        <span class="pill">🐙 GitHub</span>
+        <span class="pill">📝 Notion</span>
+        <span class="pill">💬 Slack</span>
+        <span class="pill">📋 Linear</span>
+        <span class="pill">📧 Gmail</span>
+        <span class="pill">📅 Calendar</span>
+        <span class="pill">📊 Airtable</span>
+        <span class="pill">🗂️ Drive</span>
+        <span class="pill">⏱️ Temporal</span>
+      </div>
+    </div>
+    <p class="note">Read your calendar, post to Slack, open a ticket, check a repo — without you ever leaving the conversation. Connect it once, then just use it.</p>
+  </div>
+  <div class="wm">[ ai study camp ]</div><div class="pageno">05</div>
+</section>
+
+<!-- 6 · THE REGISTRY -->
+<section class="slide">
+  <div class="content">
+    <div class="kicker">Piece 2 · The Registry — and it's just a file</div>
+    <h2>You say a nickname. It knows where to go.</h2>
+    <p class="sub">The registry is a plain markdown file — a list. You say a project's name; Cacti looks it up and knows exactly where it lives and how to treat it.</p>
+    <div class="resolve" style="margin-top:26px">
+      <div class="inp">
+        <div class="mono" style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em">you say</div>
+        <div class="mono" style="font-size:24px;font-weight:600;margin-top:6px">"schedule"</div>
+      </div>
+      <div class="ar">→</div>
+      <div class="out">
+        <div class="rowi"><span class="k">which project</span><span class="v">your scheduling project</span></div>
+        <div class="rowi"><span class="k">which area</span><span class="v">work &nbsp;<span style="color:var(--muted)">(not personal)</span></span></div>
+        <div class="rowi"><span class="k">which login</span><span class="v">your work account &nbsp;<span style="color:var(--muted)">(never your personal one)</span></span></div>
+      </div>
+    </div>
+    <div class="grid3" style="margin-top:22px">
+      <div class="card"><span class="tag">a few areas of life</span><p style="color:var(--fg);font-size:16px">work · personal · learning — each kept cleanly separate</p></div>
+      <div class="card"><span class="tag">~50 projects</span><p style="color:var(--fg);font-size:16px">nicknames work too, so "world cup" and "mundial" find the same place</p></div>
+      <div class="card" style="border-color:var(--orange)"><span class="tag" style="color:var(--orange)">never mixes them up</span><p style="color:var(--fg);font-size:16px">your personal stuff and your work stuff never get crossed</p></div>
+    </div>
+    <p class="note">No magic: it's one text file. Cacti just adds a line whenever it learns a new nickname — you'll write your first one this week.</p>
+  </div>
+  <div class="wm">[ ai study camp ]</div><div class="pageno">06</div>
+</section>
+
+<!-- 7 · SKILLS -->
+<section class="slide">
+  <div class="content">
+    <div class="kicker">Piece 3 · Skills</div>
+    <h2>Skills are the verbs Cacti knows</h2>
+    <p class="sub">Each one is a repeatable workflow you taught it once.</p>
+    <div class="grid2" style="margin-top:28px;gap:16px">
+      <div class="card" style="padding:20px 22px"><h3 style="font-size:18px"><span class="mono" style="color:var(--accent)">/today</span> &nbsp;Morning brief</h3><p>Pulls your whole day together (we'll see this live)</p></div>
+      <div class="card" style="padding:20px 22px"><h3 style="font-size:18px"><span class="mono" style="color:var(--accent)">/log</span> &nbsp;Capture a note</h3><p>"I just had a call with…" → filed in the right place</p></div>
+      <div class="card" style="padding:20px 22px"><h3 style="font-size:18px"><span class="mono" style="color:var(--accent)">/dispatch</span> &nbsp;Send work into a project</h3><p>Runs a task inside any repo, with that repo's context</p></div>
+      <div class="card" style="padding:20px 22px"><h3 style="font-size:18px"><span class="mono" style="color:var(--accent)">/journal · /reflect</span> &nbsp;Think out loud</h3><p>Life decisions, weekly reviews, goal check-ins</p></div>
+    </div>
+    <p class="note">40+ skills today — but it started with one. <b>One good skill beats ten half-built ones.</b></p>
+  </div>
+  <div class="wm">[ ai study camp ]</div><div class="pageno">07</div>
+</section>
+
+<!-- 8 · SUB-AGENTS -->
+<section class="slide">
+  <div class="content">
+    <div class="kicker">Piece 4 · Sub-agents</div>
+    <h2>One request → many workers, all at once</h2>
+    <p class="sub">Instead of one agent doing 4 things slowly, fan out to 4 agents doing 1 thing each — in parallel.</p>
+    <div class="fan" style="margin-top:30px">
+      <div class="node stripe" style="padding:22px"><div style="font-size:26px">🌵</div><div style="margin-top:6px;font-size:17px">Cacti</div><div class="nm">one ask</div></div>
+      <div class="conn">⤳</div>
+      <div class="legs">
+        <div class="leg"><div class="t">Calendar + email helper</div><div class="d">reads both your calendars + inboxes</div></div>
+        <div class="leg"><div class="t">Tasks helper</div><div class="d">gathers to-dos from every project</div></div>
+        <div class="leg"><div class="t">Reports helper</div><div class="d">reads what the overnight monitors flagged</div></div>
+        <div class="leg"><div class="t">Meeting-prep helper</div><div class="d">briefs you for each meeting that day</div></div>
+      </div>
+    </div>
+    <p class="note">Each returns a short, clean summary — not its whole messy transcript. Keeps the main conversation fast and focused.</p>
+  </div>
+  <div class="wm">[ ai study camp ]</div><div class="pageno">08</div>
+</section>
+
+<!-- 9 · /TODAY — THE PAYOFF -->
+<section class="slide">
+  <div class="content">
+    <div class="kicker">Put it together · the daily brief</div>
+    <h2><span class="mono" style="font-size:38px;color:var(--accent)">/today</span> uses all four at once</h2>
+    <div class="today-flow" style="margin-top:24px">
+      <div class="col-inputs">
+        <div class="ti"><span class="ti-ic">🗺️</span><div><div>Registry</div><div class="ti-sub">knows your projects</div></div></div>
+        <div class="ti"><span class="ti-ic">🔌</span><div><div>MCPs</div><div class="ti-sub">calendar · email · slack</div></div></div>
+        <div class="ti"><span class="ti-ic">🤖</span><div><div>Sub-agents</div><div class="ti-sub">a handful, in parallel</div></div></div>
+        <div class="ti"><span class="ti-ic">📡</span><div><div>Agent reports</div><div class="ti-sub">overnight monitors</div></div></div>
+      </div>
+      <div class="conn">→</div>
+      <div class="brain">
+        <div class="bt">/today</div>
+        <div class="bd">fans out · gathers in parallel · splices one briefing</div>
+      </div>
+      <div class="conn">→</div>
+      <div class="brief">
+        <div class="bl"><span class="bd"></span>Your schedule, both calendars</div>
+        <div class="bl"><span class="bd"></span>What needs a reply</div>
+        <div class="bl"><span class="bd"></span>Top tasks across all projects</div>
+        <div class="bl"><span class="bd"></span>What the agents flagged</div>
+        <div class="bl"><span class="bd"></span>Prep for each meeting</div>
+        <div class="bl"><span class="bd"></span>Nudges toward your goals</div>
+      </div>
+    </div>
+    <p class="note">One command. Everything that matters this morning — gathered while you make coffee.</p>
+  </div>
+  <div class="wm">[ ai study camp ]</div><div class="pageno">09</div>
+</section>
+
+<!-- 10 · AUTONOMOUS AGENTS -->
+<section class="slide">
+  <div class="content">
+    <div class="kicker">Bonus · it watches things while you sleep</div>
+    <h2>Autonomous agents run on a schedule</h2>
+    <p class="sub">They check a domain, write a short report, and Cacti reads it the next morning.</p>
+    <div style="display:flex;align-items:center;gap:0;margin-top:30px">
+      <div class="grid2" style="gap:16px;flex:1">
+        <div class="card" style="border-top:3px solid var(--accent)"><span class="tag">daily</span><h3>Nuvo-Ops monitor</h3><p>Scans every work project — health, blockers, PRs, Slack, Linear</p></div>
+        <div class="card" style="border-top:3px solid var(--accent)"><span class="tag">weekly</span><h3>Finance monitor</h3><p>LLC, taxes, cash, deadlines — surfaces what's coming up</p></div>
+      </div>
+      <div class="conn" style="width:90px">→</div>
+      <div class="node stripe" style="padding:24px;min-width:200px"><div style="font-size:26px">🌵</div><div style="margin-top:6px;font-size:17px">reads in <span class="mono" style="color:var(--accent)">/today</span></div><div class="nm">surface-and-recommend only</div></div>
+    </div>
+    <div class="statline" style="margin-top:34px">
+      <div class="s"><div class="big">read-only</div><div class="l">agents suggest — they never act without you</div></div>
+      <div class="s"><div class="big">a lens</div><div class="l">they read project files; they never copy the data</div></div>
+    </div>
+  </div>
+  <div class="wm">[ ai study camp ]</div><div class="pageno">10</div>
+</section>
+
+<!-- 11 · THE WHOLE PICTURE -->
+<section class="slide">
+  <div class="content">
+    <div class="kicker">The whole picture</div>
+    <h2>Three layers, clean ownership</h2>
+    <div class="layers" style="margin-top:30px">
+      <div class="layer">
+        <div class="lh" style="background:var(--dark)"><div class="ln">🌵 Cacti</div><div class="lt">strategy · knowledge · routing</div></div>
+        <div class="lb"><span class="chip">registry</span><span class="chip">skills</span><span class="chip">memory</span><span class="chip">/today</span><span class="chip">life OS</span></div>
+      </div>
+      <div class="layer">
+        <div class="lh" style="background:var(--accent)"><div class="ln">📡 Agents</div><div class="lt">autonomous monitoring</div></div>
+        <div class="lb"><span class="chip">nuvo-ops (daily)</span><span class="chip">finance (weekly)</span><span class="chip">read-only reports</span></div>
+      </div>
+      <div class="layer">
+        <div class="lh" style="background:var(--dark2)"><div class="ln">📂 Projects</div><div class="lt">code · execution · ~50 repos</div></div>
+        <div class="lb"><span class="chip">nuvocargo</span><span class="chip">aisc</span><span class="chip">wedding</span><span class="chip">finances</span><span class="chip">+ 45 more</span></div>
+      </div>
+    </div>
+    <p class="note">Cacti reads and writes across all of it. Projects own the facts; Cacti owns the awareness.</p>
+  </div>
+  <div class="wm">[ ai study camp ]</div><div class="pageno">11</div>
+</section>
+
+<!-- 12 · SHOW ME THE BRICK -->
+<section class="slide">
+  <div class="content">
+    <div class="kicker">Before you panic — here's where I started</div>
+    <h2>Day one, mine was tiny</h2>
+    <p class="sub">Not 50 projects and 40 skills. One folder, one file, one little command.</p>
+    <div class="grid2" style="margin-top:30px;align-items:stretch">
+      <div class="card" style="border-top:3px solid var(--accent)">
+        <span class="tag">the entire "system" on day one</span>
+        <h3 style="margin-bottom:14px">A <span class="mono" style="color:var(--accent)">/today</span> that did just two things</h3>
+        <div class="brief" style="border:none;padding:0">
+          <div class="bl"><span class="bd"></span>read my calendar for the day</div>
+          <div class="bl"><span class="bd"></span>read my to-do list</div>
+          <div class="bl" style="border-bottom:none;color:var(--muted)"><span class="bd" style="background:var(--muted)"></span>…that's it. No agents. No registry.</div>
+        </div>
+      </div>
+      <div class="card">
+        <span class="tag">all it took to build</span>
+        <h3 style="margin-bottom:14px">One folder + one <span class="mono">CLAUDE.md</span></h3>
+        <p style="font-size:16px;line-height:1.6;color:var(--fg)">A <span class="mono" style="font-size:13px;background:var(--bg);padding:1px 6px;border-radius:4px">CLAUDE.md</span> is just a note to Claude that says <i>"here's what this folder is for."</i> You're writing your first one this week.</p>
+        <p style="font-size:16px;line-height:1.6;color:var(--muted);margin-top:14px">Everything else — the registry, the agents, the parallel helpers — I added one at a time, only when I actually felt the need.</p>
+      </div>
+    </div>
+    <p class="note">The cathedral was built one brick at a time. You only need the first brick.</p>
+  </div>
+  <div class="wm">[ ai study camp ]</div><div class="pageno">12</div>
+</section>
+
+<!-- 13 · TAKEAWAY -->
+<section class="slide dark">
+  <div class="content narrow">
+    <div class="kicker">The takeaway</div>
+    <h2 style="font-size:52px;color:#fff">It's just this week's pieces — connected</h2>
+    <div style="display:flex;align-items:center;gap:16px;margin:34px 0;flex-wrap:wrap">
+      <span class="pill" style="background:var(--dark2);border-color:#444;color:#fff">🎓 a skill</span><span class="arrow">+</span>
+      <span class="pill" style="background:var(--dark2);border-color:#444;color:#fff">🔌 an MCP</span><span class="arrow">+</span>
+      <span class="pill" style="background:var(--dark2);border-color:#444;color:#fff">🤖 a sub-agent</span><span class="arrow">+</span>
+      <span class="pill" style="background:var(--dark2);border-color:#444;color:#fff">🗺️ a plain text file</span>
+      <span class="arrow" style="font-size:28px">=</span>
+      <span class="pill" style="background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600">🌵 your own OS</span>
+    </div>
+    <p class="lead">Don't copy mine. <b style="color:#fff">Start with one project, one CLAUDE.md, one good skill</b> — exactly what this week's exercise has you do. Let it grow as you hit the need. In a month, you'll have your own Cacti.</p>
+    <p class="note" style="color:rgba(255,255,255,.55)">Thursday's session · Ben Battles · ask me anything</p>
+  </div>
+  <div class="wm">[ ai study camp ]</div><div class="pageno">13</div>
+</section>
+
+<script>
+  const slides=[...document.querySelectorAll('.slide')];
+  const prog=document.getElementById('progress');
+  let i=0;
+  function go(n){i=Math.max(0,Math.min(slides.length-1,n));slides[i].scrollIntoView({behavior:'smooth'});update();}
+  function update(){prog.style.width=((i+1)/slides.length*100)+'%';}
+  // track scroll to keep progress + index in sync
+  const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){i=slides.indexOf(e.target);update();}})},{threshold:.55});
+  slides.forEach(s=>io.observe(s));
+  document.addEventListener('keydown',e=>{
+    if(['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)){e.preventDefault();go(i+1);}
+    if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();go(i-1);}
+    if(e.key==='Home'){e.preventDefault();go(0);}
+    if(e.key==='End'){e.preventDefault();go(slides.length-1);}
+  });
+  update();
+</script>
+</body>
+</html>
