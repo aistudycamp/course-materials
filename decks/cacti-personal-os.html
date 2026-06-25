@@ -16,6 +16,7 @@
     --line:rgba(28,25,23,0.12); --line2:rgba(28,25,23,0.22);
     --green:#16A34A; --orange:#D97706; --blue:#2563EB; --red:#DC2626;
     --card:#FFFFFF;
+    --cactus:#5E9E6E; --cactus-d:#4C8459; --bloom:#E8A23D;
   }
 
   html{scroll-behavior:smooth}
@@ -151,6 +152,21 @@
   .subskill .sk-name{font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--accent);font-size:15px}
   .subskill .sk-arrow{color:var(--accent);font-weight:600;font-size:13.5px}
   .subskill .blk{background:var(--card)}
+  /* cactus growth slide */
+  .cg-grow{display:grid;grid-template-columns:0.62fr 90px 1.72fr;align-items:end;gap:0;margin-top:6px}
+  .cg-stage{display:flex;flex-direction:column;align-items:center;gap:10px}
+  .cg-head{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:600;color:var(--accent);display:flex;align-items:center;gap:7px}
+  .cg-head .em{font-size:18px}
+  .cg-when{font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+  .cg-arrow{display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--accent);padding-bottom:60px}
+  .cg-arrow .ar{font-size:32px;font-weight:700}
+  .cg-arrow .lbl{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);text-align:center;line-height:1.4}
+  .cg-wrap{position:relative;display:inline-block}
+  .cg-chip{position:absolute;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;background:var(--card);border:1px solid var(--line2);border-radius:8px;padding:6px 11px;white-space:nowrap;box-shadow:0 1px 4px rgba(28,25,23,.06)}
+  .cg-chip.nuvo{color:var(--blue);border-left:3px solid var(--blue)}
+  .cg-chip.pers{color:var(--green);border-left:3px solid var(--green)}
+  .cg-chip.aisc{color:var(--accent);border-left:3px solid var(--accent)}
+  .cg-chip.cap{color:var(--fg);border-left:3px solid var(--cactus-d)}
   .hint{position:fixed;right:18px;bottom:18px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);opacity:.6;z-index:50}
   @media(max-width:1100px){.content{padding:0 32px}h1{font-size:54px}h2{font-size:36px}}
 </style>
@@ -509,7 +525,76 @@
   <div class="wm">[ ai study camp ]</div><div class="pageno">13</div>
 </section>
 
-<!-- 13 · TAKEAWAY -->
+<!-- 14 · CACTUS GROWTH -->
+<section class="slide">
+  <div class="content">
+    <div class="kicker">It starts tiny · and grows</div>
+    <h2>Plant one cactus. Let it grow arms.</h2>
+    <p class="sub">Mine started as a single sprout. Every arm is something I added the day I felt the need.</p>
+    <div class="cg-grow">
+      <!-- DAY ONE -->
+      <div class="cg-stage">
+        <div class="cg-head"><span class="em">🌵</span> cacti</div>
+        <svg width="170" height="185" viewBox="0 115 170 185" fill="none" aria-label="small saguaro">
+          <g stroke="var(--cactus)" stroke-linecap="round" fill="none">
+            <path d="M85,290 L85,140" stroke-width="38"/>
+            <path d="M85,222 C112,222 121,210 121,170" stroke-width="24"/>
+          </g>
+          <g stroke="var(--cactus-d)" stroke-width="2.2" stroke-linecap="round" opacity=".5">
+            <path d="M76,280 L76,150"/><path d="M94,280 L94,150"/>
+            <path d="M116,200 L116,174"/>
+          </g>
+          <circle cx="85" cy="140" r="6.5" fill="var(--bloom)"/>
+        </svg>
+        <div class="cg-when">Day one</div>
+      </div>
+      <!-- ARROW -->
+      <div class="cg-arrow">
+        <div class="ar">→</div>
+        <div class="lbl">arms grow<br>with your<br>needs</div>
+      </div>
+      <!-- TODAY -->
+      <div class="cg-stage">
+        <div class="cg-head"><span class="em">🌵</span> cacti</div>
+        <div class="cg-wrap">
+          <svg width="480" height="330" viewBox="0 110 480 330" fill="none" aria-label="large saguaro with arms">
+            <g stroke="var(--cactus)" stroke-linecap="round" fill="none">
+              <path d="M240,430 L240,150" stroke-width="56"/>
+              <path d="M240,300 C312,300 332,280 332,206" stroke-width="34"/>
+              <path d="M240,338 C168,338 146,316 146,236" stroke-width="34"/>
+              <path d="M240,250 C196,250 182,232 182,176" stroke-width="30"/>
+              <path d="M240,228 C292,228 308,210 308,154" stroke-width="30"/>
+              <path d="M240,202 C214,202 202,190 202,144" stroke-width="26"/>
+              <path d="M240,366 C320,366 344,346 344,276" stroke-width="32"/>
+            </g>
+            <g stroke="var(--cactus-d)" stroke-width="2.6" stroke-linecap="round" opacity=".42">
+              <path d="M226,420 L226,158"/><path d="M254,420 L254,158"/><path d="M240,420 L240,152"/>
+            </g>
+            <g fill="var(--bloom)">
+              <circle cx="240" cy="150" r="8"/>
+              <circle cx="332" cy="206" r="6.5"/>
+              <circle cx="146" cy="236" r="6.5"/>
+              <circle cx="182" cy="176" r="6.5"/>
+              <circle cx="308" cy="154" r="6.5"/>
+              <circle cx="202" cy="144" r="6"/>
+              <circle cx="344" cy="276" r="6.5"/>
+            </g>
+          </svg>
+          <span class="cg-chip aisc" style="top:30px;left:312px">🎓 aisc</span>
+          <span class="cg-chip nuvo" style="top:86px;left:356px">👔 nuvo</span>
+          <span class="cg-chip pers" style="top:116px;left:8px">🏠 personal</span>
+          <span class="cg-chip cap"  style="top:22px;left:60px">42 skills</span>
+          <span class="cg-chip cap"  style="top:156px;left:360px">4 agents</span>
+          <span class="cg-chip cap"  style="top:220px;left:24px">MCPs · registry</span>
+        </div>
+        <div class="cg-when">Today</div>
+      </div>
+    </div>
+  </div>
+  <div class="wm">[ ai study camp ]</div><div class="pageno">14</div>
+</section>
+
+<!-- 15 · TAKEAWAY -->
 <section class="slide dark">
   <div class="content narrow">
     <div class="kicker">The takeaway</div>
@@ -525,7 +610,7 @@
     <p class="lead">Don't copy mine. <b style="color:#fff">Start with one project, one CLAUDE.md, one good skill</b> — exactly what this week's exercise has you do. Let it grow as you hit the need. In a month, you'll have your own Cacti.</p>
     <p class="note" style="color:rgba(255,255,255,.55)">Thursday's session · Ben Battles · ask me anything</p>
   </div>
-  <div class="wm">[ ai study camp ]</div><div class="pageno">14</div>
+  <div class="wm">[ ai study camp ]</div><div class="pageno">15</div>
 </section>
 
 <script>
