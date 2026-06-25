@@ -133,6 +133,24 @@
   .fs-scale{display:flex;gap:44px;margin-top:24px;flex-wrap:wrap}
   .fs-scale .n{font-family:'JetBrains Mono',monospace;font-size:34px;font-weight:600;color:var(--accent);line-height:1}
   .fs-scale .l{font-size:13.5px;color:var(--muted);margin-top:6px}
+  /* nesting / composition — blocks inside blocks */
+  .nest{background:var(--card);border:1.5px solid var(--accent);border-radius:16px;padding:14px 24px;margin-top:10px}
+  .nest-h{display:flex;align-items:baseline;gap:12px;margin-bottom:2px}
+  .nest-h .nt{font-family:'JetBrains Mono',monospace;font-size:21px;font-weight:600;color:var(--accent)}
+  .nest-h .nl{font-size:14px;color:var(--muted)}
+  .nstep{display:grid;grid-template-columns:30px 1fr;gap:15px;align-items:start;padding:11px 0;border-top:1px solid var(--line)}
+  .nstep .num{font-family:'JetBrains Mono',monospace;font-weight:600;color:#fff;background:var(--accent);border-radius:50%;width:27px;height:27px;display:flex;align-items:center;justify-content:center;font-size:13px;flex:none}
+  .nstep .slabel{font-size:16px;font-weight:600;margin-bottom:8px}
+  .nstep .slabel b{color:var(--accent)}
+  .blocks{display:flex;gap:10px;flex-wrap:wrap}
+  .blk{background:var(--bg);border:1px solid var(--line2);border-radius:9px;padding:9px 13px;font-size:14px;font-weight:500;display:flex;align-items:center;gap:7px}
+  .blk .bic{font-size:15px}
+  .blk.agent{border-left:3px solid var(--orange)}
+  .blk.sub{border-left:3px solid var(--accent)}
+  .subskill{background:var(--accent-soft);border:1.5px solid var(--accent);border-radius:11px;padding:11px 14px;display:flex;align-items:center;gap:11px;flex-wrap:wrap}
+  .subskill .sk-name{font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--accent);font-size:15px}
+  .subskill .sk-arrow{color:var(--accent);font-weight:600;font-size:13.5px}
+  .subskill .blk{background:var(--card)}
   .hint{position:fixed;right:18px;bottom:18px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);opacity:.6;z-index:50}
   @media(max-width:1100px){.content{padding:0 32px}h1{font-size:54px}h2{font-size:36px}}
 </style>
@@ -356,7 +374,54 @@
   <div class="wm">[ ai study camp ]</div><div class="pageno">09</div>
 </section>
 
-<!-- 10 · AUTONOMOUS AGENTS -->
+<!-- 10 · COMPOSITION / NESTING -->
+<section class="slide">
+  <div class="content">
+    <div class="kicker">Why it scales · blocks inside blocks</div>
+    <h2>One command unpacks into many</h2>
+    <p class="sub" style="margin-bottom:14px">The bricks <b>compose</b>. A single skill can fire sub-agents, call <i>other</i> skills, and read your agents — all from one thing you type.</p>
+    <div class="nest">
+      <div class="nest-h"><span class="nt">/today</span><span class="nl">— you type this once</span></div>
+      <div class="nstep">
+        <div class="num">1</div>
+        <div>
+          <div class="slabel">Fires <b>sub-agents</b>, in parallel</div>
+          <div class="blocks">
+            <span class="blk sub"><span class="bic">🤖</span>calendar + email</span>
+            <span class="blk sub"><span class="bic">🤖</span>tasks across all repos</span>
+            <span class="blk sub"><span class="bic">🤖</span>agent reports</span>
+          </div>
+        </div>
+      </div>
+      <div class="nstep">
+        <div class="num">2</div>
+        <div>
+          <div class="slabel">Calls <b>another skill</b> — a skill nested inside a skill</div>
+          <div class="subskill">
+            <span class="sk-name">🎓 /meeting-prep</span><span class="sk-arrow">→ which fires its own helpers:</span>
+            <span class="blk"><span class="bic">🤖</span>scan transcripts</span>
+            <span class="blk"><span class="bic">🤖</span>recent Slack + tasks</span>
+          </div>
+        </div>
+      </div>
+      <div class="nstep">
+        <div class="num">3</div>
+        <div>
+          <div class="slabel">Reads your <b>overnight agents</b></div>
+          <div class="blocks">
+            <span class="blk agent"><span class="bic">📡</span>nuvo-ops</span>
+            <span class="blk agent"><span class="bic">📡</span>finance</span>
+            <span class="blk agent"><span class="bic">📡</span>house-hunt</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="note" style="margin-top:14px">One thing you type → skills calling skills calling agents. <b>That's the whole trick: small bricks, nested.</b></p>
+  </div>
+  <div class="wm">[ ai study camp ]</div><div class="pageno">10</div>
+</section>
+
+<!-- 11 · AUTONOMOUS AGENTS -->
 <section class="slide">
   <div class="content">
     <div class="kicker">Bonus · it watches things while you sleep</div>
@@ -375,7 +440,7 @@
       <div class="s"><div class="big">a lens</div><div class="l">they read project files; they never copy the data</div></div>
     </div>
   </div>
-  <div class="wm">[ ai study camp ]</div><div class="pageno">10</div>
+  <div class="wm">[ ai study camp ]</div><div class="pageno">11</div>
 </section>
 
 <!-- 11 · THE WHOLE SYSTEM (file tree) -->
@@ -413,7 +478,7 @@
     </div>
     <p class="note">All of it under one roof — Cacti reads and writes across every folder. The projects own the facts; Cacti owns the awareness.</p>
   </div>
-  <div class="wm">[ ai study camp ]</div><div class="pageno">11</div>
+  <div class="wm">[ ai study camp ]</div><div class="pageno">12</div>
 </section>
 
 <!-- 12 · SHOW ME THE BRICK -->
@@ -441,7 +506,7 @@
     </div>
     <p class="note">The cathedral was built one brick at a time. You only need the first brick.</p>
   </div>
-  <div class="wm">[ ai study camp ]</div><div class="pageno">12</div>
+  <div class="wm">[ ai study camp ]</div><div class="pageno">13</div>
 </section>
 
 <!-- 13 · TAKEAWAY -->
@@ -460,7 +525,7 @@
     <p class="lead">Don't copy mine. <b style="color:#fff">Start with one project, one CLAUDE.md, one good skill</b> — exactly what this week's exercise has you do. Let it grow as you hit the need. In a month, you'll have your own Cacti.</p>
     <p class="note" style="color:rgba(255,255,255,.55)">Thursday's session · Ben Battles · ask me anything</p>
   </div>
-  <div class="wm">[ ai study camp ]</div><div class="pageno">13</div>
+  <div class="wm">[ ai study camp ]</div><div class="pageno">14</div>
 </section>
 
 <script>
