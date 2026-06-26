@@ -15,161 +15,171 @@
     --border:rgba(28,25,23,0.1); --border-strong:rgba(28,25,23,0.2);
     --font-serif:'Playfair Display',Georgia,serif; --font-sans:'Geist',system-ui,sans-serif; --font-mono:'Geist Mono',monospace;
   }
-  * {margin:0;padding:0;box-sizing:border-box;}
-  html,body {width:100%;height:100%;overflow:hidden;background:var(--cream);color:var(--text);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;}
-  .deck {width:100%;height:100%;position:relative;}
-  .slide {position:absolute;inset:0;padding:64px 88px 90px;opacity:0;transform:translateX(30px);transition:opacity .45s ease,transform .45s ease;pointer-events:none;display:flex;flex-direction:column;overflow:hidden;}
-  .slide.active {opacity:1;transform:translateX(0);pointer-events:auto;}
-  .slide.dark {background:var(--dark);color:var(--cream);}
-  .progress {position:fixed;top:0;left:0;height:3px;background:var(--accent);z-index:50;transition:width .45s ease;}
-  .nav {position:fixed;bottom:22px;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:0 32px;z-index:40;}
-  .logo {font-family:var(--font-sans);font-weight:600;font-size:13px;letter-spacing:.02em;}
-  .dots {display:flex;gap:9px;}
-  .dot {width:7px;height:7px;border-radius:50%;border:1px solid rgba(28,25,23,.25);background:transparent;cursor:pointer;transition:all .3s;padding:0;}
-  .dot.active {background:var(--accent);border-color:var(--accent);transform:scale(1.25);}
-  .counter {font-family:var(--font-mono);font-size:11px;color:var(--text2);}
-
-  h2 {font-family:var(--font-serif);font-weight:600;font-size:48px;line-height:1.1;letter-spacing:-.01em;}
-  .eyebrow {font-family:var(--font-sans);text-transform:uppercase;letter-spacing:.18em;font-size:11px;font-weight:600;color:var(--accent);margin-bottom:18px;}
-  .lede {font-size:20px;line-height:1.55;color:var(--text2);max-width:820px;margin-top:18px;}
-
-  .card {background:var(--white);border:1px solid var(--border);border-radius:12px;padding:28px;}
-  .grid-3 {display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
-
-  .stage-head {display:flex;align-items:baseline;gap:14px;margin-bottom:14px;}
-  .stage-chip {font-family:var(--font-mono);font-size:11px;color:var(--white);background:var(--accent);padding:3px 10px;border-radius:999px;letter-spacing:.06em;font-weight:500;}
-  .stage-name {font-family:var(--font-serif);font-weight:600;font-size:24px;}
-  .stage-desc {font-size:14px;color:var(--text2);line-height:1.55;}
-  .stage-analogy {margin-top:14px;padding-top:14px;border-top:1px dashed var(--border);font-size:12px;color:var(--text2);font-style:italic;line-height:1.45;}
-
-  .feature-list {display:flex;flex-direction:column;gap:0;margin-top:24px;}
-  .feature-row {display:grid;grid-template-columns:48px 1fr;gap:20px;padding:14px 0;border-top:1px solid var(--border);align-items:baseline;}
-  .feature-num {font-family:var(--font-mono);font-size:13px;color:var(--accent);letter-spacing:.06em;}
-  .feature-text {font-family:var(--font-serif);font-size:22px;line-height:1.4;color:var(--text);}
-  .feature-text b {font-weight:700;color:var(--text);}
-
-  .code {font-family:var(--font-mono);font-size:14px;background:var(--dark);color:var(--accent-light);padding:6px 12px;border-radius:6px;display:inline-block;}
-
-  .concept-pill {display:inline-block;font-family:var(--font-mono);font-size:12px;background:var(--accent-bg);color:var(--accent);padding:6px 14px;border-radius:999px;border:1px solid rgba(13,148,136,.25);margin:4px 6px 4px 0;letter-spacing:.04em;}
-  .concept-pill.pink {background:var(--pink-bg);color:var(--pink);border-color:var(--pink-border);}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{width:100%;height:100%;overflow:hidden;background:var(--cream);color:var(--text);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;}
+  .deck{width:100%;height:100%;position:relative;}
+  .slide{position:absolute;inset:0;padding:58px 80px 84px;opacity:0;transform:translateX(30px);transition:opacity .45s ease,transform .45s ease;pointer-events:none;display:flex;flex-direction:column;overflow:hidden;}
+  .slide.active{opacity:1;transform:translateX(0);pointer-events:auto;}
+  .slide.dark{background:var(--dark);color:var(--cream);}
+  .progress{position:fixed;top:0;left:0;height:3px;background:var(--accent);z-index:50;transition:width .45s ease;}
+  .nav{position:fixed;bottom:22px;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:0 32px;z-index:40;}
+  .logo{font-family:var(--font-sans);font-weight:600;font-size:13px;letter-spacing:.02em;}
+  .dots{display:flex;gap:9px;}
+  .dot{width:7px;height:7px;border-radius:50%;border:1px solid rgba(28,25,23,.25);background:transparent;cursor:pointer;transition:all .3s;padding:0;}
+  .dot.active{background:var(--accent);border-color:var(--accent);transform:scale(1.25);}
+  .counter{font-family:var(--font-mono);font-size:11px;color:var(--text2);}
+  h2{font-family:var(--font-serif);font-weight:600;font-size:48px;line-height:1.1;letter-spacing:-.01em;}
+  .eyebrow{font-family:var(--font-sans);text-transform:uppercase;letter-spacing:.18em;font-size:11px;font-weight:600;color:var(--accent);margin-bottom:14px;}
+  .card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:24px 22px;display:flex;flex-direction:column;gap:11px;}
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  .chip{font-family:var(--font-mono);font-size:11px;color:var(--white);background:var(--accent);padding:3px 10px;border-radius:999px;letter-spacing:.06em;font-weight:500;white-space:nowrap;}
+  .incode{font-family:var(--font-mono);font-size:12px;background:var(--accent-bg);color:var(--accent);padding:2px 7px;border-radius:4px;}
+  .cmdblock{font-family:var(--font-mono);font-size:15px;background:var(--dark);color:var(--accent-light);padding:10px 16px;border-radius:8px;display:inline-block;letter-spacing:.02em;white-space:nowrap;}
+  .concept-pill{display:inline-block;font-family:var(--font-mono);font-size:12px;background:var(--accent-bg);color:var(--accent);padding:6px 14px;border-radius:999px;border:1px solid rgba(13,148,136,.25);margin:4px 6px 4px 0;letter-spacing:.04em;}
+  .concept-pill.pink{background:var(--pink-bg);color:var(--pink);border-color:var(--pink-border);}
+  .feature-row{display:grid;grid-template-columns:44px 1fr;gap:16px;padding:12px 0;border-top:1px solid var(--border);align-items:baseline;}
+  .fnum{font-family:var(--font-mono);font-size:12px;color:var(--accent);}
+  .ftext{font-family:var(--font-serif);font-size:21px;line-height:1.4;}
 </style>
 </head>
 <body>
 
 <div class="progress" id="progress"></div>
-
 <div class="deck" id="deck">
 
-  <!-- 1. Title + Scenario -->
-  <section class="slide dark active">
-    <div style="margin:auto 0;">
-      <div class="eyebrow" style="color:var(--accent-light);">Pair Programming Challenge</div>
-      <h2 style="font-size:88px;max-width:1200px;color:var(--cream);line-height:1.05;">Build a <em style="font-style:italic;color:var(--accent-light);">Collaborative</em> Board.</h2>
-      <p class="lede" style="color:rgba(245,240,235,.7);font-size:24px;margin-top:36px;max-width:960px;"><b style="color:rgba(245,240,235,.9);">Scenario:</b> Figma &amp; Miro crashed, but you still need to lead a team brainstorm in 1 hour. Ship a real-time collaborative board — complete with authentication, live cursors, and shared rooms.</p>
-    </div>
-  </section>
+<!-- ─── Slide 1: Title ─────────────────────────────────────────────────── -->
+<section class="slide dark active">
+  <div style="margin:auto 0;">
+    <div class="eyebrow" style="color:var(--accent-light);">Pair Programming Challenge · Week 3</div>
+    <h2 style="font-size:86px;max-width:1200px;color:var(--cream);line-height:1.04;">Build a <em style="color:var(--accent-light);">Collaborative</em> Board.</h2>
+    <p style="font-size:23px;line-height:1.55;color:rgba(245,240,235,.7);margin-top:32px;max-width:940px;"><b style="color:rgba(245,240,235,.9);">Scenario:</b> Figma &amp; Miro crashed — you still need to lead a team brainstorm in 1 hour. Ship a real-time collaborative board: Magic Link login, live cursors, sticky notes, shared rooms.</p>
+  </div>
+</section>
 
-  <!-- 2. Features + Concepts -->
-  <section class="slide">
-    <div class="eyebrow">What you'll build</div>
-    <h2>Five features. One board.</h2>
-    <div class="feature-list" style="margin-top:28px;flex:1;display:flex;flex-direction:column;justify-content:space-evenly;">
-      <div class="feature-row" style="padding:14px 0;"><div class="feature-num" style="font-size:15px;">01</div><div class="feature-text" style="font-size:24px;">Users log in via <b>Magic Link</b> (authentication).</div></div>
-      <div class="feature-row" style="padding:14px 0;"><div class="feature-num" style="font-size:15px;">02</div><div class="feature-text" style="font-size:24px;">Once logged in, there's one <b>multiplayer board</b> (<em>'room'</em>).</div></div>
-      <div class="feature-row" style="padding:14px 0;"><div class="feature-num" style="font-size:15px;">03</div><div class="feature-text" style="font-size:24px;">Users can add <b>rectangles, sticky notes, to-dos, and text</b> to the board.</div></div>
-      <div class="feature-row" style="padding:14px 0;"><div class="feature-num" style="font-size:15px;">04</div><div class="feature-text" style="font-size:24px;">Any authenticated user can create, read, update, and move items (<em><b>'permissions'</b></em>).</div></div>
-      <div class="feature-row" style="padding:14px 0;"><div class="feature-num" style="font-size:15px;">05</div><div class="feature-text" style="font-size:24px;">Users can <b>see who else is viewing</b> the board (<em>'presence'</em> and <em>'cursors'</em>).</div></div>
-    </div>
-    <div style="margin-top:24px;">
-      <span class="concept-pill" style="font-size:15px;padding:9px 18px;">multi-player</span>
-      <span class="concept-pill pink" style="font-size:15px;padding:9px 18px;">presence</span>
-      <span class="concept-pill pink" style="font-size:15px;padding:9px 18px;">cursors</span>
-      <span class="concept-pill" style="font-size:15px;padding:9px 18px;">'live' rooms</span>
-      <span class="concept-pill" style="font-size:15px;padding:9px 18px;">authentication</span>
-    </div>
-  </section>
+<!-- ─── Slide 2: Setup steps ──────────────────────────────────────────── -->
+<section class="slide">
+  <div class="eyebrow">Before you open Claude</div>
+  <h2 style="margin-bottom:24px;">Three setup steps.</h2>
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:space-between;min-height:0;gap:14px;">
 
-  <!-- 3. Pro Tips cards -->
-  <section class="slide">
-    <div class="eyebrow">Pro tips</div>
-    <h2>Three pro tips.</h2>
-    <p class="lede" style="margin-top:12px;">Set yourself up so the first thirty minutes don't get eaten by setup.</p>
-    <div class="grid-3" style="margin-top:36px;flex:1;min-height:0;">
-      <div class="card" style="padding:36px 32px;display:flex;flex-direction:column;">
-        <div class="stage-head" style="margin-bottom:20px;"><span class="stage-chip" style="font-size:13px;padding:5px 14px;">01</span><span class="stage-name" style="font-size:30px;">Scaffold first</span></div>
-        <div class="stage-desc" style="font-size:17px;line-height:1.6;">Once your project is created, run this from your VS Code terminal — <i>before</i> calling Claude. It creates an Instant + Next.js app for you:</div>
-        <div style="margin-top:auto;padding-top:24px;"><span class="code" style="font-size:18px;padding:12px 18px;">npx create-instant-app</span></div>
+    <!-- Step 01 -->
+    <div style="display:grid;grid-template-columns:160px 1fr auto;gap:0;background:var(--white);border:1px solid var(--border);border-radius:12px;overflow:hidden;">
+      <div style="padding:20px 22px;border-right:1px solid var(--border);display:flex;flex-direction:column;gap:6px;">
+        <span class="chip" style="align-self:flex-start;">01</span>
+        <div style="font-family:var(--font-serif);font-weight:600;font-size:19px;line-height:1.25;margin-top:4px;">Create your repo</div>
       </div>
-      <div class="card" style="padding:36px 32px;display:flex;flex-direction:column;">
-        <div class="stage-head" style="margin-bottom:20px;"><span class="stage-chip" style="font-size:13px;padding:5px 14px;">02</span><span class="stage-name" style="font-size:30px;">See it live</span></div>
-        <div class="stage-desc" style="font-size:17px;line-height:1.6;">Open a <i>second</i> terminal window and run your local environment without blocking Claude:</div>
-        <div style="margin-top:auto;padding-top:24px;"><span class="code" style="font-size:18px;padding:12px 18px;">npm run dev</span></div>
-        <div class="stage-analogy" style="font-size:14px;margin-top:16px;padding-top:16px;">Make sure you're in your 'smallest' project folder.</div>
+      <div style="padding:20px 24px;display:flex;align-items:center;">
+        <p style="font-size:14px;line-height:1.65;color:var(--text2);">On GitHub, create a new <b style="color:var(--text);">private repo</b> called <span class="incode">collab-board</span>. Check <b style="color:var(--text);">"Add a README"</b> so you can clone it right away. Clone to your Desktop, open in VS Code.</p>
       </div>
-      <div class="card" style="padding:36px 32px;display:flex;flex-direction:column;">
-        <div class="stage-head" style="margin-bottom:20px;"><span class="stage-chip" style="font-size:13px;padding:5px 14px;">03</span><span class="stage-name" style="font-size:30px;">Read the docs</span></div>
-        <div class="stage-desc" style="font-size:17px;line-height:1.6;">Check out Instant's docs — especially <b style="color:var(--text);">Presence, Rooms, and Cursors</b>:</div>
-        <div style="margin-top:auto;padding-top:24px;">
-          <a href="https://www.instantdb.com/docs/presence-and-topics" target="_blank" style="font-family:var(--font-mono);font-size:13px;color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(13,148,136,.35);padding-bottom:2px;line-height:1.6;word-break:break-all;">instantdb.com/docs/<wbr>presence-and-topics</a>
+    </div>
+
+    <!-- Step 02 -->
+    <div style="display:grid;grid-template-columns:160px 1fr auto;gap:0;background:var(--white);border:1px solid var(--border);border-radius:12px;overflow:hidden;">
+      <div style="padding:20px 22px;border-right:1px solid var(--border);display:flex;flex-direction:column;gap:6px;">
+        <span class="chip" style="align-self:flex-start;">02</span>
+        <div style="font-family:var(--font-serif);font-weight:600;font-size:19px;line-height:1.25;margin-top:4px;">Scaffold the app</div>
+      </div>
+      <div style="padding:20px 24px;display:flex;align-items:center;gap:20px;">
+        <div style="flex:1;">
+          <p style="font-size:13px;color:var(--text2);margin-bottom:8px;">In the VS Code terminal, run:</p>
+          <div class="cmdblock" style="font-size:14px;">npx create-instant-app</div>
+          <p style="font-size:13px;line-height:1.6;color:var(--text2);margin-top:8px;">When prompted: folder → <b style="color:var(--text);">app</b> · framework → <b style="color:var(--text);">Next.js</b> · AI rules → <b style="color:var(--text);">Claude</b> · log in to InstantDB, name app <b style="color:var(--text);">collab-board</b>.</p>
+        </div>
+        <pre style="font-family:var(--font-mono);font-size:11.5px;line-height:1.75;background:var(--cream-light);border:1px solid var(--border);border-radius:8px;padding:12px 14px;color:var(--text);flex-shrink:0;">collab-board/  <span style="color:var(--accent);">← open Claude here</span>
+├── app/       <span style="color:var(--text2);">← Next.js app</span>
+│   └── ...
+└── README.md</pre>
+      </div>
+    </div>
+
+    <!-- Step 03 -->
+    <div style="display:grid;grid-template-columns:160px 1fr;gap:0;background:var(--white);border:1px solid var(--border);border-radius:12px;overflow:hidden;">
+      <div style="padding:20px 22px;border-right:1px solid var(--border);display:flex;flex-direction:column;gap:6px;">
+        <span class="chip" style="align-self:flex-start;">03</span>
+        <div style="font-family:var(--font-serif);font-weight:600;font-size:19px;line-height:1.25;margin-top:4px;">Open Claude</div>
+      </div>
+      <div style="padding:20px 24px;display:flex;align-items:center;gap:24px;">
+        <div style="flex:1;">
+          <p style="font-size:13px;line-height:1.6;color:var(--text2);">From inside <span class="incode">collab-board/</span> — <b style="color:var(--text);">not</b> inside <span class="incode">app/</span> — run:</p>
+          <div class="cmdblock" style="font-size:14px;margin-top:10px;">claude</div>
+          <p style="font-size:12px;color:var(--text3);margin-top:8px;">Not sure? Run <span class="incode">pwd</span> — it should end with <span class="incode">collab-board</span>.</p>
+        </div>
+        <div style="background:rgba(13,148,136,.06);border:1px solid rgba(13,148,136,.2);border-radius:10px;padding:14px 18px;flex-shrink:0;max-width:280px;">
+          <p style="font-size:13px;line-height:1.55;color:var(--text);"><b>No second terminal needed</b> — Claude starts the dev server for you.</p>
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- 4. Summary one-pager -->
-  <section class="slide" style="padding:48px 56px 80px;">
-    <div style="display:grid;grid-template-columns:1.35fr 1fr;gap:32px;height:100%;min-height:0;">
-      <div style="display:flex;flex-direction:column;min-width:0;overflow:hidden;">
-        <div class="eyebrow" style="margin-bottom:14px;font-size:13px;">Week 3 · Pair Programming Challenge</div>
-        <h2 style="font-size:54px;line-height:1.04;margin-bottom:14px;">Build a <em style="font-style:italic;color:var(--accent);">Collaborative</em> Board.</h2>
-        <p style="font-size:17px;line-height:1.5;color:var(--text2);max-width:680px;margin-bottom:18px;"><b style="color:var(--text);">Scenario.</b> Figma &amp; Miro crashed — you still need to lead a team brainstorm in 1 hour. Build a real-time collaborative board with auth, live presence, and shared rooms.</p>
+  </div>
+</section>
 
-        <div style="font-family:var(--font-sans);text-transform:uppercase;letter-spacing:.14em;font-size:12px;font-weight:600;color:var(--accent);margin:8px 0 10px;">What you'll build</div>
-        <div style="display:flex;flex-direction:column;flex:1;justify-content:space-around;">
-          <div style="display:grid;grid-template-columns:36px 1fr;gap:14px;padding:10px 0;border-top:1px solid var(--border);align-items:baseline;"><div style="font-family:var(--font-mono);font-size:13px;color:var(--accent);">01</div><div style="font-family:var(--font-serif);font-size:19px;line-height:1.35;">Users log in via <b>Magic Link</b> (authentication).</div></div>
-          <div style="display:grid;grid-template-columns:36px 1fr;gap:14px;padding:10px 0;border-top:1px solid var(--border);align-items:baseline;"><div style="font-family:var(--font-mono);font-size:13px;color:var(--accent);">02</div><div style="font-family:var(--font-serif);font-size:19px;line-height:1.35;">One <b>multiplayer board</b> shared as a single 'room'.</div></div>
-          <div style="display:grid;grid-template-columns:36px 1fr;gap:14px;padding:10px 0;border-top:1px solid var(--border);align-items:baseline;"><div style="font-family:var(--font-mono);font-size:13px;color:var(--accent);">03</div><div style="font-family:var(--font-serif);font-size:19px;line-height:1.35;">Add <b>rectangles, sticky notes, to-dos &amp; text</b> to the board.</div></div>
-          <div style="display:grid;grid-template-columns:36px 1fr;gap:14px;padding:10px 0;border-top:1px solid var(--border);align-items:baseline;"><div style="font-family:var(--font-mono);font-size:13px;color:var(--accent);">04</div><div style="font-family:var(--font-serif);font-size:19px;line-height:1.35;">Authenticated users can create, read, update &amp; move (<b>'permissions'</b>).</div></div>
-          <div style="display:grid;grid-template-columns:36px 1fr;gap:14px;padding:10px 0;border-top:1px solid var(--border);align-items:baseline;"><div style="font-family:var(--font-mono);font-size:13px;color:var(--accent);">05</div><div style="font-family:var(--font-serif);font-size:19px;line-height:1.35;">See <b>who else is viewing</b> via <em>'presence'</em> and <em>'cursors'</em>.</div></div>
-        </div>
-
-        <div style="margin-top:14px;">
-          <span class="concept-pill" style="font-size:12px;padding:5px 12px;">multi-player</span>
-          <span class="concept-pill pink" style="font-size:12px;padding:5px 12px;">presence</span>
-          <span class="concept-pill pink" style="font-size:12px;padding:5px 12px;">cursors</span>
-          <span class="concept-pill" style="font-size:12px;padding:5px 12px;">'live' rooms</span>
-          <span class="concept-pill" style="font-size:12px;padding:5px 12px;">authentication</span>
-        </div>
-      </div>
-
-      <div style="background:var(--dark);color:var(--cream);border-radius:14px;padding:32px 30px;display:flex;flex-direction:column;min-width:0;">
-        <div class="eyebrow" style="color:var(--accent-light);margin-bottom:12px;font-size:12px;">Before you call Claude</div>
-        <div style="font-family:var(--font-serif);font-weight:600;font-size:36px;line-height:1.1;margin-bottom:24px;color:var(--cream);">Three <em style="font-style:italic;color:var(--accent-light);">pro tips.</em></div>
-
-        <div style="padding:18px 0;flex:1;display:flex;flex-direction:column;justify-content:space-around;">
-          <div>
-            <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:8px;"><span style="font-family:var(--font-mono);font-size:12px;color:var(--dark);background:var(--accent-light);padding:4px 12px;border-radius:999px;font-weight:600;">01</span><span style="font-family:var(--font-serif);font-weight:600;font-size:22px;">Scaffold first</span></div>
-            <div style="font-size:15px;line-height:1.5;color:rgba(245,240,235,.75);">In your VS Code terminal, <i>before</i> calling Claude:</div>
-            <div style="font-family:var(--font-mono);font-size:14px;background:rgba(245,240,235,.08);color:var(--accent-light);padding:8px 14px;border-radius:6px;display:inline-block;margin-top:10px;">npx create-instant-app</div>
-          </div>
-
-          <div style="padding-top:18px;border-top:1px solid rgba(245,240,235,.14);">
-            <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:8px;"><span style="font-family:var(--font-mono);font-size:12px;color:var(--dark);background:var(--accent-light);padding:4px 12px;border-radius:999px;font-weight:600;">02</span><span style="font-family:var(--font-serif);font-weight:600;font-size:22px;">See it live</span></div>
-            <div style="font-size:15px;line-height:1.5;color:rgba(245,240,235,.75);">Open a second terminal, run from your project folder:</div>
-            <div style="font-family:var(--font-mono);font-size:14px;background:rgba(245,240,235,.08);color:var(--accent-light);padding:8px 14px;border-radius:6px;display:inline-block;margin-top:10px;">npm run dev</div>
-          </div>
-
-          <div style="padding-top:18px;border-top:1px solid rgba(245,240,235,.14);">
-            <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:8px;"><span style="font-family:var(--font-mono);font-size:12px;color:var(--dark);background:var(--accent-light);padding:4px 12px;border-radius:999px;font-weight:600;">03</span><span style="font-family:var(--font-serif);font-weight:600;font-size:22px;">Read the docs</span></div>
-            <div style="font-size:15px;line-height:1.5;color:rgba(245,240,235,.75);">Focus on <b style="color:var(--cream);">Presence, Rooms &amp; Cursors</b>:</div>
-            <a href="https://www.instantdb.com/docs/presence-and-topics" target="_blank" style="font-family:var(--font-mono);font-size:12px;color:var(--accent-light);text-decoration:none;border-bottom:1px solid rgba(20,184,166,.35);padding-bottom:1px;margin-top:10px;display:inline-block;line-height:1.6;word-break:break-all;">instantdb.com/docs/<wbr>presence-and-topics</a>
-          </div>
-        </div>
-      </div>
+<!-- ─── Slide 3: Mega prompt ──────────────────────────────────────────── -->
+<section class="slide dark" style="padding:52px 80px 84px;">
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:20px;gap:24px;">
+    <div>
+      <div class="eyebrow" style="color:var(--accent-light);">Your starting prompt</div>
+      <h2 style="color:var(--cream);font-size:40px;">Paste this into Claude.</h2>
     </div>
-  </section>
+    <button id="copyBtn" onclick="copyPrompt()" style="font-family:var(--font-mono);font-size:13px;font-weight:500;background:rgba(20,184,166,.12);color:var(--accent-light);border:1px solid rgba(20,184,166,.35);padding:11px 22px;border-radius:8px;cursor:pointer;letter-spacing:.04em;transition:all .2s;white-space:nowrap;flex-shrink:0;">Copy prompt</button>
+  </div>
+  <div style="flex:1;min-height:0;position:relative;">
+    <pre id="promptText" style="font-family:var(--font-mono);font-size:12.5px;line-height:1.8;color:rgba(245,240,235,.82);background:rgba(245,240,235,.04);border:1px solid rgba(245,240,235,.09);border-radius:12px;padding:26px 30px;height:100%;overflow-y:auto;white-space:pre-wrap;word-break:break-word;">We're building a real-time collaborative whiteboard. Stack: Next.js + InstantDB. The Next.js app lives in the `app/` subfolder of this repo.
 
-</div>
+Before writing any code, do these three things in order:
+
+1. Update InstantDB to the latest version — run this from the `app/` folder:
+   npm install @instantdb/react@latest @instantdb/admin@latest @instantdb/core@latest
+
+2. Start the dev server in the background — run `npm run dev` from the `app/` folder.
+   Tell me the localhost URL when it's running.
+
+3. Write these rules into CLAUDE.md at the repo root:
+   - Stack: Next.js + InstantDB. The Next.js app is in the `app/` subfolder.
+   - Use InstantDB for ALL data, auth, and real-time — no other backend.
+   - Magic Link auth only — no passwords, no OAuth.
+   - All board state lives in InstantDB, not local React state.
+   - One shared room called 'main-board'.
+   - Always TypeScript.
+
+Then build these features in order. Use plan mode (Shift+Tab) before writing code for each one. Stop after each feature and wait for me to confirm it works before moving on.
+
+Feature 1 — Magic Link auth
+A login screen with an email input. Once the user clicks the magic link in their email, land on a board page showing their email and a sign-out button.
+
+Feature 2 — Real-time sticky notes
+Users can add sticky notes with text to the shared board. Notes must persist in InstantDB and sync live for everyone connected — test by opening two browser tabs.
+
+Feature 3 — Live cursors + presence
+Track each user's mouse position using InstantDB rooms, labeled with their email. Use board-relative coordinates from the board div's bounding rect — not clientX/clientY directly — so cursors don't drift when the board scrolls.
+
+Feature 4 — Permissions
+Any authenticated user can create, read, update, move, and delete any item on the board. Unauthenticated users cannot access the board at all.
+
+Start with Feature 1 now.</pre>
+  </div>
+</section>
+
+<!-- ─── Slide 4: What you're building ────────────────────────────────── -->
+<section class="slide">
+  <div class="eyebrow">What you're building</div>
+  <h2>Five features. One board.</h2>
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:space-evenly;margin-top:20px;">
+    <div class="feature-row"><div class="fnum">01</div><div class="ftext">Users log in via <b>Magic Link</b> — no passwords.</div></div>
+    <div class="feature-row"><div class="fnum">02</div><div class="ftext">One <b>multiplayer board</b> shared as a single live <em>'room'</em>.</div></div>
+    <div class="feature-row"><div class="fnum">03</div><div class="ftext">Add <b>sticky notes, rectangles, to-dos &amp; text</b> to the board.</div></div>
+    <div class="feature-row"><div class="fnum">04</div><div class="ftext">Any authenticated user can create, read, update &amp; move — <em><b>'permissions'</b></em>.</div></div>
+    <div class="feature-row"><div class="fnum">05</div><div class="ftext">See <b>who else is on the board</b> via <em>'presence'</em> and live cursors.</div></div>
+  </div>
+  <div style="margin-top:20px;">
+    <span class="concept-pill" style="font-size:13px;padding:7px 16px;">multi-player</span>
+    <span class="concept-pill pink" style="font-size:13px;padding:7px 16px;">presence</span>
+    <span class="concept-pill pink" style="font-size:13px;padding:7px 16px;">cursors</span>
+    <span class="concept-pill" style="font-size:13px;padding:7px 16px;">'live' rooms</span>
+    <span class="concept-pill" style="font-size:13px;padding:7px 16px;">authentication</span>
+  </div>
+</section>
+
+</div><!-- /deck -->
 
 <div class="nav">
   <div class="logo" id="logo">[ ai study camp ]</div>
@@ -178,13 +188,45 @@
 </div>
 
 <script>
-  const slides=[...document.querySelectorAll('.slide')],dots=document.getElementById('dots'),prog=document.getElementById('progress'),cur=document.getElementById('cur'),logo=document.getElementById('logo'),counter=document.querySelector('.counter');
+  const slides=[...document.querySelectorAll('.slide')];
+  const dots=document.getElementById('dots');
+  const prog=document.getElementById('progress');
+  const cur=document.getElementById('cur');
+  const logo=document.getElementById('logo');
+  const counter=document.querySelector('.counter');
   document.getElementById('total').textContent=slides.length;
   slides.forEach((_,i)=>{const d=document.createElement('button');d.className='dot'+(i===0?' active':'');d.onclick=()=>go(i);dots.appendChild(d);});
   let idx=0;
-  function go(n){idx=Math.max(0,Math.min(slides.length-1,n));slides.forEach((s,i)=>s.classList.toggle('active',i===idx));document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===idx));prog.style.width=((idx+1)/slides.length*100)+'%';cur.textContent=idx+1;const dark=slides[idx].classList.contains('dark');document.body.style.background=dark?'#1C1917':'#F5F0EB';logo.style.color=dark?'#F5F0EB':'#1C1917';counter.style.color=dark?'rgba(245,240,235,.6)':'#78716C';document.querySelectorAll('.dot').forEach(d=>{if(!d.classList.contains('active'))d.style.borderColor=dark?'rgba(245,240,235,.25)':'rgba(28,25,23,.25)';});}
+  function go(n){
+    idx=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach((s,i)=>s.classList.toggle('active',i===idx));
+    document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===idx));
+    prog.style.width=((idx+1)/slides.length*100)+'%';
+    cur.textContent=idx+1;
+    const dark=slides[idx].classList.contains('dark');
+    document.body.style.background=dark?'#1C1917':'#F5F0EB';
+    logo.style.color=dark?'#F5F0EB':'#1C1917';
+    counter.style.color=dark?'rgba(245,240,235,.6)':'#78716C';
+    document.querySelectorAll('.dot').forEach(d=>{
+      if(!d.classList.contains('active'))d.style.borderColor=dark?'rgba(245,240,235,.25)':'rgba(28,25,23,.25)';
+    });
+  }
   prog.style.width=(1/slides.length*100)+'%';
-  document.addEventListener('keydown',e=>{if(['ArrowRight',' ','PageDown'].includes(e.key))go(idx+1);if(['ArrowLeft','PageUp'].includes(e.key))go(idx-1);});
+  document.addEventListener('keydown',e=>{
+    if(['ArrowRight',' ','PageDown'].includes(e.key))go(idx+1);
+    if(['ArrowLeft','PageUp'].includes(e.key))go(idx-1);
+  });
+
+  function copyPrompt(){
+    const text=document.getElementById('promptText').textContent;
+    navigator.clipboard.writeText(text).then(()=>{
+      const btn=document.getElementById('copyBtn');
+      btn.textContent='Copied ✓';
+      btn.style.background='rgba(20,184,166,.25)';
+      btn.style.borderColor='rgba(20,184,166,.6)';
+      setTimeout(()=>{btn.textContent='Copy prompt';btn.style.background='rgba(20,184,166,.12)';btn.style.borderColor='rgba(20,184,166,.35)';},2000);
+    });
+  }
 </script>
 </body>
 </html>
