@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Interface Is Not the System - Cohort 7, Week 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream:#F5F0EB; --cream-light:#FAF7F4; --cream-dark:#EBE5DE;
+    --white:#FFFFFF; --dark:#1C1917; --dark-card:#292522;
+    --text:#1C1917; --text2:#57534E; --text3:#6E6862; --text-muted:#8A837C;
+    --on-dark:#F5F3EF; --on-dark-muted:#B5AEA6;
+    --teal:#0D9488; --teal-dark:#0F766E; --teal-light:#14B8A6;
+    --teal-bg:rgba(13,148,136,0.08); --teal-border:rgba(13,148,136,0.30);
+    --warm:#8B7048; --warm-bg:rgba(139,112,72,0.10); --warm-border:rgba(139,112,72,0.32);
+    --red:#DC2626; --red-bg:rgba(220,38,38,0.07); --red-border:rgba(220,38,38,0.28);
+    --green:#15803D; --green-bg:rgba(21,128,61,0.07); --green-border:rgba(21,128,61,0.30);
+    --border:rgba(28,25,23,0.10); --border-strong:rgba(28,25,23,0.18);
+    --font-serif:'Playfair Display',Georgia,serif;
+    --font-sans:'Geist',system-ui,sans-serif;
+    --font-mono:'Geist Mono',monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{width:100%;height:100%;overflow:hidden;background:var(--cream);color:var(--text);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;}
+  .deck{width:100%;height:100%;position:relative;}
+
+  /* chrome */
+  .progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--teal);transition:width .4s ease;z-index:100;}
+  .logo-mark{position:fixed;bottom:24px;left:32px;font-size:14px;font-weight:600;color:var(--text-muted);z-index:100;pointer-events:none;user-select:none;transition:color .4s ease;}
+  body.on-dark .logo-mark{color:var(--on-dark-muted);}
+  .dot-nav{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:100;flex-wrap:wrap;max-width:56%;justify-content:center;}
+  .dot-nav button{width:7px;height:7px;border-radius:50%;border:1.5px solid var(--text-muted);background:transparent;cursor:pointer;transition:all .3s ease;padding:0;}
+  .dot-nav button.active{background:var(--teal);border-color:var(--teal);transform:scale(1.3);}
+  .slide-count{position:fixed;bottom:28px;right:32px;font-family:var(--font-mono);font-size:12px;color:var(--text-muted);z-index:100;transition:color .4s ease;}
+  body.on-dark .slide-count{color:var(--on-dark-muted);}
+  .hint{position:fixed;top:16px;right:24px;font-family:var(--font-mono);font-size:11px;color:var(--text-muted);opacity:.6;z-index:100;}
+  body.on-dark .hint{color:var(--on-dark-muted);}
+
+  /* slides */
+  .slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:50px 68px 84px;opacity:0;pointer-events:none;transition:opacity .45s ease;background:var(--cream);overflow-y:auto;}
+  .slide.active{opacity:1;pointer-events:auto;}
+  .slide.dark-bg{background:var(--dark);color:var(--on-dark);}
+  .inner{max-width:1150px;width:100%;display:flex;flex-direction:column;}
+  .inner.centered{align-items:center;text-align:center;}
+
+  /* type */
+  .hero-title{font-family:var(--font-serif);font-weight:700;font-size:clamp(48px,5.4vw,74px);line-height:1.07;text-align:center;margin-bottom:18px;color:var(--on-dark);}
+  .hero-sub{font-size:clamp(18px,2vw,23px);color:var(--on-dark-muted);font-weight:400;text-align:center;}
+  .eyebrow{font-family:var(--font-mono);font-size:12.5px;font-weight:600;text-transform:uppercase;letter-spacing:.16em;color:var(--teal);margin-bottom:12px;}
+  .slide.dark-bg .eyebrow{color:var(--teal-light);}
+  h2.title{font-family:var(--font-serif);font-weight:600;font-size:clamp(29px,3.1vw,44px);color:var(--text);line-height:1.14;font-style:normal;}
+  .slide.dark-bg h2.title{color:var(--on-dark);}
+  .hl{color:var(--teal);font-style:normal;}
+  .slide.dark-bg .hl{color:var(--teal-light);}
+  .statement{font-family:var(--font-serif);font-weight:700;font-size:clamp(36px,4.4vw,58px);line-height:1.15;text-align:center;font-style:normal;}
+  .cue{font-size:18.5px;color:var(--text2);line-height:1.55;margin-top:20px;text-align:center;}
+  .cue b{color:var(--teal-dark);font-weight:600;}
+  .slide.dark-bg .cue{color:var(--on-dark-muted);}
+  .slide.dark-bg .cue b{color:var(--teal-light);}
+  .divider{width:58px;height:2px;background:var(--teal);margin:12px 0 22px;}
+  .inner.centered .divider{margin-left:auto;margin-right:auto;}
+  .tag{display:inline-block;font-family:var(--font-mono);font-size:12px;font-weight:600;padding:5px 13px;border-radius:20px;background:var(--teal-bg);color:var(--teal-dark);border:1px solid var(--teal-border);letter-spacing:.06em;text-transform:uppercase;}
+  .tag.dark{background:rgba(13,148,136,.2);color:var(--teal-light);border-color:rgba(13,148,136,.4);}
+
+  /* grids + cards */
+  .grid{display:grid;gap:15px;width:100%;}
+  .g2{grid-template-columns:1fr 1fr;} .g3{grid-template-columns:repeat(3,1fr);} .g4{grid-template-columns:repeat(4,1fr);}
+  .card{background:var(--white);border:1px solid var(--border);border-radius:11px;padding:20px;box-shadow:0 1px 4px rgba(28,25,23,.06);position:relative;overflow:hidden;}
+  .card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--border-strong);}
+  .card.teal::before{background:var(--teal);} .card.warm::before{background:var(--warm);}
+  .card h3{font-family:var(--font-serif);font-size:20px;font-weight:600;margin-bottom:6px;line-height:1.2;}
+  .card p{font-size:15px;color:var(--text2);line-height:1.5;}
+  .card .ico{font-size:26px;display:block;margin-bottom:9px;line-height:1;}
+  .card .kv{font-family:var(--font-mono);font-size:11.5px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--teal);margin-bottom:7px;}
+
+  /* surface inventory */
+  .surf{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:14px 15px;box-shadow:0 1px 3px rgba(28,25,23,.05);}
+  .surf .sn{font-family:var(--font-serif);font-size:17px;font-weight:600;line-height:1.2;}
+  .surf .sd{font-size:13.5px;color:var(--text3);margin-top:4px;line-height:1.4;}
+
+  /* one-brain hub */
+  .hub{display:flex;align-items:center;justify-content:center;gap:28px;width:100%;}
+  .hub-side{display:flex;flex-direction:column;gap:8px;flex:1;}
+  .door{background:var(--white);border:1px solid var(--border);border-radius:9px;padding:10px 15px;font-size:15.5px;font-weight:500;text-align:center;box-shadow:0 1px 3px rgba(28,25,23,.05);}
+  .door.on{background:var(--teal-bg);border-color:var(--teal-border);color:var(--teal-dark);font-weight:600;}
+  .brain{background:var(--dark);border-radius:16px;padding:28px 32px;text-align:center;min-width:225px;box-shadow:0 6px 30px rgba(28,25,23,.22);}
+  .brain .bl{font-family:var(--font-mono);font-size:11.5px;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:var(--teal-light);}
+  .brain .bt{font-family:var(--font-serif);font-size:30px;font-weight:700;color:var(--on-dark);margin:7px 0 4px;}
+  .brain .bs{font-size:13.5px;color:var(--on-dark-muted);line-height:1.45;}
+  .spoke{display:flex;flex-direction:column;gap:5px;align-items:center;flex-shrink:0;}
+  .spoke span{width:32px;height:2px;background:var(--teal-border);}
+
+  /* system flowchart */
+  .sysflow{display:flex;align-items:center;justify-content:center;gap:18px;width:100%;flex-wrap:nowrap;}
+  .syscol{display:flex;flex-direction:column;gap:13px;}
+  .zone{display:flex;flex-direction:column;gap:7px;}
+  .zlabel{font-family:var(--font-mono);font-size:11.5px;font-weight:600;text-transform:uppercase;letter-spacing:.11em;color:var(--teal);}
+  .zbox{background:var(--white);border:1px solid var(--border);border-radius:9px;padding:9px 15px;font-size:15px;font-weight:500;color:var(--text);line-height:1.25;white-space:nowrap;box-shadow:0 1px 3px rgba(28,25,23,.05);}
+  .zbox .sub{color:var(--text3);font-weight:400;font-size:12.5px;margin-left:6px;}
+  .sysarrow{font-size:30px;color:var(--teal);flex-shrink:0;line-height:1;}
+  .hero-node{background:var(--teal-bg);border:2px solid var(--teal);border-radius:15px;padding:16px 22px 14px;text-align:center;min-width:205px;}
+  .hero-node .hl2{font-family:var(--font-mono);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.11em;color:var(--teal);}
+  .hero-node .ht{font-family:var(--font-serif);font-size:21px;font-weight:600;margin:5px 0 10px;line-height:1.15;}
+  .hero-node .hp{background:var(--white);border:1px solid var(--teal-border);border-radius:7px;padding:6px 10px;font-size:14.5px;font-weight:500;margin-bottom:5px;}
+  .hero-node .hn{font-size:13px;color:var(--text3);line-height:1.4;margin-top:8px;}
+  .syscap{text-align:center;margin-top:18px;font-size:17px;color:var(--text2);}
+  .syscap b{color:var(--teal-dark);font-weight:600;}
+
+  /* two-panel compare */
+  .vs{display:grid;grid-template-columns:1fr 42px 1fr;align-items:stretch;width:100%;gap:0;}
+  .panel{border-radius:14px;padding:18px 20px 20px;display:flex;flex-direction:column;gap:11px;}
+  .panel.bad{background:var(--red-bg);border:1.5px solid var(--red-border);}
+  .panel.good{background:var(--green-bg);border:1.5px solid var(--green-border);}
+  .panel .ptitle{font-family:var(--font-mono);font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.11em;}
+  .panel.bad .ptitle{color:var(--red);} .panel.good .ptitle{color:var(--green);}
+  .vsmid{display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:12.5px;font-weight:700;color:var(--text-muted);}
+  .chain{display:flex;flex-direction:column;gap:5px;}
+  .cnode{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-size:14.5px;font-weight:500;line-height:1.3;text-align:center;}
+  .cnode.ghost{background:transparent;border-style:dashed;color:var(--text-muted);font-weight:400;}
+  .cnode.acc{background:var(--teal-bg);border-color:var(--teal-border);color:var(--teal-dark);font-weight:600;}
+  .cnode .cs{display:block;font-size:12px;color:var(--text3);font-weight:400;margin-top:2px;}
+  .cdown{text-align:center;font-size:14px;color:var(--text-muted);line-height:1;}
+  .verdict{margin-top:auto;padding-top:9px;font-size:14.5px;font-weight:600;line-height:1.4;}
+  .panel.bad .verdict{color:var(--red);} .panel.good .verdict{color:var(--green);}
+
+  /* folder reach diagram */
+  .hier{display:flex;flex-direction:column;align-items:center;width:100%;}
+  .hbox{background:var(--white);border:1.5px solid var(--border);border-radius:9px;padding:10px 18px;font-family:var(--font-mono);font-size:14.5px;font-weight:600;color:var(--text2);text-align:center;transition:.25s;}
+  .hbox.root{background:var(--dark);color:var(--on-dark);border-color:var(--dark);}
+  .hbox.lit{border-color:var(--teal);background:var(--teal-bg);color:var(--teal-dark);box-shadow:0 0 0 1px var(--teal);}
+  .hbox.here{border-color:var(--warm);background:var(--warm-bg);color:var(--warm);box-shadow:0 0 0 1px var(--warm);}
+  .hbox.off{opacity:.28;}
+  .hbox.sub{font-size:12.5px;font-weight:500;padding:6px 11px;}
+  .hier .vl{width:2px;height:15px;background:var(--teal-border);}
+  .hier .vl.off{background:var(--border);opacity:.4;}
+  .hrow{display:flex;gap:24px;justify-content:center;align-items:flex-start;}
+  .hcol{display:flex;flex-direction:column;align-items:center;}
+  .subrow{display:flex;gap:6px;}
+  .rule{margin-top:20px;text-align:center;font-size:18px;color:var(--text2);}
+  .rule b{color:var(--text);font-weight:600;}
+  .rule .no{color:var(--red);font-weight:600;}
+  .rule .yes{color:var(--green);font-weight:600;}
+
+  /* 3-level labelled tree (the shape) */
+  .lvltree{display:grid;grid-template-columns:150px 1fr;gap:0 24px;width:100%;align-items:center;}
+  .lvlname{font-family:var(--font-mono);font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.11em;text-align:right;}
+  .lvlname.a{color:var(--warm);} .lvlname.p{color:var(--teal);} .lvlname.f{color:var(--text3);}
+  .lvlrow{display:flex;gap:12px;justify-content:flex-start;flex-wrap:wrap;}
+  .lvlconn{grid-column:2;height:22px;display:flex;justify-content:flex-start;}
+  .lvlconn span{font-size:18px;color:var(--teal);line-height:1;margin-left:56px;}
+  .nodeA{background:var(--warm-bg);border:2px solid var(--warm-border);border-radius:10px;padding:11px 22px;font-family:var(--font-mono);font-size:16px;font-weight:700;color:var(--warm);}
+  .nodeP{background:var(--white);border:2px solid var(--teal);border-radius:10px;padding:10px 20px;font-family:var(--font-mono);font-size:15px;font-weight:600;color:var(--teal-dark);}
+  .nodeF{background:var(--cream-dark);border:1px solid var(--border-strong);border-radius:8px;padding:8px 15px;font-family:var(--font-mono);font-size:13.5px;font-weight:500;color:var(--text2);}
+  .lvldesc{font-size:13.5px;color:var(--text3);margin-top:3px;font-family:var(--font-sans);text-align:right;font-weight:400;text-transform:none;letter-spacing:0;}
+  .fmd{display:inline-block;background:var(--teal-bg);border:1px solid var(--teal-border);border-radius:5px;padding:2px 8px;font-family:var(--font-mono);font-size:11.5px;font-weight:600;color:var(--teal-dark);margin-left:8px;}
+
+  /* folder boxes (the real one) */
+  .fbox{border-radius:11px;padding:14px 16px;border:1.5px solid var(--border);background:var(--white);}
+  .fbox.area{background:var(--warm-bg);border-color:var(--warm-border);}
+  .fbox .fl{font-family:var(--font-mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.11em;margin-bottom:8px;}
+  .fbox.area .fl{color:var(--warm);}
+  .fname{font-family:var(--font-mono);font-size:15.5px;font-weight:600;color:var(--text);}
+  .fproj{background:var(--white);border:1.5px solid var(--teal-border);border-radius:9px;padding:9px 12px;margin-top:7px;}
+  .fproj .pn{font-family:var(--font-mono);font-size:14.5px;font-weight:600;color:var(--teal-dark);}
+  .ffeat{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px;}
+  .ffeat span{background:var(--cream-dark);border:1px solid var(--border);border-radius:6px;padding:4px 9px;font-family:var(--font-mono);font-size:12.5px;color:var(--text2);}
+
+  /* claude.md layer stack */
+  .stack{display:flex;flex-direction:column;align-items:center;gap:0;width:100%;}
+  .layer{width:100%;max-width:800px;display:grid;grid-template-columns:210px 1fr;gap:20px;align-items:center;background:var(--white);border:1px solid var(--border);border-radius:12px;padding:15px 22px;box-shadow:0 1px 4px rgba(28,25,23,.05);}
+  .layer.l1{border-left:4px solid var(--warm);}
+  .layer.l2{border-left:4px solid var(--teal);}
+  .layer.l3{border-left:4px solid var(--text3);}
+  .layer .lpath{font-family:var(--font-mono);font-size:12.5px;font-weight:600;color:var(--teal-dark);margin-top:2px;}
+  .layer .lname{font-family:var(--font-serif);font-size:19px;font-weight:600;}
+  .layer .ldesc{font-size:15.5px;color:var(--text2);line-height:1.45;}
+  .stack .down{font-size:20px;color:var(--teal);line-height:1;padding:6px 0;}
+  .stack .cascade{font-family:var(--font-mono);font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-top:14px;}
+
+  /* router flowchart - grid-aligned so arrows hit box centres */
+  .router{display:grid;grid-template-columns:330px 58px 1fr;align-items:start;width:100%;column-gap:0;}
+  .rsrc{background:var(--teal-bg);border:1.5px solid var(--teal);border-radius:13px;padding:14px 17px;}
+  .rsrc .rl{font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--teal-dark);margin-bottom:6px;height:22px;}
+  .rsrc .rgrid{display:grid;grid-template-rows:repeat(4,54px);align-items:center;}
+  .rsrc .rline{font-family:var(--font-mono);font-size:13.5px;line-height:1.35;color:var(--text);}
+  .rsrc .rif{color:var(--teal-dark);font-weight:600;}
+  .rarrows{display:grid;grid-template-rows:repeat(4,54px);align-items:center;padding:0 5px;margin-top:44px;}
+  .rarr{height:2px;background:var(--teal);position:relative;}
+  .rarr::after{content:'';position:absolute;right:-1px;top:-4px;border:5px solid transparent;border-left:6px solid var(--teal);}
+  .rdst{display:grid;grid-template-rows:repeat(4,54px);align-items:center;margin-top:44px;}
+  .rfile{background:var(--white);border:1.5px solid var(--border);border-radius:9px;padding:7px 13px;}
+  .rfile .rfn{font-family:var(--font-mono);font-size:14px;font-weight:600;}
+  .rfile .rfd{font-size:13px;color:var(--text3);}
+
+  /* compare list */
+  .cmp{background:var(--white);border:1px solid var(--border);border-radius:13px;padding:22px;position:relative;overflow:hidden;}
+  .cmp::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;}
+  .cmp.bad::before{background:var(--red);} .cmp.good::before{background:var(--green);}
+  .cmp .cl{font-family:var(--font-mono);font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.11em;margin-bottom:12px;}
+  .cmp.bad .cl{color:var(--red);} .cmp.good .cl{color:var(--green);}
+  .cmp ul{list-style:none;}
+  .cmp li{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:15.5px;color:var(--text2);}
+  .cmp li:last-child{border-bottom:none;}
+  .cmp li .mk{flex-shrink:0;font-weight:700;}
+  .cmp.bad li .mk{color:var(--red);} .cmp.good li .mk{color:var(--green);}
+
+  /* matrix */
+  .mtx{width:100%;border-collapse:collapse;background:var(--white);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:0 1px 4px rgba(28,25,23,.06);}
+  .mtx th{background:var(--cream-dark);font-family:var(--font-mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--text3);padding:12px 14px;text-align:left;border-bottom:1px solid var(--border);}
+  .mtx th.ctr{text-align:center;}
+  .mtx td{padding:11px 14px;font-size:15px;border-bottom:1px solid var(--border);color:var(--text2);}
+  .mtx tr:last-child td{border-bottom:none;}
+  .mtx tr.star td{background:var(--teal-bg);}
+  .mtx td.nm{font-weight:600;color:var(--text);}
+  .mtx td.ctr{text-align:center;font-weight:700;}
+  .mtx .y{color:var(--green);} .mtx .n{color:var(--red);} .mtx .p{color:var(--warm);font-size:13px;font-weight:600;}
+
+  /* vs code table */
+  .vst{width:100%;border-collapse:collapse;background:var(--white);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:0 1px 4px rgba(28,25,23,.06);}
+  .vst th{background:var(--cream-dark);font-family:var(--font-mono);font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--text3);padding:13px 16px;text-align:left;border-bottom:1px solid var(--border);}
+  .vst th.ctr{text-align:center;}
+  .vst td{padding:12px 16px;font-size:15.5px;border-bottom:1px solid var(--border);color:var(--text2);}
+  .vst tr:last-child td{border-bottom:none;}
+  .vst td.nm{font-weight:600;color:var(--text);}
+  .vst td.ctr{text-align:center;font-weight:600;}
+  .vst .y{color:var(--green);} .vst .n{color:var(--red);} .vst .p{color:var(--warm);}
+
+  /* compounding curve */
+  .curve-wrap{display:flex;justify-content:center;width:100%;}
+  .lgnd{display:flex;gap:26px;justify-content:center;margin-top:14px;font-size:15px;color:var(--text2);}
+  .lgnd i{display:inline-block;width:22px;height:3px;border-radius:2px;margin-right:8px;vertical-align:middle;font-style:normal;}
+
+  /* callback banner */
+  .callback{background:var(--warm-bg);border:1px solid var(--warm-border);border-radius:10px;padding:11px 18px;font-size:15.5px;color:var(--warm);font-weight:600;text-align:center;margin-bottom:16px;}
+
+  /* speaker notes */
+  .notes{position:fixed;bottom:58px;left:34px;right:34px;background:var(--dark);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:15px 20px;font-size:14px;color:rgba(255,255,255,.86);line-height:1.6;z-index:200;display:none;max-height:215px;overflow-y:auto;}
+  .notes.visible{display:block;}
+  .notes b{color:var(--teal-light);}
+  .notes .t{font-family:var(--font-mono);font-size:11px;color:var(--teal-light);text-transform:uppercase;letter-spacing:.1em;margin-right:9px;}
+  .notes .cut{font-family:var(--font-mono);font-size:10px;color:#F0A868;text-transform:uppercase;letter-spacing:.1em;border:1px solid rgba(240,168,104,.4);border-radius:4px;padding:1px 6px;margin-left:8px;}
+
+  /* harness / surface two-level model */
+  .hgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;width:100%;}
+  .hcard{background:var(--white);border:1.5px solid var(--border);border-radius:13px;padding:18px 20px;position:relative;overflow:hidden;}
+  .hcard::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--border-strong);}
+  .hcard.c1::before{background:var(--text3);} .hcard.c2::before{background:var(--warm);} .hcard.c3::before{background:var(--teal);}
+  .hcard.on{border-color:var(--teal);box-shadow:0 0 0 1px var(--teal);background:var(--teal-bg);}
+  .hjob{font-family:var(--font-mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;margin-bottom:6px;}
+  .hcard.c1 .hjob{color:var(--text3);} .hcard.c2 .hjob{color:var(--warm);} .hcard.c3 .hjob{color:var(--teal);}
+  .hname{font-family:var(--font-serif);font-size:24px;font-weight:700;margin-bottom:6px;line-height:1.15;}
+  .hdesc{font-size:14.5px;color:var(--text2);line-height:1.45;margin-bottom:12px;}
+  .hsurf{font-family:var(--font-mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);margin-bottom:6px;}
+  .hpills{display:flex;gap:5px;flex-wrap:wrap;}
+  .hpills span{background:var(--cream-dark);border:1px solid var(--border);border-radius:6px;padding:4px 9px;font-family:var(--font-mono);font-size:12px;color:var(--text2);}
+  .hpills span.star{background:var(--teal-bg);border-color:var(--teal-border);color:var(--teal-dark);font-weight:600;}
+  .spectrum{font-family:var(--font-mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--text-muted);text-align:center;margin-top:14px;}
+  .contbox{margin-top:14px;background:var(--warm-bg);border:1.5px dashed var(--warm-border);border-radius:10px;padding:11px 18px;text-align:center;font-size:15px;color:var(--text2);}
+  .contbox b{color:var(--warm);font-weight:700;}
+  /* abstraction ramp */
+  .ramp{display:flex;align-items:stretch;gap:8px;width:100%;}
+  .rung{flex:1;background:var(--white);border:1.5px solid var(--border);border-radius:11px;padding:14px 12px;text-align:center;display:flex;flex-direction:column;gap:5px;}
+  .rung.here{border-color:var(--teal);background:var(--teal-bg);box-shadow:0 0 0 1px var(--teal);}
+  .rung.soon{border-style:dashed;background:transparent;opacity:.6;}
+  .rung .rn{font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:.1em;color:var(--text-muted);text-transform:uppercase;}
+  .rung .rt{font-size:14.5px;font-weight:600;line-height:1.25;}
+  .rung.here .rt{color:var(--teal-dark);}
+  .rung .rtag{font-family:var(--font-mono);font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.08em;}
+  .rampcap{margin-top:8px;font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--text-muted);text-align:center;}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="pb"></div>
+<div class="hint">← → move · N notes</div>
+<div class="deck" id="deck">
+
+<!-- 1 · HERO -->
+<div class="slide dark-bg active">
+  <div class="inner centered">
+    <span class="tag dark">Cohort 7 · Week 1 · Live Lecture</span>
+    <h1 class="hero-title" style="margin-top:24px;">The interface is<br>not the <span class="hl">system.</span></h1>
+    <p class="hero-sub">Every way to talk to Claude, and the thing that actually makes it good.</p>
+  </div>
+  <div class="notes"><span class="t">0:00 · 1 min</span> Open cold, no agenda slide. "Everyone here has used AI. Almost nobody has a system. Today is the gap between those two things." <b>Then take the room's temperature</b> - show of hands: who has opened a terminal before? Who has used Claude Code? That tells you how fast to run Parts two and three.</div>
+</div>
+
+<!-- 2 · THE BRAINS -->
+<div class="slide">
+  <div class="inner">
+    <div class="eyebrow">Before anything else</div>
+    <h2 class="title">Swap the <span class="hl">brain.</span> Pick the <span class="hl">harness.</span></h2>
+    <div class="divider"></div>
+    <div class="hub">
+      <div class="hub-side">
+        <div class="hsurf">Swap the brain <span style="text-transform:none;letter-spacing:0;">· the model</span></div>
+        <div class="surf"><div class="sn">Haiku</div><div class="sd">fastest, for simple jobs</div></div>
+        <div class="surf"><div class="sn">Sonnet</div><div class="sd">the everyday default</div></div>
+        <div class="surf"><div class="sn">Opus</div><div class="sd">the deep thinker</div></div>
+        <div class="surf"><div class="sn">Fable</div><div class="sd">the newest, most capable</div></div>
+      </div>
+      <div class="spoke"><span></span><span></span><span></span></div>
+      <div class="brain">
+        <div class="bl">one platform</div>
+        <div class="bt">Claude</div>
+        <div class="bs">The brain plugs in.<br>The harness is how you reach it.</div>
+      </div>
+      <div class="spoke"><span></span><span></span><span></span></div>
+      <div class="hub-side">
+        <div class="hsurf">Pick the harness <span style="text-transform:none;letter-spacing:0;">· the way you work</span></div>
+        <div class="surf"><div class="sn">Claude Chat</div><div class="sd">conversation</div></div>
+        <div class="surf"><div class="sn">Cowork</div><div class="sd">delegation</div></div>
+        <div class="surf" style="border-color:var(--teal);background:var(--teal-bg);"><div class="sn">Claude Code</div><div class="sd">collaboration</div></div>
+      </div>
+    </div>
+    <p class="cue">Two different dials. <b>The brain is which model. The harness is which Claude you are talking to.</b></p>
+  </div>
+  <div class="notes"><span class="t">1:00 · 3 min</span> <b>Get this out of the way first, because people conflate them constantly.</b> The BRAIN is the model - Haiku, Sonnet, Opus, Fable. Same as swapping an engine: the car does not change, the engine does. Leave it on the default for ~90% of your work; only reach for a bigger one when a hard answer came back thin. The HARNESS is what Claude is running as - Chat, Cowork, Code. That is the dial that actually changes what Claude can see and do, and it is what the rest of this hour is about. <b>Say it plainly: nobody's problem was ever the model.</b></div>
+</div>
+
+<!-- 3 · THE THREE HARNESSES -->
+<div class="slide">
+  <div class="inner">
+    <div class="eyebrow">Start here</div>
+    <h2 class="title">Three <span class="hl">harnesses</span></h2>
+    <div class="divider"></div>
+    <div class="hgrid">
+      <div class="hcard c1">
+        <div class="hjob">Conversation</div>
+        <div class="hname">Claude Chat</div>
+        <div class="hdesc">You ask, it answers. Nothing on your computer changes.</div>
+        <div class="hsurf">Reach it from</div>
+        <div class="hpills"><span>web</span><span>phone</span><span>desktop app</span></div>
+      </div>
+      <div class="hcard c2">
+        <div class="hjob">Delegation</div>
+        <div class="hname">Cowork</div>
+        <div class="hdesc">You give it a goal. It works on your files and hands back the finished thing.</div>
+        <div class="hsurf">Reach it from</div>
+        <div class="hpills"><span>desktop app</span><span>web</span><span>phone</span></div>
+      </div>
+      <div class="hcard c3 on">
+        <div class="hjob">Collaboration</div>
+        <div class="hname">Claude Code</div>
+        <div class="hdesc">It works inside your project, runs commands, and builds alongside you.</div>
+        <div class="hsurf">Reach it from</div>
+        <div class="hpills"><span class="star">terminal</span><span class="star">VS Code</span><span class="star">desktop app</span><span class="star">web</span><span class="star">phone</span></div>
+      </div>
+    </div>
+    <div class="spectrum">more power and control →</div>
+    <p class="cue">Three <b>harnesses.</b> Same brain in all of them, different job and different permissions.</p>
+  </div>
+  <div class="notes"><span class="t">1:00 · 3 min</span> <b>The whole first section rests on this distinction, so be precise.</b> A harness is WHAT Claude is running as. A surface is WHERE you reach it from. There are only three harnesses. Chat = conversation, Cowork = delegation, Code = collaboration. The pills underneath are surfaces, not products - notice "desktop app" appears under all three. This course is the third column.</div>
+</div>
+
+<!-- 3 · THE DESKTOP APP IS NOT A THING -->
+<div class="slide">
+  <div class="inner">
+    <div class="eyebrow">The confusion this causes</div>
+    <h2 class="title">The desktop app is a <span class="hl">window</span>, not a product</h2>
+    <div class="divider"></div>
+    <div class="hgrid">
+      <div class="hcard c1"><div class="hjob">Tab 1</div><div class="hname">Chat</div><div class="hdesc">The same Claude Chat you already use.</div></div>
+      <div class="hcard c2"><div class="hjob">Tab 2</div><div class="hname">Cowork</div><div class="hdesc">The same Cowork. This is its main home.</div></div>
+      <div class="hcard c3"><div class="hjob">Tab 3</div><div class="hname">Code</div><div class="hdesc">Real Claude Code. Real terminal, real file editor, built in.</div></div>
+    </div>
+    <div class="contbox">One app. <b>Three tabs.</b> The app is a <b>surface</b> - a window you reach Claude through. It is not a harness, and it does not tell you which one you are in.</div>
+    <p class="cue">This is why people get lost. <b>"I use the desktop app" says nothing</b> about what Claude can actually do for you.</p>
+  </div>
+  <div class="notes"><span class="t">4:00 · 2 min</span> This is the single biggest source of confusion in the room and it is worth two minutes. The desktop app is a container. It holds all three harnesses as tabs. So "which app do you use" is a meaningless question - the meaningful one is "which harness are you in, and what can it see." Same logic kills the idea that VS Code is a separate product: it is a window you run Claude Code inside.</div>
+</div>
+
+<!-- 4 · ALL THE WAYS INTO CLAUDE CODE -->
+<div class="slide">
+  <div class="inner">
+    <div class="eyebrow">This course lives in the third column</div>
+    <h2 class="title">Five ways in. <span class="hl">All the same Claude Code.</span></h2>
+    <div class="divider"></div>
+    <div class="ramp">
+      <div class="rung"><div class="rn">Layer 1</div><div class="rt">Raw terminal</div><div class="rtag">&nbsp;</div></div>
+      <div class="rung here"><div class="rn">Layer 2</div><div class="rt">VS Code terminal</div><div class="rtag">we are here</div></div>
+      <div class="rung"><div class="rn">Layer 3</div><div class="rt">VS Code extension</div><div class="rtag">&nbsp;</div></div>
+      <div class="rung"><div class="rn">Layer 4</div><div class="rt">Desktop app</div><div class="rtag">&nbsp;</div></div>
+      <div class="rung"><div class="rn">Layer 5</div><div class="rt">Web and phone</div><div class="rtag">&nbsp;</div></div>
+      <div class="rung soon"><div class="rn">Coming</div><div class="rt">Voice, ambient</div><div class="rtag">&nbsp;</div></div>
+    </div>
+    <div class="rampcap">less friction →</div>
+    <p class="cue">Every one of these <b>is Claude Code.</b> Same program, different layers of abstraction. Your setup travels with you - the interface is just a preference.</p>
+  </div>
+  <div class="notes"><span class="t">6:00 · 3 min</span> <b>The slide that kills the "which one" anxiety.</b> These are not five products - they are five doors into one harness. Type `claude` in a raw terminal or in the VS Code terminal and it is literally the same program. The extension is that same Claude Code with a nicer view and a slightly smaller toolbox. The desktop app now has a real terminal built in. We teach layer 2 because it is the most common dev setup and everything is visible - not because it is the only answer. <b>Say the line: the config is portable, the interface is a preference.</b></div>
+</div>
+
+<!-- 5 · JUST USE CLAUDE CODE -->
+<div class="slide">
+  <div class="inner centered">
+    <div class="eyebrow" style="margin-bottom:16px;">The choice that actually matters</div>
+    <p class="statement">So which one?<br><span class="hl">Just use Claude Code.</span></p>
+    <p class="cue" style="margin-top:24px;max-width:760px;">Which window you open it in is a preference. Which harness you live in is a real choice - so live in the one with the longest reach. Everything you learn today works in the others too.</p>
+  </div>
+  <div class="notes"><span class="t">9:00 · 1 min</span> <b>Give them the answer they walked in for, plainly.</b> The surface (terminal, VS Code, desktop app) is genuinely a preference - that is what the last slide showed. But the HARNESS is a real choice, and my honest recommendation is: just use Claude Code, all the time. It works out of your folder, it has the longest reach, and - the part that matters most - it keeps your whole setup in files that are yours. <b>Do not soften this into "it depends."</b> It mostly does not. If someone in the room lives in Cowork, tell them directly: everything today applies to you too, you are not doing it wrong - Claude Code is just where I would point a beginner who wants the full system. The next slide is WHY: the two dials that actually separate them.</div>
+</div>
+
+<!-- 6 · TWO VARIABLES -->
+<div class="slide">
+  <div class="inner">
+    <div class="eyebrow">The key to the whole lecture</div>
+    <h2 class="title">Only <span class="hl">two things</span> actually differ</h2>
+    <div class="divider"></div>
+    <div class="grid g2">
+      <div class="card teal">
+        <div class="kv">Variable 1</div>
+        <h3>What it can SEE</h3>
+        <p>Your files. Your projects. Who you are, how you work, what you decided last month.</p>
+      </div>
+      <div class="card warm">
+        <div class="kv">Variable 2</div>
+        <h3>What it can DO</h3>
+        <p>Read a sheet. Write a file. Run a command. Reach another tool.</p>
+      </div>
+    </div>
+    <p class="cue">These differ by <b>harness</b>, not by surface. Chat sees nothing of yours no matter which window you open it in.</p>
+  </div>
+  <div class="notes"><span class="t">10:00 · 3 min</span> These are the only two dials, and here is the sharp point: <b>they are properties of the HARNESS, not the surface.</b> Chat on your phone and Chat in the desktop app are equally blind to your files. Claude Code in a raw terminal and in the VS Code extension are equally powerful. That is why the harness/surface split matters - it tells you which choice is real and which is cosmetic. Write SEE and DO on the whiteboard; you point at them for the next 40 minutes.</div>
+</div>
+
+<!-- 7 · THE LADDER -->
+<div class="slide">
+  <div class="inner">
+    <div class="eyebrow">Same brain, different reach</div>
+    <h2 class="title">The three, by <span class="hl">sees</span> and <span class="hl">does</span></h2>
+    <div class="divider"></div>
+    <div class="grid" style="gap:8px;">
+      <div class="card" style="padding:14px 20px;"><div style="display:grid;grid-template-columns:170px 1fr 1fr;gap:16px;align-items:center;"><div style="font-family:var(--font-serif);font-size:18px;font-weight:600;">Claude Chat</div><div style="font-size:14.5px;color:var(--text2);"><b>Sees</b> the conversation, what you upload, and what it remembers about you.</div><div style="font-size:14.5px;color:var(--text2);"><b>Does</b> nothing on your computer.</div></div></div>
+      <div class="card" style="padding:14px 20px;"><div style="display:grid;grid-template-columns:170px 1fr 1fr;gap:16px;align-items:center;"><div style="font-family:var(--font-serif);font-size:18px;font-weight:600;">Cowork</div><div style="font-size:14.5px;color:var(--text2);"><b>Sees</b> a folder you hand it.</div><div style="font-size:14.5px;color:var(--text2);"><b>Does</b> the job in that folder and hands you the finished file.</div></div></div>
+      <div class="card teal" style="padding:14px 20px;"><div style="display:grid;grid-template-columns:170px 1fr 1fr;gap:16px;align-items:center;"><div style="font-family:var(--font-serif);font-size:18px;font-weight:600;color:var(--teal-dark);">Claude Code</div><div style="font-size:14.5px;color:var(--text2);"><b>Sees</b> your folder, everything under it, and anything else you point it at.</div><div style="font-size:14.5px;color:var(--text2);"><b>Does</b> anything you can do at a keyboard.</div></div></div>
+    </div>
+    <p class="cue">Not a better model at the bottom. A <b>bigger window and a longer arm.</b></p>
+  </div>
+  <div class="notes"><span class="t">13:00 · 3 min</span> <b>Cold-call before you reveal:</b> "where does Cowork go - sees a lot, or a little?" Make them use the two variables once, out loud. <b>Be precise and be fair to Chat:</b> it is NOT blind - it has Projects, it can hold a knowledge base, it has connectors, and since March it remembers you across conversations. What it cannot do is touch your machine. That is the real line. And be fair to Cowork: it is not a toy - it writes real files, runs code, and since July it keeps working with your laptop shut. This is a REACH ranking, not a quality ranking. Next slide has the detail.</div>
+</div>
+
+<!-- 8 · WHAT EACH ONE CAN ACTUALLY DO -->
+<div class="slide">
+  <div class="inner">
+    <div class="eyebrow">The detail, since people ask</div>
+    <h2 class="title">What each one can <span class="hl">actually do</span></h2>
+    <div class="divider"></div>
+    <p style="font-size:15px;color:var(--text3);margin:2px 0 14px;">All three remember you and connect to your tools. Here is what actually separates them:</p>
+    <table class="mtx">
+      <thead><tr><th>&nbsp;</th><th class="ctr">Claude Chat</th><th class="ctr">Cowork</th><th class="ctr">Claude Code</th></tr></thead>
+      <tbody>
+        <tr><td class="nm">Works out of a folder on your computer</td><td class="ctr n">✕</td><td class="ctr y">✓</td><td class="ctr y">✓</td></tr>
+        <tr><td class="nm">Keeps going with your laptop shut</td><td class="ctr n">✕</td><td class="ctr y">✓</td><td class="ctr y">✓</td></tr>
+        <tr><td class="nm">A terminal you can drive</td><td class="ctr n">✕</td><td class="ctr n">✕</td><td class="ctr y">✓</td></tr>
+        <tr class="star"><td class="nm">Where its standing instructions live</td><td class="ctr p">in the app</td><td class="ctr p">in the app</td><td class="ctr y">a file you own</td></tr>
+      </tbody>
+    </table>
+    <p class="cue">Chat and Cowork both work. <b>Only Claude Code gives you a terminal and keeps your instructions in a file you own</b> - which is why it is the one to make home.</p>
+  </div>
+  <div class="notes"><span class="t">15:00 · 2 min</span> <b>First, kill the misread before it starts:</b> Cowork absolutely works out of a folder - top row, checkmark. It reads and writes your real files, runs skills, connects to your tools, and since July it keeps going with your laptop shut. It is not a toy. <b>The two rows that actually matter are the bottom two.</b> Only Claude Code gives you a terminal you can drive, and - the one that compounds - only Claude Code keeps its instructions in a plain text file that sits in your folder, travels with it, and that you can read and edit yourself. Cowork can be told the same things, but they live in its settings panel, not in a file you own. <b>That file-you-own difference is the whole reason to make Claude Code home.</b> <b>Shelf life:</b> the bottom row changes the day Cowork reads a CLAUDE.md. Say that out loud.</div>
+</div>
+
+<!-- 9 · THE ADD-ONS -->
+<div class="slide">
+  <div class="inner">
+    <div class="eyebrow">The fourth thing, which is not a harness</div>
+    <h2 class="title">Then there are the <span class="hl">add-ons</span></h2>
+    <div class="divider"></div>
+    <div class="grid g3" style="gap:12px;">
+      <div class="surf"><div class="sn">Excel</div><div class="sd">a panel inside the open workbook</div></div>
+      <div class="surf"><div class="sn">Word · PowerPoint</div><div class="sd">a panel inside the open document</div></div>
+      <div class="surf"><div class="sn">Outlook</div><div class="sd">a panel inside your inbox</div></div>
+      <div class="surf"><div class="sn">Chrome</div><div class="sd">a panel on the page you're on</div></div>
+      <div class="surf"><div class="sn">Slack</div><div class="sd">Claude, in the thread</div></div>
+      <div class="surf" style="border-style:dashed;"><div class="sn">and more</div><div class="sd">the list keeps growing</div></div>
+    </div>
+    <div class="contbox" style="margin-top:18px;">Each one is Claude, bolted onto an app you already use. <b>Genuinely handy. And there is no project behind any of them.</b></div>
+    <p class="cue">Not a fourth harness. <b>A panel in someone else's window.</b></p>
+  </div>
+  <div class="notes"><span class="t">16:00 · 2 min</span> <b>Be fair to these - they are genuinely useful and there are lots of them.</b> Excel is just the example we are about to dig into; the list keeps growing. What they share is the thing they LACK: <b>no folder of yours behind them.</b> They see the one document, page or thread they are bolted to. <b>One honest carve-out if it comes up:</b> Claude in Slack does keep channel context - it is the most capable of the bunch. It still has no folder. Do NOT let this land as "add-ons are bad" - land it as "add-ons have nothing of yours behind them."</div>
+</div>
+
+<!-- 8 · EXCEL: TWO DOORS -->
+<div class="slide">
+  <div class="inner">
+    <div class="eyebrow">A real case</div>
+    <h2 class="title">Two doors into the <span class="hl">same spreadsheet</span></h2>
+    <div class="divider"></div>
+    <div class="vs">
+      <div class="panel bad">
+        <div class="ptitle">The Excel add-on</div>
+        <div class="chain">
+          <div class="cnode">You, in the sheet</div>
+          <div class="cdown">↓</div>
+          <div class="cnode">Claude, in a side panel<span class="cs">sees this workbook</span></div>
+          <div class="cdown">↓</div>
+          <div class="cnode">A good answer, in the sheet</div>
+          <div class="cdown">↓</div>
+          <div class="cnode ghost">and then it forgets<span class="cs">no project, no memory that carries</span></div>
+        </div>
+        <div class="verdict">Meets you fresh, every single time.</div>
+      </div>
+      <div class="vsmid">VS</div>
+      <div class="panel good">
+        <div class="ptitle">Claude Code, opened on your project</div>
+        <div class="chain">
+          <div class="cnode">You, in your project folder</div>
+          <div class="cdown">↓</div>
+          <div class="cnode acc">It already knows the project<span class="cs">your notes, your rules, last month's work</span></div>
+          <div class="cdown">↓</div>
+          <div class="cnode">It opens the same spreadsheet</div>
+          <div class="cdown">↓</div>
+          <div class="cnode acc">Answer, and it writes back<span class="cs">tomorrow it starts from here</span></div>
+        </div>
+        <div class="verdict">Starts from everything you ever told it.</div>
+      </div>
+    </div>
+  </div>
+  <div class="notes"><span class="t">13:00 · 3 min</span> <b>Be fair to the add-on - a student will fact-check you.</b> It is genuinely good: reads formulas with citations, debugs #REF!, builds models, and it CAN reach cloud connectors. The gap is not that it is stupid or cut off. The gap is that it has <b>no project</b> - no folder, no memory that persists (its history lives in your browser and is gone in 30 days), no skills, no shell. <b>Plant the seed on the bottom-right box:</b> "tomorrow it starts from here." That is the idea the whole lecture is building to. Do NOT explain the right-hand column yet - leave it a mystery, we come back to this exact slide.</div>
+</div>
+
+<!-- 9 · THE DIFFERENCE -->
+<div class="slide">
+  <div class="inner centered">
+    <p class="statement">The add-on has no<br><span class="hl">system behind it.</span></p>
+    <p class="cue" style="margin-top:26px;max-width:720px;">Same Claude. Standing in an empty room.</p>
+  </div>
+  <div class="notes"><span class="t">16:00 · 1 min</span> The thesis in one line. Pause. Then the turn: "so the question was never which door. It is - what is behind the door when Claude walks in? The rest of the hour is us building that thing, and the reason it is worth building is that it <b>grows</b>."</div>
+</div>
+
+<!-- 10 · YOUR SYSTEM IS A FOLDER -->
+<div class="slide dark-bg">
+  <div class="inner centered">
+    <span class="tag dark">Part two · the system</span>
+    <p class="statement" style="margin-top:22px;color:var(--on-dark);">Your system is a <span class="hl">folder.</span></p>
+    <p class="cue" style="margin-top:24px;max-width:780px;">Two things live in it: <b>your projects</b>, and <b>a file that explains them.</b> Everything you build here stays here, and it adds up.</p>
+  </div>
+  <div class="notes"><span class="t">17:00 · 1 min</span> Deliberately anticlimactic - they expect the answer to be a product and it is a directory. <b>Two jobs on this slide:</b> (1) name the two ingredients NOW, so the CLAUDE.md label they are about to see in the diagrams is not a mystery; (2) say "it adds up" out loud - that is the compounding thread, and this is its second plant. The next 15 minutes only matter because of what they let happen at the end.</div>
+</div>
+
+<!-- 11 · WHAT CLAUDE CAN SEE -->
+<div class="slide">
+  <div class="inner">
+    <div class="eyebrow">The main rule of folders</div>
+    <h2 class="title">Point it at the <span class="hl">top</span>, and it sees everything</h2>
+    <div class="divider"></div>
+    <div class="hier">
+      <div class="hbox root here">your-work · you point Claude here</div>
+      <div class="vl"></div>
+      <div class="hrow">
+        <div class="hcol"><div class="hbox lit">Project A</div><div class="vl"></div><div class="subrow"><div class="hbox sub lit">notes</div><div class="hbox sub lit">data</div></div></div>
+        <div class="hcol"><div class="hbox lit">Project B</div><div class="vl"></div><div class="subrow"><div class="hbox sub lit">specs</div></div></div>
+        <div class="hcol"><div class="hbox lit">Project C</div><div class="vl"></div><div class="subrow"><div class="hbox sub lit">drafts</div><div class="hbox sub lit">refs</div></div></div>
+      </div>
+    </div>
+    <p class="rule">Every project, every subfolder. <span class="yes">All of it in reach.</span></p>
+  </div>
+  <div class="notes"><span class="t">18:00 · 2 min</span> <b>Define the two words as you go, out loud.</b> "Point Claude at a folder" = when you start it, you choose a folder, and that becomes its workspace. The top folder that everything hangs off is called the <b>root</b>, like the trunk of a tree. Everything underneath is in reach. Next slide is the trap.</div>
+</div>
+
+<!-- 12 · THE TRAP -->
+<div class="slide">
+  <div class="inner">
+    <div class="eyebrow">The other way to do it</div>
+    <h2 class="title">Or start <span class="hl">inside</span> one project</h2>
+    <div class="divider"></div>
+    <div class="hier">
+      <div class="hbox root lit">your-work · rules from here still load</div>
+      <div class="vl"></div>
+      <div class="hrow">
+        <div class="hcol"><div class="hbox" style="opacity:.6;border-style:dashed;">Project A · not loaded</div><div class="vl" style="opacity:.35;"></div><div class="subrow"><div class="hbox sub" style="opacity:.5;border-style:dashed;">notes</div><div class="hbox sub" style="opacity:.5;border-style:dashed;">data</div></div></div>
+        <div class="hcol"><div class="hbox here">Project B · you start here</div><div class="vl"></div><div class="subrow"><div class="hbox sub lit">specs</div></div></div>
+        <div class="hcol"><div class="hbox" style="opacity:.6;border-style:dashed;">Project C · not loaded</div><div class="vl" style="opacity:.35;"></div><div class="subrow"><div class="hbox sub" style="opacity:.5;border-style:dashed;">drafts</div><div class="hbox sub" style="opacity:.5;border-style:dashed;">refs</div></div></div>
+      </div>
+    </div>
+    <p class="rule">You stay focused on just this project, and carry less along with you. Your rules from the folders above still apply - <span class="yes">we will see how in a minute.</span></p>
+  </div>
+  <div class="notes"><span class="t">20:00 · 2 min</span> <b>This is a real tradeoff, not a trap.</b> Starting inside one project does one useful thing: it loads LESS. Claude is not holding your other projects in its head, so it is faster, tighter, and cheaper on context - it is focused on just this one job. The cost is the flip side: it does not come in already knowing your other work. Your rules from the folders above still apply (it reads those on the way in), so your voice and global habits are intact. <b>Be honest about my own practice:</b> I still open at the head folder every single time - I like that it already knows everything. But some people prefer the focus of starting in the project, and that is completely fine. <b>Do not tell them there is one right way here - there is not.</b> Bridge: "either way, the shape of your folders is what makes it work - so what shape?"</div>
+</div>
+
+<!-- 13 · THE SHAPE -->
+<div class="slide">
+  <div class="inner">
+    <div class="eyebrow">The shape that works</div>
+    <h2 class="title">Areas, then projects, then <span class="hl">features</span></h2>
+    <div class="divider"></div>
+    <div class="lvltree">
+      <div class="lvlname a">Area<div class="lvldesc">a division of your life</div></div>
+      <div class="lvlrow"><div class="nodeA">📁 work <span class="fmd">CLAUDE.md</span></div><div class="nodeA" style="opacity:.45;">📁 personal <span class="fmd">CLAUDE.md</span></div></div>
+      <div class="lvlconn"><span>↓</span></div>
+      <div class="lvlname p">Project<div class="lvldesc">a thing you work on</div></div>
+      <div class="lvlrow"><div class="nodeP">📁 client-acme <span class="fmd">CLAUDE.md</span></div><div class="nodeP">📁 fundraise <span class="fmd">CLAUDE.md</span></div><div class="nodeP">📁 hiring <span class="fmd">CLAUDE.md</span></div></div>
+      <div class="lvlconn"><span>↓</span></div>
+      <div class="lvlname f">Feature<div class="lvldesc">a piece inside it</div></div>
+      <div class="lvlrow"><div class="nodeF">pricing <span class="fmd">CLAUDE.md</span></div><div class="nodeF">contracts</div><div class="nodeF">calls</div><div class="nodeF">diligence</div><div class="nodeF">investor-updates</div></div>
+    </div>
+    <p class="cue">Area → project → feature. <b>This is a shape, not a rule</b> - yours will look nothing like mine.</p>
+  </div>
+  <div class="notes"><span class="t">22:00 · 3 min</span> Areas are the big divisions of your life (work, personal, a side thing). Projects are what you actually work on. Features are the pieces inside a project. Most people stop at ONE flat level and then wonder why Claude cannot find anything. <b>Say clearly: do not copy my template. This is a shape, not a required setup.</b> The only part that has to hold is one root you point at, projects under it, features under those. <b>Point at the CLAUDE.md tags:</b> every level can have one, and that is the next section.</div>
+</div>
+
+<!-- 14 · A REAL ONE -->
+<div class="slide">
+  <div class="inner">
+    <div class="eyebrow">Mine, actually</div>
+    <h2 class="title">What it looks like <span class="hl">lived-in</span></h2>
+    <div class="divider"></div>
+    <div class="grid g3" style="gap:14px;">
+      <div class="fbox area">
+        <div class="fl">Area · work</div>
+        <div class="fname">📁 nuvocargo <span class="fmd">CLAUDE.md</span></div>
+        <div class="fproj">
+          <div class="pn">📁 schedule <span class="fmd">CLAUDE.md</span></div>
+          <div class="ffeat"><span>specs</span><span>evals</span><span>staging-harness</span></div>
+        </div>
+        <div class="fproj">
+          <div class="pn">📁 prediction <span class="fmd">CLAUDE.md</span></div>
+          <div class="ffeat"><span>prediction-agent</span></div>
+        </div>
+        <div class="fproj"><div class="pn">📁 build <span class="fmd">CLAUDE.md</span></div><div class="ffeat"><span>tender-intake</span><span>bugs</span></div></div>
+      </div>
+      <div class="fbox area">
+        <div class="fl">Area · teaching</div>
+        <div class="fname">📁 aisc <span class="fmd">CLAUDE.md</span></div>
+        <div class="fproj">
+          <div class="pn">📁 internal <span class="fmd">CLAUDE.md</span></div>
+          <div class="ffeat"><span>cohorts</span><span>curriculum</span></div>
+        </div>
+        <div class="fproj"><div class="pn">📁 public <span class="fmd">CLAUDE.md</span></div><div class="ffeat"><span>decks</span><span>skills</span></div></div>
+      </div>
+      <div class="fbox area">
+        <div class="fl">Area · personal</div>
+        <div class="fname">📁 personal <span class="fmd">CLAUDE.md</span></div>
+        <div class="fproj"><div class="pn">📁 cooking <span class="fmd">CLAUDE.md</span></div><div class="ffeat"><span>recipes</span><span>meal-plans</span></div></div>
+        <div class="fproj"><div class="pn">📁 wedding <span class="fmd">CLAUDE.md</span></div><div class="ffeat"><span>guests</span><span>vendors</span><span>budget</span></div></div>
+        <div class="fproj"><div class="pn">📁 finances <span class="fmd">CLAUDE.md</span></div><div class="ffeat"><span>taxes</span><span>llc</span></div></div>
+      </div>
+    </div>
+    <p class="cue">Same three levels. <b>A CLAUDE.md at every one of them.</b> These slides live in the teaching area.</p>
+  </div>
+  <div class="notes"><span class="t">25:00 · 1 min</span> <b>Better: skip the slide and show your actual terminal.</b> The credibility move is that the real thing is boring and it has survived two years. Point out that this deck, Monday's kickoff notes, and every student file live in the teaching area. <span class="cut">pressure valve · cut if behind</span></div>
+</div>
+
+<!-- CONTEXT · why any of this matters -->
+<div class="slide">
+  <div class="inner">
+    <div class="eyebrow">Before we get to the file</div>
+    <h2 class="title">Claude works on a <span class="hl">whiteboard</span></h2>
+    <div class="divider"></div>
+    <div class="grid g3">
+      <div class="card"><span class="ico">👁️</span><h3>Everything it knows is on the board</h3><p>This conversation. The files it opened. What it pulled from your tools. That is all there is.</p></div>
+      <div class="card warm"><span class="ico">📏</span><h3>The board has an edge</h3><p>It fills up. When it is full, the earliest things get pushed off - and it starts forgetting what you told it.</p></div>
+      <div class="card"><span class="ico">🧹</span><h3>Everything you load costs space</h3><p>Every file it reads takes room. A huge instruction file is rent you pay at the start of every single session.</p></div>
+    </div>
+    <div class="contbox" style="margin-top:18px;">This is <b>context.</b> It is the one resource you are actually managing - and the folder is how you manage it.</div>
+  </div>
+  <div class="notes"><span class="t">26:00 · 2 min</span> <b>They need this before CLAUDE.md or the next section is just filing tips.</b> Context is what Claude can hold at once. Draw it on the whiteboard you are standing at - that is the joke and the metaphor. Two consequences they will feel this week: (1) one task, one chat - a chat that has been running all day is a board covered in other people's handwriting; (2) you do not want everything loaded, you want the right things loaded. <b>That is exactly the job CLAUDE.md does</b> - and it is why the next slide is a briefing, not an encyclopedia.</div>
+</div>
+
+<!-- 15 · CLAUDE.MD DIVIDER -->
+<div class="slide dark-bg">
+  <div class="inner centered">
+    <span class="tag dark">Part three · the context</span>
+    <p class="statement" style="margin-top:22px;color:var(--on-dark);">The folder holds the work.<br><span class="hl">CLAUDE.md</span> holds the instructions.</p>
+  </div>
+  <div class="notes"><span class="t">28:00 · 1 min</span> Say the name out loud and spell it: CLAUDE dot M D. It is just a text file with that exact name - the same label they have been seeing on every folder in the last three diagrams. <b>The folder is the filing cabinet. This is the instructions taped to the front of it</b> - who you are, how you work, and where to look for things.</div>
+</div>
+
+<!-- 16 · WHAT IS A CLAUDE.MD -->
+<div class="slide">
+  <div class="inner">
+    <div class="eyebrow">The file that does the work</div>
+    <h2 class="title">A <span class="hl">briefing document</span>, in plain English</h2>
+    <div class="divider"></div>
+    <div class="grid g3">
+      <div class="card teal"><span class="ico">📋</span><h3>Just a text file</h3><p>No code, no format to learn. It sits in a folder and it is named CLAUDE.md.</p></div>
+      <div class="card teal"><span class="ico">🔁</span><h3>Read every session</h3><p>Claude opens it before you type a word. You never re-explain yourself again.</p></div>
+      <div class="card teal"><span class="ico">💬</span><h3>You don't write it</h3><p>Ask Claude to interview you and write it. Then correct it. That is the whole method.</p></div>
+    </div>
+    <p class="cue">Who you are. How you work. What good looks like. <b>What you never want it to do.</b></p>
+  </div>
+  <div class="notes"><span class="t">27:00 · 2 min</span> Kill the intimidation immediately - it is a text file, not config. The best way to make one is to say: "interview me about my role, my voice, what good output looks like, and what you should never do, then write it to CLAUDE.md." Claude does the work. This is also their homework, so land the sentence clearly.</div>
+</div>
+
+<!-- 17 · THE LAYER STACK -->
+<div class="slide">
+  <div class="inner">
+    <div class="eyebrow">The flowchart to remember</div>
+    <h2 class="title">It is a <span class="hl">stack</span>, not a file</h2>
+    <div class="divider"></div>
+    <div class="stack">
+      <div class="layer l1">
+        <div><div class="lname">Global</div><div class="lpath">one for your whole computer</div></div>
+        <div class="ldesc">Who you are, everywhere.</div>
+      </div>
+      <div class="down">↓</div>
+      <div class="layer l2">
+        <div><div class="lname">Project</div><div class="lpath">inside client-acme</div></div>
+        <div class="ldesc">What this project is.</div>
+      </div>
+      <div class="down">↓</div>
+      <div class="layer l3">
+        <div><div class="lname">Feature</div><div class="lpath">inside client-acme / pricing</div></div>
+        <div class="ldesc">Constraints for this one corner only.</div>
+      </div>
+      <div class="cascade">they stack · deeper = more specific · all of them load</div>
+    </div>
+    <p class="cue">Wherever you start, Claude reads <b>every one of these that applies to you.</b></p>
+  </div>
+  <div class="notes"><span class="t">29:00 · 3 min</span> <b>THE slide.</b> Most people never learn this - it is not one file, it is a cascade. Global says "I write in lowercase and I hate em dashes." Project says "Acme is a logistics client, Sarah is the contact, the rate card is the source of truth." Feature says "pricing answers must always cite the rate card." All three load automatically, because of where you started. Nobody typed anything twice. This is the flowchart to photograph.</div>
+</div>
+
+<!-- 18 · SAME REQUEST, TWO RESULTS -->
+<div class="slide">
+  <div class="inner">
+    <div class="eyebrow">Why it is worth the effort</div>
+    <h2 class="title">Same request. <span class="hl">Two results.</span></h2>
+    <div class="divider"></div>
+    <div class="grid g2">
+      <div class="cmp bad">
+        <div class="cl">Empty folder, no CLAUDE.md</div>
+        <ul>
+          <li><span class="mk">✕</span> You re-explain who you are, every time</li>
+          <li><span class="mk">✕</span> Generic tone, wrong format</li>
+          <li><span class="mk">✕</span> It does not know the project exists</li>
+          <li><span class="mk">✕</span> You rewrite half of what comes back</li>
+        </ul>
+      </div>
+      <div class="cmp good">
+        <div class="cl">Real folder, real CLAUDE.md</div>
+        <ul>
+          <li><span class="mk">✓</span> Three words in, it has the context</li>
+          <li><span class="mk">✓</span> Sounds like you wrote it</li>
+          <li><span class="mk">✓</span> Knows the people, the files, the history</li>
+          <li><span class="mk">✓</span> Usable as it comes out</li>
+        </ul>
+      </div>
+    </div>
+    <p class="cue">You did not write a better prompt. You gave it better <b>context</b>, once.</p>
+  </div>
+  <div class="notes"><span class="t">32:00 · 2 min</span> <b>RUN THIS LIVE if you possibly can - it is the one moment that turns belief into evidence.</b> Same prompt twice: once in an empty folder, once in a real one. Use a project one of them named on Monday (Nico's rentals, Batu's greenhouse) so it is their world, not yours. The voice-match moment is the sell. If the demo is risky on time, say the line instead: people spend months trying to get better at prompting when the lever was context all along.</div>
+</div>
+
+<!-- 19 · ROUTER -->
+<div class="slide">
+  <div class="inner">
+    <div class="eyebrow">The mistake that follows</div>
+    <h2 class="title">CLAUDE.md is a <span class="hl">map</span>, not a warehouse</h2>
+    <div class="divider"></div>
+    <div class="router">
+      <div class="rsrc">
+        <div class="rl">CLAUDE.md · read every single session</div>
+        <div class="rgrid">
+          <div class="rline"><span class="rif">if writing an email →</span><br>read voice.md</div>
+          <div class="rline"><span class="rif">if a person comes up →</span><br>read contacts.md</div>
+          <div class="rline"><span class="rif">if diligence →</span><br>open fundraise/</div>
+          <div class="rline"><span class="rif">if portfolio →</span><br>open portfolio/</div>
+        </div>
+      </div>
+      <div class="rarrows">
+        <div class="rarr"></div><div class="rarr"></div><div class="rarr"></div><div class="rarr"></div>
+      </div>
+      <div class="rdst">
+        <div class="rfile"><div class="rfn">voice.md</div><div class="rfd">how you write</div></div>
+        <div class="rfile"><div class="rfn">contacts.md</div><div class="rfd">who everyone is</div></div>
+        <div class="rfile"><div class="rfn">fundraise/</div><div class="rfd">the live deals</div></div>
+        <div class="rfile"><div class="rfn">portfolio/</div><div class="rfd">the companies</div></div>
+      </div>
+    </div>
+    <p class="cue">Short map, deep territory. <b>Point, don't paste.</b></p>
+  </div>
+  <div class="notes"><span class="t">34:00 · 2 min</span> The universal beginner mistake is a 2,000-line CLAUDE.md. It is read on EVERY session, so every word is rent you pay forever. Claude works on a whiteboard with an edge - everything it loads takes up room. So keep the map short and let it fetch only what it needs. <b>Third compounding plant:</b> every session reads this file, and every session can also ADD to it. That is what turns into the next section.</div>
+</div>
+
+<!-- 20 · EXCEL CALLBACK -->
+<div class="slide">
+  <div class="inner">
+    <div class="callback">Remember the two doors into the spreadsheet?</div>
+    <div class="eyebrow">The payoff</div>
+    <h2 class="title">The mystery box, <span class="hl">unpacked</span></h2>
+    <div class="divider"></div>
+    <div class="sysflow">
+      <div class="syscol">
+        <div class="zone">
+          <div class="zlabel">You ask</div>
+          <div class="zbox">"Update the Acme model"</div>
+        </div>
+      </div>
+      <div class="sysarrow">→</div>
+      <div class="hero-node" style="min-width:235px;">
+        <div class="hl2">What it walks in knowing</div>
+        <div class="ht">Your system</div>
+        <div class="hp">global CLAUDE.md</div>
+        <div class="hp">project CLAUDE.md</div>
+        <div class="hp">every file in the folder</div>
+        <div class="hn">none of this exists in the add-on</div>
+      </div>
+      <div class="sysarrow">→</div>
+      <div class="syscol">
+        <div class="zone">
+          <div class="zlabel">Then it touches the sheet</div>
+          <div class="zbox">opens the spreadsheet <span class="sub">reads every formula</span></div>
+          <div class="zbox">edits cells, adds charts</div>
+          <div class="zbox">saves notes back <span class="sub">into the project</span></div>
+        </div>
+      </div>
+    </div>
+    <p class="syscap">The difference was never the door. <b>It was the room behind it.</b></p>
+  </div>
+  <div class="notes"><span class="t">36:00 · 2 min</span> <b>The payoff.</b> Deliberately reopen the Excel slide. That right-hand column was a mystery then; now every box in it has a name they learned. Claude Code opens real spreadsheets through an official skill you install once - it reads formulas, edits cells, builds charts, all while sitting inside the project. Do not go deeper than that; wiring it up is a later week. The point is the shape, not the setup.</div>
+</div>
+
+<!-- 21 · THE LOOP -->
+<div class="slide">
+  <div class="inner">
+    <div class="eyebrow">Part four · the whole point</div>
+    <h2 class="title">Every session makes the next one <span class="hl">better</span></h2>
+    <div class="divider"></div>
+    <div class="sysflow">
+      <div class="syscol">
+        <div class="zone">
+          <div class="zlabel">You ask</div>
+          <div class="zbox">"Draft the Acme update"</div>
+        </div>
+      </div>
+      <div class="sysarrow">→</div>
+      <div class="hero-node">
+        <div class="hl2">It opens your folder</div>
+        <div class="ht">It already knows</div>
+        <div class="hp">who you are</div>
+        <div class="hp">what this project is</div>
+        <div class="hp">six months of work</div>
+        <div class="hn">no re-explaining · no setup</div>
+      </div>
+      <div class="sysarrow">→</div>
+      <div class="syscol">
+        <div class="zone">
+          <div class="zlabel">It writes back</div>
+          <div class="zbox">the draft <span class="sub">→ saved in the project</span></div>
+          <div class="zbox">a decision <span class="sub">→ logged</span></div>
+          <div class="zbox">a new rule <span class="sub">→ into CLAUDE.md</span></div>
+        </div>
+      </div>
+    </div>
+    <p class="syscap">The folder is <b>richer than it was this morning.</b> That is a compounding system.</p>
+  </div>
+  <div class="notes"><span class="t">38:00 · 3 min</span> <b>THE slide of the lecture.</b> Say the phrase out loud: compounding system. You have planted it three times already (the Excel box, "it adds up," the router). This is where it pays. The loop - you ask, it reads the system, it answers, it writes back into the system, and tomorrow it starts from a better place. Nobody "maintained" anything. The work itself deposited the context. That is the whole difference between using AI and building with it.</div>
+</div>
+
+<!-- 22 · THE CURVE -->
+<div class="slide">
+  <div class="inner centered">
+    <div class="eyebrow">Six months from now</div>
+    <h2 class="title" style="text-align:center;">Chat resets. A system <span class="hl">compounds.</span></h2>
+    <div class="divider"></div>
+    <div class="curve-wrap">
+      <svg width="760" height="272" viewBox="0 0 760 272" role="img" aria-label="A flat line for chat versus an upward curve for a compounding system">
+        <line x1="62" y1="232" x2="736" y2="232" stroke="rgba(28,25,23,0.18)" stroke-width="1.5"/>
+        <line x1="62" y1="18" x2="62" y2="232" stroke="rgba(28,25,23,0.18)" stroke-width="1.5"/>
+        <text x="68" y="15" font-family="Geist Mono, monospace" font-size="11.5" fill="#6E6862">HOW MUCH IT KNOWS ABOUT YOUR WORK</text>
+        <text x="640" y="256" font-family="Geist Mono, monospace" font-size="11.5" fill="#6E6862">TIME →</text>
+        <path d="M62,206 L736,199" stroke="#DC2626" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        <path d="M62,206 C275,199 465,150 736,36" stroke="#0D9488" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <circle cx="736" cy="36" r="5.5" fill="#0D9488"/>
+        <circle cx="736" cy="199" r="5.5" fill="#DC2626"/>
+        <text x="470" y="182" font-family="Geist, sans-serif" font-size="15" font-weight="600" fill="#DC2626">remembers you, not your work</text>
+        <text x="345" y="74" font-family="Geist, sans-serif" font-size="15" font-weight="600" fill="#0D9488">adds to the pile, every time</text>
+      </svg>
+    </div>
+    <div class="lgnd">
+      <span><i style="background:#DC2626;"></i>A door with no folder behind it</span>
+      <span><i style="background:#0D9488;"></i>Any door pointed at your system</span>
+    </div>
+  </div>
+  <div class="notes"><span class="t">41:00 · 2 min</span> One picture. The red line is not a bad model - it is a good model with amnesia. <b>If you have a REAL number from your own work, say it here</b> - "this used to take me 40 minutes, now it takes 5" beats the chart, because the chart is a shape and a number is evidence. Do not invent one. If you don't have one handy, say instead: six months of chatting leaves you where you started; six months of working out of a folder leaves you with something a new hire would need a month to absorb.</div>
+</div>
+
+<!-- 23 · WHAT WRITES BACK -->
+<div class="slide">
+  <div class="inner">
+    <div class="eyebrow">So it isn't abstract</div>
+    <h2 class="title">What actually gets <span class="hl">deposited</span></h2>
+    <div class="divider"></div>
+    <div class="grid g4">
+      <div class="card teal"><span class="ico">📋</span><h3>CLAUDE.md edits</h3><p>A rule you state once. True forever.</p></div>
+      <div class="card teal"><span class="ico">📁</span><h3>The work itself</h3><p>Drafts and notes, saved in the project.</p></div>
+      <div class="card teal"><span class="ico">🧠</span><h3>Memory</h3><p>Facts it learned and wrote down.</p></div>
+      <div class="card teal"><span class="ico">⚡</span><h3>Skills</h3><p>A saved recipe for a job you repeat. Week 3.</p></div>
+    </div>
+    <p class="cue">You do not maintain this. <b>Doing the work maintains it.</b></p>
+  </div>
+  <div class="notes"><span class="t">43:00 · 1 min</span> The four deposits, concrete. Define skills in one line since it is the first time they hear it: a saved recipe for a repeated job. Point forward - Week 3 is skills, and they only work because of the folder they build this week. Someone will ask "do I have to write all this?" No. Claude writes most of it. You just have to let it, and not delete the folder.</div>
+</div>
+
+<!-- 24 · THE MATRIX -->
+<div class="slide">
+  <div class="inner">
+    <div class="eyebrow">Back to the first question</div>
+    <h2 class="title">Now you can <span class="hl">answer it yourself</span></h2>
+    <div class="divider"></div>
+    <table class="mtx">
+      <thead><tr><th>Door</th><th class="ctr">Sees your system?</th><th class="ctr">Can act?</th><th>Reach for it when</th></tr></thead>
+      <tbody>
+        <tr><td class="nm">Claude Chat</td><td class="ctr n">✕</td><td class="ctr n">✕</td><td>A one-off question</td></tr>
+        <tr><td class="nm">Add-ons <span style="font-weight:400;color:var(--text3);">· Excel, Word, Chrome, Slack</span></td><td class="ctr n">✕</td><td class="ctr p">the thing it's bolted to</td><td>A quick job, right where you are</td></tr>
+        <tr><td class="nm">Your phone</td><td class="ctr n">✕</td><td class="ctr n">✕</td><td>It's just Claude Chat again - unless you send the job home</td></tr>
+        <tr><td class="nm">Cowork</td><td class="ctr y">✓</td><td class="ctr y">✓</td><td>The folder is the job, and you want no terminal</td></tr>
+        <tr class="star"><td class="nm">Claude Code</td><td class="ctr y">✓</td><td class="ctr y">✓</td><td>The whole system, and full reach</td></tr>
+      </tbody>
+    </table>
+    <p class="cue">Two columns. <b>That is all you ever needed to ask.</b></p>
+  </div>
+  <div class="notes"><span class="t">44:00 · 2 min</span> The payoff for the two variables. They can now answer the question they walked in with. <b>Be fair - the add-ons are not villains</b>, they are good at exactly what they are. The error is making one of them your MAIN door and then wondering why Claude feels dumb. <b>The phone row is the one that surprises people:</b> picking up your phone does not get you your system, it gets you Claude Chat - the only thing it can really do is send a job home to a harness that has your folders. Note the desktop app is not a row, because it is not a separate thing - Chat, Cowork and Code all live inside it.</div>
+</div>
+
+<!-- 25 · MY SETUP -->
+<div class="slide">
+  <div class="inner">
+    <div class="eyebrow">If you want a starting point</div>
+    <h2 class="title">What <span class="hl">I</span> actually do</h2>
+    <div class="divider"></div>
+    <div class="sysflow">
+      <div class="hero-node" style="min-width:245px;">
+        <div class="hl2">Home base</div>
+        <div class="ht">Claude Code</div>
+        <div class="hp">in the VS Code terminal</div>
+        <div class="hn">opened on the folder I'm working in</div>
+      </div>
+      <div class="sysarrow">→</div>
+      <div class="syscol">
+        <div class="zone">
+          <div class="zlabel">Everything else points at the same folders</div>
+          <div class="zbox">Claude Code on the web <span class="sub">jobs I kick off and walk away from</span></div>
+          <div class="zbox">Cowork <span class="sub">when I want a finished deck or sheet, not a conversation</span></div>
+          <div class="zbox">Phone <span class="sub">to send a job home when an idea hits</span></div>
+          <div class="zbox">Add-ons <span class="sub">only when I'm already inside that app</span></div>
+        </div>
+      </div>
+    </div>
+    <p class="syscap">One system. <b>Many doors into it.</b> It was never a choice between tools.</p>
+  </div>
+  <div class="notes"><span class="t">46:00 · 1 min</span> Be honest that this is YOUR answer, not THE answer. <b>The transferable part is the shape:</b> one home base with real reach, and everything else pointed at the same folders. The add-ons row is the honest one - you do use them, just never as the front door. If they end up living in Cowork instead of Claude Code, <b>every single thing in this lecture still holds.</b> That is the whole point of the two variables.</div>
+</div>
+
+<!-- 26 · CLOSE -->
+<div class="slide dark-bg">
+  <div class="inner centered">
+    <span class="tag dark">This week</span>
+    <p class="statement" style="margin-top:20px;color:var(--on-dark);">Build the <span class="hl">folder.</span><br>The door can wait.</p>
+    <div class="grid g3" style="margin-top:34px;text-align:left;">
+      <div class="card" style="background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.16);"><div class="kv" style="color:var(--teal-light);">Step 1</div><h3 style="color:var(--on-dark);">Make the shape</h3><p style="color:var(--on-dark-muted);">One root. Projects under it. Features under those. Real names, three levels.</p></div>
+      <div class="card" style="background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.16);"><div class="kv" style="color:var(--teal-light);">Step 2</div><h3 style="color:var(--on-dark);">Point Claude at it</h3><p style="color:var(--on-dark-muted);">Cowork or Claude Code, whichever you have. Then say: <b style="color:var(--on-dark);">"Interview me about my role, my voice, and what you should never do - then save it as my instructions for this folder."</b></p></div>
+      <div class="card" style="background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.16);"><div class="kv" style="color:var(--teal-light);">Step 3</div><h3 style="color:var(--on-dark);">Use it once</h3><p style="color:var(--on-dark-muted);">One real task from your actual job. Notice where it saved the result.</p></div>
+    </div>
+  </div>
+  <div class="notes"><span class="t">47:00 · 2 min</span> Close warm, and make the ask <b>literally executable</b> - step 2 names the door AND gives them the sentence to copy. Restate the thesis one last time: the interface is disposable, the system is the asset, and it compounds. Do not go shopping for tools this week. Go build the folder. Friday's group session opens with "what did you build, and where did it get clunky?" <b>Ends ~49 min, leaving ~11 for questions.</b></div>
+</div>
+
+</div>
+
+<div class="logo-mark">[ ai study camp ]</div>
+<div class="dot-nav" id="dots"></div>
+<div class="slide-count" id="sc"></div>
+
+<script>
+const slides=[...document.querySelectorAll('.slide')];
+const pb=document.getElementById('pb'),sc=document.getElementById('sc'),dots=document.getElementById('dots');
+let cur=0,notesOn=false;const total=slides.length;
+slides.forEach((_,i)=>{const b=document.createElement('button');if(i===0)b.className='active';b.setAttribute('aria-label','Slide '+(i+1));b.onclick=()=>go(i);dots.appendChild(b);});
+function render(){
+  slides.forEach((s,i)=>s.classList.toggle('active',i===cur));
+  pb.style.width=((cur+1)/total*100)+'%';
+  sc.textContent=(cur+1)+' / '+total;
+  [...dots.children].forEach((d,i)=>d.classList.toggle('active',i===cur));
+  document.body.classList.toggle('on-dark',slides[cur].classList.contains('dark-bg'));
+  document.querySelectorAll('.notes').forEach(n=>n.classList.remove('visible'));
+  if(notesOn){const n=slides[cur].querySelector('.notes');if(n)n.classList.add('visible');}
+}
+function go(i){if(i<0||i>=total)return;cur=i;render();}
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();go(cur+1);}
+  if(e.key==='ArrowLeft'){e.preventDefault();go(cur-1);}
+  if(e.key==='n'||e.key==='N'){notesOn=!notesOn;render();}
+});
+render();
+</script>
+</body>
+</html>
