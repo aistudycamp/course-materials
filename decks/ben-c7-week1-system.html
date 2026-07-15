@@ -270,6 +270,15 @@
   .rung.here .rt{color:var(--teal-dark);}
   .rung .rtag{font-family:var(--font-mono);font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.08em;}
   .rampcap{margin-top:8px;font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--text-muted);text-align:center;}
+  .wboard{background:var(--white);border:2px dashed var(--border);border-radius:16px;padding:34px 38px;}
+  .wblabel{font-family:var(--font-mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.13em;color:var(--text3);text-align:center;margin-bottom:22px;}
+  .wbnotes{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;}
+  .wbn{background:var(--teal-bg);border:1px solid var(--teal-border);border-radius:9px;padding:20px 26px;font-family:var(--font-serif);font-size:19px;font-weight:600;color:var(--teal-dark);}
+  .wbedge{margin-top:26px;padding-top:18px;border-top:1px dashed var(--border);text-align:center;font-size:15px;color:var(--text3);}
+  .cxmove{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:24px 22px;text-align:center;box-shadow:0 1px 3px rgba(28,25,23,.05);}
+  .cxmove .ci{font-size:30px;}
+  .cxmove h3{font-family:var(--font-serif);font-size:21px;font-weight:600;margin:10px 0 6px;}
+  .cxmove p{font-size:15px;color:var(--text3);line-height:1.45;}
 </style>
 </head>
 <body>
@@ -315,7 +324,6 @@
         <div class="surf" style="border-color:var(--teal);background:var(--teal-bg);"><div class="sn">Claude Code</div><div class="sd">collaboration</div></div>
       </div>
     </div>
-    <p class="cue">Two different dials. <b>The brain is which model. The harness is which Claude you are talking to.</b></p>
   </div>
   <div class="notes"><span class="t">1:00 · 3 min</span> <b>Get this out of the way first, because people conflate them constantly.</b> The BRAIN is the model - Haiku, Sonnet, Opus, Fable. Same as swapping an engine: the car does not change, the engine does. Leave it on the default for ~90% of your work; only reach for a bigger one when a hard answer came back thin. The HARNESS is what Claude is running as - Chat, Cowork, Code. That is the dial that actually changes what Claude can see and do, and it is what the rest of this hour is about. <b>Say it plainly: nobody's problem was ever the model.</b></div>
 </div>
@@ -350,7 +358,6 @@
       </div>
     </div>
     <div class="spectrum">more power and control →</div>
-    <p class="cue">Three <b>harnesses.</b> Same brain in all of them, different job and different permissions.</p>
   </div>
   <div class="notes"><span class="t">1:00 · 3 min</span> <b>The whole first section rests on this distinction, so be precise.</b> A harness is WHAT Claude is running as. A surface is WHERE you reach it from. There are only three harnesses. Chat = conversation, Cowork = delegation, Code = collaboration. The pills underneath are surfaces, not products - notice "desktop app" appears under all three. This course is the third column.</div>
 </div>
@@ -366,40 +373,9 @@
       <div class="hcard c2"><div class="hjob">Tab 2</div><div class="hname">Cowork</div><div class="hdesc">The same Cowork. This is its main home.</div></div>
       <div class="hcard c3"><div class="hjob">Tab 3</div><div class="hname">Code</div><div class="hdesc">Real Claude Code. Real terminal, real file editor, built in.</div></div>
     </div>
-    <div class="contbox">One app. <b>Three tabs.</b> The app is a <b>surface</b> - a window you reach Claude through. It is not a harness, and it does not tell you which one you are in.</div>
-    <p class="cue">This is why people get lost. <b>"I use the desktop app" says nothing</b> about what Claude can actually do for you.</p>
+    <div class="contbox">One app, three tabs. <b>A surface, not a harness.</b></div>
   </div>
   <div class="notes"><span class="t">4:00 · 2 min</span> This is the single biggest source of confusion in the room and it is worth two minutes. The desktop app is a container. It holds all three harnesses as tabs. So "which app do you use" is a meaningless question - the meaningful one is "which harness are you in, and what can it see." Same logic kills the idea that VS Code is a separate product: it is a window you run Claude Code inside.</div>
-</div>
-
-<!-- 4 · ALL THE WAYS INTO CLAUDE CODE -->
-<div class="slide">
-  <div class="inner">
-    <div class="eyebrow">This course lives in the third column</div>
-    <h2 class="title">Five ways in. <span class="hl">All the same Claude Code.</span></h2>
-    <div class="divider"></div>
-    <div class="ramp">
-      <div class="rung"><div class="rn">Layer 1</div><div class="rt">Raw terminal</div><div class="rtag">&nbsp;</div></div>
-      <div class="rung here"><div class="rn">Layer 2</div><div class="rt">VS Code terminal</div><div class="rtag">we are here</div></div>
-      <div class="rung"><div class="rn">Layer 3</div><div class="rt">VS Code extension</div><div class="rtag">&nbsp;</div></div>
-      <div class="rung"><div class="rn">Layer 4</div><div class="rt">Desktop app</div><div class="rtag">&nbsp;</div></div>
-      <div class="rung"><div class="rn">Layer 5</div><div class="rt">Web and phone</div><div class="rtag">&nbsp;</div></div>
-      <div class="rung soon"><div class="rn">Coming</div><div class="rt">Voice, ambient</div><div class="rtag">&nbsp;</div></div>
-    </div>
-    <div class="rampcap">less friction →</div>
-    <p class="cue">Every one of these <b>is Claude Code.</b> Same program, different layers of abstraction. Your setup travels with you - the interface is just a preference.</p>
-  </div>
-  <div class="notes"><span class="t">6:00 · 3 min</span> <b>The slide that kills the "which one" anxiety.</b> These are not five products - they are five doors into one harness. Type `claude` in a raw terminal or in the VS Code terminal and it is literally the same program. The extension is that same Claude Code with a nicer view and a slightly smaller toolbox. The desktop app now has a real terminal built in. We teach layer 2 because it is the most common dev setup and everything is visible - not because it is the only answer. <b>Say the line: the config is portable, the interface is a preference.</b></div>
-</div>
-
-<!-- 5 · JUST USE CLAUDE CODE -->
-<div class="slide">
-  <div class="inner centered">
-    <div class="eyebrow" style="margin-bottom:16px;">The choice that actually matters</div>
-    <p class="statement">So which one?<br><span class="hl">Just use Claude Code.</span></p>
-    <p class="cue" style="margin-top:24px;max-width:760px;">Which window you open it in is a preference. Which harness you live in is a real choice - so live in the one with the longest reach. Everything you learn today works in the others too.</p>
-  </div>
-  <div class="notes"><span class="t">9:00 · 1 min</span> <b>Give them the answer they walked in for, plainly.</b> The surface (terminal, VS Code, desktop app) is genuinely a preference - that is what the last slide showed. But the HARNESS is a real choice, and my honest recommendation is: just use Claude Code, all the time. It works out of your folder, it has the longest reach, and - the part that matters most - it keeps your whole setup in files that are yours. <b>Do not soften this into "it depends."</b> It mostly does not. If someone in the room lives in Cowork, tell them directly: everything today applies to you too, you are not doing it wrong - Claude Code is just where I would point a beginner who wants the full system. The next slide is WHY: the two dials that actually separate them.</div>
 </div>
 
 <!-- 6 · TWO VARIABLES -->
@@ -420,7 +396,6 @@
         <p>Read a sheet. Write a file. Run a command. Reach another tool.</p>
       </div>
     </div>
-    <p class="cue">These differ by <b>harness</b>, not by surface. Chat sees nothing of yours no matter which window you open it in.</p>
   </div>
   <div class="notes"><span class="t">10:00 · 3 min</span> These are the only two dials, and here is the sharp point: <b>they are properties of the HARNESS, not the surface.</b> Chat on your phone and Chat in the desktop app are equally blind to your files. Claude Code in a raw terminal and in the VS Code extension are equally powerful. That is why the harness/surface split matters - it tells you which choice is real and which is cosmetic. Write SEE and DO on the whiteboard; you point at them for the next 40 minutes.</div>
 </div>
@@ -436,7 +411,6 @@
       <div class="card" style="padding:14px 20px;"><div style="display:grid;grid-template-columns:170px 1fr 1fr;gap:16px;align-items:center;"><div style="font-family:var(--font-serif);font-size:18px;font-weight:600;">Cowork</div><div style="font-size:14.5px;color:var(--text2);"><b>Sees</b> a folder you hand it.</div><div style="font-size:14.5px;color:var(--text2);"><b>Does</b> the job in that folder and hands you the finished file.</div></div></div>
       <div class="card teal" style="padding:14px 20px;"><div style="display:grid;grid-template-columns:170px 1fr 1fr;gap:16px;align-items:center;"><div style="font-family:var(--font-serif);font-size:18px;font-weight:600;color:var(--teal-dark);">Claude Code</div><div style="font-size:14.5px;color:var(--text2);"><b>Sees</b> your folder, everything under it, and anything else you point it at.</div><div style="font-size:14.5px;color:var(--text2);"><b>Does</b> anything you can do at a keyboard.</div></div></div>
     </div>
-    <p class="cue">Not a better model at the bottom. A <b>bigger window and a longer arm.</b></p>
   </div>
   <div class="notes"><span class="t">13:00 · 3 min</span> <b>Cold-call before you reveal:</b> "where does Cowork go - sees a lot, or a little?" Make them use the two variables once, out loud. <b>Be precise and be fair to Chat:</b> it is NOT blind - it has Projects, it can hold a knowledge base, it has connectors, and since March it remembers you across conversations. What it cannot do is touch your machine. That is the real line. And be fair to Cowork: it is not a toy - it writes real files, runs code, and since July it keeps working with your laptop shut. This is a REACH ranking, not a quality ranking. Next slide has the detail.</div>
 </div>
@@ -457,7 +431,6 @@
         <tr class="star"><td class="nm">Where its standing instructions live</td><td class="ctr p">in the app</td><td class="ctr p">in the app</td><td class="ctr y">a file you own</td></tr>
       </tbody>
     </table>
-    <p class="cue">Chat and Cowork both work. <b>Only Claude Code gives you a terminal and keeps your instructions in a file you own</b> - which is why it is the one to make home.</p>
   </div>
   <div class="notes"><span class="t">15:00 · 2 min</span> <b>First, kill the misread before it starts:</b> Cowork absolutely works out of a folder - top row, checkmark. It reads and writes your real files, runs skills, connects to your tools, and since July it keeps going with your laptop shut. It is not a toy. <b>The two rows that actually matter are the bottom two.</b> Only Claude Code gives you a terminal you can drive, and - the one that compounds - only Claude Code keeps its instructions in a plain text file that sits in your folder, travels with it, and that you can read and edit yourself. Cowork can be told the same things, but they live in its settings panel, not in a file you own. <b>That file-you-own difference is the whole reason to make Claude Code home.</b> <b>Shelf life:</b> the bottom row changes the day Cowork reads a CLAUDE.md. Say that out loud.</div>
 </div>
@@ -476,8 +449,7 @@
       <div class="surf"><div class="sn">Slack</div><div class="sd">Claude, in the thread</div></div>
       <div class="surf" style="border-style:dashed;"><div class="sn">and more</div><div class="sd">the list keeps growing</div></div>
     </div>
-    <div class="contbox" style="margin-top:18px;">Each one is Claude, bolted onto an app you already use. <b>Genuinely handy. And there is no project behind any of them.</b></div>
-    <p class="cue">Not a fourth harness. <b>A panel in someone else's window.</b></p>
+    <div class="contbox" style="margin-top:18px;">Handy. <b>No project behind any of them.</b></div>
   </div>
   <div class="notes"><span class="t">16:00 · 2 min</span> <b>Be fair to these - they are genuinely useful and there are lots of them.</b> Excel is just the example we are about to dig into; the list keeps growing. What they share is the thing they LACK: <b>no folder of yours behind them.</b> They see the one document, page or thread they are bolted to. <b>One honest carve-out if it comes up:</b> Claude in Slack does keep channel context - it is the most capable of the bunch. It still has no folder. Do NOT let this land as "add-ons are bad" - land it as "add-ons have nothing of yours behind them."</div>
 </div>
@@ -525,9 +497,36 @@
 <div class="slide">
   <div class="inner centered">
     <p class="statement">The add-on has no<br><span class="hl">system behind it.</span></p>
-    <p class="cue" style="margin-top:26px;max-width:720px;">Same Claude. Standing in an empty room.</p>
   </div>
-  <div class="notes"><span class="t">16:00 · 1 min</span> The thesis in one line. Pause. Then the turn: "so the question was never which door. It is - what is behind the door when Claude walks in? The rest of the hour is us building that thing, and the reason it is worth building is that it <b>grows</b>."</div>
+  <div class="notes"><span class="t">16:00 · 1 min</span> The thesis in one line. Pause. Then the turn: "so the question was never which door - it is what is behind the door when Claude walks in." Hold that thought; we build that thing in part two. But first, close the loop everyone walked in for: of the three harnesses, which do you actually use?</div>
+</div>
+
+<!-- 5 · JUST USE CLAUDE CODE -->
+<div class="slide">
+  <div class="inner centered">
+    <div class="eyebrow" style="margin-bottom:16px;">The choice that actually matters</div>
+    <p class="statement">So which one?<br><span class="hl">Just use Claude Code.</span></p>
+  </div>
+  <div class="notes"><span class="t">17:00 · 1 min</span> <b>Give them the answer they walked in for, plainly.</b> They have now seen all three - the reach ranking, what each can actually do, and that add-ons have nothing of yours behind them. So the honest recommendation: just use Claude Code, all the time. It works out of your folder, it has the longest reach, and - the part that matters most - it keeps your whole setup in files that are yours. <b>Do not soften this into "it depends."</b> It mostly does not. If someone in the room lives in Cowork, tell them directly: everything today applies to you too, you are not doing it wrong - Claude Code is just where I would point a beginner who wants the full system. Next slide kills the flip-side anxiety: which of the five ways INTO Claude Code do you use?</div>
+</div>
+
+<!-- 4 · ALL THE WAYS INTO CLAUDE CODE -->
+<div class="slide">
+  <div class="inner">
+    <div class="eyebrow">This course lives in the third column</div>
+    <h2 class="title">Five ways in. <span class="hl">All the same Claude Code.</span></h2>
+    <div class="divider"></div>
+    <div class="ramp">
+      <div class="rung"><div class="rn">Layer 1</div><div class="rt">Raw terminal</div><div class="rtag">&nbsp;</div></div>
+      <div class="rung here"><div class="rn">Layer 2</div><div class="rt">VS Code terminal</div><div class="rtag">we are here</div></div>
+      <div class="rung"><div class="rn">Layer 3</div><div class="rt">VS Code extension</div><div class="rtag">&nbsp;</div></div>
+      <div class="rung"><div class="rn">Layer 4</div><div class="rt">Desktop app</div><div class="rtag">&nbsp;</div></div>
+      <div class="rung"><div class="rn">Layer 5</div><div class="rt">Web and phone</div><div class="rtag">&nbsp;</div></div>
+      <div class="rung soon"><div class="rn">Coming</div><div class="rt">Voice, ambient</div><div class="rtag">&nbsp;</div></div>
+    </div>
+    <div class="rampcap">less friction →</div>
+  </div>
+  <div class="notes"><span class="t">18:00 · 3 min</span> <b>The last "which one" - not which harness, we just answered that, but which of the five doors into Claude Code.</b> These are not five products - they are five doors into one harness. Type `claude` in a raw terminal or in the VS Code terminal and it is literally the same program. The extension is that same Claude Code with a nicer view and a slightly smaller toolbox. The desktop app now has a real terminal built in. We teach layer 2 because it is the most common dev setup and everything is visible - not because it is the only answer. Say the line: the config is portable, the interface is a preference. <b>That closes part one - you know the harness and every way into it. Part two is the payoff: what you point it AT.</b></div>
 </div>
 
 <!-- 10 · YOUR SYSTEM IS A FOLDER -->
@@ -535,7 +534,6 @@
   <div class="inner centered">
     <span class="tag dark">Part two · the system</span>
     <p class="statement" style="margin-top:22px;color:var(--on-dark);">Your system is a <span class="hl">folder.</span></p>
-    <p class="cue" style="margin-top:24px;max-width:780px;">Two things live in it: <b>your projects</b>, and <b>a file that explains them.</b> Everything you build here stays here, and it adds up.</p>
   </div>
   <div class="notes"><span class="t">17:00 · 1 min</span> Deliberately anticlimactic - they expect the answer to be a product and it is a directory. <b>Two jobs on this slide:</b> (1) name the two ingredients NOW, so the CLAUDE.md label they are about to see in the diagrams is not a mystery; (2) say "it adds up" out loud - that is the compounding thread, and this is its second plant. The next 15 minutes only matter because of what they let happen at the end.</div>
 </div>
@@ -555,7 +553,6 @@
         <div class="hcol"><div class="hbox lit">Project C</div><div class="vl"></div><div class="subrow"><div class="hbox sub lit">drafts</div><div class="hbox sub lit">refs</div></div></div>
       </div>
     </div>
-    <p class="rule">Every project, every subfolder. <span class="yes">All of it in reach.</span></p>
   </div>
   <div class="notes"><span class="t">18:00 · 2 min</span> <b>Define the two words as you go, out loud.</b> "Point Claude at a folder" = when you start it, you choose a folder, and that becomes its workspace. The top folder that everything hangs off is called the <b>root</b>, like the trunk of a tree. Everything underneath is in reach. Next slide is the trap.</div>
 </div>
@@ -563,7 +560,7 @@
 <!-- 12 · THE TRAP -->
 <div class="slide">
   <div class="inner">
-    <div class="eyebrow">The other way to do it</div>
+    <div class="eyebrow">Less to carry, tighter focus</div>
     <h2 class="title">Or start <span class="hl">inside</span> one project</h2>
     <div class="divider"></div>
     <div class="hier">
@@ -575,7 +572,6 @@
         <div class="hcol"><div class="hbox" style="opacity:.6;border-style:dashed;">Project C · not loaded</div><div class="vl" style="opacity:.35;"></div><div class="subrow"><div class="hbox sub" style="opacity:.5;border-style:dashed;">drafts</div><div class="hbox sub" style="opacity:.5;border-style:dashed;">refs</div></div></div>
       </div>
     </div>
-    <p class="rule">You stay focused on just this project, and carry less along with you. Your rules from the folders above still apply - <span class="yes">we will see how in a minute.</span></p>
   </div>
   <div class="notes"><span class="t">20:00 · 2 min</span> <b>This is a real tradeoff, not a trap.</b> Starting inside one project does one useful thing: it loads LESS. Claude is not holding your other projects in its head, so it is faster, tighter, and cheaper on context - it is focused on just this one job. The cost is the flip side: it does not come in already knowing your other work. Your rules from the folders above still apply (it reads those on the way in), so your voice and global habits are intact. <b>Be honest about my own practice:</b> I still open at the head folder every single time - I like that it already knows everything. But some people prefer the focus of starting in the project, and that is completely fine. <b>Do not tell them there is one right way here - there is not.</b> Bridge: "either way, the shape of your folders is what makes it work - so what shape?"</div>
 </div>
@@ -596,7 +592,6 @@
       <div class="lvlname f">Feature<div class="lvldesc">a piece inside it</div></div>
       <div class="lvlrow"><div class="nodeF">pricing <span class="fmd">CLAUDE.md</span></div><div class="nodeF">contracts</div><div class="nodeF">calls</div><div class="nodeF">diligence</div><div class="nodeF">investor-updates</div></div>
     </div>
-    <p class="cue">Area → project → feature. <b>This is a shape, not a rule</b> - yours will look nothing like mine.</p>
   </div>
   <div class="notes"><span class="t">22:00 · 3 min</span> Areas are the big divisions of your life (work, personal, a side thing). Projects are what you actually work on. Features are the pieces inside a project. Most people stop at ONE flat level and then wonder why Claude cannot find anything. <b>Say clearly: do not copy my template. This is a shape, not a required setup.</b> The only part that has to hold is one root you point at, projects under it, features under those. <b>Point at the CLAUDE.md tags:</b> every level can have one, and that is the next section.</div>
 </div>
@@ -638,25 +633,42 @@
         <div class="fproj"><div class="pn">📁 finances <span class="fmd">CLAUDE.md</span></div><div class="ffeat"><span>taxes</span><span>llc</span></div></div>
       </div>
     </div>
-    <p class="cue">Same three levels. <b>A CLAUDE.md at every one of them.</b> These slides live in the teaching area.</p>
   </div>
   <div class="notes"><span class="t">25:00 · 1 min</span> <b>Better: skip the slide and show your actual terminal.</b> The credibility move is that the real thing is boring and it has survived two years. Point out that this deck, Monday's kickoff notes, and every student file live in the teaching area. <span class="cut">pressure valve · cut if behind</span></div>
 </div>
 
-<!-- CONTEXT · why any of this matters -->
+<!-- CONTEXT 1 · WHAT IS CONTEXT -->
 <div class="slide">
   <div class="inner">
-    <div class="eyebrow">Before we get to the file</div>
-    <h2 class="title">Claude works on a <span class="hl">whiteboard</span></h2>
+    <div class="eyebrow">Before the file, the idea behind it</div>
+    <h2 class="title">What is <span class="hl">context?</span></h2>
+    <div class="divider"></div>
+    <div class="wboard">
+      <div class="wblabel">everything Claude is holding right now</div>
+      <div class="wbnotes">
+        <div class="wbn">this conversation</div>
+        <div class="wbn">the files it opened</div>
+        <div class="wbn">what it pulled from your tools</div>
+      </div>
+      <div class="wbedge">That is all it has to work from.</div>
+    </div>
+  </div>
+  <div class="notes"><span class="t">26:00 · 2 min</span> <b>They need this before CLAUDE.md, or the next section is just filing tips.</b> Context is simply everything Claude is holding at this moment - the conversation, the files it has read, whatever it pulled from your tools. Draw a whiteboard on the real board you are standing at; that is the whole metaphor. Nothing outside the board exists to it. This is the idea the CLAUDE.md section depends on, so land it plainly and move on - the next slide is what happens when the board fills up.</div>
+</div>
+
+<!-- CONTEXT 2 · MANAGING IT -->
+<div class="slide">
+  <div class="inner">
+    <div class="eyebrow">The board has an edge - it fills up</div>
+    <h2 class="title">So you <span class="hl">manage</span> what is on it</h2>
     <div class="divider"></div>
     <div class="grid g3">
-      <div class="card"><span class="ico">👁️</span><h3>Everything it knows is on the board</h3><p>This conversation. The files it opened. What it pulled from your tools. That is all there is.</p></div>
-      <div class="card warm"><span class="ico">📏</span><h3>The board has an edge</h3><p>It fills up. When it is full, the earliest things get pushed off - and it starts forgetting what you told it.</p></div>
-      <div class="card"><span class="ico">🧹</span><h3>Everything you load costs space</h3><p>Every file it reads takes room. A huge instruction file is rent you pay at the start of every single session.</p></div>
+      <div class="cxmove"><div class="ci">🗂️</div><h3>One task, one chat</h3><p>A fresh board per job. A chat running all day is a board covered in other people's handwriting.</p></div>
+      <div class="cxmove"><div class="ci">🔄</div><h3>Compact</h3><p>Claude sums up the board and keeps going. Same job, smaller footprint.</p></div>
+      <div class="cxmove"><div class="ci">✨</div><h3>New chat</h3><p>Wipe the board. Fresh start when a task is done or things feel tangled.</p></div>
     </div>
-    <div class="contbox" style="margin-top:18px;">This is <b>context.</b> It is the one resource you are actually managing - and the folder is how you manage it.</div>
   </div>
-  <div class="notes"><span class="t">26:00 · 2 min</span> <b>They need this before CLAUDE.md or the next section is just filing tips.</b> Context is what Claude can hold at once. Draw it on the whiteboard you are standing at - that is the joke and the metaphor. Two consequences they will feel this week: (1) one task, one chat - a chat that has been running all day is a board covered in other people's handwriting; (2) you do not want everything loaded, you want the right things loaded. <b>That is exactly the job CLAUDE.md does</b> - and it is why the next slide is a briefing, not an encyclopedia.</div>
+  <div class="notes"><span class="t">28:00 · 2 min</span> <b>Two consequences they will feel this week.</b> First: everything you load costs space - a giant instruction file is rent you pay at the start of every session, which is exactly why the CLAUDE.md we are about to build has to be short. Second: keep one task to one chat, and when a board fills up, compact it or start fresh. These are the two habits that keep Claude sharp instead of foggy. Bridge: "so the biggest lever on that board is what loads onto it every single time you start - and that is the file we are about to meet."</div>
 </div>
 
 <!-- 15 · CLAUDE.MD DIVIDER -->
@@ -679,7 +691,6 @@
       <div class="card teal"><span class="ico">🔁</span><h3>Read every session</h3><p>Claude opens it before you type a word. You never re-explain yourself again.</p></div>
       <div class="card teal"><span class="ico">💬</span><h3>You don't write it</h3><p>Ask Claude to interview you and write it. Then correct it. That is the whole method.</p></div>
     </div>
-    <p class="cue">Who you are. How you work. What good looks like. <b>What you never want it to do.</b></p>
   </div>
   <div class="notes"><span class="t">27:00 · 2 min</span> Kill the intimidation immediately - it is a text file, not config. The best way to make one is to say: "interview me about my role, my voice, what good output looks like, and what you should never do, then write it to CLAUDE.md." Claude does the work. This is also their homework, so land the sentence clearly.</div>
 </div>
@@ -707,7 +718,6 @@
       </div>
       <div class="cascade">they stack · deeper = more specific · all of them load</div>
     </div>
-    <p class="cue">Wherever you start, Claude reads <b>every one of these that applies to you.</b></p>
   </div>
   <div class="notes"><span class="t">29:00 · 3 min</span> <b>THE slide.</b> Most people never learn this - it is not one file, it is a cascade. Global says "I write in lowercase and I hate em dashes." Project says "Acme is a logistics client, Sarah is the contact, the rate card is the source of truth." Feature says "pricing answers must always cite the rate card." All three load automatically, because of where you started. Nobody typed anything twice. This is the flowchart to photograph.</div>
 </div>
@@ -738,7 +748,6 @@
         </ul>
       </div>
     </div>
-    <p class="cue">You did not write a better prompt. You gave it better <b>context</b>, once.</p>
   </div>
   <div class="notes"><span class="t">32:00 · 2 min</span> <b>RUN THIS LIVE if you possibly can - it is the one moment that turns belief into evidence.</b> Same prompt twice: once in an empty folder, once in a real one. Use a project one of them named on Monday (Nico's rentals, Batu's greenhouse) so it is their world, not yours. The voice-match moment is the sell. If the demo is risky on time, say the line instead: people spend months trying to get better at prompting when the lever was context all along.</div>
 </div>
@@ -769,7 +778,6 @@
         <div class="rfile"><div class="rfn">portfolio/</div><div class="rfd">the companies</div></div>
       </div>
     </div>
-    <p class="cue">Short map, deep territory. <b>Point, don't paste.</b></p>
   </div>
   <div class="notes"><span class="t">34:00 · 2 min</span> The universal beginner mistake is a 2,000-line CLAUDE.md. It is read on EVERY session, so every word is rent you pay forever. Claude works on a whiteboard with an edge - everything it loads takes up room. So keep the map short and let it fetch only what it needs. <b>Third compounding plant:</b> every session reads this file, and every session can also ADD to it. That is what turns into the next section.</div>
 </div>
@@ -807,7 +815,6 @@
         </div>
       </div>
     </div>
-    <p class="syscap">The difference was never the door. <b>It was the room behind it.</b></p>
   </div>
   <div class="notes"><span class="t">36:00 · 2 min</span> <b>The payoff.</b> Deliberately reopen the Excel slide. That right-hand column was a mystery then; now every box in it has a name they learned. Claude Code opens real spreadsheets through an official skill you install once - it reads formulas, edits cells, builds charts, all while sitting inside the project. Do not go deeper than that; wiring it up is a later week. The point is the shape, not the setup.</div>
 </div>
@@ -844,7 +851,6 @@
         </div>
       </div>
     </div>
-    <p class="syscap">The folder is <b>richer than it was this morning.</b> That is a compounding system.</p>
   </div>
   <div class="notes"><span class="t">38:00 · 3 min</span> <b>THE slide of the lecture.</b> Say the phrase out loud: compounding system. You have planted it three times already (the Excel box, "it adds up," the router). This is where it pays. The loop - you ask, it reads the system, it answers, it writes back into the system, and tomorrow it starts from a better place. Nobody "maintained" anything. The work itself deposited the context. That is the whole difference between using AI and building with it.</div>
 </div>
@@ -889,7 +895,6 @@
       <div class="card teal"><span class="ico">🧠</span><h3>Memory</h3><p>Facts it learned and wrote down.</p></div>
       <div class="card teal"><span class="ico">⚡</span><h3>Skills</h3><p>A saved recipe for a job you repeat. Week 3.</p></div>
     </div>
-    <p class="cue">You do not maintain this. <b>Doing the work maintains it.</b></p>
   </div>
   <div class="notes"><span class="t">43:00 · 1 min</span> The four deposits, concrete. Define skills in one line since it is the first time they hear it: a saved recipe for a repeated job. Point forward - Week 3 is skills, and they only work because of the folder they build this week. Someone will ask "do I have to write all this?" No. Claude writes most of it. You just have to let it, and not delete the folder.</div>
 </div>
@@ -910,7 +915,6 @@
         <tr class="star"><td class="nm">Claude Code</td><td class="ctr y">✓</td><td class="ctr y">✓</td><td>The whole system, and full reach</td></tr>
       </tbody>
     </table>
-    <p class="cue">Two columns. <b>That is all you ever needed to ask.</b></p>
   </div>
   <div class="notes"><span class="t">44:00 · 2 min</span> The payoff for the two variables. They can now answer the question they walked in with. <b>Be fair - the add-ons are not villains</b>, they are good at exactly what they are. The error is making one of them your MAIN door and then wondering why Claude feels dumb. <b>The phone row is the one that surprises people:</b> picking up your phone does not get you your system, it gets you Claude Chat - the only thing it can really do is send a job home to a harness that has your folders. Note the desktop app is not a row, because it is not a separate thing - Chat, Cowork and Code all live inside it.</div>
 </div>
@@ -939,7 +943,6 @@
         </div>
       </div>
     </div>
-    <p class="syscap">One system. <b>Many doors into it.</b> It was never a choice between tools.</p>
   </div>
   <div class="notes"><span class="t">46:00 · 1 min</span> Be honest that this is YOUR answer, not THE answer. <b>The transferable part is the shape:</b> one home base with real reach, and everything else pointed at the same folders. The add-ons row is the honest one - you do use them, just never as the front door. If they end up living in Cowork instead of Claude Code, <b>every single thing in this lecture still holds.</b> That is the whole point of the two variables.</div>
 </div>
