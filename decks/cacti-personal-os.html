@@ -6,7 +6,7 @@
 <title>Cacti — A Personal Operating System · AISC Week 3</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,500&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
@@ -112,6 +112,16 @@
   .layer .lh .lt{font-family:'JetBrains Mono',monospace;font-size:11.5px;opacity:.7;margin-top:3px}
   .chip{font-family:'JetBrains Mono',monospace;font-size:12.5px;background:var(--bg);border:1px solid var(--line2);border-radius:6px;padding:5px 10px;color:var(--fg)}
 
+  .roster{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .rgroup{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:12px;padding:16px 16px 14px}
+  .rgroup.wide{grid-column:1 / -1;display:grid;grid-template-columns:auto repeat(5,1fr);gap:14px;align-items:center;border-top-color:var(--muted)}
+  .rgroup.wide .rg-h{margin-bottom:0;white-space:nowrap;padding-right:6px}
+  .rg-h{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:12px}
+  .ragent{margin-bottom:11px;line-height:1.35}
+  .ragent:last-child{margin-bottom:0}
+  .ragent b{font-size:16.5px;display:block}
+  .ragent span{font-size:13px;color:var(--muted);display:block;margin-top:2px}
+  .rgroup.wide .ragent{margin-bottom:0}
   .note{font-size:16.5px;color:var(--muted);margin-top:26px;font-family:'Geist',system-ui,sans-serif;line-height:1.55}
 
   .big{font-family:'JetBrains Mono',monospace;font-size:52px;font-weight:600;color:var(--accent);line-height:1}
@@ -425,9 +435,9 @@
         <div>
           <div class="slabel">Reads your <b>overnight agents</b></div>
           <div class="blocks">
-            <span class="blk agent"><span class="bic">📡</span>nuvo-ops</span>
-            <span class="blk agent"><span class="bic">📡</span>finance</span>
-            <span class="blk agent"><span class="bic">📡</span>house-hunt</span>
+            <span class="blk agent"><span class="bic">🌶️</span>Pepper — what's waiting on me</span>
+            <span class="blk agent"><span class="bic">🌿</span>Basil — unprocessed meetings</span>
+            <span class="blk agent"><span class="bic">🍀</span>Ivy — today's session prep</span>
           </div>
         </div>
       </div>
@@ -437,24 +447,43 @@
   <div class="wm">[ ai study camp ]</div><div class="pageno">10</div>
 </section>
 
-<!-- 11 · AUTONOMOUS AGENTS -->
+<!-- 11 · THE ROSTER -->
 <section class="slide">
   <div class="content">
-    <div class="kicker">Bonus · it watches things while you sleep</div>
-    <h2>Autonomous agents run on a schedule</h2>
-    <p class="sub">They check a domain, write a short report, and Cacti reads it the next morning.</p>
-    <div style="display:flex;align-items:center;gap:0;margin-top:30px">
-      <div class="grid2" style="gap:16px;flex:1">
-        <div class="card" style="border-top:3px solid var(--accent)"><span class="tag">daily</span><h3>Nuvo-Ops monitor</h3><p>Scans every work project — health, blockers, PRs, Slack, Linear</p></div>
-        <div class="card" style="border-top:3px solid var(--accent)"><span class="tag">weekly</span><h3>Finance monitor</h3><p>LLC, taxes, cash, deadlines — surfaces what's coming up</p></div>
+    <div class="kicker">Bonus · the shape it grew into</div>
+    <h2>Thirteen specialists. You call them by name.</h2>
+    <p class="sub" style="margin-bottom:24px">Rather than one agent that does everything badly, each one owns a narrow lane and knows where its files live. I just say the name.</p>
+    <div class="roster">
+      <div class="rgroup">
+        <div class="rg-h">Work</div>
+        <div class="ragent"><b>Pepper</b><span>Slack + Linear + PR triage; keeps the tracker honest</span></div>
+        <div class="ragent"><b>Clover</b><span>Data analyst — queries the warehouse, checks the numbers</span></div>
       </div>
-      <div class="conn" style="width:90px">→</div>
-      <div class="node stripe" style="padding:24px;min-width:200px"><div style="font-size:26px">🌵</div><div style="margin-top:6px;font-size:17px">reads in <span class="mono" style="color:var(--accent)">/today</span></div><div class="nm">surface-and-recommend only</div></div>
+      <div class="rgroup">
+        <div class="rg-h">Teaching</div>
+        <div class="ragent"><b>Ivy</b><span>Cohort ops — knows every student, preps every session</span></div>
+        <div class="ragent"><b>Fern</b><span>Builds and critiques the coursework you're sitting in</span></div>
+      </div>
+      <div class="rgroup">
+        <div class="rg-h">How things come out</div>
+        <div class="ragent"><b>Olive</b><span>My voice — drafts anything that goes out. Never sends</span></div>
+        <div class="ragent"><b>Poppy</b><span>My visuals — every deck and dashboard. Built this one</span></div>
+      </div>
+      <div class="rgroup">
+        <div class="rg-h">The system itself</div>
+        <div class="ragent"><b>Sage</b><span>Librarian — the folder structure police</span></div>
+        <div class="ragent"><b>Basil</b><span>Meeting notes in, tasks and decisions out</span></div>
+      </div>
+      <div class="rgroup wide">
+        <div class="rg-h">The rest of a life</div>
+        <div class="ragent"><b>Mint</b><span>Money</span></div>
+        <div class="ragent"><b>Aloe</b><span>Health</span></div>
+        <div class="ragent"><b>Cherry</b><span>What to buy</span></div>
+        <div class="ragent"><b>Agave</b><span>What to watch</span></div>
+        <div class="ragent"><b>Nopal</b><span>My plants</span></div>
+      </div>
     </div>
-    <div class="statline" style="margin-top:34px">
-      <div class="s"><div class="big">read-only</div><div class="l">agents suggest — they never act without you</div></div>
-      <div class="s"><div class="big">a lens</div><div class="l">they read project files; they never copy the data</div></div>
-    </div>
+    <p class="note" style="margin-top:24px"><b>Most do nothing until I say their name.</b> Only two run on a clock: Cacti writes <span class="mono" style="color:var(--accent)">/today</span> before I wake up, Sage tidies at night.</p>
   </div>
   <div class="wm">[ ai study camp ]</div><div class="pageno">11</div>
 </section>
@@ -467,15 +496,15 @@
     <div class="fs">
       <div class="fs-col brain">
         <div class="fs-h">🌵 <span class="fs-nm">cacti/</span> <span class="cnt">the brain — sits above everything</span></div>
-        <div class="fs-row"><span class="fs-gu">├</span><span class="fs-nm">.claude/skills/</span><span class="fs-ds">42 skills</span></div>
+        <div class="fs-row"><span class="fs-gu">├</span><span class="fs-nm">.claude/skills/</span><span class="fs-ds">53 skills</span></div>
         <div class="fs-row"><span class="fs-gu">├</span><span class="fs-nm">memory/</span><span class="fs-ds">what it remembers about me</span></div>
         <div class="fs-row"><span class="fs-gu">├</span><span class="fs-nm">knowledge/registry.md</span><span class="fs-ds">← the map</span></div>
-        <div class="fs-row"><span class="fs-gu">├</span><span class="fs-nm">agents/</span><span class="fs-ds">nuvo-ops · finance · audit · house-hunt</span></div>
+        <div class="fs-row"><span class="fs-gu">├</span><span class="fs-nm">agents/</span><span class="fs-ds">13 named specialists — sage · pepper · ivy · olive …</span></div>
         <div class="fs-row"><span class="fs-gu">├</span><span class="fs-nm">life/</span><span class="fs-ds">goals · vision · decisions</span></div>
         <div class="fs-row"><span class="fs-gu">└</span><span class="fs-nm">daily/</span><span class="fs-ds">every /today brief</span></div>
       </div>
       <div class="fs-col">
-        <div class="fs-h">📂 <span class="fs-nm">cc/</span> <span class="cnt">50+ projects across 3 domains</span></div>
+        <div class="fs-h">📂 <span class="fs-nm">cc/</span> <span class="cnt">75 projects across 4 domains</span></div>
         <div class="fs-row fs-dom"><span class="fs-gu">├</span><span class="fs-nm nuvo">👔 nuvo/</span></div>
         <div class="fs-row in"><span class="fs-gu">├</span><span class="fs-ds">build · schedule · quote · nuvo-ops · edi · ap · comms …</span></div>
         <div class="fs-row in"><span class="fs-gu">└</span><span class="fs-ds">schedule/ → scheduling-agent · prediction-agent · facility-data</span></div>
@@ -487,9 +516,9 @@
       </div>
     </div>
     <div class="fs-scale">
-      <div><div class="n">42</div><div class="l">skills</div></div>
-      <div><div class="n">50+</div><div class="l">projects</div></div>
-      <div><div class="n">4</div><div class="l">autonomous agents</div></div>
+      <div><div class="n">53</div><div class="l">skills</div></div>
+      <div><div class="n">75</div><div class="l">projects</div></div>
+      <div><div class="n">13</div><div class="l">named agents</div></div>
       <div><div class="n">6</div><div class="l">connected tools</div></div>
     </div>
     <p class="note">All of it under one roof — Cacti reads and writes across every folder. The projects own the facts; Cacti owns the awareness.</p>
@@ -516,8 +545,8 @@
       <div class="card">
         <span class="tag">all it took to build</span>
         <h3 style="margin-bottom:14px">One folder + one <span class="mono">CLAUDE.md</span></h3>
-        <p style="font-size:16px;line-height:1.6;color:var(--fg)">A <span class="mono" style="font-size:13px;background:var(--bg);padding:1px 6px;border-radius:4px">CLAUDE.md</span> is just a note to Claude that says "here's what this folder is for." You're writing your first one this week.</p>
-        <p style="font-size:16px;line-height:1.6;color:var(--muted);margin-top:14px">Everything else — the registry, the agents, the parallel helpers — I added one at a time, only when I actually felt the need.</p>
+        <p style="font-size:16px;line-height:1.6;color:var(--fg)">A note to Claude saying what this folder is for. You write your first one this week.</p>
+        <p style="font-size:16px;line-height:1.6;color:var(--muted);margin-top:14px">Everything else came one at a time, when I felt the need.</p>
       </div>
     </div>
     <p class="note">The cathedral was built one brick at a time. You only need the first brick.</p>
