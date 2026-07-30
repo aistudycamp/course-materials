@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cacti — A Personal Operating System · AISC Week 3</title>
+<title>Cacti · A Personal Operating System · AISC Week 3</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -144,7 +144,7 @@
   .fs-scale{display:flex;gap:44px;margin-top:24px;flex-wrap:wrap}
   .fs-scale .n{font-family:'JetBrains Mono',monospace;font-size:34px;font-weight:600;color:var(--accent);line-height:1}
   .fs-scale .l{font-size:13.5px;color:var(--muted);margin-top:6px}
-  /* nesting / composition — blocks inside blocks */
+  /* nesting / composition: blocks inside blocks */
   .nest{background:var(--card);border:1.5px solid var(--accent);border-radius:16px;padding:14px 24px;margin-top:10px}
   .nest-h{display:flex;align-items:baseline;gap:12px;margin-bottom:2px}
   .nest-h .nt{font-family:'JetBrains Mono',monospace;font-size:21px;font-weight:600;color:var(--accent)}
@@ -191,7 +191,7 @@
   <div class="content">
     <div class="kicker">AI Study Camp · Week 3 · Guest Session</div>
     <h1>Cacti 🌵</h1>
-    <p class="lead" style="margin-top:26px">A personal operating system built entirely from the things you're learning this week: <b style="color:#fff">skills</b>, <b style="color:#fff">MCPs</b>, and <b style="color:#fff">sub-agents</b>.</p>
+    <p class="lead" style="margin-top:26px">Run your whole life from one conversation. Built from <b style="color:#fff">skills</b>, <b style="color:#fff">MCPs</b>, <b style="color:#fff">sub-agents</b>.</p>
   </div>
   <div class="wm">[ ai study camp ]</div>
   <div class="pageno">01</div>
@@ -202,7 +202,6 @@
   <div class="content">
     <div class="kicker">The problem</div>
     <h2>Your life is scattered across a dozen tabs</h2>
-    <p class="sub">Email here, tasks there, calendar somewhere else, code in 50 folders.</p>
     <div style="display:grid;grid-template-columns:1fr 64px 1fr;align-items:center;margin-top:20px">
       <div class="grid3" style="gap:12px">
         <span class="pill"><span class="dot"></span>Gmail</span>
@@ -222,7 +221,6 @@
         <div class="nm">copy · paste · re-explain · repeat</div>
       </div>
     </div>
-    <p class="note">Every tool is its own island. You are the integration layer — and it's exhausting.</p>
   </div>
   <div class="wm">[ ai study camp ]</div><div class="pageno">02</div>
 </section>
@@ -231,7 +229,7 @@
 <section class="slide">
   <div class="content">
     <div class="kicker">The shift</div>
-    <h2>What if you talked to one thing — and it ran the rest?</h2>
+    <h2>Talk to one thing</h2>
     <div style="display:grid;grid-template-columns:200px 70px 1fr;align-items:center;margin-top:46px;gap:0">
       <div class="node" style="background:var(--dark);color:#fff;border:none;padding:24px">
         <div style="font-size:30px">🗣️</div>
@@ -267,12 +265,11 @@
     <div class="kicker">The whole thing is built from 4 pieces</div>
     <h2>You already learned three of them this week</h2>
     <div class="grid4" style="margin-top:34px">
-      <div class="card stripe"><span class="ic">🎓</span><span class="tag">Skills</span><h3>Taught behaviors</h3><p>A saved workflow. "Every time I say <span class="mono">/today</span>, do these steps."</p></div>
-      <div class="card stripe"><span class="ic">🔌</span><span class="tag">MCPs</span><h3>Tool connections</h3><p>Plugs Claude into Slack, Notion, GitHub, Linear — your real tools.</p></div>
-      <div class="card stripe"><span class="ic">🤖</span><span class="tag">Sub-agents</span><h3>Parallel workers</h3><p>Fan one request out to many helpers, each doing a slice at once.</p></div>
-      <div class="card stripe" style="border-top-color:var(--orange)"><span class="ic">🗺️</span><span class="tag" style="color:var(--orange)">The Registry</span><h3>The map</h3><p>The glue — and it's just a text file. You already know how to make one.</p></div>
+      <div class="card stripe"><span class="ic">🎓</span><span class="tag">Skills</span><h3>Taught behaviors</h3><p>A workflow you taught once.</p></div>
+      <div class="card stripe"><span class="ic">🔌</span><span class="tag">MCPs</span><h3>Tool connections</h3><p>Into Slack, Notion, GitHub, Linear.</p></div>
+      <div class="card stripe"><span class="ic">🤖</span><span class="tag">Sub-agents</span><h3>Parallel workers</h3><p>Many helpers, each on one slice, at once.</p></div>
+      <div class="card stripe" style="border-top-color:var(--orange)"><span class="ic">🗺️</span><span class="tag" style="color:var(--orange)">The Registry</span><h3>The map</h3><p>The glue. Just a text file.</p></div>
     </div>
-    <p class="note">Skills + MCPs + Sub-agents are the Lego bricks. The map is the baseplate — and it's nothing fancier than a markdown file.</p>
   </div>
   <div class="wm">[ ai study camp ]</div><div class="pageno">04</div>
 </section>
@@ -282,7 +279,6 @@
   <div class="content">
     <div class="kicker">Piece 1 · MCPs</div>
     <h2>MCPs give Cacti hands</h2>
-    <p class="sub">Each connector is a door into a real tool. Install once, use forever.</p>
     <div style="display:grid;grid-template-columns:240px 70px 1fr;align-items:center;margin-top:30px">
       <div class="node stripe" style="padding:26px"><div style="font-size:28px">🌵</div><div style="margin-top:8px;font-size:19px">Cacti</div></div>
       <div class="arrow">→</div>
@@ -298,7 +294,6 @@
         <span class="pill">⏱️ Temporal</span>
       </div>
     </div>
-    <p class="note">Read your calendar, post to Slack, open a ticket, check a repo — without you ever leaving the conversation. Connect it once, then just use it.</p>
   </div>
   <div class="wm">[ ai study camp ]</div><div class="pageno">05</div>
 </section>
@@ -306,9 +301,8 @@
 <!-- 6 · THE REGISTRY -->
 <section class="slide">
   <div class="content">
-    <div class="kicker">Piece 2 · The Registry — and it's just a file</div>
+    <div class="kicker">Piece 2 · The Registry</div>
     <h2>You say a nickname. It knows where to go.</h2>
-    <p class="sub">The registry is a plain markdown file — a list. You say a project's name; Cacti looks it up and knows exactly where it lives and how to treat it.</p>
     <div class="resolve" style="margin-top:26px">
       <div class="inp">
         <div class="mono" style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em">you say</div>
@@ -322,11 +316,10 @@
       </div>
     </div>
     <div class="grid3" style="margin-top:22px">
-      <div class="card"><span class="tag">3 areas of life</span><p style="color:var(--fg);font-size:16px">nuvo · personal · aisc — each kept cleanly separate</p></div>
-      <div class="card"><span class="tag">~50 projects</span><p style="color:var(--fg);font-size:16px">nicknames work too, so "world cup" and "mundial" find the same place</p></div>
+      <div class="card"><span class="tag">3 areas of life</span><p style="color:var(--fg);font-size:16px">nuvo · personal · aisc, kept separate</p></div>
+      <div class="card"><span class="tag">~50 projects</span><p style="color:var(--fg);font-size:16px">"world cup" and "mundial" find the same place</p></div>
       <div class="card" style="border-color:var(--orange)"><span class="tag" style="color:var(--orange)">never mixes them up</span><p style="color:var(--fg);font-size:16px">your personal stuff and your work stuff never get crossed</p></div>
     </div>
-    <p class="note">No magic: it's one text file. Cacti just adds a line whenever it learns a new nickname — you'll write your first one this week.</p>
   </div>
   <div class="wm">[ ai study camp ]</div><div class="pageno">06</div>
 </section>
@@ -336,14 +329,12 @@
   <div class="content">
     <div class="kicker">Piece 3 · Skills</div>
     <h2>Skills are the verbs Cacti knows</h2>
-    <p class="sub">Each one is a repeatable workflow you taught it once.</p>
     <div class="grid2" style="margin-top:28px;gap:16px">
-      <div class="card" style="padding:20px 22px"><h3 style="font-size:18px"><span class="mono" style="color:var(--accent)">/today</span> &nbsp;Morning brief</h3><p>Pulls my whole day together (we'll see this live)</p></div>
-      <div class="card" style="padding:20px 22px"><h3 style="font-size:18px"><span class="mono" style="color:var(--accent)">/visualize</span> &nbsp;Make a deck or diagram</h3><p>Turns any doc into slides or a flowchart — <b>this deck was built with it</b></p></div>
-      <div class="card" style="padding:20px 22px"><h3 style="font-size:18px"><span class="mono" style="color:var(--accent)">/process-meeting</span> &nbsp;Transcript → notes</h3><p>Drop a Zoom recording → clean summary + action items, filed</p></div>
-      <div class="card" style="padding:20px 22px"><h3 style="font-size:18px"><span class="mono" style="color:var(--accent)">/quick-task</span> &nbsp;Capture in plain English</h3><p>"Remind me to…" → routed to the right project automatically</p></div>
+      <div class="card" style="padding:20px 22px"><h3 style="font-size:18px"><span class="mono" style="color:var(--accent)">/today</span> &nbsp;Morning brief</h3><p>Pulls my whole day together. Live in a sec.</p></div>
+      <div class="card" style="padding:20px 22px"><h3 style="font-size:18px"><span class="mono" style="color:var(--accent)">/visualize</span> &nbsp;Make a deck or diagram</h3><p>Any doc into slides. <b>Built this deck.</b></p></div>
+      <div class="card" style="padding:20px 22px"><h3 style="font-size:18px"><span class="mono" style="color:var(--accent)">/process-meeting</span> &nbsp;Transcript → notes</h3><p>Zoom recording in, clean notes out.</p></div>
+      <div class="card" style="padding:20px 22px"><h3 style="font-size:18px"><span class="mono" style="color:var(--accent)">/quick-task</span> &nbsp;Capture in plain English</h3><p>"Remind me to…" routed to the right project.</p></div>
     </div>
-    <p class="note">40+ skills today — but it started with one. <b>One good skill beats ten half-built ones.</b></p>
   </div>
   <div class="wm">[ ai study camp ]</div><div class="pageno">07</div>
 </section>
@@ -353,7 +344,6 @@
   <div class="content">
     <div class="kicker">Piece 4 · Sub-agents</div>
     <h2>One request → many workers, all at once</h2>
-    <p class="sub">Instead of one agent doing 4 things slowly, fan out to 4 agents doing 1 thing each — in parallel.</p>
     <div class="fan" style="margin-top:30px">
       <div class="node stripe" style="padding:22px"><div style="font-size:26px">🌵</div><div style="margin-top:6px;font-size:17px">Cacti</div><div class="nm">one ask</div></div>
       <div class="conn">⤳</div>
@@ -364,12 +354,11 @@
         <div class="leg"><div class="t">Meeting-prep helper</div><div class="d">briefs you for each meeting that day</div></div>
       </div>
     </div>
-    <p class="note">Each returns a short, clean summary — not its whole messy transcript. Keeps the main conversation fast and focused.</p>
   </div>
   <div class="wm">[ ai study camp ]</div><div class="pageno">08</div>
 </section>
 
-<!-- 9 · /TODAY — THE PAYOFF -->
+<!-- 9 · /TODAY · THE PAYOFF -->
 <section class="slide">
   <div class="content">
     <div class="kicker">Put it together · the daily brief</div>
@@ -396,7 +385,6 @@
         <div class="bl"><span class="bd"></span>Nudges toward your goals</div>
       </div>
     </div>
-    <p class="note">One command. Everything that matters this morning — gathered while you make coffee.</p>
   </div>
   <div class="wm">[ ai study camp ]</div><div class="pageno">09</div>
 </section>
@@ -406,9 +394,8 @@
   <div class="content">
     <div class="kicker">Why it scales · blocks inside blocks</div>
     <h2>One command unpacks into many</h2>
-    <p class="sub" style="margin-bottom:14px">The bricks <b>compose</b>. A single skill can fire sub-agents, call <i>other</i> skills, and read your agents — all from one thing you type.</p>
     <div class="nest">
-      <div class="nest-h"><span class="nt">/today</span><span class="nl">— you type this once</span></div>
+      <div class="nest-h"><span class="nt">/today</span><span class="nl">you type this once</span></div>
       <div class="nstep">
         <div class="num">1</div>
         <div>
@@ -423,7 +410,7 @@
       <div class="nstep">
         <div class="num">2</div>
         <div>
-          <div class="slabel">Calls <b>another skill</b> — a skill nested inside a skill</div>
+          <div class="slabel">Calls <b>another skill</b>, nested inside</div>
           <div class="subskill">
             <span class="sk-name">🎓 /meeting-prep</span><span class="sk-arrow">→ which fires its own helpers:</span>
             <span class="blk"><span class="bic">🤖</span>scan transcripts</span>
@@ -436,14 +423,13 @@
         <div>
           <div class="slabel">Reads your <b>overnight agents</b></div>
           <div class="blocks">
-            <span class="blk agent"><span class="bic">🌶️</span>Pepper — what's waiting on me</span>
-            <span class="blk agent"><span class="bic">🌿</span>Basil — unprocessed meetings</span>
-            <span class="blk agent"><span class="bic">🍀</span>Ivy — today's session prep</span>
+            <span class="blk agent"><span class="bic">🌶️</span>Pepper: what's waiting on me</span>
+            <span class="blk agent"><span class="bic">🌿</span>Basil: unprocessed meetings</span>
+            <span class="blk agent"><span class="bic">🍀</span>Ivy: today's session prep</span>
           </div>
         </div>
       </div>
     </div>
-    <p class="note" style="margin-top:14px">One thing you type → skills calling skills calling agents. <b>That's the whole trick: small bricks, nested.</b></p>
   </div>
   <div class="wm">[ ai study camp ]</div><div class="pageno">10</div>
 </section>
@@ -453,26 +439,25 @@
   <div class="content">
     <div class="kicker">Bonus · the shape it grew into</div>
     <h2>Thirteen specialists. You call them by name.</h2>
-    <p class="sub" style="margin-bottom:24px">Rather than one agent that does everything badly, each one owns a narrow lane and knows where its files live. I just say the name.</p>
     <div class="roster">
       <div class="rgroup">
         <div class="rg-h">Work</div>
-        <div class="ragent"><b>Pepper</b><span>Slack + Linear + PR triage; keeps the tracker honest</span></div>
-        <div class="ragent"><b>Clover</b><span>Data analyst — queries the warehouse, checks the numbers</span></div>
+        <div class="ragent"><b>Pepper</b><span>Slack, Linear, PR triage</span></div>
+        <div class="ragent"><b>Clover</b><span>Data analyst, checks the numbers</span></div>
       </div>
       <div class="rgroup">
         <div class="rg-h">Teaching</div>
-        <div class="ragent"><b>Ivy</b><span>Cohort ops — knows every student, preps every session</span></div>
-        <div class="ragent"><b>Fern</b><span>Builds and critiques the coursework you're sitting in</span></div>
+        <div class="ragent"><b>Ivy</b><span>Cohort ops, preps every session</span></div>
+        <div class="ragent"><b>Fern</b><span>Builds and critiques the coursework</span></div>
       </div>
       <div class="rgroup">
         <div class="rg-h">How things come out</div>
-        <div class="ragent"><b>Olive</b><span>My voice — drafts anything that goes out. Never sends</span></div>
-        <div class="ragent"><b>Poppy</b><span>My visuals — every deck and dashboard. Built this one</span></div>
+        <div class="ragent"><b>Olive</b><span>My voice. Never sends</span></div>
+        <div class="ragent"><b>Poppy</b><span>My visuals. Built this deck</span></div>
       </div>
       <div class="rgroup">
         <div class="rg-h">The system itself</div>
-        <div class="ragent"><b>Sage</b><span>Librarian — the folder structure police</span></div>
+        <div class="ragent"><b>Sage</b><span>Librarian, folder structure</span></div>
         <div class="ragent"><b>Basil</b><span>Meeting notes in, tasks and decisions out</span></div>
       </div>
       <div class="rgroup wide">
@@ -484,7 +469,7 @@
         <div class="ragent"><b>Nopal</b><span>My plants</span></div>
       </div>
     </div>
-    <p class="note" style="margin-top:24px"><b>Most do nothing until I say their name.</b> Only two run on a clock: Cacti writes <span class="mono" style="color:var(--accent)">/today</span> before I wake up, Sage tidies at night.</p>
+    <p class="note" style="margin-top:24px"><b>Most sleep until I say the name.</b> Two run on a clock: <span class="mono" style="color:var(--accent)">/today</span> at dawn, Sage at night.</p>
   </div>
   <div class="wm">[ ai study camp ]</div><div class="pageno">11</div>
 </section>
@@ -530,11 +515,11 @@
     <h2>One brain. Fifty projects. Three lives.</h2>
     <div class="fs">
       <div class="fs-col brain">
-        <div class="fs-h">🌵 <span class="fs-nm">cacti/</span> <span class="cnt">the brain — sits above everything</span></div>
+        <div class="fs-h">🌵 <span class="fs-nm">cacti/</span> <span class="cnt">the brain, above everything</span></div>
         <div class="fs-row"><span class="fs-gu">├</span><span class="fs-nm">.claude/skills/</span><span class="fs-ds">53 skills</span></div>
         <div class="fs-row"><span class="fs-gu">├</span><span class="fs-nm">memory/</span><span class="fs-ds">what it remembers about me</span></div>
         <div class="fs-row"><span class="fs-gu">├</span><span class="fs-nm">knowledge/registry.md</span><span class="fs-ds">← the map</span></div>
-        <div class="fs-row"><span class="fs-gu">├</span><span class="fs-nm">agents/</span><span class="fs-ds">13 named specialists — sage · pepper · ivy · olive …</span></div>
+        <div class="fs-row"><span class="fs-gu">├</span><span class="fs-nm">agents/</span><span class="fs-ds">13 named specialists: sage · pepper · ivy · olive …</span></div>
         <div class="fs-row"><span class="fs-gu">├</span><span class="fs-nm">life/</span><span class="fs-ds">goals · vision · decisions</span></div>
         <div class="fs-row"><span class="fs-gu">└</span><span class="fs-nm">daily/</span><span class="fs-ds">every /today brief</span></div>
       </div>
@@ -556,7 +541,6 @@
       <div><div class="n">13</div><div class="l">named agents</div></div>
       <div><div class="n">6</div><div class="l">connected tools</div></div>
     </div>
-    <p class="note">All of it under one roof — Cacti reads and writes across every folder. The projects own the facts; Cacti owns the awareness.</p>
   </div>
   <div class="wm">[ ai study camp ]</div><div class="pageno">13</div>
 </section>
@@ -564,9 +548,8 @@
 <!-- 12 · SHOW ME THE BRICK -->
 <section class="slide">
   <div class="content">
-    <div class="kicker">Before you panic — here's where I started</div>
+    <div class="kicker">Before you panic</div>
     <h2>Day one, mine was tiny</h2>
-    <p class="sub">Not 50 projects and 40 skills. One folder, one file, one little command.</p>
     <div class="grid2" style="margin-top:30px;align-items:stretch">
       <div class="card" style="border-top:3px solid var(--accent)">
         <span class="tag">the entire "system" on day one</span>
@@ -580,11 +563,9 @@
       <div class="card">
         <span class="tag">all it took to build</span>
         <h3 style="margin-bottom:14px">One folder + one <span class="mono">CLAUDE.md</span></h3>
-        <p style="font-size:16px;line-height:1.6;color:var(--fg)">A note to Claude saying what this folder is for. You write your first one this week.</p>
-        <p style="font-size:16px;line-height:1.6;color:var(--muted);margin-top:14px">Everything else came one at a time, when I felt the need.</p>
+        <p style="font-size:16px;line-height:1.6;color:var(--fg)">A note telling Claude what the folder is for.</p>
       </div>
     </div>
-    <p class="note">The cathedral was built one brick at a time. You only need the first brick.</p>
   </div>
   <div class="wm">[ ai study camp ]</div><div class="pageno">14</div>
 </section>
@@ -594,7 +575,6 @@
   <div class="content">
     <div class="kicker">It starts tiny · and grows</div>
     <h2>Plant one cactus. Let it grow arms.</h2>
-    <p class="sub">Mine started as a single sprout. Every arm is something I added the day I felt the need.</p>
     <div class="cg-grow">
       <!-- DAY ONE -->
       <div class="cg-stage">
@@ -662,7 +642,7 @@
 <section class="slide dark">
   <div class="content narrow">
     <div class="kicker">The takeaway</div>
-    <h2 style="font-size:52px;color:#fff">It's just this week's pieces — connected</h2>
+    <h2 style="font-size:52px;color:#fff">This week's pieces, connected</h2>
     <div style="display:flex;align-items:center;gap:16px;margin:34px 0;flex-wrap:wrap">
       <span class="pill" style="background:var(--dark2);border-color:#444;color:#fff">🎓 a skill</span><span class="arrow">+</span>
       <span class="pill" style="background:var(--dark2);border-color:#444;color:#fff">🔌 an MCP</span><span class="arrow">+</span>
@@ -671,7 +651,7 @@
       <span class="arrow" style="font-size:28px">=</span>
       <span class="pill" style="background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600">🌵 your own OS</span>
     </div>
-    <p class="lead">Don't copy mine. <b style="color:#fff">Start with one project, one CLAUDE.md, one good skill</b> — exactly what this week's exercise has you do. Let it grow as you hit the need. In a month, you'll have your own Cacti.</p>
+    <p class="lead">Don't copy mine. <b style="color:#fff">Start with one project, one CLAUDE.md, one good skill.</b> Let it grow as you hit the need.</p>
     <p class="note" style="color:rgba(255,255,255,.55)">Thursday's session · Ben Battles · ask me anything</p>
   </div>
   <div class="wm">[ ai study camp ]</div><div class="pageno">16</div>
