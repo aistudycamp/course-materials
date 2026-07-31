@@ -200,7 +200,7 @@ Before writing any code, do these four things in order:
    - No login required — anyone can post and clap.
    - Always TypeScript. Style with Tailwind.
 
-Then build these features in order. Use plan mode (Shift+Tab) before writing code for each one. Stop after each feature and wait for me to confirm it works — then make a git commit for that feature before moving on.
+Then build all four features in one pass. Do not stop between features, do not ask me to confirm each one, and do not use plan mode. Make a git commit after each feature so we can roll back, then keep going without waiting.
 
 Feature 1 — Posting form
 A form at the top of the page with three inputs: "Your name", "Who you're appreciating", and a message textarea. On submit, save a new shoutout to InstantDB with fields: fromName, toName, message, claps (default 0), and createdAt (timestamp). Use Instant's `transact` API. Clear the form after a successful post.
@@ -217,7 +217,7 @@ Sort the feed so the post with the most claps is at the top. Newer posts break t
 Bonus (only if time) — Confetti on clap
 When someone claps, fire confetti from the button using the `canvas-confetti` npm package.
 
-Start with Feature 1 now.</pre>
+Build all of it now. Tell me the URL when it is ready to test.</pre>
   </div>
 </section>
 
