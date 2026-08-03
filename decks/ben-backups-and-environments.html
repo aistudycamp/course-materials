@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Backups and environments - Week 3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream:#F5F0EB; --cream-light:#FAF7F4; --cream-dark:#EBE5DE;
+    --white:#FFFFFF; --dark:#1C1917; --dark-card:#292522;
+    --text:#1C1917; --text2:#57534E; --text3:#6E6862; --text-muted:#8A837C;
+    --on-dark:#F5F3EF; --on-dark-muted:#B5AEA6;
+    --teal:#0D9488; --teal-dark:#0F766E; --teal-light:#14B8A6;
+    --teal-bg:rgba(13,148,136,0.08); --teal-border:rgba(13,148,136,0.30);
+    --warm:#8B7048; --warm-bg:rgba(139,112,72,0.10); --warm-border:rgba(139,112,72,0.32);
+    --red:#DC2626; --red-bg:rgba(220,38,38,0.07); --red-border:rgba(220,38,38,0.28);
+    --green:#15803D; --green-bg:rgba(21,128,61,0.07); --green-border:rgba(21,128,61,0.30);
+    --border:rgba(28,25,23,0.10); --border-strong:rgba(28,25,23,0.18);
+    --font-serif:'Playfair Display',Georgia,serif;
+    --font-sans:'Geist',system-ui,sans-serif;
+    --font-mono:'Geist Mono',monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{width:100%;height:100%;overflow:hidden;background:var(--cream);color:var(--text);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;}
+  .deck{width:100%;height:100%;position:relative;}
+
+  /* chrome */
+  .progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--teal);transition:width .4s ease;z-index:100;}
+  .logo-mark{position:fixed;bottom:24px;left:32px;font-size:14px;font-weight:600;color:var(--text-muted);z-index:100;pointer-events:none;user-select:none;transition:color .4s ease;}
+  body.on-dark .logo-mark{color:var(--on-dark-muted);}
+  .dot-nav{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:100;flex-wrap:wrap;max-width:56%;justify-content:center;}
+  .dot-nav button{width:7px;height:7px;border-radius:50%;border:1.5px solid var(--text-muted);background:transparent;cursor:pointer;transition:all .3s ease;padding:0;}
+  .dot-nav button.active{background:var(--teal);border-color:var(--teal);transform:scale(1.3);}
+  .slide-count{position:fixed;bottom:28px;right:32px;font-family:var(--font-mono);font-size:12px;color:var(--text-muted);z-index:100;transition:color .4s ease;}
+  body.on-dark .slide-count{color:var(--on-dark-muted);}
+  .hint{position:fixed;top:16px;right:24px;font-family:var(--font-mono);font-size:11px;color:var(--text-muted);opacity:.6;z-index:100;}
+  body.on-dark .hint{color:var(--on-dark-muted);}
+
+  /* slides */
+  .slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:50px 68px 84px;opacity:0;pointer-events:none;transition:opacity .45s ease;background:var(--cream);overflow-y:auto;}
+  .slide.active{opacity:1;pointer-events:auto;}
+  .slide.dark-bg{background:var(--dark);color:var(--on-dark);}
+  .inner{max-width:1150px;width:100%;display:flex;flex-direction:column;}
+  .inner.centered{align-items:center;text-align:center;}
+
+  /* type */
+  .hero-title{font-family:var(--font-serif);font-weight:700;font-size:clamp(48px,5.4vw,74px);line-height:1.07;text-align:center;margin-bottom:18px;color:var(--on-dark);}
+  .hero-sub{font-size:clamp(18px,2vw,23px);color:var(--on-dark-muted);font-weight:400;text-align:center;}
+  .eyebrow{font-family:var(--font-mono);font-size:12.5px;font-weight:600;text-transform:uppercase;letter-spacing:.16em;color:var(--teal);margin-bottom:12px;}
+  .slide.dark-bg .eyebrow{color:var(--teal-light);}
+  h2.title{font-family:var(--font-serif);font-weight:600;font-size:clamp(29px,3.1vw,44px);color:var(--text);line-height:1.14;font-style:normal;}
+  .slide.dark-bg h2.title{color:var(--on-dark);}
+  .hl{color:var(--teal);font-style:normal;}
+  .slide.dark-bg .hl{color:var(--teal-light);}
+  .statement{font-family:var(--font-serif);font-weight:700;font-size:clamp(36px,4.4vw,58px);line-height:1.15;text-align:center;font-style:normal;}
+  .cue{font-size:18.5px;color:var(--text2);line-height:1.55;margin-top:20px;text-align:center;}
+  .cue b{color:var(--teal-dark);font-weight:600;}
+  .slide.dark-bg .cue{color:var(--on-dark-muted);}
+  .slide.dark-bg .cue b{color:var(--teal-light);}
+  .divider{width:58px;height:2px;background:var(--teal);margin:12px 0 22px;}
+  .inner.centered .divider{margin-left:auto;margin-right:auto;}
+  .tag{display:inline-block;font-family:var(--font-mono);font-size:12px;font-weight:600;padding:5px 13px;border-radius:20px;background:var(--teal-bg);color:var(--teal-dark);border:1px solid var(--teal-border);letter-spacing:.06em;text-transform:uppercase;}
+  .tag.dark{background:rgba(13,148,136,.2);color:var(--teal-light);border-color:rgba(13,148,136,.4);}
+
+  /* grids + cards */
+  .grid{display:grid;gap:15px;width:100%;}
+  .g2{grid-template-columns:1fr 1fr;} .g3{grid-template-columns:repeat(3,1fr);} .g4{grid-template-columns:repeat(4,1fr);}
+  .card{background:var(--white);border:1px solid var(--border);border-radius:11px;padding:20px;box-shadow:0 1px 4px rgba(28,25,23,.06);position:relative;overflow:hidden;}
+  .card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--border-strong);}
+  .card.teal::before{background:var(--teal);} .card.warm::before{background:var(--warm);}
+  .card h3{font-family:var(--font-serif);font-size:20px;font-weight:600;margin-bottom:6px;line-height:1.2;}
+  .card p{font-size:15px;color:var(--text2);line-height:1.5;}
+  .card .ico{font-size:26px;display:block;margin-bottom:9px;line-height:1;}
+  .card .kv{font-family:var(--font-mono);font-size:11.5px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--teal);margin-bottom:7px;}
+
+
+  /* two columns: code vs data */
+  .cols{display:grid;grid-template-columns:1fr 60px 1fr;gap:0;width:100%;align-items:stretch;}
+  .col{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:24px 26px;box-shadow:0 1px 4px rgba(28,25,23,.06);}
+  .col.data{background:var(--warm-bg);border-color:var(--warm-border);}
+  .colname{font-family:var(--font-serif);font-size:26px;font-weight:600;margin-bottom:4px;}
+  .colwhere{font-family:var(--font-mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.12em;color:var(--text-muted);margin-bottom:16px;}
+  .item{background:var(--cream);border:1px solid var(--border);border-radius:8px;padding:11px 14px;font-size:16px;font-weight:500;margin-bottom:9px;}
+  .col.data .item{background:var(--white);border-color:var(--warm-border);}
+  .item span{display:block;font-size:13px;font-weight:400;color:var(--text3);margin-top:3px;}
+  .gap{display:flex;align-items:center;justify-content:center;}
+  .gapline{width:2px;height:82%;background:repeating-linear-gradient(to bottom,var(--border-strong) 0 7px,transparent 7px 15px);}
+
+  /* restore track */
+  .track{display:flex;align-items:center;gap:12px;margin-top:6px;}
+  .pt{width:15px;height:15px;border-radius:50%;background:var(--teal);flex-shrink:0;}
+  .pt.off{background:var(--border-strong);}
+  .tline{height:2px;background:var(--border-strong);flex:1;}
+  .backarrow{font-family:var(--font-mono);font-size:14px;font-weight:600;color:var(--teal-dark);margin-top:12px;}
+  .backarrow.none{color:var(--warm);}
+
+  /* tier cards */
+  .tier{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:22px;text-align:center;box-shadow:0 1px 4px rgba(28,25,23,.06);}
+  .tier.now{border:2px solid var(--warm);background:var(--warm-bg);}
+  .tprice{font-family:var(--font-serif);font-size:34px;font-weight:600;line-height:1;}
+  .tname{font-family:var(--font-mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.12em;color:var(--text-muted);margin-bottom:10px;}
+  .tback{font-size:17px;font-weight:600;margin-top:14px;}
+  .tback.zero{color:var(--warm);}
+
+  /* env diagram */
+  .env{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%;}
+  .envbox{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px;box-shadow:0 1px 4px rgba(28,25,23,.06);}
+  .envwho{font-family:var(--font-mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.12em;color:var(--teal);margin-bottom:9px;}
+  .envfile{font-family:var(--font-mono);font-size:14px;background:var(--dark);color:var(--teal-light);border-radius:7px;padding:9px 12px;margin-bottom:12px;}
+  .envarrow{text-align:center;font-family:var(--font-mono);font-size:13px;color:var(--text-muted);margin-bottom:10px;}
+  .envdb{border:2px solid var(--teal-border);background:var(--teal-bg);border-radius:9px;padding:11px;text-align:center;font-family:var(--font-mono);font-size:14px;font-weight:600;color:var(--teal-dark);}
+
+  /* threshold */
+  .thresh{display:grid;grid-template-columns:1fr 210px 1fr;gap:0;width:100%;align-items:center;}
+  .side{text-align:center;padding:26px 20px;border-radius:12px;background:var(--white);border:1px solid var(--border);}
+  .side.real{background:var(--warm-bg);border-color:var(--warm-border);}
+  .sidebig{font-family:var(--font-serif);font-size:27px;font-weight:600;line-height:1.2;}
+  .sidesmall{font-size:15px;color:var(--text2);margin-top:8px;}
+  .threshbar{background:var(--dark);height:150px;width:2px;position:relative;margin:0 auto;}
+  .threshlabel{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(0deg);white-space:nowrap;background:var(--dark);color:var(--on-dark);font-family:var(--font-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:7px 14px;border-radius:20px;}
+
+  /* checks */
+  .checks{display:flex;flex-direction:column;gap:18px;width:100%;}
+  .check{display:flex;align-items:center;gap:20px;background:var(--white);border:1px solid var(--border);border-radius:12px;padding:24px 28px;box-shadow:0 1px 4px rgba(28,25,23,.06);}
+  .cbox{width:30px;height:30px;border:2.5px solid var(--teal);border-radius:6px;flex-shrink:0;}
+  .ctext{font-family:var(--font-serif);font-size:25px;font-weight:600;line-height:1.25;}
+  /* speaker notes */
+  .notes{position:fixed;bottom:58px;left:34px;right:34px;background:var(--dark);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:15px 20px;font-size:14px;color:rgba(255,255,255,.86);line-height:1.6;z-index:200;display:none;max-height:215px;overflow-y:auto;}
+  .notes.visible{display:block;}
+  .notes b{color:var(--teal-light);}
+  .notes .t{font-family:var(--font-mono);font-size:11px;color:var(--teal-light);text-transform:uppercase;letter-spacing:.1em;margin-right:9px;}
+  .notes .cut{font-family:var(--font-mono);font-size:10px;color:#F0A868;text-transform:uppercase;letter-spacing:.1em;border:1px solid rgba(240,168,104,.4);border-radius:4px;padding:1px 6px;margin-left:8px;}
+
+  /* harness / surface two-level model */
+  .hgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;width:100%;}
+  .hcard{background:var(--white);border:1.5px solid var(--border);border-radius:13px;padding:18px 20px;position:relative;overflow:hidden;}
+  .hcard::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--border-strong);}
+  .hcard.c1::before{background:var(--text3);} .hcard.c2::before{background:var(--warm);} .hcard.c3::before{background:var(--teal);}
+  .hcard.on{border-color:var(--teal);box-shadow:0 0 0 1px var(--teal);background:var(--teal-bg);}
+  .hjob{font-family:var(--font-mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;margin-bottom:6px;}
+  .hcard.c1 .hjob{color:var(--text3);} .hcard.c2 .hjob{color:var(--warm);} .hcard.c3 .hjob{color:var(--teal);}
+  .hname{font-family:var(--font-serif);font-size:24px;font-weight:700;margin-bottom:6px;line-height:1.15;}
+  .hdesc{font-size:14.5px;color:var(--text2);line-height:1.45;margin-bottom:12px;}
+  .hsurf{font-family:var(--font-mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);margin-bottom:6px;}
+  .hpills{display:flex;gap:5px;flex-wrap:wrap;}
+  .hpills span{background:var(--cream-dark);border:1px solid var(--border);border-radius:6px;padding:4px 9px;font-family:var(--font-mono);font-size:12px;color:var(--text2);}
+  .hpills span.star{background:var(--teal-bg);border-color:var(--teal-border);color:var(--teal-dark);font-weight:600;}
+  .spectrum{font-family:var(--font-mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--text-muted);text-align:center;margin-top:14px;}
+  .contbox{margin-top:14px;background:var(--warm-bg);border:1.5px dashed var(--warm-border);border-radius:10px;padding:11px 18px;text-align:center;font-size:15px;color:var(--text2);}
+  .contbox b{color:var(--warm);font-weight:700;}
+  /* abstraction ramp */
+  .ramp{display:flex;align-items:stretch;gap:8px;width:100%;}
+  .rung{flex:1;background:var(--white);border:1.5px solid var(--border);border-radius:11px;padding:14px 12px;text-align:center;display:flex;flex-direction:column;gap:5px;}
+  .rung.here{border-color:var(--teal);background:var(--teal-bg);box-shadow:0 0 0 1px var(--teal);}
+  .rung.soon{border-style:dashed;background:transparent;opacity:.6;}
+  .rung .rn{font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:.1em;color:var(--text-muted);text-transform:uppercase;}
+  .rung .rt{font-size:14.5px;font-weight:600;line-height:1.25;}
+  .rung.here .rt{color:var(--teal-dark);}
+  .rung .rtag{font-family:var(--font-mono);font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.08em;}
+  .rampcap{margin-top:8px;font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--text-muted);text-align:center;}
+  .wboard{background:var(--white);border:2px dashed var(--border);border-radius:16px;padding:34px 38px;}
+  .wblabel{font-family:var(--font-mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.13em;color:var(--text3);text-align:center;margin-bottom:22px;}
+  .wbnotes{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;}
+  .wbn{background:var(--teal-bg);border:1px solid var(--teal-border);border-radius:9px;padding:20px 26px;font-family:var(--font-serif);font-size:19px;font-weight:600;color:var(--teal-dark);}
+  .wbedge{margin-top:26px;padding-top:18px;border-top:1px dashed var(--border);text-align:center;font-size:15px;color:var(--text3);}
+  .cxmove{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:24px 22px;text-align:center;box-shadow:0 1px 3px rgba(28,25,23,.05);}
+  .cxmove .ci{font-size:30px;}
+  .cxmove h3{font-family:var(--font-serif);font-size:21px;font-weight:600;margin:10px 0 6px;}
+  .cxmove p{font-size:15px;color:var(--text3);line-height:1.45;}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="pb"></div>
+<div class="hint">&larr; &rarr; move &middot; N notes</div>
+<div class="logo-mark">[ ai study camp ]</div>
+<div class="dot-nav" id="dots"></div>
+<div class="slide-count" id="sc">1 / 7</div>
+
+<div class="deck">
+
+<!-- 1 -->
+<section class="slide dark-bg active">
+  <div class="inner centered">
+    <div class="tag dark">Week 3</div>
+    <h1 class="hero-title" style="margin-top:20px;">Backups and environments</h1>
+  </div>
+  <div class="notes"><span class="t">0:00 &middot; 30 sec</span> Open cold. <b>"Someone in this room lost a database this weekend and there was no way to get it back."</b> If Ilya is here and brought his terminal scrollback, spend three minutes walking it live before slide two and let the room see the real command. Do not diagnose it in advance.</div>
+</section>
+
+<!-- 2 -->
+<section class="slide">
+  <div class="inner">
+    <div class="eyebrow">The split</div>
+    <h2 class="title">Two things you own</h2>
+    <div class="divider"></div>
+    <div class="cols">
+      <div class="col">
+        <div class="colname">Your code</div>
+        <div class="colwhere">Your laptop, then GitHub</div>
+        <div class="item">git<span>save history on this machine</span></div>
+        <div class="item">GitHub<span>that history, copied online</span></div>
+        <div class="item">branches<span>a lane to build in</span></div>
+      </div>
+      <div class="gap"><div class="gapline"></div></div>
+      <div class="col data">
+        <div class="colname">Your data</div>
+        <div class="colwhere">Wherever you store it</div>
+        <div class="item">Instant, Supabase, Airtable, a Sheet<span>whatever you picked</span></div>
+        <div class="item">users, posts, orders, records<span>everything typed into the app</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="notes"><span class="t">0:30 &middot; 2.5 min</span> Everything we have taught you about undo lives in the left column. git is your save history on this laptop. GitHub is that same history copied online, and <b>it only exists once you push</b>. Branches are a separate lane to build in so you are not touching what is live. All three are about the files Claude writes. <b>None of them know your database exists.</b> The right column is a different system entirely, and it does not matter which one you picked. Instant, Supabase, Airtable, a Google Sheet behind an n8n flow. <b>Nothing on the left reaches any of them.</b></div>
+</section>
+
+<!-- 3 -->
+<section class="slide">
+  <div class="inner">
+    <div class="eyebrow">The gap</div>
+    <h2 class="title">Where undo stops</h2>
+    <div class="divider"></div>
+    <div class="cols">
+      <div class="col">
+        <div class="colname">Your code</div>
+        <div class="colwhere">every commit is a save point</div>
+        <div class="track"><div class="pt"></div><div class="tline"></div><div class="pt"></div><div class="tline"></div><div class="pt"></div></div>
+        <div class="backarrow">&larr;&larr;&larr; go back to any of them</div>
+      </div>
+      <div class="gap"><div class="gapline"></div></div>
+      <div class="col data">
+        <div class="colname">Your data</div>
+        <div class="colwhere">no commits, no save points</div>
+        <div class="track"><div class="pt off"></div><div class="tline"></div><div class="pt off"></div><div class="tline"></div><div class="pt off"></div></div>
+        <div class="backarrow none">nothing to go back to</div>
+      </div>
+    </div>
+  </div>
+  <div class="notes"><span class="t">3:00 &middot; 3 min</span> Our own recovery guide opens by telling you <b>"almost nothing is truly lost."</b> That is true, and it is true about your code. Your database has no commits. There is no revert for a row that got deleted. Roll your code all the way back to last Tuesday and the data is still exactly how you left it thirty seconds ago. <b>Say the auto mode thing here yourself:</b> I told you to leave Claude on auto because it will not delete your folders or post things online. It will run a destructive database operation, because that is not on the list it guards. Better you hear it from me than find out.</div>
+</section>
+
+<!-- 4 -->
+<section class="slide">
+  <div class="inner">
+    <div class="eyebrow">Any service you store data in</div>
+    <h2 class="title">Three questions</h2>
+    <div class="divider"></div>
+    <div class="grid g3">
+      <div class="card teal">
+        <div class="kv">01</div>
+        <h3>Does it back up at all?</h3>
+        <p>Not "is it reliable." Does a copy exist from before today.</p>
+      </div>
+      <div class="card teal">
+        <div class="kv">02</div>
+        <h3>On my plan?</h3>
+        <p>Backups are usually a paid feature. Free tiers often have none.</p>
+      </div>
+      <div class="card teal">
+        <div class="kv">03</div>
+        <h3>How do I restore?</h3>
+        <p>A button, a support ticket, or nothing. Find out before you need it.</p>
+      </div>
+    </div>
+    <div class="grid g2" style="margin-top:16px;">
+      <div class="tier now" style="text-align:left;padding:16px 20px;">
+        <div class="tname">Instant, free</div>
+        <div class="tback zero" style="margin-top:4px;">No backups at all</div>
+      </div>
+      <div class="tier" style="text-align:left;padding:16px 20px;">
+        <div class="tname">Instant, Pro $30/mo</div>
+        <div class="tback" style="margin-top:4px;">Daily, kept 7 days</div>
+      </div>
+    </div>
+  </div>
+  <div class="notes"><span class="t">6:00 &middot; 2.5 min</span> These three questions work on <b>anything</b> you store data in, now and in five years. Ask them the day you pick a service, not the day you need them. Most people never ask question one and assume the answer is yes. <b>Our worked example:</b> everyone here is on Instant free, which has no backups at all. Not a shorter window, none. Pro is thirty dollars a month for a daily backup kept seven days. So the real question is never "should I be more careful," it is <b>"is what is in here worth thirty dollars a month yet."</b> Every service answers these differently. You have to go look.</div>
+</section>
+
+<!-- 5 -->
+<section class="slide">
+  <div class="inner">
+    <div class="eyebrow">Works on any service</div>
+    <h2 class="title">The copy you own</h2>
+    <div class="divider"></div>
+    <div class="grid g2">
+      <div class="card">
+        <div class="kv">The idea</div>
+        <h3>Pull your data out on a schedule</h3>
+        <p>A file you control beats a feature you rent. It survives a plan change, a price change, and the service going away.</p>
+      </div>
+      <div class="card teal">
+        <div class="kv">Hand this to Claude</div>
+        <div class="envfile" style="margin-top:8px;white-space:pre-wrap;line-height:1.7;">Write a script that exports every
+table in my database to dated JSON
+files in a backups/ folder, then
+add it to .gitignore. Run it now
+and show me the output.</div>
+      </div>
+    </div>
+  </div>
+  <div class="notes"><span class="t">8:30 &middot; 3 min</span> This is the part that transfers no matter what you build on. <b>A copy you own beats a feature you rent.</b> Your export survives a downgrade, a price change, an account lockout, and the company shutting down. Claude writes this in about a minute for any database you are using, so there is no excuse to not have one. <b>Two things to say out loud:</b> the backups folder goes in gitignore, because your data does not belong in a public repo. And a backup you have never restored from is a guess, so open one of the files and look at it.</div>
+</section>
+
+<!-- 6 -->
+<section class="slide">
+  <div class="inner">
+    <div class="eyebrow">The other half</div>
+    <h2 class="title">Two environments</h2>
+    <div class="divider"></div>
+    <div class="env">
+      <div class="envbox">
+        <div class="envwho">What your laptop points at</div>
+        <div class="envfile">.env.local</div>
+        <div class="envarrow">&darr;</div>
+        <div class="envdb">the throwaway one</div>
+      </div>
+      <div class="envbox">
+        <div class="envwho">What your users touch</div>
+        <div class="envfile">host's dashboard</div>
+        <div class="envarrow">&darr;</div>
+        <div class="envdb">the real one</div>
+      </div>
+    </div>
+    <div class="thresh" style="margin-top:22px;">
+      <div class="side">
+        <div class="sidebig">One is fine</div>
+        <div class="sidesmall">nothing in there but your own test rows</div>
+      </div>
+      <div class="threshbar" style="height:96px;"><div class="threshlabel">someone else's data</div></div>
+      <div class="side real">
+        <div class="sidebig">Now split it</div>
+        <div class="sidesmall">and pay for the tier with backups</div>
+      </div>
+    </div>
+  </div>
+  <div class="notes"><span class="t">11:30 &middot; 2.5 min</span> You already know this shape from the API keys guide: <b>same variable names, different places.</b> Local on your computer, production on your host. This is one more variable. The thing your laptop connects to should not be the thing your users are typing into. Same idea whether it is Instant, Supabase, or a Sheet. <b>On proportion:</b> for a homework project one environment is fine and I am not telling you to run two for a sticker board. The line is the moment there is data in there you did not type yourself. A real user, a client, anything you would have to apologize for losing. Cross it and you do both on the same day: split the environment, pay for backups.</div>
+</section>
+
+<!-- 7 -->
+<section class="slide">
+  <div class="inner">
+    <div class="eyebrow">Two minutes, now</div>
+    <h2 class="title">Right now</h2>
+    <div class="divider"></div>
+    <div class="checks">
+      <div class="check"><div class="cbox"></div><div class="ctext">Does my database have backups on the plan I am actually on?</div></div>
+      <div class="check"><div class="cbox"></div><div class="ctext">Is my laptop pointed at the same database my live site uses?</div></div>
+      <div class="check"><div class="cbox"></div><div class="ctext">Do I have one export sitting on my own machine?</div></div>
+    </div>
+  </div>
+  <div class="notes"><span class="t">14:00 &middot; 1 min</span> Do these while we are here, not later. Open your database dashboard and find the plan, then find the word backup. Compare the ID in your local env file against the one in your host's settings. <b>If they match, your laptop is pointed at your live database right now.</b> That is fine today for a homework project, the point is that you know it. Then have Claude write the export from the last slide. <b>Three answers, and none of them take more than a minute to get.</b></div>
+</section>
+
+</div>
+
+<script>
+const slides=[...document.querySelectorAll('.slide')];
+const pb=document.getElementById('pb'),sc=document.getElementById('sc'),dots=document.getElementById('dots');
+let cur=0,notesOn=false;const total=slides.length;
+slides.forEach((_,i)=>{const b=document.createElement('button');if(i===0)b.className='active';b.setAttribute('aria-label','Slide '+(i+1));b.onclick=()=>go(i);dots.appendChild(b);});
+function render(){
+  slides.forEach((s,i)=>s.classList.toggle('active',i===cur));
+  pb.style.width=((cur+1)/total*100)+'%';
+  sc.textContent=(cur+1)+' / '+total;
+  [...dots.children].forEach((d,i)=>d.classList.toggle('active',i===cur));
+  document.body.classList.toggle('on-dark',slides[cur].classList.contains('dark-bg'));
+  document.querySelectorAll('.notes').forEach(n=>n.classList.remove('visible'));
+  if(notesOn){const n=slides[cur].querySelector('.notes');if(n)n.classList.add('visible');}
+}
+function go(i){if(i<0||i>=total)return;cur=i;render();}
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();go(cur+1);}
+  if(e.key==='ArrowLeft'){e.preventDefault();go(cur-1);}
+  if(e.key==='n'||e.key==='N'){notesOn=!notesOn;render();}
+});
+render();
+</script>
+</body>
+</html>
