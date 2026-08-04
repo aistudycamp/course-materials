@@ -520,7 +520,7 @@
     <div class="slide-inner">
       <h2 class="slide-title">Email Trigger &mdash; Workflow Version</h2>
       <div style="display: flex; gap: 10px; margin-bottom: 28px;">
-        <span class="tag">n8n can build this</span>
+        <span class="tag">A workflow tool builds this</span>
         <span class="tag" style="font-size: 10px;">Every email runs these exact steps</span>
       </div>
 
@@ -689,27 +689,22 @@
         <div class="level-card">
           <div class="level-badge l0">1</div>
           <div class="level-name">Workflow</div>
-          <div class="level-desc">Fixed steps, no AI. Same path every time.</div>
+          <div class="level-desc">Fixed steps, may include an LLM. Same path every time.</div>
         </div>
         <div class="level-card">
-          <div class="level-badge l1">2</div>
-          <div class="level-name">LLM Workflow</div>
-          <div class="level-desc">AI does one step. The rest is fixed.</div>
-        </div>
-        <div class="level-card">
-          <div class="level-badge l2">3</div>
-          <div class="level-name">AI Assistant</div>
+          <div class="level-badge l2">2</div>
+          <div class="level-name">Chat Assistant</div>
           <div class="level-desc">Has tools. Responds to what you ask.</div>
         </div>
         <div class="level-card">
-          <div class="level-badge l3">4</div>
+          <div class="level-badge l3">3</div>
           <div class="level-name">Agent</div>
           <div class="level-desc">Has tools. Decides what to do next.</div>
         </div>
         <div class="level-card">
-          <div class="level-badge l4">5</div>
+          <div class="level-badge l4">4</div>
           <div class="level-name">Agentic System</div>
-          <div class="level-desc">Multiple agents. One orchestrates the rest.</div>
+          <div class="level-desc">Many agents plus skills. One orchestrates the rest.</div>
         </div>
       </div>
 
@@ -720,47 +715,47 @@
     </div>
   </div>
 
-  <!-- SLIDE 5 - N8N ON SPECTRUM -->
+  <!-- SLIDE 5 - WORKFLOW (LEVEL 1) -->
   <div class="slide" data-slide="5">
     <div class="slide-inner">
-      <h2 class="slide-title">n8n on the Spectrum</h2>
-      <p class="slide-subtitle">n8n covers Tiers 1&ndash;2 (Workflow + LLM Workflow): predictable, reliable, visual</p>
+      <h2 class="slide-title">Workflow</h2>
+      <div style="height: 6px;"></div>
+      <span class="tag" style="margin-bottom: 28px;">Level 1 &middot; fixed path, may include an LLM step</span>
 
       <div class="spectrum-mini-labels">
-        <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+        <span>1</span><span>2</span><span>3</span><span>4</span>
       </div>
       <div class="spectrum-mini">
         <div class="seg s0 lit"></div>
-        <div class="seg s1 lit"></div>
+        <div class="seg s1 dim"></div>
         <div class="seg s2 dim"></div>
         <div class="seg s3 dim"></div>
-        <div class="seg s4 dim"></div>
       </div>
 
       <div class="mini-cards">
         <div class="card mini-card">
-          <div class="mini-card-level" style="color: var(--t1-color);">Tier 1 &mdash; Workflow</div>
+          <div class="mini-card-level" style="color: var(--t1-color);">No LLM</div>
           <div class="mini-card-title">Form &rarr; Slack</div>
           <div class="node-chain">
             <span class="node">Webhook</span>
             <span class="node-arrow">&rarr;</span>
             <span class="node">Slack</span>
           </div>
-          <div class="mini-card-desc">New form submission triggers a Slack message. No AI needed.</div>
+          <div class="mini-card-desc">New form submission triggers a Slack message.</div>
         </div>
         <div class="card mini-card">
-          <div class="mini-card-level" style="color: var(--t2-color);">Tier 2 &mdash; LLM Workflow (Basic)</div>
+          <div class="mini-card-level" style="color: var(--t2-color);">With an LLM step</div>
           <div class="mini-card-title">Classify &amp; Reply</div>
           <div class="node-chain">
             <span class="node">Email</span>
             <span class="node-arrow">&rarr;</span>
-            <span class="node">OpenAI</span>
+            <span class="node">LLM</span>
             <span class="node-arrow">&rarr;</span>
             <span class="node">Template</span>
             <span class="node-arrow">&rarr;</span>
             <span class="node">Send</span>
           </div>
-          <div class="mini-card-desc">AI extracts info in one node; workflow fills a template and sends.</div>
+          <div class="mini-card-desc">AI extracts info in one node; the flow fills a template and sends.</div>
         </div>
       </div>
 
@@ -773,18 +768,18 @@
   <!-- SLIDE - AI ASSISTANT (TIER 3) -->
   <div class="slide" data-slide="5b">
     <div class="slide-inner">
-      <h2 class="slide-title">What is an AI Assistant?</h2>
-      <p class="slide-subtitle" style="margin-bottom: 28px;">Tier 3: has tools, responds to what you ask</p>
+      <h2 class="slide-title">What is a Chat Assistant?</h2>
+      <div style="height: 6px;"></div>
+      <span class="tag" style="margin-bottom: 28px;">Level 2 &middot; has tools, responds to what you ask</span>
 
       <div class="spectrum-mini-labels">
-        <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+        <span>1</span><span>2</span><span>3</span><span>4</span>
       </div>
       <div class="spectrum-mini">
         <div class="seg s0 dim"></div>
-        <div class="seg s1 dim"></div>
-        <div class="seg s2 lit"></div>
+        <div class="seg s1 lit"></div>
+        <div class="seg s2 dim"></div>
         <div class="seg s3 dim"></div>
-        <div class="seg s4 dim"></div>
       </div>
 
       <div style="display: flex; align-items: stretch; gap: 0; width: 100%; max-width: 960px; margin: 20px 0 24px;">
@@ -841,17 +836,17 @@
   <div class="slide" data-slide="6">
     <div class="slide-inner">
       <h2 class="slide-title">What is an Agent?</h2>
-      <p class="slide-subtitle" style="margin-bottom: 16px;">Tier 4: has tools, decides what to do next, loops until done</p>
+      <div style="height: 6px;"></div>
+      <span class="tag" style="margin-bottom: 16px;">Level 3 &middot; has tools, decides what to do next, loops until done</span>
 
       <div class="spectrum-mini-labels">
-        <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+        <span>1</span><span>2</span><span>3</span><span>4</span>
       </div>
       <div class="spectrum-mini" style="margin-bottom: 20px;">
         <div class="seg s0 dim"></div>
         <div class="seg s1 dim"></div>
-        <div class="seg s2 dim"></div>
-        <div class="seg s3 lit"></div>
-        <div class="seg s4 dim"></div>
+        <div class="seg s2 lit"></div>
+        <div class="seg s3 dim"></div>
       </div>
 
       <div style="display: flex; align-items: stretch; gap: 0; width: 100%; max-width: 960px; margin-bottom: 16px;">
@@ -913,21 +908,49 @@
     </div>
   </div>
 
+  <!-- SLIDE 6b - SKILL VS AGENT -->
+  <div class="slide" data-slide="6b">
+    <div class="slide-inner">
+      <h2 class="slide-title">Skill vs Agent</h2>
+      <div style="height: 8px;"></div>
+      <div class="compare-grid">
+        <div class="card compare-card workflow">
+          <div class="card-header">Skill = Recipe</div>
+          <div class="step"><span class="step-num">1</span><span>Fixed steps, <strong>same result every time</strong></span></div>
+          <div class="step"><span class="step-num">2</span><span>Follow it, the muffins come out the same</span></div>
+          <div class="step"><span class="step-num">3</span><span>For anything you want consistent</span></div>
+          <div style="margin-top: 10px;"><span class="tag" style="font-size: 11px;">Predictable. You trust the output.</span></div>
+        </div>
+        <div class="card compare-card agent">
+          <div class="card-header">Agent = Chef</div>
+          <div class="step"><span class="step-num">1</span><span>Give it a goal, it <strong>uses judgment</strong></span></div>
+          <div class="step"><span class="step-num">2</span><span>Might get creative, add its own twist</span></div>
+          <div class="step"><span class="step-num">3</span><span>Could hand you cranberry walnut when you're allergic</span></div>
+          <div style="margin-top: 10px;"><span class="tag" style="font-size: 11px;">Flexible. Sometimes surprising.</span></div>
+        </div>
+      </div>
+      <div class="tradeoff-takeaway" style="margin-top: 24px; font-style: normal;">An agent executes skills. Claude Code is the chef, the skill is its recipe.</div>
+      <div class="callout" style="margin-top: 14px;">
+        <span class="hl">Want the same output every time? Build a skill. Need judgment on an open task? That's an agent.</span>
+      </div>
+    </div>
+  </div>
+
   <!-- SLIDE 8 - AGENTIC SYSTEM -->
   <div class="slide" data-slide="8">
     <div class="slide-inner">
       <h2 class="slide-title">Agentic System</h2>
-      <p class="slide-subtitle" style="margin-bottom: 16px;">Tier 5: multiple agents, one orchestrates, others specialize</p>
+      <div style="height: 6px;"></div>
+      <span class="tag" style="margin-bottom: 16px;">Level 4 &middot; many agents plus skills, one orchestrates the rest</span>
 
       <div class="spectrum-mini-labels">
-        <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+        <span>1</span><span>2</span><span>3</span><span>4</span>
       </div>
       <div class="spectrum-mini" style="margin-bottom: 20px;">
         <div class="seg s0 dim"></div>
         <div class="seg s1 dim"></div>
         <div class="seg s2 dim"></div>
-        <div class="seg s3 dim"></div>
-        <div class="seg s4 lit"></div>
+        <div class="seg s3 lit"></div>
       </div>
 
       <div style="display: flex; flex-direction: column; align-items: center; gap: 14px; width: 100%; max-width: 860px; margin-bottom: 20px;">
@@ -969,6 +992,7 @@
         <div style="margin-top: 8px; display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--text-secondary);">
           <div>• <strong style="color: var(--text);">Orchestrator</strong> breaks it into tasks: research, analyze, write</div>
           <div>• <strong style="color: var(--text);">Delegates</strong> each task to a specialist agent</div>
+          <div>• Each specialist is an agent, running its own <strong style="color: var(--text);">skills</strong></div>
           <div>• Specialists work independently, loop until their task is done</div>
           <div>• <strong style="color: var(--text);">Orchestrator assembles</strong> the final output</div>
         </div>
@@ -1022,8 +1046,8 @@
   <!-- SLIDE 10 - DECISION FLOW -->
   <div class="slide" data-slide="10">
     <div class="slide-inner">
-      <h2 class="slide-title">Which Tier Do You Need?</h2>
-      <p class="slide-subtitle">A simple decision tree to find your starting point</p>
+      <h2 class="slide-title">Which One Do You Need?</h2>
+      <div style="height: 18px;"></div>
 
       <div class="decision-tree">
         <div class="decision-node question">Do you know ALL the steps in advance?</div>
@@ -1033,18 +1057,18 @@
           <div class="decision-branch">
             <div class="branch-answer yes">YES</div>
             <div class="decision-connector"></div>
-            <div class="decision-node question" style="font-size: 14px;">Does any step need AI?</div>
+            <div class="decision-node question" style="font-size: 14px;">Pure automation, or an agent following a recipe?</div>
             <div class="decision-connector"></div>
             <div class="decision-fork" style="gap: 0;">
               <div class="decision-branch">
-                <div class="branch-answer no">NO</div>
+                <div class="branch-answer no">AUTOMATION</div>
                 <div class="decision-connector"></div>
-                <div class="decision-outcome l1">Tier 1<br>Workflow</div>
+                <div class="decision-outcome l1">Level 1<br>Workflow</div>
               </div>
               <div class="decision-branch">
-                <div class="branch-answer yes">YES</div>
+                <div class="branch-answer somewhat">AGENT + RECIPE</div>
                 <div class="decision-connector"></div>
-                <div class="decision-outcome l2">Tier 2<br>LLM Workflow</div>
+                <div class="decision-outcome l3">Skill<br>a recipe</div>
               </div>
             </div>
           </div>
@@ -1052,18 +1076,13 @@
           <div class="decision-branch">
             <div class="branch-answer no">NO</div>
             <div class="decision-connector"></div>
-            <div class="decision-node question" style="font-size: 14px;">Does it respond to requests or pursue goals?</div>
+            <div class="decision-node question" style="font-size: 14px;">Needs judgment on an open task?</div>
             <div class="decision-connector"></div>
             <div class="decision-fork" style="gap: 0;">
               <div class="decision-branch">
-                <div class="branch-answer somewhat">RESPONDS</div>
+                <div class="branch-answer yes" style="color: var(--t5-color); background: rgba(26,122,120,0.1);">YES</div>
                 <div class="decision-connector"></div>
-                <div class="decision-outcome l3">Tier 3<br>AI Assistant</div>
-              </div>
-              <div class="decision-branch">
-                <div class="branch-answer yes" style="color: var(--t5-color); background: rgba(26,122,120,0.1);">PURSUES GOALS</div>
-                <div class="decision-connector"></div>
-                <div class="decision-outcome l5">Tier 4&ndash;5<br>Agent / System</div>
+                <div class="decision-outcome l5">Agent<br>or System</div>
               </div>
             </div>
           </div>
@@ -1075,41 +1094,50 @@
   <!-- SLIDE 11 - THREE REAL EXAMPLES -->
   <div class="slide" data-slide="11">
     <div class="slide-inner">
-      <h2 class="slide-title">Three Real Examples</h2>
-      <p class="slide-subtitle">See where each one lands on the spectrum, then think about your own project.</p>
+      <h2 class="slide-title">Four Real Examples</h2>
+      <div style="height: 20px;"></div>
 
-      <div class="mini-cards" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 28px; align-items: stretch;">
-        <div class="card mini-card" style="gap: 10px; justify-content: flex-start;">
+      <div class="mini-cards" style="grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 24px; align-items: stretch;">
+        <div class="card mini-card" style="gap: 8px; justify-content: flex-start;">
           <div style="display: flex; gap: 6px; align-items: center;">
-            <span class="tag" style="font-size: 10px; padding: 3px 10px;">Tier 1</span>
+            <span class="tag" style="font-size: 10px; padding: 3px 10px;">Level 1</span>
             <span style="font-size: 11px; color: var(--text-muted); font-weight: 500;">Workflow</span>
           </div>
-          <div style="font-family: var(--font-serif); font-size: 20px; font-weight: 700; color: var(--text); line-height: 1.2;">Waitlist Signup</div>
-          <div style="font-size: 15px; color: var(--text); line-height: 1.55; font-style: italic;">"Someone joins &rarr; add to Airtable, send welcome email, ping the founder on Slack."</div>
-          <div style="font-size: 13px; color: var(--text-muted);">Multi-step, fully fixed. Zero AI.</div>
+          <div style="font-family: var(--font-serif); font-size: 18px; font-weight: 700; color: var(--text); line-height: 1.2;">Waitlist Signup</div>
+          <div style="font-size: 14px; color: var(--text); line-height: 1.5; font-style: italic;">"Someone joins &rarr; add to Airtable, welcome email, ping the founder."</div>
+          <div style="font-size: 12px; color: var(--text-muted);">Multi-step, fully fixed.</div>
         </div>
-        <div class="card mini-card" style="gap: 10px; justify-content: flex-start;">
+        <div class="card mini-card" style="gap: 8px; justify-content: flex-start;">
           <div style="display: flex; gap: 6px; align-items: center;">
-            <span class="tag" style="font-size: 10px; padding: 3px 10px;">Tier 2</span>
-            <span style="font-size: 11px; color: var(--text-muted); font-weight: 500;">LLM Workflow</span>
+            <span class="tag" style="font-size: 10px; padding: 3px 10px;">Level 2</span>
+            <span style="font-size: 11px; color: var(--text-muted); font-weight: 500;">Chat Assistant</span>
           </div>
-          <div style="font-family: var(--font-serif); font-size: 20px; font-weight: 700; color: var(--text); line-height: 1.2;">Support Ticket Router</div>
-          <div style="font-size: 15px; color: var(--text); line-height: 1.55; font-style: italic;">"Read this ticket and decide if it&apos;s billing, technical, or sales &mdash; then route it."</div>
-          <div style="font-size: 13px; color: var(--text-muted);">AI does one step. The routing is fixed.</div>
+          <div style="font-family: var(--font-serif); font-size: 18px; font-weight: 700; color: var(--text); line-height: 1.2;">Support Bot</div>
+          <div style="font-size: 14px; color: var(--text); line-height: 1.5; font-style: italic;">"Answer questions about orders, shipping, and returns."</div>
+          <div style="font-size: 12px; color: var(--text-muted);">You ask. It responds.</div>
         </div>
-        <div class="card mini-card" style="gap: 10px; justify-content: flex-start; border-color: var(--teal-border);">
+        <div class="card mini-card" style="gap: 8px; justify-content: flex-start; border-color: var(--teal-border);">
           <div style="display: flex; gap: 6px; align-items: center;">
-            <span class="tag" style="font-size: 10px; padding: 3px 10px;">Tier 4</span>
+            <span class="tag" style="font-size: 10px; padding: 3px 10px;">Skill</span>
+            <span style="font-size: 11px; color: var(--text-muted); font-weight: 500;">a recipe</span>
+          </div>
+          <div style="font-family: var(--font-serif); font-size: 18px; font-weight: 700; color: var(--text); line-height: 1.2;">Weekly Report</div>
+          <div style="font-size: 14px; color: var(--text); line-height: 1.5; font-style: italic;">"Pull the numbers, format the same summary every Monday."</div>
+          <div style="font-size: 12px; color: var(--text-muted);">Same output every time.</div>
+        </div>
+        <div class="card mini-card" style="gap: 8px; justify-content: flex-start; border-color: var(--teal-border);">
+          <div style="display: flex; gap: 6px; align-items: center;">
+            <span class="tag" style="font-size: 10px; padding: 3px 10px;">Level 3</span>
             <span style="font-size: 11px; color: var(--text-muted); font-weight: 500;">Agent</span>
           </div>
-          <div style="font-family: var(--font-serif); font-size: 20px; font-weight: 700; color: var(--text); line-height: 1.2;">Incident Response</div>
-          <div style="font-size: 15px; color: var(--text); line-height: 1.55; font-style: italic;">"A production error fired. Handle it."</div>
-          <div style="font-size: 13px; color: var(--text-muted);">Reads trace, searches commits, checks runbook, drafts Slack update, opens ticket. No fixed path.</div>
+          <div style="font-family: var(--font-serif); font-size: 18px; font-weight: 700; color: var(--text); line-height: 1.2;">Incident Response</div>
+          <div style="font-size: 14px; color: var(--text); line-height: 1.5; font-style: italic;">"A production error fired. Handle it."</div>
+          <div style="font-size: 12px; color: var(--text-muted);">Reads trace, checks runbook, drafts update. No fixed path.</div>
         </div>
       </div>
 
       <div class="callout" style="text-align: center;">
-        <span class="hl">Now think about your project.</span> Do you know all the steps in advance? Does it need judgment? Where does it land?
+        <span class="hl">Now think about your project. Same output every time? Build a skill. Open judgment? That's an agent.</span>
       </div>
     </div>
   </div>
