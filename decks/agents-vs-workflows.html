@@ -1,9 +1,10 @@
 <!DOCTYPE html>
+<!-- olive-reviewed: 2026-08-04 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>How Much Freedom to Give Your AI — AISC Week 4</title>
+<title>How Much Freedom to Give Your AI: AISC Week 4</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -458,7 +459,7 @@
 
 <div class="deck" id="deck">
 
-  <!-- SLIDE 0 — TITLE -->
+  <!-- SLIDE 0 - TITLE -->
   <div class="slide dark-bg active" data-slide="0">
     <div class="slide-inner">
       <div style="font-family: var(--font-sans); font-size: 18px; font-weight: 600; color: var(--teal); letter-spacing: 0.04em; margin-bottom: 48px;">[ ai study camp ]</div>
@@ -467,7 +468,7 @@
     </div>
   </div>
 
-  <!-- SLIDE 1 — SAME TASK, TWO WAYS -->
+  <!-- SLIDE 1 - SAME TASK, TWO WAYS -->
   <div class="slide" data-slide="1">
     <div class="slide-inner">
       <h2 class="slide-title">Same Task, Two Ways</h2>
@@ -514,7 +515,7 @@
     </div>
   </div>
 
-  <!-- SLIDE 2 — WORKFLOW VERSION -->
+  <!-- SLIDE 2 - WORKFLOW VERSION -->
   <div class="slide" data-slide="2">
     <div class="slide-inner">
       <h2 class="slide-title">Email Trigger &mdash; Workflow Version</h2>
@@ -616,10 +617,10 @@
 
         </div>
 
-        <!-- System Prompt panel — below OpenAI node -->
+        <!-- System Prompt panel - below OpenAI node -->
         <div style="margin-top: 18px; display: flex; justify-content: center; padding: 0 8px;">
           <div style="background: rgba(16,163,127,0.07); border: 1px solid rgba(16,163,127,0.22); border-radius: 10px; padding: 14px 18px; max-width: 560px; width: 100%;">
-            <div style="font-size: 10px; font-weight: 700; color: #10A37F; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 9px;">&#9650; Extract Values — System Prompt</div>
+            <div style="font-size: 10px; font-weight: 700; color: #10A37F; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 9px;">&#9650; Extract Values: System Prompt</div>
             <div style="font-family: var(--font-mono); font-size: 11px; color: rgba(255,255,255,0.72); line-height: 2.1;">
               <div><span style="color: #10A37F; font-weight: 600;">Role:</span> Email Parser</div>
               <div><span style="color: #10A37F; font-weight: 600;">Goal:</span> Extract sender_name, topic, urgency</div>
@@ -631,12 +632,12 @@
       </div>
 
       <div class="callout" style="margin-top: 20px;">
-        The LLM does one smart thing in step 2. <span class="hl">The rest is fixed — no decisions, no branching.</span>
+        <span class="hl">The LLM does one smart thing in step 2. The rest is fixed: no decisions, no branching.</span>
       </div>
     </div>
   </div>
 
-  <!-- SLIDE 3 — AGENT VERSION -->
+  <!-- SLIDE 3 - AGENT VERSION -->
   <div class="slide" data-slide="3">
     <div class="slide-inner">
       <h2 class="slide-title">Email Trigger &mdash; Agent Version</h2>
@@ -666,19 +667,19 @@
           <div class="indent dim">&rarr; Notified account manager</div>
           <div class="gap"></div>
           <div><span class="blue">Tool call:</span> <span class="bright">draft_reply(tone: "personal", offer: "retention_credit")</span></div>
-          <div class="indent dim">&rarr; Custom reply — not a template</div>
+          <div class="indent dim">&rarr; Custom reply, not a template</div>
           <div class="section"></div>
           <div class="bright">A workflow couldn't do this. It had no branch for "loyal customer about to churn, renewal soon."</div>
         </div>
       </div>
 
       <div class="callout" style="margin-top: 16px;">
-        The LLM does everything — reads the situation, decides what matters, chooses which tools to call.<br><span class="hl">No template. No fixed path. Every email gets a different response.</span>
+        <span class="hl">No template. No fixed path. Every email gets a different response.</span>
       </div>
     </div>
   </div>
 
-  <!-- SLIDE 4 — THE SPECTRUM -->
+  <!-- SLIDE 4 - THE SPECTRUM -->
   <div class="slide" data-slide="4">
     <div class="slide-inner">
       <h2 class="slide-title">The Spectrum</h2>
@@ -719,7 +720,7 @@
     </div>
   </div>
 
-  <!-- SLIDE 5 — N8N ON SPECTRUM -->
+  <!-- SLIDE 5 - N8N ON SPECTRUM -->
   <div class="slide" data-slide="5">
     <div class="slide-inner">
       <h2 class="slide-title">n8n on the Spectrum</h2>
@@ -764,16 +765,16 @@
       </div>
 
       <div class="callout" style="margin-top: 16px;">
-        Adding an AI step doesn&apos;t make it an agent. <span class="hl">The path is still fixed &mdash; the LLM is a tool, not the decision-maker.</span>
+        Adding an AI step doesn&apos;t make it an agent. <span class="hl">The path is still fixed: the LLM is a tool, not the decision-maker.</span>
       </div>
     </div>
   </div>
 
-  <!-- SLIDE — AI ASSISTANT (TIER 3) -->
+  <!-- SLIDE - AI ASSISTANT (TIER 3) -->
   <div class="slide" data-slide="5b">
     <div class="slide-inner">
       <h2 class="slide-title">What is an AI Assistant?</h2>
-      <p class="slide-subtitle" style="margin-bottom: 28px;">Tier 3 — has tools, responds to what you ask</p>
+      <p class="slide-subtitle" style="margin-bottom: 28px;">Tier 3: has tools, responds to what you ask</p>
 
       <div class="spectrum-mini-labels">
         <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
@@ -826,7 +827,7 @@
             <span class="tag" style="font-size: 10px; font-family: var(--font-mono); padding: 3px 8px;">search_faq</span>
             <span class="tag" style="font-size: 10px; font-family: var(--font-mono); padding: 3px 8px;">escalate_ticket</span>
           </div>
-          <div style="font-size: 12px; color: var(--text-muted);">Pre-defined — it can only do what it's given.</div>
+          <div style="font-size: 12px; color: var(--text-muted);">Pre-defined. It can only do what it's given.</div>
         </div>
       </div>
 
@@ -836,11 +837,11 @@
     </div>
   </div>
 
-  <!-- SLIDE 6 — AGENT ANATOMY -->
+  <!-- SLIDE 6 - AGENT ANATOMY -->
   <div class="slide" data-slide="6">
     <div class="slide-inner">
       <h2 class="slide-title">What is an Agent?</h2>
-      <p class="slide-subtitle" style="margin-bottom: 16px;">Tier 4 — has tools, decides what to do next, loops until done</p>
+      <p class="slide-subtitle" style="margin-bottom: 16px;">Tier 4: has tools, decides what to do next, loops until done</p>
 
       <div class="spectrum-mini-labels">
         <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
@@ -864,7 +865,7 @@
               <span style="color: var(--text-muted);">Goal: resolve production issues.</span><br>
               <span style="color: var(--text-muted);">- Read alerts, check logs, find root cause</span><br>
               <span style="color: var(--text-muted);">- Draft updates for the team</span><br>
-              <span style="color: var(--text-muted);">- Escalate if unsure — don't guess</span>
+              <span style="color: var(--text-muted);">- Escalate if unsure, don't guess</span>
             </div>
             <div style="font-size: 12px; color: var(--text-muted); font-style: italic;">This is your CLAUDE.md for a deployed agent</div>
           </div>
@@ -882,7 +883,7 @@
           <div style="font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--teal-dark); margin-bottom: 8px;">LLM Brain</div>
           <div style="font-size: 15px; font-weight: 600; margin-bottom: 8px; color: var(--text);">Reads + Decides</div>
           <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.55;">Decides which tool to call. Reads the result. Decides what to do next. <strong style="color: var(--teal-dark);">Loops until the goal is done.</strong></div>
-          <div style="margin-top: 10px; font-size: 12px; color: var(--teal); font-weight: 600; letter-spacing: 0.3px;">&#8635; not just one response — it iterates</div>
+          <div style="margin-top: 10px; font-size: 12px; color: var(--teal); font-weight: 600; letter-spacing: 0.3px;">&#8635; not just one response, it iterates</div>
         </div>
 
         <div style="display: flex; align-items: center; padding: 0 12px; color: var(--teal-muted); font-size: 18px; flex-direction: column; gap: 4px;">
@@ -902,59 +903,21 @@
             <span class="tag" style="font-size: 10px; font-family: var(--font-mono); padding: 3px 8px;">query_db</span>
             <span class="tag" style="font-size: 10px; font-family: var(--font-mono); padding: 3px 8px;">send_email</span>
           </div>
-          <div style="font-size: 12px; color: var(--text-muted);">Unlike an assistant, the set isn't fixed — you give it whatever it needs.</div>
+          <div style="font-size: 12px; color: var(--text-muted);">Unlike an assistant, the set isn't fixed, you give it whatever it needs.</div>
         </div>
       </div>
 
       <div class="callout" style="margin-top: 0;">
-        <span class="hl">Claude Code is an agent.</span> System prompt = CLAUDE.md. Tools = bash, file read/write, search. It loops until the task is done — you haven&apos;t been chatting, you&apos;ve been using an agent all course.
+        <span class="hl">Claude Code is an agent.</span> System prompt = CLAUDE.md. Tools = bash, file read/write, search. It loops until done. <span class="hl">You drive an assistant. An agent drives itself.</span>
       </div>
     </div>
   </div>
 
-  <!-- SLIDE 7 — ASSISTANT VS AGENT -->
-  <div class="slide" data-slide="7">
-    <div class="slide-inner">
-      <h2 class="slide-title">Assistant vs Agent</h2>
-      <p class="slide-subtitle">Both have tools. The difference is who&apos;s driving.</p>
-
-      <div class="compare-grid">
-        <div class="card compare-card workflow">
-          <div class="card-header">Tier 3 — AI Assistant</div>
-          <div class="step"><span class="step-num">+</span><span>Responds to what <strong>you</strong> ask</span></div>
-          <div class="step"><span class="step-num">+</span><span>Narrow scope &mdash; does specific, defined tasks</span></div>
-          <div class="step"><span class="step-num">+</span><span>You decide when to use it and what to ask</span></div>
-          <div class="step"><span class="step-num">+</span><span>Predictable &mdash; stays in its lane</span></div>
-          <div style="margin-top: 14px; font-style: italic; font-size: 13px; color: var(--text-muted);">"What&apos;s the status of order #1234?"</div>
-          <div style="margin-top: 10px; display: flex; gap: 6px; flex-wrap: wrap;">
-            <span class="tag" style="font-size: 10px;">Customer support bot</span>
-            <span class="tag" style="font-size: 10px;">FAQ bot</span>
-            <span class="tag" style="font-size: 10px;">Search assistant</span>
-          </div>
-        </div>
-
-        <div class="card compare-card agent">
-          <div class="card-header">Tier 4 — Agent</div>
-          <div class="step"><span class="step-num">+</span><span>Pursues a <strong>goal</strong> autonomously</span></div>
-          <div class="step"><span class="step-num">+</span><span>Broad scope &mdash; figures out what needs doing</span></div>
-          <div class="step"><span class="step-num">+</span><span>Decides what to do next based on what it finds</span></div>
-          <div class="step"><span class="step-num">+</span><span>Multi-step &mdash; can run for hours</span></div>
-          <div style="margin-top: 14px; font-style: italic; font-size: 13px; color: var(--text-muted);">"Handle this customer issue end-to-end"</div>
-          <div style="margin-top: 10px;">
-            <span class="tag" style="font-size: 10px;">Claude Code &middot; Incident response &middot; Research agent</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="tradeoff-takeaway" style="margin-top: 24px; font-style: normal;">You drive an assistant. An agent drives itself.</div>
-    </div>
-  </div>
-
-  <!-- SLIDE 8 — AGENTIC SYSTEM -->
+  <!-- SLIDE 8 - AGENTIC SYSTEM -->
   <div class="slide" data-slide="8">
     <div class="slide-inner">
       <h2 class="slide-title">Agentic System</h2>
-      <p class="slide-subtitle" style="margin-bottom: 16px;">Tier 5 — multiple agents, one orchestrates, others specialize</p>
+      <p class="slide-subtitle" style="margin-bottom: 16px;">Tier 5: multiple agents, one orchestrates, others specialize</p>
 
       <div class="spectrum-mini-labels">
         <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
@@ -1013,7 +976,7 @@
     </div>
   </div>
 
-  <!-- SLIDE 9 — TRADE-OFFS -->
+  <!-- SLIDE 9 - TRADE-OFFS -->
   <div class="slide" data-slide="9">
     <div class="slide-inner">
       <h2 class="slide-title">Trade-offs</h2>
@@ -1027,58 +990,28 @@
         </div>
         <div class="tradeoff-row">
           <span class="tradeoff-label">Reliability</span>
-          <div class="tradeoff-cell">
-            <span class="tradeoff-verdict win">High</span>
-            <span class="tradeoff-detail">Same path every time</span>
-          </div>
-          <div class="tradeoff-cell">
-            <span class="tradeoff-verdict lose">Variable</span>
-            <span class="tradeoff-detail">Depends on LLM reasoning</span>
-          </div>
+          <div class="tradeoff-cell"><span class="tradeoff-verdict win">High</span></div>
+          <div class="tradeoff-cell"><span class="tradeoff-verdict lose">Variable</span></div>
         </div>
         <div class="tradeoff-row">
           <span class="tradeoff-label">Flexibility</span>
-          <div class="tradeoff-cell">
-            <span class="tradeoff-verdict lose">Low</span>
-            <span class="tradeoff-detail">Fixed steps, can't adapt</span>
-          </div>
-          <div class="tradeoff-cell">
-            <span class="tradeoff-verdict win-ag">High</span>
-            <span class="tradeoff-detail">Adapts to each situation</span>
-          </div>
+          <div class="tradeoff-cell"><span class="tradeoff-verdict lose">Low</span></div>
+          <div class="tradeoff-cell"><span class="tradeoff-verdict win-ag">High</span></div>
         </div>
         <div class="tradeoff-row">
           <span class="tradeoff-label">Cost per run</span>
-          <div class="tradeoff-cell">
-            <span class="tradeoff-verdict win">Cheap</span>
-            <span class="tradeoff-detail">Few fixed API calls</span>
-          </div>
-          <div class="tradeoff-cell">
-            <span class="tradeoff-verdict lose">Expensive</span>
-            <span class="tradeoff-detail">Many LLM calls per run</span>
-          </div>
+          <div class="tradeoff-cell"><span class="tradeoff-verdict win">Cheap</span></div>
+          <div class="tradeoff-cell"><span class="tradeoff-verdict lose">Expensive</span></div>
         </div>
         <div class="tradeoff-row">
           <span class="tradeoff-label">Debugging</span>
-          <div class="tradeoff-cell">
-            <span class="tradeoff-verdict win">Easy</span>
-            <span class="tradeoff-detail">See each node's input/output</span>
-          </div>
-          <div class="tradeoff-cell">
-            <span class="tradeoff-verdict lose">Harder</span>
-            <span class="tradeoff-detail">Reasoning can be opaque</span>
-          </div>
+          <div class="tradeoff-cell"><span class="tradeoff-verdict win">Easy</span></div>
+          <div class="tradeoff-cell"><span class="tradeoff-verdict lose">Harder</span></div>
         </div>
         <div class="tradeoff-row">
           <span class="tradeoff-label">Time to build</span>
-          <div class="tradeoff-cell">
-            <span class="tradeoff-verdict neutral">Maybe</span>
-            <span class="tradeoff-detail">Fast for simple flows</span>
-          </div>
-          <div class="tradeoff-cell">
-            <span class="tradeoff-verdict neutral">Maybe</span>
-            <span class="tradeoff-detail">Fast for complex tasks</span>
-          </div>
+          <div class="tradeoff-cell"><span class="tradeoff-verdict neutral">Depends</span></div>
+          <div class="tradeoff-cell"><span class="tradeoff-verdict neutral">Depends</span></div>
         </div>
       </div>
 
@@ -1086,7 +1019,7 @@
     </div>
   </div>
 
-  <!-- SLIDE 10 — DECISION FLOW -->
+  <!-- SLIDE 10 - DECISION FLOW -->
   <div class="slide" data-slide="10">
     <div class="slide-inner">
       <h2 class="slide-title">Which Tier Do You Need?</h2>
@@ -1139,11 +1072,11 @@
     </div>
   </div>
 
-  <!-- SLIDE 11 — THREE REAL EXAMPLES -->
+  <!-- SLIDE 11 - THREE REAL EXAMPLES -->
   <div class="slide" data-slide="11">
     <div class="slide-inner">
       <h2 class="slide-title">Three Real Examples</h2>
-      <p class="slide-subtitle">See where each one lands on the spectrum — then think about your own project.</p>
+      <p class="slide-subtitle">See where each one lands on the spectrum, then think about your own project.</p>
 
       <div class="mini-cards" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 28px; align-items: stretch;">
         <div class="card mini-card" style="gap: 10px; justify-content: flex-start;">
