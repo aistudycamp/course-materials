@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Week 1 Seminar — Option B (Standard, 8 slides)</title>
+<title>Model Bake-off - AI Study Camp</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -82,182 +82,125 @@
   <!-- 1. Title -->
   <section class="slide dark active">
     <div style="margin:auto 0;">
-      <div class="eyebrow" style="color:var(--accent-light);">Week 1 · Socratic Seminar</div>
-      <h1 class="title">What's<br>actually<br><em style="font-style:italic;color:var(--accent-light);">inside</em> an LLM?</h1>
+      <div class="eyebrow" style="color:var(--accent-light);">Week 1 · Friday</div>
+      <h1 class="title">The model<br><span style="color:var(--accent-light);">bake-off</span></h1>
     </div>
   </section>
 
-  <!-- 2. Big idea -->
+  <!-- 2. Frame + roster -->
   <section class="slide">
-    <div class="eyebrow">Start here</div>
-    <div style="margin:auto 0;">
-      <h2 style="font-size:72px;max-width:1100px;">An LLM is a massive <em style="color:var(--accent);font-style:italic;">mathematical function.</em></h2>
-      <p class="lede" style="font-size:22px;max-width:900px;margin-top:32px;">Text goes in. Numbers get multiplied through billions of parameters. Probabilities come out. Everything else is built on top of this.</p>
+    <div class="eyebrow">The bake-off</div>
+    <h2>One prompt, three models.</h2>
+    <div class="grid-3" style="margin-top:36px;">
+      <div class="card" style="border-top:3px solid #0D9488;">
+        <div class="stage-name">Haiku 4.5</div>
+        <div class="stage-desc" style="margin-top:10px;">Fast. Barely thinks. Good for quick, simple work.</div>
+      </div>
+      <div class="card" style="border-top:3px solid #0F766E;">
+        <div class="stage-name">Sonnet 5</div>
+        <div class="stage-desc" style="margin-top:10px;">The everyday pick. Balances speed and depth.</div>
+      </div>
+      <div class="card" style="border-top:3px solid #14B8A6;">
+        <div class="stage-name">Opus 5</div>
+        <div class="stage-desc" style="margin-top:10px;">Slow. Thinks it through. Good for hard, ambiguous problems.</div>
+      </div>
     </div>
   </section>
 
-  <!-- 3. Tokens -->
+  <!-- 3. Why outputs differ -->
   <section class="slide">
-    <div class="eyebrow">Words → Numbers</div>
-    <h2>First, text becomes tokens.</h2>
-    <p class="lede">The model doesn't see words. It sees numbers. Each token maps to an ID.</p>
-    <div style="margin-top:40px;display:grid;grid-template-columns:repeat(7,1fr);gap:10px;align-items:center;">
-      <div class="token-box"><div class="token-word">What</div><div class="token-num">#4532</div></div>
-      <div class="token-box"><div class="token-word">is</div><div class="token-num">#318</div></div>
-      <div class="token-box"><div class="token-word">an</div><div class="token-num">#281</div></div>
-      <div class="token-box" style="border-color:var(--accent);background:var(--accent-bg);"><div class="token-word" style="color:var(--accent);">LLM</div><div class="token-num">#72987</div></div>
-      <div class="token-box"><div class="token-word">?</div><div class="token-num">#30</div></div>
-      <div class="arrow">→</div>
-      <div class="token-box" style="background:var(--dark);color:var(--cream);border-color:var(--dark);"><div class="token-word" style="font-family:var(--font-mono);font-size:14px;color:var(--cream);">[4532, 318,<br>281, 72987, 30]</div></div>
+    <div class="eyebrow">Why outputs differ</div>
+    <h2>It never picks one fixed answer.</h2>
+    <div class="limit-list" style="margin-top:12px;">
+      <div class="limit-row" style="border-top:none;">
+        <div class="limit-term">Same model,<br>twice</div>
+        <div class="limit-desc">It predicts a word, then the next, then the next. Each step has more than one good option, so a second run can take a different path.</div>
+      </div>
+      <div class="limit-row">
+        <div class="limit-term">Different<br>models</div>
+        <div class="limit-desc">Different training means different instincts for what a good next word looks like. That gap is much bigger than the first one.</div>
+      </div>
     </div>
-    <p style="margin-top:40px;font-size:16px;color:var(--text2);max-width:780px;line-height:1.6;">Common words = 1 token. Longer words split. <b style="color:var(--text);">1 word ≈ 1.3 tokens.</b> This is why tokens cost money and eat context.</p>
   </section>
 
-  <!-- 4. Embeddings -->
+  <!-- 4. Fast versus slow -->
   <section class="slide">
-    <div class="eyebrow">Meaning as geometry</div>
-    <h2>Each token becomes a <em style="font-style:italic;color:var(--accent);">vector</em> — a point in a 12,000-dimensional space.</h2>
-    <p class="lede">Words with similar meanings end up close together. The model "understands" through distance.</p>
-    <div class="emb-space">
-      <div class="emb-word accent" style="left:22%;top:30%;">king</div>
-      <div class="emb-word accent" style="left:32%;top:26%;">queen</div>
-      <div class="emb-word" style="left:20%;top:60%;">puppy</div>
-      <div class="emb-word" style="left:28%;top:66%;">dog</div>
-      <div class="emb-word" style="left:30%;top:74%;">canine</div>
-      <div class="emb-word" style="left:66%;top:40%;">JavaScript</div>
-      <div class="emb-word" style="left:74%;top:48%;">Python</div>
-      <div class="emb-word" style="right:8%;bottom:20%;color:var(--text2);">refrigerator</div>
-      <div style="position:absolute;bottom:16px;left:20px;font-family:var(--font-mono);font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;">Embedding space · conceptual</div>
-    </div>
-  </section>
-
-  <!-- 5. Q2 transition (dark) -->
-  <section class="slide dark">
-    <div style="margin:auto 0;">
-      <div class="eyebrow" style="color:var(--accent-light);">Question 2</div>
-      <h1 class="title" style="font-size:84px;">How did it<br><em style="font-style:italic;color:var(--accent-light);">get smart?</em></h1>
-      <p class="lede" style="color:rgba(245,240,235,.6);margin-top:28px;max-width:720px;">From random numbers to something that writes poetry and debugs code. Walk me through it.</p>
-    </div>
-  </section>
-
-  <!-- 6. Training 3 stages -->
-  <section class="slide">
-    <div class="eyebrow">How it gets smart</div>
-    <h2>Training happens in three stages.</h2>
-    <div class="grid-3" style="margin-top:28px;">
+    <div class="eyebrow">Fast versus slow</div>
+    <h2>Cheap does not mean worse.</h2>
+    <div class="grid-2" style="margin-top:32px;">
       <div class="card">
-        <div class="stage-head"><span class="stage-chip">01</span><span class="stage-name">Pre-training</span></div>
-        <div class="stage-desc">Feed it the internet. Hide a word. Ask the model to predict it. Adjust weights. Repeat trillions of times.</div>
-        <div class="stage-analogy">Imagine a textbook with random words ripped out. After enough pages, the model can fill in anything.</div>
+        <div class="stage-name" style="color:var(--accent);">Why Haiku is fast</div>
+        <div class="stage-desc" style="margin-top:10px;">Less thinking per answer. Built for quick turnaround, not for working through something hard.</div>
       </div>
       <div class="card">
-        <div class="stage-head"><span class="stage-chip">02</span><span class="stage-name">Supervised Fine-Tuning</span></div>
-        <div class="stage-desc">Humans write thousands of example conversations. Model learns the <i>personality</i> of being helpful — how an assistant talks.</div>
-        <div class="stage-analogy">Pre-training read every book. SFT showed it how a tutor responds.</div>
+        <div class="stage-name" style="color:var(--accent);">When fast wins</div>
+        <div class="stage-desc" style="margin-top:10px;">Simple, well-defined, high-volume work. Same result, a fraction of the wait.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. The effort dial -->
+  <section class="slide">
+    <div class="eyebrow">The effort dial</div>
+    <h2>Effort is how long it thinks before answering.</h2>
+    <div class="grid-2" style="margin-top:32px;">
+      <div class="card">
+        <div class="stage-name" style="color:#b45309;">Low effort</div>
+        <div class="stage-desc" style="margin-top:10px;">Answers on the first idea that looks right. Fine when the task has one clear path.</div>
       </div>
       <div class="card">
-        <div class="stage-head"><span class="stage-chip">03</span><span class="stage-name">Reinforcement Learning</span></div>
-        <div style="font-size:12px;color:var(--text2);margin-top:-6px;margin-bottom:10px;font-family:var(--font-mono);">from human feedback (RLHF)</div>
-        <div class="stage-desc">Humans rate two responses. Preferred one wins. Do this thousands of times. Model develops judgment.</div>
-        <div class="stage-analogy">A manager reviewing work until the new hire develops taste.</div>
+        <div class="stage-name" style="color:#7c3aed;">High effort</div>
+        <div class="stage-desc" style="margin-top:10px;">Weighs options, checks its own work, catches mistakes before committing. Costs time.</div>
       </div>
     </div>
-    <p style="margin-top:28px;font-size:15px;color:var(--text2);max-width:900px;line-height:1.6;font-style:italic;">This is why Claude and ChatGPT <i>feel</i> different — different RLHF preferences = different personalities.</p>
-  </section>
-
-  <!-- 7. Q3 transition (dark) -->
-  <section class="slide dark">
-    <div style="margin:auto 0;">
-      <div class="eyebrow" style="color:var(--accent-light);">Question 3</div>
-      <h1 class="title" style="font-size:84px;">Where does<br>it <em style="font-style:italic;color:var(--accent-light);">break down?</em></h1>
-      <p class="lede" style="color:rgba(245,240,235,.6);margin-top:28px;max-width:720px;">It's powerful. But it's not magic. What can't it do — and why?</p>
+    <div class="card" style="margin-top:20px;border-left:3px solid var(--accent);">
+      <div class="stage-desc">On an easy task, high effort mostly buys a slower wait for the same answer.</div>
     </div>
   </section>
 
-  <!-- 8. Memory model — 50 First Dates (NEW) -->
+  <!-- 6. Why the code differs -->
   <section class="slide">
-    <div class="eyebrow">The memory problem</div>
-    <h2>It has <em style="font-style:italic;color:var(--accent);">50 First Dates</em> memory.</h2>
-    <p class="lede">Every session is a restart. The model doesn't remember yesterday. You bridge the gap by handing it notes — every time.</p>
-    <div class="grid-3" style="margin-top:32px;">
-      <div class="card" style="border-top:3px solid var(--accent);">
-        <div class="stage-name" style="color:var(--accent);">Weights</div>
-        <div style="font-size:13px;color:var(--text2);margin-top:4px;font-family:var(--font-mono);">hazy long-term memory</div>
-        <div class="stage-desc" style="margin-top:14px;">Compressed patterns from training. It "remembers" how Python works — not what you told it last week.</div>
+    <div class="eyebrow">Why the code differs</div>
+    <h2>Models do not agree on how much is enough.</h2>
+    <div class="grid-2" style="margin-top:32px;">
+      <div class="card">
+        <div class="stage-name" style="color:var(--accent);">More code</div>
+        <div class="stage-desc" style="margin-top:10px;">More scaffolding, comments, and defensive checks. Can mean more thorough.</div>
       </div>
-      <div class="card" style="border-top:3px solid #f59e0b;">
-        <div class="stage-name" style="color:#b45309;">Context window</div>
-        <div style="font-size:13px;color:var(--text2);margin-top:4px;font-family:var(--font-mono);">working memory</div>
-        <div class="stage-desc" style="margin-top:14px;">What the model can see <i>right now</i>. Your prompt, your files, this conversation. Resets every session.</div>
-      </div>
-      <div class="card" style="border-top:3px solid #8b5cf6;">
-        <div class="stage-name" style="color:#7c3aed;">CLAUDE.md</div>
-        <div style="font-size:13px;color:var(--text2);margin-top:4px;font-family:var(--font-mono);">the notes Adam Sandler writes</div>
-        <div class="stage-desc" style="margin-top:14px;">You re-inject context at the start of every session. Project docs, skills, memory files — continuity the model can't keep on its own.</div>
+      <div class="card">
+        <div class="stage-name" style="color:var(--accent);">Less code</div>
+        <div class="stage-desc" style="margin-top:10px;">Terser by default. Can mean tighter, or can mean it skipped something.</div>
       </div>
     </div>
-    <p style="margin-top:28px;font-size:15px;color:var(--text2);font-style:italic;max-width:900px;line-height:1.6;">Karpathy calls this <i>anterograde amnesia</i>. The whole craft of working with Claude Code is managing which memory you're writing to.</p>
+    <div class="card" style="margin-top:20px;border-left:3px solid var(--accent);">
+      <div class="stage-desc">More is not automatically better. Check what it built, not how much it wrote.</div>
+    </div>
   </section>
 
-  <!-- 7. Context window -->
+  <!-- 7. Context window (if it comes up) -->
   <section class="slide">
-    <div class="eyebrow">Its working memory</div>
+    <div class="eyebrow">If it comes up</div>
     <h2>The context window is a whiteboard.</h2>
-    <p class="lede">Everything in the conversation goes on it. It's big, but not infinite. When full, early stuff falls off.</p>
     <div class="board" style="margin-top:24px;">
       <div class="board-title">▢ whiteboard · session active</div>
-      <div class="board-line">System instructions →</div>
-      <div class="board-line">Your first prompt →</div>
+      <div class="board-line">Your prompt →</div>
       <div class="board-line">Files it read →</div>
       <div class="board-line">Its reply →</div>
       <div class="board-line fade1">More back and forth →</div>
       <div class="board-line fade2">…earlier context fading…</div>
-      <div style="margin-top:20px;padding-top:16px;border-top:1px dashed var(--border);font-size:14px;color:var(--text2);font-family:var(--font-mono);">/clear — wipe.  /compact — condense.  new session — fresh board.</div>
+      <div style="margin-top:20px;padding-top:16px;border-top:1px dashed var(--border);font-size:14px;color:var(--text2);font-family:var(--font-mono);">Nothing outside the board exists to it. A new session starts on a blank one.</div>
     </div>
   </section>
 
-  <!-- 8. Lossy zip (NEW) -->
+  <!-- 8. The rule (close) -->
   <section class="slide">
-    <div class="eyebrow">What training leaves behind</div>
-    <h2>The model is a <em style="font-style:italic;color:var(--accent);">lossy zip file</em> of the internet.</h2>
-    <p class="lede">Training doesn't <i>store</i> the internet — it compresses it into patterns. Common patterns survive. Rare details get smudged.</p>
-    <div class="grid-2" style="margin-top:32px;">
-      <div class="card" style="border-left:3px solid var(--accent);">
-        <div class="stage-name" style="color:var(--accent);">Well-compressed</div>
-        <div class="stage-desc" style="margin-top:10px;">Python syntax. Common idioms. Writing patterns. Widely-discussed facts. Seen millions of times.</div>
-      </div>
-      <div class="card" style="border-left:3px solid #f59e0b;">
-        <div class="stage-name" style="color:#b45309;">Lossy / smudged</div>
-        <div class="stage-desc" style="margin-top:10px;">Obscure dates. Niche facts. Precise numbers. Rare names. Seen rarely — compressed away.</div>
-      </div>
+    <div class="eyebrow">The rule</div>
+    <h2>Pick the model for the task. Step up when the cheap one struggles.</h2>
+    <div class="card" style="margin-top:32px;max-width:820px;">
+      <div class="stage-name" style="color:var(--accent);">Not sure which to use?</div>
+      <div class="stage-desc" style="margin-top:10px;">Start with the one that fits most of your work. Move up only when it struggles.</div>
     </div>
-    <div style="margin-top:28px;padding:20px 24px;background:var(--accent-bg);border-radius:10px;border:1px solid rgba(13,148,136,.25);">
-      <p style="font-size:17px;line-height:1.55;color:var(--text);"><b>Hallucination isn't a bug — it's the compression artifact.</b> When the model hits a gap, it doesn't say "I don't know." It generates the most statistically plausible completion. Sometimes that's right. Sometimes it isn't. The model can't tell the difference.</p>
-    </div>
-  </section>
-
-  <!-- 9. Hallucination + how to avoid -->
-  <section class="slide dark">
-    <div class="eyebrow" style="color:var(--accent-light);">Why it hallucinates — and how to stop it</div>
-    <p class="quote dark" style="margin-top:24px;">It isn't lying.<br>It's predicting the next token.</p>
-    <p class="quote-attr" style="max-width:780px;line-height:1.6;margin-top:20px;">A fake citation is just a high-probability pattern: "A 2023 study by Dr. Smith in the Journal of…" — a shape it's seen a thousand times. It can't tell "I remember this" from "this sounds like things I remember."</p>
-    <div class="grid-3" style="margin-top:auto;padding-top:40px;">
-      <div class="card" style="background:rgba(245,240,235,.04);border-color:rgba(245,240,235,.1);padding:32px 26px;">
-        <div class="stage-chip" style="background:var(--accent-light);color:var(--dark);">01</div>
-        <div class="stage-name" style="margin-top:14px;color:var(--cream);">Give it a tool.</div>
-        <div class="stage-desc" style="margin-top:8px;color:rgba(245,240,235,.65);">Web search. File reads. A calculator. Anything real beats a pattern match.</div>
-      </div>
-      <div class="card" style="background:rgba(245,240,235,.04);border-color:rgba(245,240,235,.1);padding:32px 26px;">
-        <div class="stage-chip" style="background:var(--accent-light);color:var(--dark);">02</div>
-        <div class="stage-name" style="margin-top:14px;color:var(--cream);">Ground it in context.</div>
-        <div class="stage-desc" style="margin-top:8px;color:rgba(245,240,235,.65);">Paste the source. Link the doc. Don't ask it to recall — let it read.</div>
-      </div>
-      <div class="card" style="background:rgba(245,240,235,.04);border-color:rgba(245,240,235,.1);padding:32px 26px;">
-        <div class="stage-chip" style="background:var(--accent-light);color:var(--dark);">03</div>
-        <div class="stage-name" style="margin-top:14px;color:var(--cream);">Verify what matters.</div>
-        <div class="stage-desc" style="margin-top:8px;color:rgba(245,240,235,.65);">Names, numbers, citations — always check. Specifics are where it drifts.</div>
-      </div>
-    </div>
+    <div style="margin-top:24px;font-family:var(--font-mono);font-size:13px;color:var(--text2);">Further reading: Choosing the right Claude model.</div>
   </section>
 
 </div>

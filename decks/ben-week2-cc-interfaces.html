@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Every Way to Talk to Claude — Week 2 Office Hours</title>
+<title>Every Way to Talk to Claude: Week 2 Office Hours</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -55,6 +55,8 @@
   .card-grid.cols-2 { grid-template-columns: 1fr 1fr; }
   .card-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
   .callout-teal { background: var(--teal-bg); border: 1px solid var(--teal-border); border-radius: 12px; padding: 20px 24px; color: var(--teal-dark); line-height: 1.55; }
+  .callout-red { background: var(--red-bg); border: 1px solid var(--red-border); border-radius: 12px; padding: 20px 24px; color: var(--red-soft); line-height: 1.55; }
+  .notes { display: none; }
   .split { display: flex; gap: 36px; align-items: flex-start; }
   .split-left { flex: 1; }
   .split-right { flex: 1.45; }
@@ -368,7 +370,7 @@
 <!-- SLIDE 0: Hero -->
 <div class="slide dark-bg active" data-slide="0">
   <div class="slide-inner centered">
-    <span class="tag dark" style="margin-bottom: 24px;">Week 2 — Office Hours</span>
+    <span class="tag dark" style="margin-bottom: 24px;">Week 2 &middot; Office Hours</span>
     <h1 class="hero-title">Every way to<br>talk to <span class="teal">Claude.</span></h1>
     <p class="hero-subtitle">The interfaces, the layers, and why we picked our setup.</p>
   </div>
@@ -423,7 +425,7 @@
     </div>
 
     <div class="callout-teal" style="max-width: 660px; margin: 32px auto 0; text-align: center;">
-      Swap the brain, pick your shell — it's all Claude underneath.
+      Swap the brain, pick your shell. It's all Claude underneath.
     </div>
   </div>
 </div>
@@ -433,7 +435,7 @@
   <div class="slide-inner">
     <h2 class="slide-title">The abstraction <span class="teal">layers.</span></h2>
     <div class="teal-divider"></div>
-    <p class="body-text" style="margin-bottom: 8px; max-width: 720px;">Less friction at every step. We teach the terminal layer — most powerful, most portable.</p>
+    <p class="body-text" style="margin-bottom: 8px; max-width: 720px;">Less friction at every step. We teach the terminal layer, most powerful and most portable.</p>
 
     <div class="layer-diagram">
       <div class="layer-col">
@@ -474,12 +476,12 @@
 <!-- SLIDE 3: The pure terminal -->
 <div class="slide" data-slide="3">
   <div class="slide-inner">
-    <h2 class="slide-title">The terminal — <span class="teal">why you still need it.</span></h2>
+    <h2 class="slide-title">The <span class="teal">terminal.</span></h2>
     <div class="teal-divider"></div>
 
     <div class="split">
       <div class="split-left">
-        <p class="body-text" style="margin-bottom: 18px;">It's how you install and run everything — before any AI wrapper exists.</p>
+        <p class="body-text" style="margin-bottom: 18px;">It's how you install and run everything, before any AI wrapper exists.</p>
 
         <div class="chip-row">
           <span class="chip">Install things</span>
@@ -507,7 +509,7 @@
 
     <div class="split">
       <div class="split-left">
-        <p class="body-text" style="margin-bottom: 18px;">Same terminal you know — plus file tree, git, and editor in one window. You see everything Claude touches, live.</p>
+        <p class="body-text" style="margin-bottom: 18px;">Same terminal you know, plus file tree, git, and editor in one window. You see everything Claude touches, live.</p>
 
         <div class="chip-row">
           <span class="chip">File tree</span>
@@ -524,10 +526,10 @@
   </div>
 </div>
 
-<!-- SLIDE 5: Claude Code in VS Code terminal — home base -->
+<!-- SLIDE 5: Claude Code in VS Code terminal, home base -->
 <div class="slide" data-slide="5">
   <div class="slide-inner">
-    <h2 class="slide-title">Claude Code in the terminal. <span class="teal">Home base.</span></h2>
+    <h2 class="slide-title">Claude Code in <span class="teal">the terminal.</span></h2>
     <div class="teal-divider"></div>
 
     <div class="split">
@@ -554,7 +556,7 @@
           </figure>
           <figure>
             <img class="screenshot-img" src="img/week2-3.png" alt="Claude Code running in the VS Code integrated terminal">
-            <figcaption class="shot-caption">VS Code terminal — same CLI</figcaption>
+            <figcaption class="shot-caption">VS Code terminal, same CLI</figcaption>
           </figure>
         </div>
 
@@ -563,15 +565,105 @@
   </div>
 </div>
 
-<!-- SLIDE 6: VS Code Claude extension -->
+<!-- SLIDE 6: Moving around a terminal (cd) -->
 <div class="slide" data-slide="6">
+  <div class="slide-inner">
+    <h2 class="slide-title">Moving around <span class="teal">a terminal.</span></h2>
+    <div class="teal-divider"></div>
+
+    <div class="split">
+      <div class="split-left">
+        <p class="body-text" style="margin-bottom: 18px;">A terminal always sits inside one folder. Four commands are the whole skill.</p>
+
+        <div class="chip-row">
+          <span class="chip">pwd</span>
+          <span class="chip">ls</span>
+          <span class="chip">cd folder-name</span>
+          <span class="chip">cd ..</span>
+        </div>
+
+        <div class="callout-teal">
+          VS Code's integrated terminal already starts inside whatever folder you opened. That's one reason we teach it.
+        </div>
+      </div>
+      <div class="split-right">
+        <div class="term-block">
+          <span class="term-comment"># where am I</span><br>
+          <span class="term-prompt">$ </span><span class="term-cmd">pwd</span><br>
+          /Users/maria/Desktop<br>
+          <br>
+          <span class="term-comment"># what's here</span><br>
+          <span class="term-prompt">$ </span><span class="term-cmd">ls</span><br>
+          notes.txt&nbsp;&nbsp;&nbsp;old-project<br>
+          <br>
+          <span class="term-comment"># step into a folder</span><br>
+          <span class="term-prompt">$ </span><span class="term-cmd">cd old-project</span><br>
+          <span class="term-prompt">$ </span><span class="term-cmd">pwd</span><br>
+          /Users/maria/Desktop/old-project<br>
+          <br>
+          <span class="term-comment"># step back out</span><br>
+          <span class="term-prompt">$ </span><span class="term-cmd">cd ..</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="notes">
+      pwd tells you where you are right now. ls lists what is inside the current folder. cd folder-name steps into a folder that ls just showed you. cd dot dot steps back out one level. VS Code's integrated terminal already starts inside whatever folder you opened in the file tree, so most of this course you will open the right folder in VS Code first and never need cd at all. It matters for the raw terminal and for finding your way if you ever land somewhere unexpected.
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 7: Landing in your home base (M1 build) -->
+<div class="slide" data-slide="7">
+  <div class="slide-inner">
+    <h2 class="slide-title">Landing in <span class="teal">your home base.</span></h2>
+    <div class="teal-divider"></div>
+    <p class="body-text" style="margin-bottom: 8px; max-width: 760px;">Every terminal opens wherever your shell happens to start. Not your project folder. Fix it once, and it stays fixed.</p>
+
+    <div class="split" style="margin-top: 16px;">
+      <div class="split-left">
+        <ul class="feature-list">
+          <li><strong>Name your home base.</strong> Lowercase, no spaces. Never inside Desktop or Documents.</li>
+          <li><strong>Open your shell config.</strong> On a Mac, that's <code style="font-family: var(--font-mono); font-size: 14px; background: var(--cream-dark); padding: 2px 6px; border-radius: 4px;">~/.zshrc</code>.</li>
+          <li><strong>Add one function named <code style="font-family: var(--font-mono); font-size: 14px; background: var(--cream-dark); padding: 2px 6px; border-radius: 4px;">claude</code>.</strong> It moves you home, then hands off to the real program.</li>
+          <li><strong>Reload it.</strong> <code style="font-family: var(--font-mono); font-size: 14px; background: var(--cream-dark); padding: 2px 6px; border-radius: 4px;">source ~/.zshrc</code>, or open a fresh terminal window.</li>
+          <li><strong>Test it.</strong> Type <code style="font-family: var(--font-mono); font-size: 14px; background: var(--cream-dark); padding: 2px 6px; border-radius: 4px;">claude</code> from anywhere. Confirm it lands in your home base.</li>
+        </ul>
+
+        <div class="chip-row" style="margin-top: 14px;">
+          <span class="chip plain">Later, Week 3: point claude at one project folder</span>
+        </div>
+      </div>
+      <div class="split-right">
+        <div class="term-block">
+          <span class="term-comment"># ~/.zshrc</span><br>
+          <span class="term-cmd">claude() {</span><br>
+          &nbsp;&nbsp;<span class="term-cmd">cd ~/maria-home</span><br>
+          &nbsp;&nbsp;<span class="term-cmd">command claude "$@"</span><br>
+          <span class="term-cmd">}</span>
+        </div>
+
+        <div class="callout-red" style="margin-top: 16px;">
+          Skip <code style="font-family: var(--font-mono);">command</code> and the function calls itself, not the real program. Every session hangs, recursing forever.
+        </div>
+      </div>
+    </div>
+
+    <div class="notes">
+      A shell function named claude shadows the real installed program of the same name. If the function's own body just calls claude again, that calls the function, not the binary, and it never reaches Claude Code. It just recurses until the shell gives up. The command builtin steps around functions and aliases and finds the actual program on PATH instead, so command claude "dollar sign at" calls the real thing after the cd has already moved you home. Tested this live before building the slide: without command the wrapper recurses into itself every time; with it, claude reaches the real binary from any starting folder. Build this together, live, in the session. Nobody should leave with a broken shell config.
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 8: VS Code Claude extension -->
+<div class="slide" data-slide="8">
   <div class="slide-inner">
     <h2 class="slide-title">The VS Code <span class="teal">extension.</span></h2>
     <div class="teal-divider"></div>
 
     <div class="split">
       <div class="split-left">
-        <p class="body-text" style="margin-bottom: 18px;">Same Claude Code, no terminal visible — a sidebar panel inside VS Code. Also works in Cursor.</p>
+        <p class="body-text" style="margin-bottom: 18px;">Same Claude Code, no terminal visible. A sidebar panel inside VS Code. Also works in Cursor.</p>
 
         <div class="chip-row">
           <span class="chip">Sidebar panel</span>
@@ -588,15 +680,15 @@
   </div>
 </div>
 
-<!-- SLIDE 7: Claude Desktop app -->
-<div class="slide" data-slide="7">
+<!-- SLIDE 9: Claude Desktop app -->
+<div class="slide" data-slide="9">
   <div class="slide-inner">
     <h2 class="slide-title">Claude Desktop. <span class="teal">April 2026.</span></h2>
     <div class="teal-divider"></div>
 
     <div class="split">
       <div class="split-left" style="flex: 1;">
-        <p class="body-text" style="margin-bottom: 18px;">April 2026 redesign. First time it has a real terminal built in — you might not need VS Code at all.</p>
+        <p class="body-text" style="margin-bottom: 18px;">April 2026 redesign. First time it has a real terminal built in. You might not need VS Code at all.</p>
 
         <div class="chip-row">
           <span class="chip">Built-in terminal <span class="new-badge">new</span></span>
@@ -614,12 +706,12 @@
   </div>
 </div>
 
-<!-- SLIDE 8: Cursor + Codex + Google Coding -->
-<div class="slide" data-slide="8">
+<!-- SLIDE 10: Cursor + Codex + Google Coding -->
+<div class="slide" data-slide="10">
   <div class="slide-inner">
     <h2 class="slide-title">Cursor, Codex &amp; <span class="teal">Google Coding.</span></h2>
     <div class="teal-divider"></div>
-    <p class="body-text" style="margin-bottom: 24px; max-width: 760px;">Same capabilities — just a different shell. Once you know the pattern, you recognize all of these on sight.</p>
+    <p class="body-text" style="margin-bottom: 24px; max-width: 760px;">Same capabilities, just a different shell. Once you know the pattern, you recognize all of these on sight.</p>
 
     <div class="card-grid cols-3">
       <div class="card" style="display: flex; flex-direction: column; gap: 14px;">
@@ -648,7 +740,7 @@
         <div>
           <div style="font-family: var(--font-mono); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 4px;">Google</div>
           <h3 style="font-family: var(--font-serif); font-size: 24px; font-weight: 600; color: var(--text);">Google Coding</h3>
-          <div style="font-size: 14px; color: var(--text-secondary); margin-top: 6px;">Async agent — hands you back a PR.</div>
+          <div style="font-size: 14px; color: var(--text-secondary); margin-top: 6px;">Async agent. Hands you back a PR.</div>
         </div>
         <div class="chip-row" style="margin: 0;">
           <span class="chip plain">Async by default</span>
@@ -658,18 +750,18 @@
     </div>
 
     <div class="callout-teal" style="margin-top: 24px; text-align: center;">
-      Different brand, same pattern. The shell changes — the idea doesn't.
+      Different brand, same pattern. The shell changes. The idea doesn't.
     </div>
   </div>
 </div>
 
-<!-- SLIDE 9: Codex CLI + Gemini CLI -->
-<div class="slide" data-slide="9">
+<!-- SLIDE 11: Codex CLI + Gemini CLI -->
+<div class="slide" data-slide="11">
   <div class="slide-inner">
     <h2 class="slide-title">Same idea, <span class="teal">different brain.</span></h2>
     <div class="teal-divider"></div>
 
-    <p class="body-text" style="margin-bottom: 28px; max-width: 760px;">They're all <em>harnesses</em> — type in the terminal, it reads and edits your code. Same pattern, just a different model inside.</p>
+    <p class="body-text" style="margin-bottom: 28px; max-width: 760px;">They're all <em>harnesses</em>. Type in the terminal, it reads and edits your code. Same pattern, just a different model inside.</p>
 
     <div class="harness-grid">
       <div class="harness-card" style="border: 1px solid rgba(13,148,136,0.3);">
@@ -698,12 +790,12 @@
       </div>
     </div>
 
-    <p class="caption" style="margin-top: 24px; text-align: center; font-size: 15px;">Learn one, you know them all. The harness is the pattern — the model is just the brain inside.</p>
+    <p class="caption" style="margin-top: 24px; text-align: center; font-size: 15px;">Learn one, you know them all. The harness is the pattern. The model is just the brain inside.</p>
   </div>
 </div>
 
-<!-- SLIDE 10: Why we teach it this way (dark) -->
-<div class="slide dark-bg" data-slide="10">
+<!-- SLIDE 12: Why we teach it this way (dark) -->
+<div class="slide dark-bg" data-slide="12">
   <div class="slide-inner" style="max-width: 900px;">
     <span class="tag dark" style="margin-bottom: 24px;">The honest answer</span>
     <h2 class="slide-title dark">Why we teach <span class="teal">it this way.</span></h2>
@@ -711,13 +803,13 @@
 
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 8px;">
       <div class="dark-card">
-        <p><strong>We had to pick one.</strong> VS Code + Claude Code terminal is the most widely used dev setup. Not the only answer — our answer.</p>
+        <p><strong>We had to pick one.</strong> VS Code + Claude Code terminal is the most widely used dev setup. Not the only answer. Our answer.</p>
       </div>
       <div class="dark-card">
         <p><strong>The config is portable.</strong> CLAUDE.md, MCP servers, skills, and hooks work across every interface. The interface is a preference.</p>
       </div>
       <div class="dark-card">
-        <p><strong>The terminal is the floor.</strong> Pipelines, CI/CD, scripted agents — no visual wrapper can do all of this. Learn the foundation layer.</p>
+        <p><strong>The terminal is the floor.</strong> Pipelines, CI/CD, scripted agents. No visual wrapper can do all of this. Learn the foundation layer.</p>
       </div>
       <div class="dark-card">
         <p><strong>The layers are converging fast.</strong> The Desktop app is catching up. In a year you might never open a terminal. Learn it now so the rest makes sense.</p>
