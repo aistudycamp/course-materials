@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<!-- olive-reviewed: 2026-08-13 -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Context and CLAUDE.md, AISC How-To Guides</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .flowchart { margin: 28px 0; padding: 28px; background: var(--cream-light); border: 1px solid var(--border); border-radius: 12px; }
+    .fc-global { background: var(--dark); color: var(--text-on-dark); border-radius: 10px; padding: 16px 20px; max-width: 420px; margin: 0 auto 8px; }
+    .fc-global .fc-path { font-family: var(--font-mono); font-size: 13px; color: var(--teal-light); display: block; margin-bottom: 4px; }
+    .fc-global .fc-desc { font-size: 14px; color: var(--text-on-dark-muted); }
+    .fc-stem { width: 1px; height: 28px; background: var(--border-strong); margin: 0 auto; }
+    .fc-row { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 8px; }
+    .fc-project { background: var(--white); border: 1px solid var(--border-strong); border-radius: 10px; padding: 14px 18px; min-width: 140px; text-align: center; }
+    .fc-project .fc-path { font-family: var(--font-mono); font-size: 12px; color: var(--teal-dark); display: block; margin-bottom: 4px; }
+    .fc-project .fc-desc { font-size: 13px; color: var(--text-secondary); }
+    .router-list { list-style: none; padding-left: 0; display: flex; flex-direction: column; gap: 6px; margin: 12px 0; }
+    .router-list li { font-size: 15px; color: var(--text); padding-left: 18px; position: relative; }
+    .router-list li span.arrow { position: absolute; left: 0; color: var(--teal); font-weight: 600; }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner">
+      <span class="logo-mark">[ ai study camp ]</span>
+    </div>
+  </header>
+
+  <!-- PAGE CONTENT -->
+  <main class="page-content">
+
+    <!-- HERO -->
+    <section class="guide-hero">
+      <div class="guide-badge">How-To Guide</div>
+      <h1 class="guide-title">Context and CLAUDE.md</h1>
+      <p class="guide-subtitle">Session habits, and how CLAUDE.md works at the global and project level.</p>
+    </section>
+
+    <!-- WHY CONTEXT MATTERS -->
+    <section class="intro-section">
+      <h2>Why Context Matters</h2>
+      <p>Claude keeps a running memory of everything said in a session: every file it read, every change it made, every decision you discussed. Mix two unrelated projects into one chat, and Claude carries both at once. It can bleed into your work in subtle ways, wrong file, wrong assumption, wrong project.</p>
+    </section>
+
+    <!-- STEPS -->
+    <section class="steps-section">
+      <div class="steps-container">
+
+        <!-- Step 1 -->
+        <div class="step">
+          <div class="step-header">
+            <div class="step-circle">1</div>
+            <h2 class="step-title">Keep Projects in Separate Chats</h2>
+          </div>
+          <div class="step-body">
+            <p>Claude has a command that clears a session's memory:</p>
+            <div class="terminal">
+              <div class="term-bar">
+                <span class="term-dot r"></span>
+                <span class="term-dot y"></span>
+                <span class="term-dot g"></span>
+                <span class="term-title">claude</span>
+              </div>
+              <div class="term-body">
+<span class="cmd">/clear</span>
+              </div>
+            </div>
+            <p>In practice, most people never type it. What actually happens: you open a new chat for each project instead. That's the real habit, and it works just as well.</p>
+            <p><strong>The rule:</strong> one project, one chat. Talking about your website, and then your job search, and then a client's app, all in the same chat, means Claude is holding all three at once. Start a new chat when you switch projects, even if you never touch <code>/clear</code>.</p>
+            <div class="tip-box">
+              <span class="tip-label">Tip</span>
+              <p>If a session has run long and Claude seems slower or less sharp, <code>/compact</code> compresses the history without wiping it. Use it inside a project. Use a new chat between projects.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step">
+          <div class="step-header">
+            <div class="step-circle">2</div>
+            <h2 class="step-title">What Is CLAUDE.md?</h2>
+          </div>
+          <div class="step-body">
+            <p>It's a file Claude reads at the start of every session in a folder. Think of it as a briefing document: what this project is, how it's structured, how you want Claude to behave in it.</p>
+            <p>Say this in a new chat, in the project's folder:</p>
+            <div class="terminal">
+              <div class="term-bar">
+                <span class="term-dot r"></span>
+                <span class="term-dot y"></span>
+                <span class="term-dot g"></span>
+                <span class="term-title">claude</span>
+              </div>
+              <div class="term-body">
+<span class="cmd">Look at this project and create a CLAUDE.md for me based on what you see.</span>
+              </div>
+            </div>
+            <p>Claude reads your files and drafts a starting point. Edit from there, it's faster than writing one cold.</p>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step">
+          <div class="step-header">
+            <div class="step-circle">3</div>
+            <h2 class="step-title">Global and Project CLAUDE.md</h2>
+          </div>
+          <div class="step-body">
+            <p>CLAUDE.md works at two levels. One global file that loads everywhere, and one file per project that loads only there.</p>
+            <div class="flowchart">
+              <div class="fc-global">
+                <span class="fc-path">~/.claude/CLAUDE.md</span>
+                <span class="fc-desc">Global. Who you are, how you communicate, the people you work with. Loads in every project.</span>
+              </div>
+              <div class="fc-stem"></div>
+              <div class="fc-row">
+                <div class="fc-project">
+                  <span class="fc-path">project-a/CLAUDE.md</span>
+                  <span class="fc-desc">This project only</span>
+                </div>
+                <div class="fc-project">
+                  <span class="fc-path">project-b/CLAUDE.md</span>
+                  <span class="fc-desc">This project only</span>
+                </div>
+                <div class="fc-project">
+                  <span class="fc-path">project-c/CLAUDE.md</span>
+                  <span class="fc-desc">This project only</span>
+                </div>
+              </div>
+            </div>
+            <p>Put things you'd repeat in every project in the global file. Put things specific to one project in that project's own file. Claude loads both, global first.</p>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="step">
+          <div class="step-header">
+            <div class="step-circle">4</div>
+            <h2 class="step-title">Add the Three Core Sections</h2>
+          </div>
+          <div class="step-body">
+            <p>A good CLAUDE.md has three things: <strong>Identity</strong>, <strong>Rules</strong>, and <strong>Context</strong>.</p>
+
+            <p><strong>Identity</strong>, what is this project, one or two sentences.</p>
+            <div class="terminal">
+              <div class="term-bar">
+                <span class="term-dot r"></span>
+                <span class="term-dot y"></span>
+                <span class="term-dot g"></span>
+                <span class="term-title">CLAUDE.md</span>
+              </div>
+              <div class="term-body">
+<span class="out"># My Recipe App</span>
+<span class="gap"></span>
+<span class="out">A web app that helps people find recipes based on ingredients they have at home.</span>
+<span class="out">Built with React and Instant DB.</span>
+              </div>
+            </div>
+
+            <p><strong>Rules</strong>, how should Claude behave in this project.</p>
+            <div class="terminal">
+              <div class="term-bar">
+                <span class="term-dot r"></span>
+                <span class="term-dot y"></span>
+                <span class="term-dot g"></span>
+                <span class="term-title">CLAUDE.md</span>
+              </div>
+              <div class="term-body">
+<span class="out">## Rules</span>
+<span class="gap"></span>
+<span class="out">- Keep the UI simple and mobile-friendly</span>
+<span class="out">- Use Tailwind CSS for all styling</span>
+<span class="out">- Never delete existing recipes from the database without asking first</span>
+              </div>
+            </div>
+
+            <p><strong>Context</strong>, what does Claude need to know about the structure.</p>
+            <div class="terminal">
+              <div class="term-bar">
+                <span class="term-dot r"></span>
+                <span class="term-dot y"></span>
+                <span class="term-dot g"></span>
+                <span class="term-title">CLAUDE.md</span>
+              </div>
+              <div class="term-body">
+<span class="out">## Key Files</span>
+<span class="gap"></span>
+<span class="out">- `src/App.tsx` -- Main app component</span>
+<span class="out">- `src/db.ts` -- Database connection and queries</span>
+<span class="out">- `instant.schema.ts` -- Database schema</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="step">
+          <div class="step-header">
+            <div class="step-circle">5</div>
+            <h2 class="step-title">Point to Other Files Instead of One Giant File</h2>
+          </div>
+          <div class="step-body">
+            <p>This is context management done through CLAUDE.md itself. Instead of one file that tries to hold everything, point to separate files by topic:</p>
+            <div class="terminal">
+              <div class="term-bar">
+                <span class="term-dot r"></span>
+                <span class="term-dot y"></span>
+                <span class="term-dot g"></span>
+                <span class="term-title">CLAUDE.md</span>
+              </div>
+              <div class="term-body">
+<span class="out">## Context</span>
+<span class="gap"></span>
+<span class="out">For how I communicate, see @docs/communication-style.md</span>
+<span class="out">For the people I work with, see @docs/contacts.md</span>
+<span class="out">For how the front end is built, see @docs/architecture.md</span>
+              </div>
+            </div>
+            <p>The <code>@filename</code> syntax tells Claude to load that file too, only when it's relevant. Your main CLAUDE.md stays short, a table of contents, and Claude loads the deep material on demand.</p>
+            <ul class="router-list">
+              <li><span class="arrow">&rsaquo;</span> Sub-folders can have their own CLAUDE.md too, and it loads automatically when Claude works in that folder.</li>
+              <li><span class="arrow">&rsaquo;</span> If a topic keeps growing, give it its own file and point to it. Don't let the main file grow instead.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Step 6 -->
+        <div class="step">
+          <div class="step-header">
+            <div class="step-circle">6</div>
+            <h2 class="step-title">Verify Claude Actually Read It</h2>
+          </div>
+          <div class="step-body">
+            <p>Don't assume it loaded. At the start of a session, ask:</p>
+            <div class="terminal">
+              <div class="term-bar">
+                <span class="term-dot r"></span>
+                <span class="term-dot y"></span>
+                <span class="term-dot g"></span>
+                <span class="term-title">claude</span>
+              </div>
+              <div class="term-body">
+<span class="cmd">What does my CLAUDE.md say?</span>
+              </div>
+            </div>
+            <p>If Claude summarizes it correctly, it loaded. If it hesitates or gets it wrong, the file is in the wrong location, or has a syntax issue.</p>
+          </div>
+        </div>
+
+        <!-- Step 7 -->
+        <div class="step">
+          <div class="step-header">
+            <div class="step-circle">7</div>
+            <h2 class="step-title">Keep It Short, Keep It Current</h2>
+          </div>
+          <div class="step-body">
+            <p>A good CLAUDE.md is short. If the main file runs past 40 to 50 lines, that's the signal to split it, not to keep adding.</p>
+            <p>Every time you correct Claude on the same thing twice, add it to CLAUDE.md. You can just say:</p>
+            <div class="terminal">
+              <div class="term-bar">
+                <span class="term-dot r"></span>
+                <span class="term-dot y"></span>
+                <span class="term-dot g"></span>
+                <span class="term-title">claude</span>
+              </div>
+              <div class="term-body">
+<span class="cmd">Add a rule to CLAUDE.md: always use early returns instead of nested if statements</span>
+              </div>
+            </div>
+            <p><strong>Bad:</strong> "This is a project. Please help me."</p>
+            <p><strong>Good:</strong> "A personal budget tracker built with React. Use Tailwind for styling. The main data lives in <code>src/data/transactions.ts</code>. Never mock data, always use the real Instant DB."</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TROUBLESHOOTING -->
+    <section class="troubleshooting-section">
+      <h2 class="troubleshooting-label">Troubleshooting</h2>
+      <div class="trouble-list">
+
+        <div class="trouble-item">
+          <p class="trouble-error">Claude seems confused about which project we're working on</p>
+          <p class="trouble-fix">You're probably in a chat that's mixed two projects. Start a new chat for the current one.</p>
+        </div>
+
+        <div class="trouble-item">
+          <p class="trouble-error">Claude keeps referencing something from earlier that doesn't apply anymore</p>
+          <p class="trouble-fix">Context bleed. A new chat, or <code>/clear</code>, fixes it.</p>
+        </div>
+
+        <div class="trouble-item">
+          <p class="trouble-error">Session feels sluggish</p>
+          <p class="trouble-fix">Try <code>/compact</code> first if you want to stay in the same chat. A new chat works too.</p>
+        </div>
+
+        <div class="trouble-item">
+          <p class="trouble-error">Claude keeps forgetting my preferences</p>
+          <p class="trouble-fix">Check the file is at the project root, not a subfolder, and check whether it belongs in the global file instead.</p>
+        </div>
+
+        <div class="trouble-item">
+          <p class="trouble-error">Claude ignores a rule</p>
+          <p class="trouble-fix">Be more specific. "Write clean code" is vague. "Use early returns instead of nested if statements" is actionable.</p>
+        </div>
+
+        <div class="trouble-item">
+          <p class="trouble-error">File is getting too long</p>
+          <p class="trouble-fix">Split it. Move a topic to its own file and point to it with <code>@filename</code>.</p>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>
