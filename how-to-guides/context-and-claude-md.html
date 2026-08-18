@@ -22,6 +22,12 @@
     .router-list { list-style: none; padding-left: 0; display: flex; flex-direction: column; gap: 6px; margin: 12px 0; }
     .router-list li { font-size: 15px; color: var(--text); padding-left: 18px; position: relative; }
     .router-list li span.arrow { position: absolute; left: 0; color: var(--teal); font-weight: 600; }
+    .command-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 18px 0; }
+    .command-card { background: var(--cream-light); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; }
+    .command-card h3 { margin: 0 0 6px; font-family: var(--font-serif); font-size: 20px; }
+    .command-card code { display: inline-block; margin-bottom: 8px; color: var(--teal-dark); font-family: var(--font-mono); font-weight: 600; }
+    .command-card p { margin: 0; }
+    @media (max-width: 640px) { .command-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -57,26 +63,14 @@
         <div class="step">
           <div class="step-header">
             <div class="step-circle">1</div>
-            <h2 class="step-title">Keep Projects in Separate Chats</h2>
+            <h2 class="step-title">Keep My Projects in Separate Chats</h2>
           </div>
           <div class="step-body">
-            <p>Claude has a command that clears a session's memory:</p>
-            <div class="terminal">
-              <div class="term-bar">
-                <span class="term-dot r"></span>
-                <span class="term-dot y"></span>
-                <span class="term-dot g"></span>
-                <span class="term-title">claude</span>
-              </div>
-              <div class="term-body">
-<span class="cmd">/clear</span>
-              </div>
-            </div>
-            <p>In practice, most people never type it. What actually happens: you open a new chat for each project instead. That's the real habit, and it works just as well.</p>
-            <p><strong>The rule:</strong> one project, one chat. Talking about your website, and then your job search, and then a client's app, all in the same chat, means Claude is holding all three at once. Start a new chat when you switch projects, even if you never touch <code>/clear</code>.</p>
+            <p>Claude keeps the conversation, files, decisions, and assumptions from a session in context. If you mix unrelated projects into one chat, those contexts can bleed together.</p>
+            <p><strong>The rule:</strong> one project, one chat. Use a separate chat for your website, your job search, and a client's app. Start a new chat when you switch projects, even if you stay in the same folder.</p>
             <div class="tip-box">
               <span class="tip-label">Tip</span>
-              <p>If a session has run long and Claude seems slower or less sharp, <code>/compact</code> compresses the history without wiping it. Use it inside a project. Use a new chat between projects.</p>
+              <p>Separate chats are the clean boundary between projects. The next point covers what to do when you want to keep working on the same subject.</p>
             </div>
           </div>
         </div>
@@ -85,6 +79,30 @@
         <div class="step">
           <div class="step-header">
             <div class="step-circle">2</div>
+            <h2 class="step-title">Use Compact and Clear</h2>
+          </div>
+          <div class="step-body">
+            <p>Use these commands when you are continuing the same subject but need to manage the chat's context.</p>
+            <div class="command-grid">
+              <div class="command-card">
+                <h3>Clear</h3>
+                <code>/clear</code>
+                <p>Start over in the same chat on the same subject. It gives you a clean slate without opening a new project chat.</p>
+              </div>
+              <div class="command-card">
+                <h3>Compact</h3>
+                <code>/compact</code>
+                <p>Compress the conversation while keeping the important context. Use it when the context window reaches roughly 40–50%.</p>
+              </div>
+            </div>
+            <p><strong>Remember:</strong> use a new chat between projects. Use <code>/clear</code> or <code>/compact</code> when you are continuing the same subject.</p>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step">
+          <div class="step-header">
+            <div class="step-circle">3</div>
             <h2 class="step-title">What Is CLAUDE.md?</h2>
           </div>
           <div class="step-body">
@@ -105,10 +123,10 @@
           </div>
         </div>
 
-        <!-- Step 3 -->
+        <!-- Step 4 -->
         <div class="step">
           <div class="step-header">
-            <div class="step-circle">3</div>
+            <div class="step-circle">4</div>
             <h2 class="step-title">Global and Project CLAUDE.md</h2>
           </div>
           <div class="step-body">
@@ -138,10 +156,10 @@
           </div>
         </div>
 
-        <!-- Step 4 -->
+        <!-- Step 5 -->
         <div class="step">
           <div class="step-header">
-            <div class="step-circle">4</div>
+            <div class="step-circle">5</div>
             <h2 class="step-title">Add the Three Core Sections</h2>
           </div>
           <div class="step-body">
@@ -199,10 +217,10 @@
           </div>
         </div>
 
-        <!-- Step 5 -->
+        <!-- Step 6 -->
         <div class="step">
           <div class="step-header">
-            <div class="step-circle">5</div>
+            <div class="step-circle">6</div>
             <h2 class="step-title">Point to Other Files Instead of One Giant File</h2>
           </div>
           <div class="step-body">
@@ -230,10 +248,10 @@
           </div>
         </div>
 
-        <!-- Step 6 -->
+        <!-- Step 7 -->
         <div class="step">
           <div class="step-header">
-            <div class="step-circle">6</div>
+            <div class="step-circle">7</div>
             <h2 class="step-title">Verify Claude Actually Read It</h2>
           </div>
           <div class="step-body">
@@ -253,10 +271,10 @@
           </div>
         </div>
 
-        <!-- Step 7 -->
+        <!-- Step 8 -->
         <div class="step">
           <div class="step-header">
-            <div class="step-circle">7</div>
+            <div class="step-circle">8</div>
             <h2 class="step-title">Keep It Short, Keep It Current</h2>
           </div>
           <div class="step-body">
