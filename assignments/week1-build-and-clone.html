@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- olive-reviewed: 2026-08-10 -->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build and Clone</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#F5F0EB;--teal:#0D9488;--tealdark:#0b7a70;--ink:#1a1a1a;--muted:#6b6257;--card:#ffffff;--rule:#e3dcd3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--cream);color:var(--ink);font-family:'Inter',system-ui,sans-serif;line-height:1.6}
+.topbar{height:4px;background:var(--teal)}
+.banner{background:#262521;padding:40px 24px 32px}
+.bannerinner{max-width:720px;margin:0 auto}
+.mark{font-size:13px;letter-spacing:.08em;color:#5eead4;font-weight:600;margin-bottom:18px}
+h1{font-family:'Playfair Display',serif;font-size:40px;line-height:1.15;color:#f5f0eb}
+.wrap{max-width:720px;margin:0 auto;padding:36px 24px 80px}
+.goal{background:var(--card);border:1px solid var(--rule);border-left:4px solid var(--teal);border-radius:10px;padding:16px 20px;margin-bottom:26px;font-size:15px}
+.goal b{color:var(--teal)}
+section{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:28px 30px;margin-bottom:22px}
+.num{display:inline-block;background:var(--teal);color:#fff;font-size:13px;font-weight:600;border-radius:999px;padding:2px 11px;margin-bottom:12px}
+h2{font-family:'Playfair Display',serif;font-size:24px;margin-bottom:10px}
+p{margin-bottom:12px}
+p:last-child{margin-bottom:0}
+ul{margin:0 0 12px 20px}
+ul:last-child{margin-bottom:0}
+li{margin-bottom:6px}
+.promptbox{background:#faf7f3;border:1px solid var(--rule);border-radius:10px;padding:20px;font-size:15px;line-height:1.7;margin:14px 0}
+.blank{background:#fdf3d7;border-bottom:2px solid var(--teal);padding:1px 6px;border-radius:4px;font-style:italic;cursor:text;outline:none}
+.blank:focus{background:#fbecc0}
+.copybtn{background:var(--teal);color:#fff;border:none;border-radius:8px;padding:10px 18px;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer}
+.copybtn:active{transform:scale(.98)}
+.runs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+.run{border:1px solid var(--rule);border-radius:10px;padding:14px;text-align:center}
+.run b{display:block;font-size:15px}
+.run .lvl{display:inline-block;margin-top:4px;font-size:12px;font-weight:600;color:var(--teal);background:#e8f6f4;border-radius:999px;padding:2px 10px}
+.run span.tag{display:block;font-size:13px;color:var(--muted);margin-top:4px}
+.qs li{margin-bottom:9px}
+.foot{text-align:center;color:var(--muted);font-size:13px;margin-top:40px}
+.cap{font-size:13px;color:var(--muted);margin-bottom:16px}
+.faq{background:#faf7f3;border:1px solid var(--rule);border-radius:10px;padding:14px 18px;margin-top:14px}
+.faq .q{font-weight:600;margin-bottom:2px}
+.faq .a{color:var(--muted);margin-bottom:10px}
+.faq .a:last-child{margin-bottom:0}
+/* Finder mockups, light like the real thing */
+.mock{border:1px solid var(--rule);border-radius:10px;overflow:hidden;margin:16px 0 6px;box-shadow:0 2px 8px rgba(0,0,0,.06);font-size:13px;background:#fff}
+.mbar{background:#ece6df;padding:8px 12px;display:flex;align-items:center;gap:6px;border-bottom:1px solid var(--rule)}
+.dot{width:10px;height:10px;border-radius:50%}
+.dot:nth-child(1){background:#ff5f57}.dot:nth-child(2){background:#febc2e}.dot:nth-child(3){background:#28c840}
+.mtitle{margin-left:10px;color:var(--muted);font-weight:500}
+.fbody{display:flex;min-height:120px}
+.fside{width:132px;background:#f6f2ec;border-right:1px solid var(--rule);padding:10px 0}
+.fside div{padding:4px 14px;color:#555}
+.fside .on{background:#3478f6;color:#fff;border-radius:6px;margin:0 6px;padding:4px 8px;font-weight:500}
+.fmain{flex:1;padding:16px;display:flex;gap:22px;align-items:flex-start;position:relative}
+.ficon{text-align:center;width:110px}
+.ficon .glyph{font-size:38px;line-height:1}
+.ficon .fname{margin-top:4px;font-weight:500}
+.ficon .fname.sel{background:#3478f6;color:#fff;border-radius:5px;padding:1px 7px;display:inline-block}
+.menu{position:absolute;left:120px;top:24px;background:#f5f2ee;border:1px solid var(--rule);border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,.18);min-width:150px;padding:5px;z-index:2}
+.menu div{padding:4px 12px;border-radius:5px;color:#333}
+.menu .on{background:#3478f6;color:#fff}
+.dialog{margin:14px auto;max-width:420px;border:1px solid var(--rule);border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,.14);background:#fff}
+.dbody{padding:10px 14px}
+.crumb{color:var(--muted);margin-bottom:8px}
+.drow{padding:6px 10px;border-radius:6px}
+.drow.on{background:#3478f6;color:#fff;font-weight:500}
+.dfootr{display:flex;justify-content:flex-end;gap:8px;padding:10px 14px;border-top:1px solid var(--rule)}
+.btn{border:1px solid var(--rule);background:#fff;border-radius:7px;padding:5px 14px}
+.btn.go{background:#3478f6;color:#fff;border-color:#3478f6;font-weight:500}
+/* Claude desktop app mockups, dark like the real thing */
+.amock{background:#262521;border-radius:12px;padding:16px;margin:16px 0 6px;font-size:14px;color:#d6d1c8;position:relative;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.amock.tall{padding-top:210px}
+.trow{display:flex;gap:8px;margin-bottom:10px}
+.dchip{background:#3a3833;border-radius:9px;padding:5px 13px;color:#e8e4dd;font-weight:500}
+.dchip.hot{outline:2px solid var(--teal)}
+.dinput{background:#2e2d29;border:1px solid #45433d;border-radius:12px;padding:14px 16px;color:#8d8880;margin-bottom:12px}
+.dbot{display:flex;align-items:center;gap:12px;position:relative}
+.dbot .autochip{color:#e5b567;background:#3a3320;border-radius:7px;padding:3px 11px;font-weight:600}
+.dbot .autochip.hot{outline:2px solid var(--teal)}
+.dbot .dim{color:#8d8880}
+.dbot .rightside{margin-left:auto;display:flex;gap:16px;align-items:center;color:#e8e4dd}
+.dbot .rightside .hot{outline:2px solid var(--teal);border-radius:7px;padding:2px 8px}
+.dmenu{position:absolute;background:#33322d;border:1px solid #4a4842;border-radius:12px;box-shadow:0 10px 26px rgba(0,0,0,.45);min-width:190px;padding:10px 6px;z-index:2;font-size:14px}
+.dmenu .hd{color:#8d8880;padding:2px 12px 8px}
+.dmenu .row{display:flex;justify-content:space-between;gap:24px;padding:5px 12px;border-radius:6px;color:#e8e4dd}
+.dmenu .row .k{color:#8d8880}
+.dmenu .div{border-top:1px solid #4a4842;margin:6px 8px}
+.dmenu.up-right{right:0;bottom:40px}
+.dmenu.up-left{left:0;bottom:40px}
+.badge{background:#e8e4dd;color:#262521;border-radius:5px;padding:0 7px;font-size:12px;font-weight:600}
+.effort{position:absolute;right:0;bottom:40px;background:#33322d;border:1px solid #4a4842;border-radius:14px;box-shadow:0 10px 26px rgba(0,0,0,.45);padding:16px 18px;min-width:280px;z-index:2}
+.effort .ehd{font-size:16px;color:#8d8880;margin-bottom:10px}
+.effort .ehd b{color:#e8e4dd;font-weight:600}
+.effort .lbls{display:flex;justify-content:space-between;color:#8d8880;margin-bottom:8px}
+.slider{background:#211f1c;border-radius:999px;height:26px;display:flex;align-items:center;justify-content:space-between;padding:0 12px;position:relative}
+.sdot{width:5px;height:5px;border-radius:50%;background:#5a5750}
+.sdot.last{background:#8f7ff5}
+.shandle{position:absolute;width:22px;height:22px;border-radius:50%;background:#cfcac2;top:2px}
+.partdiv{display:flex;align-items:center;gap:14px;margin:32px 0 20px}
+.partdiv .line{flex:1;height:1px;background:var(--rule)}
+.partdiv .plabel{font-size:13px;letter-spacing:.06em;color:var(--teal);font-weight:600;white-space:nowrap}
+@media(max-width:560px){.runs{grid-template-columns:1fr}h1{font-size:30px}.fside{width:96px}}
+</style>
+</head>
+<body>
+<div class="topbar"></div>
+<div class="banner">
+<div class="bannerinner">
+<div class="mark">[ ai study camp ]</div>
+<h1>Build and Clone</h1>
+</div>
+</div>
+<div class="wrap">
+<div class="goal"><b>Goal.</b> See how the same prompt produces different results depending on which model builds it and how hard that model thinks.</div>
+<p style="color:var(--muted);font-size:14px;margin-bottom:6px">Two parts this week: build your own site three ways, then clone a real one.</p>
+<div class="faq" style="margin-bottom:22px"><div class="q">Where do I do this?</div><div class="a">All three builds happen in <b>Claude Code inside the Claude desktop app</b>. Use the Code tab, start a new session for each run, and point that session at the assignment folder. Do not use Claude Chat or Cowork for this assignment.</div></div>
+
+<div class="partdiv"><span class="line"></span><span class="plabel">PART 1, BUILD YOUR OWN</span><span class="line"></span></div>
+
+<section>
+<div class="num">1</div>
+<h2>The job</h2>
+<ul>
+<li>Pick something you want a website for. Your business, a hobby, an event, an idea you have been sitting on.</li>
+<li>You will build the same site three times. Each run pairs a model with an effort level, so the two ends of the spectrum are obvious.</li>
+</ul>
+<div class="runs">
+<div class="run"><b>Haiku 4.5</b><span class="lvl">Low effort</span><span class="tag">answers fast, barely thinks</span></div>
+<div class="run"><b>Sonnet 5</b><span class="lvl">middle of the slider</span><span class="tag">the everyday pair</span></div>
+<div class="run"><b>Opus 5</b><span class="lvl">Max effort</span><span class="tag">slow, thinks it through</span></div>
+</div>
+<div class="faq">
+<div class="q">Why pair the fastest model with the least thinking, and the slowest with the most?</div>
+<div class="a">So the contrast is obvious. Haiku on low effort should feel quick and a little careless. Opus on max effort should feel slow and considered. That gap is the entire point of the exercise.</div>
+</div>
+</section>
+
+<section>
+<div class="num">2</div>
+<h2>Two folders</h2>
+<p>Open Finder, click <b>Documents</b> in the sidebar, then right-click any empty space and choose <b>New Folder</b>.</p>
+<div class="mock">
+<div class="mbar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="mtitle">Documents</span></div>
+<div class="fbody">
+<div class="fside"><div>Desktop</div><div class="on">Documents</div><div>Downloads</div></div>
+<div class="fmain">
+<div class="menu"><div class="on">New Folder</div><div>Get Info</div><div>Sort By</div></div>
+</div>
+</div>
+</div>
+<p class="cap">Right-click in the empty space, not on a file.</p>
+<p>Name it <b>AISC</b>, all caps, then press Return.</p>
+<div class="mock">
+<div class="mbar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="mtitle">Documents</span></div>
+<div class="fbody">
+<div class="fside"><div>Desktop</div><div class="on">Documents</div><div>Downloads</div></div>
+<div class="fmain">
+<div class="ficon"><div class="glyph">&#128193;</div><div class="fname sel">AISC</div></div>
+</div>
+</div>
+</div>
+<p class="cap">Type the name while it is highlighted.</p>
+<p>Double-click into AISC and make one more folder inside it: <b>week1-assignment</b>. Lowercase, with the hyphen, no spaces.</p>
+<div class="mock">
+<div class="mbar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="mtitle">Documents &gt; AISC</span></div>
+<div class="fbody">
+<div class="fside"><div>Desktop</div><div class="on">Documents</div><div>Downloads</div></div>
+<div class="fmain">
+<div class="ficon"><div class="glyph">&#128193;</div><div class="fname sel">week1-assignment</div></div>
+</div>
+</div>
+</div>
+<p class="cap">Your three sites will live here.</p>
+<ul>
+<li>Everything this week goes in these two folders. No others yet.</li>
+<li>Thursday we set up your real workspace together and move it in.</li>
+</ul>
+<div class="faq">
+<div class="q">What if I already made other folders?</div>
+<div class="a">Leave them. Just make sure AISC and week1-assignment exist as described. Nothing else needs to change.</div>
+</div>
+</section>
+
+<section>
+<div class="num">3</div>
+<h2>Open Claude Code in the desktop app</h2>
+<p>Open the Claude desktop app, choose the <b>Code</b> tab, and start a new session. Above the message box sit the folder buttons. Click the one with the folder-plus icon.</p>
+<div class="amock">
+<div class="trow"><span class="dchip">&#128421;&#65039; Local</span><span class="dchip hot">&#128193;+</span></div>
+<div class="dinput">Describe a task or ask a question</div>
+<div class="dbot">
+<span class="autochip">Auto</span><span class="dim">+</span><span class="dim">&#127908;</span>
+<span class="rightside"><span>Sonnet 5</span><span>High</span></span>
+</div>
+</div>
+<p class="cap">Yours may already show a folder name next to Local. The folder-plus button changes it.</p>
+<p>In the window that opens, go to Documents, then AISC, click <b>week1-assignment</b> once, and click Open.</p>
+<div class="dialog">
+<div class="mbar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="mtitle">Choose a folder</span></div>
+<div class="dbody">
+<div class="crumb">Documents &gt; AISC</div>
+<div class="drow on">&#128193; week1-assignment</div>
+</div>
+<div class="dfootr"><span class="btn">Cancel</span><span class="btn go">Open</span></div>
+</div>
+<p class="cap">The folder name now shows above the message box. Everything Claude builds lands there.</p>
+<p>One more check: the button at the bottom left should say <b>Auto</b>. If it says Manual or Plan, click it and pick Auto.</p>
+<div class="amock tall">
+<div class="dmenu up-left" style="left:16px;bottom:56px">
+<div class="hd">Mode</div>
+<div class="row"><span>Manual</span><span class="k">1</span></div>
+<div class="row"><span>Accept edits</span><span class="k">2</span></div>
+<div class="row"><span>Plan</span><span class="k">3</span></div>
+<div class="row"><span>Auto</span><span><span class="badge">Default</span> &#10003;</span></div>
+<div class="row"><span>Bypass permissions</span><span class="k">Enable</span></div>
+</div>
+<div class="trow"><span class="dchip">&#128421;&#65039; Local</span><span class="dchip">&#128193; week1-assignment</span></div>
+<div class="dinput">Describe a task or ask a question</div>
+<div class="dbot">
+<span class="autochip hot">Auto</span><span class="dim">+</span><span class="dim">&#127908;</span>
+<span class="rightside"><span>Sonnet 5</span><span>High</span></span>
+</div>
+</div>
+<p class="cap">Auto lets Claude create the files without stopping to ask about each one.</p>
+<div class="faq">
+<div class="q">Why Auto, not Manual?</div>
+<div class="a">Manual stops and asks before every file it touches. For a one-shot build like this, that is a lot of clicking for no real decision on your end. Auto builds straight through.</div>
+<div class="q">Does the folder selection carry over to my next session?</div>
+<div class="a">No. Each new session starts pointed at nothing, or at whatever you last had open. Check the folder chip every time you start a fresh session in step 5.</div>
+</div>
+</section>
+
+<section>
+<div class="num">4</div>
+<h2>The prompt</h2>
+<p>Click the highlighted part and type your idea. Leave the rest exactly as it is, every run.</p>
+<div class="promptbox" id="prompt">Build me a complete one-page website for <span class="blank" contenteditable="true" spellcheck="false">describe your website idea here</span>.<br><br>Structure it like this: a hero section at the top with a big headline and one line under it, an about section, three sections showing what I do or offer, and a footer with contact details.<br><br>Put everything in one single HTML file I can open in my browser. Write real text that fits the subject, not placeholder text. Pick colors and fonts that fit the subject. Make it look good on a phone too.<br><br>When you are done, tell me in one sentence what you would improve next.</div>
+<button class="copybtn" onclick="copyPrompt(this)">Copy my prompt</button>
+<ul>
+<li>The structure lines are the scaffolding. Same skeleton every run is what makes the results comparable.</li>
+<li>Hero, section, footer: the words designers use for the parts of a page. You will hear them all course.</li>
+</ul>
+<div class="faq">
+<div class="q">Can I change the structure part too?</div>
+<div class="a">No, only your idea in the highlighted blank. If the structure changes between runs, you are no longer comparing the same thing.</div>
+</div>
+</section>
+
+<section>
+<div class="num">5</div>
+<h2>Three runs, model paired with effort</h2>
+<div class="faq">
+<div class="q">One new session per run, no exceptions.</div>
+<div class="a">If you paste the prompt again in the same chat you already used, the model can see what it built last time and the run stops being a clean one shot. Haiku gets its own fresh session, Sonnet gets its own, Opus gets its own. Same prompt every time, never the same chat twice.</div>
+</div>
+<p>Paste the prompt and send it. Before you send, set the model and the effort level to match the run you are on. Click the model name at the bottom right to open the model list:</p>
+<div class="amock tall">
+<div class="dmenu up-right" style="right:16px;bottom:56px">
+<div class="hd">Models</div>
+<div class="row"><span>Fable 5</span><span class="k">1</span></div>
+<div class="row"><span>Opus 5</span><span class="k">2</span></div>
+<div class="row"><span>Sonnet 5</span><span>&#10003;</span></div>
+<div class="row"><span>Haiku 4.5</span><span class="k">4</span></div>
+<div class="div"></div>
+<div class="row"><span>More models</span><span class="k">&#8250;</span></div>
+</div>
+<div class="trow"><span class="dchip">&#128421;&#65039; Local</span><span class="dchip">&#128193; week1-assignment</span></div>
+<div class="dinput">Describe a task or ask a question</div>
+<div class="dbot">
+<span class="autochip">Auto</span><span class="dim">+</span><span class="dim">&#127908;</span>
+<span class="rightside"><span class="hot">Sonnet 5</span><span>High</span></span>
+</div>
+</div>
+<p class="cap">Fable 5 is in the list too. Leave it out this time, these three make the pairing clean.</p>
+<p>Then click the effort name right next to it. A slider opens, from Faster to Smarter:</p>
+<div class="amock tall">
+<div class="effort" style="bottom:56px">
+<div class="ehd">Effort <b>Low</b></div>
+<div class="lbls"><span>Faster</span><span>Smarter</span></div>
+<div class="slider"><span class="shandle" style="left:6px"></span><span class="sdot" style="opacity:0"></span><span class="sdot"></span><span class="sdot"></span><span class="sdot"></span><span class="sdot"></span><span class="sdot last"></span></div>
+</div>
+<div class="trow"><span class="dchip">&#128421;&#65039; Local</span><span class="dchip">&#128193; week1-assignment</span></div>
+<div class="dinput">Describe a task or ask a question</div>
+<div class="dbot">
+<span class="autochip">Auto</span><span class="dim">+</span><span class="dim">&#127908;</span>
+<span class="rightside"><span>Haiku 4.5</span><span class="hot">Low</span></span>
+</div>
+</div>
+<p class="cap">Drag the handle. The word above it names the level as you move.</p>
+<p>Same three pairs as step 1: Haiku on low, Sonnet in the middle, Opus on max.</p>
+<ul>
+<li>Fresh session for each run: new chat, re-select the folder, re-set both the model and the effort.</li>
+<li>One shot each. No fixing, no follow-ups.</li>
+<li>Name each file after its run: haiku-low, sonnet-mid, opus-max.</li>
+<li>Double-click the .html file in Finder to open it in your browser. No server, no localhost, needed.</li>
+</ul>
+<div class="faq">
+<div class="q">The slider does not show words like Low or Max, just dots. What do I do?</div>
+<div class="a">Drag to the far left for the Haiku run, roughly the middle for Sonnet, the far right for Opus. The exact label matters less than the position.</div>
+<div class="q">What if a model has no effort slider at all?</div>
+<div class="a">Some models fix their own effort and will not show the slider. If that happens, run it as is and note in step 6 that this model had no dial to move.</div>
+<div class="q">I forgot to reset something before sending. Do I start over?</div>
+<div class="a">Yes for that run. Close the chat without sending again, start a new one, and check the folder, model, and effort before you paste the prompt.</div>
+<div class="q">Claude says something about starting a local server, or a localhost address. What do I do?</div>
+<div class="a">Say no, or ask it to just save a single HTML file instead. You do not need a server for a one-page site, only a file you can double-click.</div>
+<div class="q">Can I skip opening the file and just grab a picture of it?</div>
+<div class="a">Yes. Ask Claude to save a screenshot of the finished site as a PNG in the same folder, named after the run. If it can, that PNG is what you bring Friday instead of opening the file live.</div>
+</div>
+</section>
+
+<section>
+<div class="num">6</div>
+<h2>What to notice</h2>
+<ul class="qs">
+<li>Which run finished first, and was it worse for being fast?</li>
+<li>Which wrote the most, and was more actually better?</li>
+<li>Which looks best in the browser, before you knew which made it?</li>
+<li>How did each one talk to you while it worked?</li>
+<li>Haiku on low effort versus Opus on max: what did the extra thinking time actually buy?</li>
+</ul>
+<p>Jot answers anywhere. Two sentences per question is plenty.</p>
+</section>
+
+<div class="partdiv"><span class="line"></span><span class="plabel">PART 2, CLONE SOMETHING REAL</span><span class="line"></span></div>
+<p style="color:var(--muted);font-size:14px;margin-bottom:6px">Building from scratch shows you the differences between models. Cloning shows you the speed. Most people who see this done live do not believe it took ten minutes.</p>
+
+<section>
+<div class="num">7</div>
+<h2>Pick a site and clone it</h2>
+<ul>
+<li>Pick something with a real design: your own site, your company's, or one you like the look of. One page is plenty, you do not need the whole site.</li>
+<li>Same folder as before, <b>week1-assignment</b>, new session. Point the app at it the same way as step 3.</li>
+</ul>
+<p>Take a screenshot of the page: press <b>Cmd + Shift + 4</b>, then drag over the part you want. It saves to your Desktop.</p>
+<div class="mock">
+<div class="mbar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="mtitle">Desktop</span></div>
+<div class="fbody">
+<div class="fside"><div class="on">Desktop</div><div>Documents</div><div>Downloads</div></div>
+<div class="fmain">
+<div class="ficon"><div class="glyph">&#128247;</div><div class="fname">Screenshot.png</div></div>
+</div>
+</div>
+</div>
+<p class="cap">Drag the screenshot straight into the message box to attach it.</p>
+<div class="promptbox">Recreate this page as a single HTML file. Match the layout, the colors, and the fonts as closely as you can. Use real text where you can read it in the image, and reasonable placeholder text anywhere you cannot.<br><br>[attach your screenshot here, and paste the site's address too if you have it]</div>
+<ul>
+<li>Send it and watch. This is not one shot: if something looks off, say so and let it fix it. A couple of rounds is normal.</li>
+<li>Save it as <b>clone-v1.html</b> when you are happy with it.</li>
+</ul>
+<div class="faq">
+<div class="q">Can Claude just visit the address itself instead of using a screenshot?</div>
+<div class="a">Some setups can. Try pasting the address in first. If nothing happens after a minute, fall back to the screenshot, that always works.</div>
+<div class="q">Is this allowed? It is someone else's design.</div>
+<div class="a">This stays in your own folder for practice. It is not for publishing as your own or presenting as a real product.</div>
+</div>
+</section>
+
+<section>
+<div class="num">8</div>
+<h2>Make one or more real changes</h2>
+<p>Ask for one or more changes that are actually yours. Some ideas:</p>
+<ul>
+<li>A different section</li>
+<li>New colors</li>
+<li>Different words</li>
+<li>One added feature</li>
+</ul>
+<ul>
+<li>Same session, same folder. Save the result as <b>clone-v2.html</b>, keeping v1 so you have a before and after.</li>
+<li>This is the part that proves you can edit, not just copy.</li>
+</ul>
+</section>
+
+<section>
+<div class="num">9</div>
+<h2>Friday</h2>
+<ul>
+<li>Bring all three from Part 1, unlabeled. An open HTML file in your browser or a PNG screenshot both work.</li>
+<li>The room guesses which run built which. Then you reveal.</li>
+<li>Your step 6 notes are what you share after the reveal.</li>
+<li>Bring both the cloned site and your edited version to Friday's show-and-tell.</li>
+</ul>
+</section>
+
+<p class="foot">AI for Building, Week 1</p>
+</div>
+<script>
+function copyPrompt(btn){
+  const text=document.getElementById('prompt').innerText;
+  navigator.clipboard.writeText(text).then(()=>{
+    btn.textContent='Copied';
+    setTimeout(()=>{btn.textContent='Copy my prompt'},1600);
+  });
+}
+</script>
+</body>
+</html>
