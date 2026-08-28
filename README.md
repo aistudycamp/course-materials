@@ -26,6 +26,7 @@ claude
 
 Step-by-step guides for common pain points. Open the HTML files in your browser.
 
+- [Home Base](how-to-guides/home-base.html)
 - [Install Claude Code](how-to-guides/install-claude-code.html)
 - [Install a Skill](how-to-guides/install-a-skill.html)
 - [Write a CLAUDE.md](how-to-guides/write-a-claude-md.html)

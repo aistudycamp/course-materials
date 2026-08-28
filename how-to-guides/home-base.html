@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<!-- olive-reviewed: 2026-08-28 -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home Base · AISC How-To Guides</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner">
+      <span class="logo-mark">[ ai study camp ]</span>
+    </div>
+  </header>
+
+  <!-- PAGE CONTENT -->
+  <main class="page-content">
+
+    <!-- HERO -->
+    <section class="guide-hero">
+      <div class="guide-badge">How-To Guide</div>
+      <h1 class="guide-title">Home Base</h1>
+      <p class="guide-subtitle">One command that always opens Claude Code in the same folder, from anywhere.</p>
+    </section>
+
+    <!-- WHY ONE FOLDER -->
+    <section class="intro-section">
+      <h2>Why One Folder</h2>
+      <p>Claude Code works best from one folder you always start in, your home base. Everything you build lives below it, and Claude can find the CLAUDE.md files that carry your project context. Start from a random folder instead, and none of that context is there.</p>
+    </section>
+
+    <!-- STEPS -->
+    <section class="steps-section">
+      <div class="steps-container">
+
+        <!-- Step 1 -->
+        <div class="step">
+          <div class="step-header">
+            <div class="step-circle">1</div>
+            <h2 class="step-title">Set It Up</h2>
+          </div>
+          <div class="step-body">
+            <p>You already made your home folder in Week 1, the one with <code>work</code>, <code>personal</code>, and <code>learning</code> inside it. Open Claude Code from anywhere and paste this to wire the shortcut to it.</p>
+            <div class="terminal">
+              <div class="term-bar">
+                <span class="term-dot r"></span>
+                <span class="term-dot y"></span>
+                <span class="term-dot g"></span>
+                <span class="term-title">claude</span>
+              </div>
+              <div class="term-body">
+<span class="cmd">Set up a shortcut so typing `claude` always starts a session in my home folder from Week 1, no matter where I am. If you're not sure which folder that is, ask me for its name or path before doing anything. Add a shell function named `claude` to my shell config: with no arguments it switches to that home folder and starts the real `claude` command there; with a folder name as an argument it opens that folder inside my home base instead. Call the real `claude` binary explicitly so the function doesn't call itself. Reload my shell config so it works right away, and tell me the exact path it's pointing at.</span>
+              </div>
+            </div>
+            <p>Claude finds your existing home folder and wires the shortcut to it. Typing <code>claude</code> now always starts there.</p>
+            <div class="tip-box">
+              <span class="tip-label">Tip</span>
+              <p>If it asks to reload your terminal, say yes. If it doesn't ask, close and reopen your terminal once.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step">
+          <div class="step-header">
+            <div class="step-circle">2</div>
+            <h2 class="step-title">Use It</h2>
+          </div>
+          <div class="step-body">
+            <p>From any folder, on any day, type:</p>
+            <div class="terminal">
+              <div class="term-bar">
+                <span class="term-dot r"></span>
+                <span class="term-dot y"></span>
+                <span class="term-dot g"></span>
+                <span class="term-title">claude</span>
+              </div>
+              <div class="term-body">
+<span class="cmd">claude</span>
+<span class="gap"></span>
+<span class="out">Started in ~/alex-home</span>
+              </div>
+            </div>
+            <p>Working on something specific? Pass the folder name and Claude opens that instead:</p>
+            <div class="terminal">
+              <div class="term-bar">
+                <span class="term-dot r"></span>
+                <span class="term-dot y"></span>
+                <span class="term-dot g"></span>
+                <span class="term-title">claude</span>
+              </div>
+              <div class="term-body">
+<span class="cmd">claude my-project</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TROUBLESHOOTING -->
+    <section class="troubleshooting-section">
+      <h2 class="troubleshooting-label">Troubleshooting</h2>
+      <div class="trouble-list">
+
+        <div class="trouble-item">
+          <p class="trouble-error">Typing claude does the same thing as before</p>
+          <p class="trouble-fix">Close and reopen your terminal. If that doesn't fix it, tell Claude "reload my shell config" and it will.</p>
+        </div>
+
+        <div class="trouble-item">
+          <p class="trouble-error">Not sure of your home folder's exact name or path</p>
+          <p class="trouble-fix">Ask Claude "what folders are at the top level of my user folder" and pick the one with work, personal, and learning inside it.</p>
+        </div>
+
+        <div class="trouble-item">
+          <p class="trouble-error">Never made a home folder in Week 1</p>
+          <p class="trouble-fix">Tell Claude that directly. It creates one now, at the top of your user folder, not the Desktop or Documents (those sync to iCloud automatically, which can corrupt a project stored inside them).</p>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>
