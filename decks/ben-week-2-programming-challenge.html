@@ -47,6 +47,7 @@
 </style>
 </head>
 <body>
+<!-- olive-reviewed: 2026-08-31 -->
 
 <div class="progress" id="progress"></div>
 <div class="deck" id="deck">
@@ -60,10 +61,24 @@
   </div>
 </section>
 
-<!-- ─── 2. Five features ───────────────────────────────────────────── -->
+<!-- 2. Supabase recovery -->
+<section class="slide">
+  <div class="eyebrow">Before we start</div>
+  <h2 style="margin-bottom:8px;">Supabase not set up yet?</h2>
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;max-width:960px;">
+    <div class="frow"><div class="fnum">01</div><div class="ftext">Create a free account at <b>supabase.com</b>.</div></div>
+    <div class="frow"><div class="fnum">02</div><div class="ftext">Create a project named <span class="incode">ai-study-camp</span>.</div></div>
+    <div class="frow"><div class="fnum">03</div><div class="ftext">Follow the <b>setup guide</b> to save your keys and install the MCP.</div></div>
+  </div>
+  <div class="callout" style="margin-top:8px;">
+    Setup guide: <a href="https://course-materials-opal.vercel.app/how-to-guides/supabase-setup.html" style="color:var(--accent);font-family:var(--font-mono);font-size:12px;">course-materials-opal.vercel.app/how-to-guides/supabase-setup.html</a>
+  </div>
+</section>
+
+<!-- 3. Four features -->
 <section class="slide">
   <div class="eyebrow">What you're building</div>
-  <h2 style="margin-bottom:4px;">Four features. One feed.</h2>
+  <h2 style="margin-bottom:4px;">Four features</h2>
   <div style="flex:1;display:flex;flex-direction:column;justify-content:space-evenly;margin-top:8px;">
     <div class="frow"><div class="fnum">01</div><div class="ftext">A form: <b>who's posting, who's getting the love</b>, a message.</div></div>
     <div class="frow"><div class="fnum">02</div><div class="ftext">A <b>real-time feed</b> showing shout-outs as they post.</div></div>
@@ -71,88 +86,93 @@
     <div class="frow"><div class="fnum">04</div><div class="ftext">Sort the feed by <b>most clapped</b>.</div></div>
   </div>
   <div style="margin-top:16px;">
-    <span class="concept-pill" style="font-size:13px;padding:7px 16px;">real-time</span>
-    <span class="concept-pill pink" style="font-size:13px;padding:7px 16px;">useQuery</span>
-    <span class="concept-pill pink" style="font-size:13px;padding:7px 16px;">transact</span>
-    <span class="concept-pill" style="font-size:13px;padding:7px 16px;">optimistic updates</span>
-    <span class="concept-pill" style="font-size:13px;padding:7px 16px;">Instant DB</span>
+    <span class="concept-pill" style="font-size:13px;padding:7px 16px;">Realtime</span>
+    <span class="concept-pill pink" style="font-size:13px;padding:7px 16px;">supabase-js</span>
+    <span class="concept-pill pink" style="font-size:13px;padding:7px 16px;">week2_shoutouts</span>
+    <span class="concept-pill" style="font-size:13px;padding:7px 16px;">Postgres</span>
+    <span class="concept-pill" style="font-size:13px;padding:7px 16px;">Supabase</span>
   </div>
 </section>
 
-<!-- ─── 3. Setup ────────────────────────────────── -->
+<!-- 4. Setup -->
 <section class="slide">
   <div class="eyebrow">Setup</div>
-  <h2 style="margin-bottom:20px;">Get the starter.</h2>
+  <h2 style="margin-bottom:20px;">Your course folder</h2>
   <div style="display:grid;grid-template-columns:1.15fr 1fr;gap:18px;flex:1;min-height:0;">
 
     <div style="background:var(--white);border:2px solid var(--accent);border-radius:14px;padding:22px 20px;display:flex;flex-direction:column;">
-      <span class="chip" style="align-self:flex-start;">Paste into Claude</span>
-      <pre style="font-family:var(--font-mono);font-size:14px;line-height:1.95;background:var(--dark);color:var(--accent-light);border-radius:8px;padding:18px 20px;margin-top:12px;flex:1;white-space:pre-wrap;display:flex;flex-direction:column;justify-content:center;">Set up the Instant Starter on my Desktop:
-1. Clone https://github.com/aistudycamp/
-   instant-starter.git into ~/Desktop
-   as shoutout-wall
-2. cd into it, run npm install
-3. cp .env.local.example .env.local
-4. Set NEXT_PUBLIC_INSTANT_APP_ID to:
-   [APP ID from class chat]
-5. Run npm run dev in the background
-6. Tell me when localhost:3000 is up</pre>
-      <div class="note" style="margin-top:10px;">App ID is in the class chat.</div>
+      <span class="chip" style="align-self:flex-start;">In the terminal</span>
+      <pre style="font-family:var(--font-mono);font-size:14px;line-height:1.95;background:var(--dark);color:var(--accent-light);border-radius:8px;padding:18px 20px;margin-top:12px;flex:1;white-space:pre-wrap;display:flex;flex-direction:column;justify-content:center;">1. Open your AI Study Camp folder
+   in VS Code (supabase.md and
+   CLAUDE.md live there)
+2. In the terminal, run: claude
+3. Type /mcp and confirm
+   supabase is on the list
+4. Next slide: paste the
+   build prompt</pre>
+      <div class="note" style="margin-top:10px;">Claude builds the app in a new shoutout-wall folder inside it.</div>
     </div>
 
     <div style="display:flex;flex-direction:column;gap:14px;min-height:0;">
       <div style="background:var(--white);border:1px solid var(--border);border-radius:14px;padding:20px;flex:1;">
         <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;">Already wired</div>
         <ul style="font-size:14px;color:var(--text2);padding-left:16px;margin:10px 0 0;line-height:1.9;">
-          <li>Next.js, InstantDB, Tailwind</li>
-          <li>Sign in, working</li>
-          <li>Schema and permissions, pushed</li>
+          <li><span class="incode">supabase.md</span>: Project URL + anon key</li>
+          <li><span class="incode">CLAUDE.md</span>: course rules</li>
+          <li>Supabase MCP, installed</li>
         </ul>
       </div>
       <div style="background:var(--white);border:1px solid var(--border);border-radius:14px;padding:20px;flex:1;">
-        <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;">Then</div>
+        <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;">The demo table</div>
         <ul style="font-size:14px;color:var(--text2);padding-left:16px;margin:10px 0 0;line-height:1.9;">
-          <li>Open the URL, enter your email</li>
-          <li>Type the 6 digit code</li>
-          <li>Next slide, paste the build prompt</li>
+          <li>One table: <span class="incode">week2_shoutouts</span></li>
+          <li>Open policies: anyone can read and write</li>
+          <li>Fine for class, never for a real app</li>
         </ul>
       </div>
       <div style="background:rgba(255,200,100,.12);border:1px solid rgba(200,150,0,.2);border-radius:7px;padding:10px 13px;font-size:12px;color:var(--text2);">
-        <b style="color:var(--text);">Do not edit</b> <span class="incode">instant.schema.ts</span> or <span class="incode">instant.perms.ts</span>. One shared app, whole room.
+        <b style="color:var(--text);">Never share</b> the service role key or database password. If Claude asks, say no: tell it to use the MCP.
       </div>
     </div>
 
   </div>
 </section>
 
-<!-- ─── 6. Mega prompt ────────────────────────────────────────────── -->
+<!-- 5. Mega prompt -->
 <section class="slide">
   <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:18px;gap:20px;">
     <div>
-      <div class="eyebrow">Your starting prompt</div>
-      <h2 style="font-size:38px;">Paste this into Claude.</h2>
+      <div class="eyebrow">Paste into Claude</div>
+      <h2 style="font-size:38px;">The build prompt</h2>
     </div>
     <button id="copyBtn" onclick="copyPrompt()" style="font-family:var(--font-mono);font-size:13px;font-weight:500;background:var(--accent-bg);color:var(--accent);border:1px solid rgba(13,148,136,.35);padding:10px 20px;border-radius:8px;cursor:pointer;letter-spacing:.04em;transition:all .2s;white-space:nowrap;flex-shrink:0;">Copy prompt</button>
   </div>
   <div style="flex:1;min-height:0;">
-    <pre id="promptText" style="font-family:var(--font-mono);font-size:12px;line-height:1.8;color:var(--accent-light);background:var(--dark);border-radius:12px;padding:24px 28px;height:100%;overflow-y:auto;white-space:pre-wrap;word-break:break-word;">We're building a real-time Shoutout Wall. Anyone can post a message of appreciation for a classmate and everyone sees it live. Stack: Next.js + InstantDB + Tailwind.
+    <pre id="promptText" style="font-family:var(--font-mono);font-size:12px;line-height:1.8;color:var(--accent-light);background:var(--dark);border-radius:12px;padding:24px 28px;height:100%;overflow-y:auto;white-space:pre-wrap;word-break:break-word;">We're building a real-time Shout-Out Wall. Anyone can post a message of appreciation for a classmate, and everyone sees new posts and claps land live in every open browser. Stack: Next.js + Supabase (@supabase/supabase-js) + Tailwind.
 
-The starter is already running: sign in works, the schema is pushed, the dev server is up.
+My Supabase Project URL and anon public key are in supabase.md in this folder. Use those. Never ask me for the service role key or the database password; you do not need them. All schema work (tables, policies, Realtime) goes through the Supabase MCP.
 
-Do not edit `src/instant.schema.ts`, `src/instant.perms.ts`, or `src/components/AuthGate.tsx`. Everything you need is already defined: a `shoutouts` entity with fromName, toName, message, claps, createdAt.
+Do this setup first, in order:
 
-Build inside `src/app/page.tsx`, keeping it wrapped in `<AuthGate>`.
+1. Scaffold a Next.js app in a new folder here called shoutout-wall (TypeScript, Tailwind, App Router). Then work inside that folder.
+2. Install @supabase/supabase-js. Create .env.local with NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY, copying the values from supabase.md. Confirm .env.local is gitignored.
+3. Make a shared Supabase client in lib/supabase.ts that reads those two env vars.
+4. Using the Supabase MCP, create a table called week2_shoutouts with columns: id (uuid primary key, default gen_random_uuid()), from_name (text), to_name (text), message (text), claps (integer, default 0), created_at (timestamptz, default now()). Enable row level security, then add permissive policies so anyone can select, insert, and update rows. This is an open class demo table; that is intentional.
+5. Enable Realtime on week2_shoutouts so other browsers get inserts and updates pushed to them.
+6. If the MCP fails at any point, do not stop: print the exact SQL for me to paste into the Supabase dashboard SQL editor and wait for me to say it ran.
+7. Run git init and commit the starting point.
+8. Start the dev server in the background with npm run dev and tell me the localhost URL.
 
-Build all four features in one pass. Do not stop between features, do not ask me to confirm each one, and do not use plan mode. Make a git commit after each feature so we can roll back, then keep going without waiting.
+Then build these four features in one pass. Do not stop between features and do not ask me to confirm each one. Make a git commit after each feature so we can roll back.
 
 Feature 1: Posting form
-A form at the top with three inputs: your name, who you're appreciating, and a message. On submit, save a shoutout to InstantDB using Instant's `transact` API, with claps starting at 0 and createdAt as a timestamp. Clear the form after posting.
+A form at the top with three inputs: your name, who you're appreciating, and a message. On submit, insert a row into week2_shoutouts with claps at 0. Clear the form after posting.
 
-Feature 2: Real-time feed
-Below the form, render all shoutouts as cards using Instant's `useQuery` hook so it updates live. Each card shows who is appreciating who, the message, how long ago it posted, and the clap count. Test by opening two browser tabs.
+Feature 2: Realtime feed
+Below the form, render every shoutout as a card. Load the rows on page load, then subscribe to Realtime changes on week2_shoutouts (inserts and updates) and update the list in place, so new posts appear without a refresh. Each card shows who is appreciating who, the message, how long ago it posted, and the clap count. Test by opening two browser tabs.
 
 Feature 3: Clap counter
-A clap button on each card that increments that shoutout's claps using `transact` with the existing ID. The count persists after a refresh.
+A clap button on each card that increments that row's claps in Supabase. The new count persists after a refresh and shows up live in the other tab.
 
 Feature 4: Sort by most clapped
 Most clapped at the top. Newer posts break ties.

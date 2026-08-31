@@ -73,7 +73,7 @@
     <span class="concept-pill" style="font-size:13px;padding:7px 16px;">multi-player</span>
     <span class="concept-pill pink" style="font-size:13px;padding:7px 16px;">presence</span>
     <span class="concept-pill pink" style="font-size:13px;padding:7px 16px;">cursors</span>
-    <span class="concept-pill" style="font-size:13px;padding:7px 16px;">'live' rooms</span>
+    <span class="concept-pill" style="font-size:13px;padding:7px 16px;">Supabase Realtime</span>
     <span class="concept-pill" style="font-size:13px;padding:7px 16px;">optimistic updates</span>
   </div>
 </section>
@@ -81,43 +81,48 @@
 <!-- ─── 3. Setup ────────────────────────────────── -->
 <section class="slide">
   <div class="eyebrow">Setup</div>
-  <h2 style="margin-bottom:20px;">Get the starter.</h2>
+  <h2 style="margin-bottom:20px;">Wire up Supabase.</h2>
   <div style="display:grid;grid-template-columns:1.15fr 1fr;gap:18px;flex:1;min-height:0;">
 
     <div style="background:var(--white);border:2px solid var(--accent);border-radius:14px;padding:22px 20px;display:flex;flex-direction:column;">
       <span class="chip" style="align-self:flex-start;">Paste into Claude</span>
-      <pre style="font-family:var(--font-mono);font-size:14px;line-height:1.95;background:var(--dark);color:var(--accent-light);border-radius:8px;padding:18px 20px;margin-top:12px;flex:1;white-space:pre-wrap;display:flex;flex-direction:column;justify-content:center;">Set up the Instant Starter on my Desktop:
-1. Clone https://github.com/aistudycamp/
-   instant-starter.git into ~/Desktop
-   as collab-board
-2. cd into it, run npm install
-3. cp .env.local.example .env.local
-4. Set NEXT_PUBLIC_INSTANT_APP_ID to:
-   [APP ID from class chat]
-5. Run npm run dev in the background
-6. Tell me when localhost:3000 is up</pre>
-      <div class="note" style="margin-top:10px;">App ID is in the class chat.</div>
+      <pre style="font-family:var(--font-mono);font-size:14px;line-height:1.95;background:var(--dark);color:var(--accent-light);border-radius:8px;padding:18px 20px;margin-top:12px;flex:1;white-space:pre-wrap;display:flex;flex-direction:column;justify-content:center;">Set up the Week 3 board in my AI Study
+Camp folder:
+1. Make a Next.js app in a new folder
+   called collab-board, with Tailwind
+2. Install @supabase/supabase-js
+3. Fill a gitignored .env.local from
+   supabase.md (Project URL + anon key)
+4. Through the Supabase MCP: create a
+   week3_notes table (text, color, x, y,
+   author_email, created_at), turn on
+   Realtime, add RLS so signed-in users
+   get full access and signed-out none
+5. Add Supabase magic link sign-in
+6. Run npm run dev in the background
+7. Tell me when localhost:3000 is up</pre>
+      <div class="note" style="margin-top:10px;">Missing the Week 2 Supabase setup? course-materials-opal.vercel.app/how-to-guides/supabase-setup.html</div>
     </div>
 
     <div style="display:flex;flex-direction:column;gap:14px;min-height:0;">
       <div style="background:var(--white);border:1px solid var(--border);border-radius:14px;padding:20px;flex:1;">
-        <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;">Already wired</div>
+        <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;">From Week 2</div>
         <ul style="font-size:14px;color:var(--text2);padding-left:16px;margin:10px 0 0;line-height:1.9;">
-          <li>Next.js, InstantDB, Tailwind</li>
-          <li>Sign in, working</li>
-          <li>Schema and permissions, pushed</li>
+          <li>ai-study-camp Supabase project</li>
+          <li>supabase.md: Project URL + anon key</li>
+          <li>Supabase MCP in Claude Code</li>
         </ul>
       </div>
       <div style="background:var(--white);border:1px solid var(--border);border-radius:14px;padding:20px;flex:1;">
         <div style="font-family:var(--font-mono);font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;">Then</div>
         <ul style="font-size:14px;color:var(--text2);padding-left:16px;margin:10px 0 0;line-height:1.9;">
           <li>Open the URL, enter your email</li>
-          <li>Type the 6 digit code</li>
+          <li>Click the magic link in your inbox</li>
           <li>Next slide, paste the build prompt</li>
         </ul>
       </div>
       <div style="background:rgba(255,200,100,.12);border:1px solid rgba(200,150,0,.2);border-radius:7px;padding:10px 13px;font-size:12px;color:var(--text2);">
-        <b style="color:var(--text);">Do not edit</b> <span class="incode">instant.schema.ts</span> or <span class="incode">instant.perms.ts</span>. One shared app, whole room.
+        <b style="color:var(--text);">Magic link emails are rate limited</b> (a few per hour per address). One send, then wait. If Claude asks for the service role key: say no, use the MCP.
       </div>
     </div>
 
@@ -134,26 +139,22 @@
     <button id="copyBtn" onclick="copyPrompt()" style="font-family:var(--font-mono);font-size:13px;font-weight:500;background:var(--accent-bg);color:var(--accent);border:1px solid rgba(13,148,136,.35);padding:10px 20px;border-radius:8px;cursor:pointer;letter-spacing:.04em;transition:all .2s;white-space:nowrap;flex-shrink:0;">Copy prompt</button>
   </div>
   <div style="flex:1;min-height:0;">
-    <pre id="promptText" style="font-family:var(--font-mono);font-size:12px;line-height:1.8;color:var(--accent-light);background:var(--dark);border-radius:12px;padding:24px 28px;height:100%;overflow-y:auto;white-space:pre-wrap;word-break:break-word;">We're building a real-time collaborative whiteboard. Stack: Next.js + InstantDB. The Next.js app lives in the `app/` subfolder of this repo.
+    <pre id="promptText" style="font-family:var(--font-mono);font-size:12px;line-height:1.8;color:var(--accent-light);background:var(--dark);border-radius:12px;padding:24px 28px;height:100%;overflow-y:auto;white-space:pre-wrap;word-break:break-word;">We're building a real-time collaborative whiteboard on the setup from the last prompt. Stack: Next.js + @supabase/supabase-js, my ai-study-camp Supabase project, creds already in the gitignored `.env.local`.
 
-The starter is already running: sign in works, the schema is pushed, the dev server is up.
+Already working: magic link sign-in, the `week3_notes` table (text, color, x, y, author_email, created_at) with Realtime on and RLS set, the dev server.
 
-Do not edit `src/instant.schema.ts`, `src/instant.perms.ts`, or `src/components/AuthGate.tsx`. Everything you need is already defined:
-  - a `notes` entity: text, color, x, y, authorEmail, createdAt
-  - a `board` room with presence: email, color, x, y
-
-Build inside `src/app/page.tsx`, keeping it wrapped in `<AuthGate>`.
+Schema changes go through the Supabase MCP only. Never ask for the service role key or the database password; the anon key covers everything the app does.
 
 Build all three features in one pass. Do not stop between features, do not ask me to confirm each one, and do not use plan mode. Make a git commit after each feature so we can roll back, then keep going without waiting.
 
 Feature 1: Real-time sticky notes
-A board area where any signed-in user can add a sticky note with text and a color. Notes persist in InstantDB and sync live for everyone connected. Test by opening two browser tabs.
+A board area where any signed-in user can add a sticky note with text and a color. Notes save to `week3_notes` and sync live for everyone connected, via a Supabase Realtime subscription. Test by opening two browser tabs.
 
 Feature 2: Live cursors and presence
-Track each user's mouse position in the `board` room, labeled with their email, each user a different color. Use board-relative coordinates from the board element's bounding rect, not clientX / clientY directly, so cursors do not drift when the page scrolls.
+Track each user's mouse position with a Supabase Realtime Presence channel called `main-board`, labeled with their email, each user a different color. Use board-relative coordinates from the board element's bounding rect, not clientX / clientY directly, so cursors do not drift when the page scrolls.
 
 Feature 3: Drag to move
-Any user can drag any note to a new position. The new x and y save to InstantDB and move for everyone in real time.
+Any user can drag any note to a new position. The new x and y save to `week3_notes` and move for everyone in real time.
 
 Bonus, only if time: give it a look
 Restyle the board so it does not look like the default. Pick a palette and commit to it.

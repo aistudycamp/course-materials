@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<!-- olive-reviewed: 2026-08-31 -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supabase Setup · AISC How-To Guides</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner">
+      <span class="logo-mark">[ ai study camp ]</span>
+    </div>
+  </header>
+
+  <!-- PAGE CONTENT -->
+  <main class="page-content">
+
+    <!-- HERO -->
+    <section class="guide-hero">
+      <div class="guide-badge">How-To Guide</div>
+      <h1 class="guide-title">Supabase Setup</h1>
+      <p class="guide-subtitle">A free account, one project, and one prompt that connects Claude Code to it. You do this once.</p>
+    </section>
+
+    <!-- WHY SUPABASE -->
+    <section class="intro-section">
+      <h2>Why One Project</h2>
+      <p>Every build in the course stores its data in the same Supabase project, named <code>ai-study-camp</code>. Set it up once and Claude handles the database in every build after that. How it works inside your apps is the next guide, <a href="build-with-supabase.html">Build with Supabase</a>.</p>
+    </section>
+
+    <!-- STEPS -->
+    <section class="steps-section">
+      <div class="steps-container">
+
+        <!-- Step 1 -->
+        <div class="step">
+          <div class="step-header">
+            <div class="step-circle">1</div>
+            <h2 class="step-title">Create an Account</h2>
+          </div>
+          <div class="step-body">
+            <p>Go to <a href="https://supabase.com">supabase.com</a> and sign up for a free account. Signing in with GitHub is the fastest path, since you already have one from Week 1.</p>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step">
+          <div class="step-header">
+            <div class="step-circle">2</div>
+            <h2 class="step-title">Create a Project</h2>
+          </div>
+          <div class="step-body">
+            <p>Click <strong>New project</strong> and name it <code>ai-study-camp</code>, exactly that. Supabase asks for a database password: generate one and save it in your password manager. You won't need it day to day.</p>
+            <div class="tip-box">
+              <span class="tip-label">Tip</span>
+              <p>The name matters. The prompt in step 3 and every later build refer to the project as ai-study-camp.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step">
+          <div class="step-header">
+            <div class="step-circle">3</div>
+            <h2 class="step-title">Paste the Setup Prompt</h2>
+          </div>
+          <div class="step-body">
+            <p>Open Claude Code and paste this:</p>
+            <div class="terminal">
+              <div class="term-bar">
+                <span class="term-dot r"></span>
+                <span class="term-dot y"></span>
+                <span class="term-dot g"></span>
+                <span class="term-title">claude</span>
+              </div>
+              <div class="term-body">
+<span class="cmd">I just created a Supabase account with a project called ai-study-camp for my course. Set it up so all my course projects can use it:</span>
+<span class="cmd">1. Find my AI Study Camp folder in my home base (create one under learning if it doesn't exist) and create a file in it called supabase.md</span>
+<span class="cmd">2. Walk me through finding my Project URL and anon public key in the Supabase dashboard, then save both in supabase.md, labeled, along with the project name and a line on what this project is for. Never save the service role key or my database password anywhere</span>
+<span class="cmd">3. Walk me through creating a personal access token in the Supabase dashboard, then install the official Supabase MCP server with it, user-scoped so it works in every project. Keep the token in the MCP config only. In future builds you'll use this MCP to create tables and columns for me, so I never write SQL myself</span>
+<span class="cmd">4. Create or update the CLAUDE.md in my AI Study Camp folder with: builds here use my ai-study-camp Supabase project (connection info in supabase.md), Next.js for the frontend, Supabase for the database and login, Vercel for deploys, each build gets its own tables, and schema changes go through the Supabase MCP</span>
+<span class="cmd">5. When you're done, show me the supabase.md file and confirm the MCP is connected</span>
+              </div>
+            </div>
+            <p>Claude walks you through the dashboard clicks, saves your connection info, and installs the Supabase MCP server. When it finishes, it shows you <code>supabase.md</code> and confirms the MCP is connected. That's the whole setup.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TROUBLESHOOTING -->
+    <section class="troubleshooting-section">
+      <h2 class="troubleshooting-label">Troubleshooting</h2>
+      <div class="trouble-list">
+
+        <div class="trouble-item">
+          <p class="trouble-error">MCP shows as not connected</p>
+          <p class="trouble-fix">Tokens expire or get revoked. Create a fresh personal access token in the Supabase dashboard and ask Claude to reinstall the Supabase MCP server with it.</p>
+        </div>
+
+        <div class="trouble-item">
+          <p class="trouble-error">"Invalid API key"</p>
+          <p class="trouble-fix">You copied the service role key by mistake, or the string got cut off. Re-copy the anon public key from the dashboard, the full string, and have Claude update supabase.md.</p>
+        </div>
+
+        <div class="trouble-item">
+          <p class="trouble-error">Project shows as paused</p>
+          <p class="trouble-fix">The free tier pauses a project after about 7 days without activity. Open the dashboard and click Restore. It comes back in a minute or two with all your data.</p>
+        </div>
+
+        <div class="trouble-item">
+          <p class="trouble-error">Claude asks for the service role key</p>
+          <p class="trouble-fix">Say no. Claude works through the MCP and never needs that key. Tell it to use the Supabase MCP instead.</p>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>

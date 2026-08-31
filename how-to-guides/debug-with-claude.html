@@ -128,7 +128,7 @@
         <div class="term-body">
 <span class="cmd">## Known Issues and Gotchas</span>
 <span class="gap"></span>
-<span class="out">- Instant DB `useQuery` returns `undefined` on first render</span>
+<span class="out">- Supabase queries resolve after the first render, so data starts `undefined`</span>
 <span class="out">  -- always check for `isLoading` before accessing data</span>
 <span class="out">- Tailwind classes don't apply in new components unless</span>
 <span class="out">  the file is in the `content` array in `tailwind.config.js`</span>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<!-- olive-reviewed: 2026-08-31 -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Build with Supabase · AISC How-To Guides</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner">
+      <span class="logo-mark">[ ai study camp ]</span>
+    </div>
+  </header>
+
+  <!-- PAGE CONTENT -->
+  <main class="page-content">
+
+    <!-- HERO -->
+    <section class="guide-hero">
+      <div class="guide-badge">How-To Guide</div>
+      <h1 class="guide-title">Build with Supabase</h1>
+      <p class="guide-subtitle">One project, one table set per build, and Claude doing the database work through the MCP.</p>
+    </section>
+
+    <!-- WHAT SUPABASE GIVES YOU -->
+    <section class="intro-section">
+      <h2>What Supabase Gives You</h2>
+      <p>Your <code>ai-study-camp</code> project (set up in <a href="supabase-setup.html">Supabase Setup</a>) gives every app you build four things:</p>
+      <ul class="prereq-list">
+        <li>A real Postgres database that holds your app's data</li>
+        <li>Login, so your app can have user accounts</li>
+        <li>Realtime sync, so a change shows up in every open browser without a refresh</li>
+        <li>A hosted dashboard where you can see every row</li>
+      </ul>
+    </section>
+
+    <!-- THE FLOW -->
+    <section class="steps-section">
+      <div class="steps-container">
+
+        <!-- Step 1 -->
+        <div class="step">
+          <div class="step-header">
+            <div class="step-circle">1</div>
+            <h2 class="step-title">Start in Your AI Study Camp Folder</h2>
+          </div>
+          <div class="step-body">
+            <p>Start Claude Code in your AI Study Camp folder and name the project in your first prompt. Claude reads <code>supabase.md</code> for the connection info.</p>
+            <div class="terminal">
+              <div class="term-bar">
+                <span class="term-dot r"></span>
+                <span class="term-dot y"></span>
+                <span class="term-dot g"></span>
+                <span class="term-title">claude</span>
+              </div>
+              <div class="term-body">
+<span class="cmd">Build me a habit tracker. Use my ai-study-camp Supabase project for the database, connection info is in supabase.md.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step">
+          <div class="step-header">
+            <div class="step-circle">2</div>
+            <h2 class="step-title">Claude Creates the Tables</h2>
+          </div>
+          <div class="step-body">
+            <p>Claude creates this build's tables and columns through the Supabase MCP. You never write SQL. Later changes work the same way: describe what you want and Claude updates the table and the app in the same pass.</p>
+            <div class="terminal">
+              <div class="term-bar">
+                <span class="term-dot r"></span>
+                <span class="term-dot y"></span>
+                <span class="term-dot g"></span>
+                <span class="term-title">claude</span>
+              </div>
+              <div class="term-body">
+<span class="cmd">Add a streak count to each habit and show it on the habit card.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step">
+          <div class="step-header">
+            <div class="step-circle">3</div>
+            <h2 class="step-title">Claude Wires the App</h2>
+          </div>
+          <div class="step-body">
+            <p>Inside the app, Claude installs the <code>@supabase/supabase-js</code> library and puts your Project URL and anon public key in <code>.env.local</code>. That's the whole connection. When you deploy to Vercel, the same two values go in the Vercel dashboard.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- THE TWO KEYS -->
+    <section class="intro-section">
+      <h2>The Two Keys</h2>
+      <p>Supabase gives your project two keys, and they are nothing alike. The <strong>anon public key</strong> ships inside every deployed app, so anyone can see it. That's fine, it only does what your access rules allow. The <strong>service role key</strong> bypasses every rule. Never share it, never save it. The course never uses it.</p>
+      <div class="tip-box">
+        <span class="tip-label">Rule</span>
+        <p>If anything asks for the service role key, say no. Claude does its database work through the MCP.</p>
+      </div>
+    </section>
+
+    <!-- CHECKING YOUR DATA -->
+    <section class="intro-section">
+      <h2>Checking Your Data</h2>
+      <p>Open the Supabase dashboard and click <strong>Table Editor</strong>. Every table in your project is there, and clicking one shows the rows. When something in your app looks wrong, look here first: if the row exists, the bug is in the app, and if it doesn't, the save never happened.</p>
+    </section>
+
+    <!-- ONE TABLE SET PER BUILD -->
+    <section class="intro-section">
+      <h2>One Table Set per Build</h2>
+      <p>Every build gets its own tables in the same project, prefixed by week: <code>week2_habits</code>, <code>week3_recipes</code>. Nothing collides, old builds keep working, and the Table Editor stays readable. Claude follows this from the CLAUDE.md in your AI Study Camp folder.</p>
+    </section>
+
+    <!-- TROUBLESHOOTING -->
+    <section class="troubleshooting-section">
+      <h2 class="troubleshooting-label">Troubleshooting</h2>
+      <div class="trouble-list">
+
+        <div class="trouble-item">
+          <p class="trouble-error">Claude doesn't know which project to use</p>
+          <p class="trouble-fix">Say "use my ai-study-camp Supabase project, connection info is in supabase.md." If supabase.md doesn't exist, do the Supabase Setup guide first.</p>
+        </div>
+
+        <div class="trouble-item">
+          <p class="trouble-error">New rows don't show in the Table Editor</p>
+          <p class="trouble-fix">Refresh the dashboard and check you're looking at this build's tables, the ones with this week's prefix.</p>
+        </div>
+
+        <div class="trouble-item">
+          <p class="trouble-error">"Invalid API key" in the browser</p>
+          <p class="trouble-fix">The app got the wrong key or a cut-off one. Ask Claude to re-copy the anon public key from supabase.md into .env.local and restart the dev server.</p>
+        </div>
+
+        <div class="trouble-item">
+          <p class="trouble-error">The app worked last week and now nothing loads</p>
+          <p class="trouble-fix">The free tier pauses a project after about 7 days without activity. Open the dashboard and click Restore. All your data comes back with it.</p>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>
