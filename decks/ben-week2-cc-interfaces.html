@@ -372,7 +372,6 @@
   <div class="slide-inner centered">
     <span class="tag dark" style="margin-bottom: 24px;">Week 2 &middot; Office Hours</span>
     <h1 class="hero-title">Every way to<br>talk to <span class="teal">Claude.</span></h1>
-    <p class="hero-subtitle">The interfaces, the layers, and why we picked our setup.</p>
   </div>
 </div>
 
@@ -441,26 +440,22 @@
       <div class="layer-col">
         <div class="layer-num">Layer 1</div>
         <div class="layer-icon">⬛</div>
-        <div class="layer-name">Raw Terminal</div>
-      </div>
-      <div class="layer-col">
-        <div class="layer-num">Layer 2</div>
-        <div class="layer-icon">📁</div>
-        <div class="layer-name">VS Code + Terminal</div>
+        <div class="layer-name">The Terminal</div>
+        <div class="layer-desc">Raw, or inside VS Code.<br>Same terminal either way.</div>
       </div>
       <div class="layer-col our-pick">
-        <div class="layer-num">Layer 3</div>
+        <div class="layer-num">Layer 2</div>
         <div class="layer-icon">⚡</div>
         <div class="layer-name">Claude Code CLI</div>
         <div class="layer-you">← we are here</div>
       </div>
       <div class="layer-col">
-        <div class="layer-num">Layer 4</div>
+        <div class="layer-num">Layer 3</div>
         <div class="layer-icon">🔲</div>
         <div class="layer-name">VS Code Extension</div>
       </div>
       <div class="layer-col">
-        <div class="layer-num">Layer 5</div>
+        <div class="layer-num">Layer 4</div>
         <div class="layer-icon">🖥️</div>
         <div class="layer-name">Desktop App</div>
       </div>
@@ -470,11 +465,46 @@
         <div class="layer-name">Ambient / Voice</div>
       </div>
     </div>
+
+    <div class="callout-teal" style="max-width: 760px; margin: 24px auto 0; text-align: center;">
+      Raw terminal or VS Code terminal, same command, same files on disk. The terminal is just the window it sits in.
+    </div>
   </div>
 </div>
 
-<!-- SLIDE 3: The pure terminal -->
+<!-- SLIDE 3: Why not the desktop app -->
 <div class="slide" data-slide="3">
+  <div class="slide-inner">
+    <h2 class="slide-title">Why not the <span class="teal">desktop app?</span></h2>
+    <div class="teal-divider"></div>
+
+    <div class="card-grid cols-2" style="margin-top: 24px;">
+      <div class="card">
+        <h4 style="font-family: var(--font-serif); font-size: 20px; font-weight: 600; margin-bottom: 12px;">Desktop apps</h4>
+        <div class="chip-row" style="margin: 0;">
+          <span class="chip plain">Claude Desktop runs only Claude</span>
+          <span class="chip plain">Codex app runs only Codex</span>
+          <span class="chip plain">One vendor per app</span>
+        </div>
+      </div>
+      <div class="card" style="border-color: var(--teal-border); background: var(--teal-bg);">
+        <h4 style="font-family: var(--font-serif); font-size: 20px; font-weight: 600; margin-bottom: 12px; color: var(--teal-dark);">The terminal</h4>
+        <div class="chip-row" style="margin: 0;">
+          <span class="chip">Runs every coding agent</span>
+          <span class="chip">Same folders, same files</span>
+          <span class="chip">Same skills carry over</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout-teal" style="max-width: 700px; margin: 28px auto 0; text-align: center;">
+      We're teaching you coding agents, not one app. The terminal is the layer they all share.
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 4: The pure terminal -->
+<div class="slide" data-slide="4">
   <div class="slide-inner">
     <h2 class="slide-title">The <span class="teal">terminal.</span></h2>
     <div class="teal-divider"></div>
@@ -501,8 +531,8 @@
   </div>
 </div>
 
-<!-- SLIDE 4: VS Code + terminal -->
-<div class="slide" data-slide="4">
+<!-- SLIDE 5: VS Code + terminal -->
+<div class="slide" data-slide="5">
   <div class="slide-inner">
     <h2 class="slide-title">VS Code: a terminal with <span class="teal">context.</span></h2>
     <div class="teal-divider"></div>
@@ -526,8 +556,8 @@
   </div>
 </div>
 
-<!-- SLIDE 5: Claude Code in VS Code terminal, home base -->
-<div class="slide" data-slide="5">
+<!-- SLIDE 6: Claude Code in VS Code terminal, home base -->
+<div class="slide" data-slide="6">
   <div class="slide-inner">
     <h2 class="slide-title">Claude Code in <span class="teal">the terminal.</span></h2>
     <div class="teal-divider"></div>
@@ -565,8 +595,79 @@
   </div>
 </div>
 
-<!-- SLIDE 6: Moving around a terminal (cd) -->
-<div class="slide" data-slide="6">
+<!-- SLIDE 7: VS Code Claude extension -->
+<div class="slide" data-slide="7">
+  <div class="slide-inner">
+    <h2 class="slide-title">The VS Code <span class="teal">extension.</span></h2>
+    <div class="teal-divider"></div>
+
+    <div class="split">
+      <div class="split-left">
+        <p class="body-text" style="margin-bottom: 18px;">Same Claude Code, no terminal visible. A sidebar panel inside VS Code. Also works in Cursor.</p>
+
+        <div class="chip-row">
+          <span class="chip">Sidebar panel</span>
+          <span class="chip">Inline diffs</span>
+          <span class="chip">@-mention files</span>
+          <span class="chip">Plan mode</span>
+        </div>
+      </div>
+      <div class="split-right">
+        <img class="screenshot-img" src="img/week2-4.png" alt="Claude Code extension panel open in VS Code" data-screenshot="4">
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 8: Claude Desktop app -->
+<div class="slide" data-slide="8">
+  <div class="slide-inner">
+    <h2 class="slide-title">Claude <span class="teal">Desktop.</span></h2>
+    <div class="teal-divider"></div>
+
+    <div class="split">
+      <div class="split-left" style="flex: 1;">
+        <div class="chip-row">
+          <span class="chip">Built-in terminal <span class="new-badge">new</span></span>
+          <span class="chip">File editor <span class="new-badge">new</span></span>
+          <span class="chip">Visual diffs</span>
+          <span class="chip">Parallel sessions</span>
+        </div>
+
+        <div class="callout-red" style="margin-top: 18px;">
+          Only runs Claude models.
+        </div>
+      </div>
+      <div class="split-right" style="flex: 1.35;">
+        <img class="screenshot-img" src="img/week2-5.png" alt="Claude Code desktop app" data-screenshot="5">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 9: Why we teach it this way (dark) -->
+<div class="slide dark-bg" data-slide="9">
+  <div class="slide-inner" style="max-width: 900px;">
+    <h2 class="slide-title dark">Why we teach <span class="teal">it this way.</span></h2>
+    <div class="teal-divider"></div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-top: 8px;">
+      <div class="dark-card">
+        <p><strong>We had to pick one.</strong> VS Code + Claude Code terminal is the most widely used dev setup. Not the only answer. Our answer.</p>
+      </div>
+      <div class="dark-card">
+        <p><strong>The config is portable.</strong> CLAUDE.md, MCP servers, skills, and hooks work across every interface.</p>
+      </div>
+      <div class="dark-card">
+        <p><strong>The terminal is the floor.</strong> Every coding agent lives there. Learn it once, and Codex, Gemini, and whatever comes next already work the same way.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 10: Moving around a terminal (cd) -->
+<div class="slide" data-slide="10">
   <div class="slide-inner">
     <h2 class="slide-title">Moving around <span class="teal">a terminal.</span></h2>
     <div class="teal-divider"></div>
@@ -613,150 +714,61 @@
   </div>
 </div>
 
-<!-- SLIDE 7: Landing in your home base (M1 build) -->
-<div class="slide" data-slide="7">
+<!-- SLIDE 11: Landing in your home base (M1 build) -->
+<div class="slide" data-slide="11">
   <div class="slide-inner">
     <h2 class="slide-title">Landing in <span class="teal">your home base.</span></h2>
     <div class="teal-divider"></div>
-    <p class="body-text" style="margin-bottom: 8px; max-width: 760px;">Every terminal opens wherever your shell happens to start. Not your project folder. Fix it once, and it stays fixed.</p>
+    <p class="body-text" style="margin-bottom: 8px; max-width: 760px;">Same folder you built in Week 1. You're just walking in the terminal door now instead of the app.</p>
 
     <div class="split" style="margin-top: 16px;">
       <div class="split-left">
-        <ul class="feature-list">
-          <li><strong>Name your home base.</strong> Lowercase, no spaces. Never inside Desktop or Documents.</li>
-          <li><strong>Open your shell config.</strong> On a Mac, that's <code style="font-family: var(--font-mono); font-size: 14px; background: var(--cream-dark); padding: 2px 6px; border-radius: 4px;">~/.zshrc</code>.</li>
-          <li><strong>Add one function named <code style="font-family: var(--font-mono); font-size: 14px; background: var(--cream-dark); padding: 2px 6px; border-radius: 4px;">claude</code>.</strong> It moves you home, then hands off to the real program.</li>
-          <li><strong>Reload it.</strong> <code style="font-family: var(--font-mono); font-size: 14px; background: var(--cream-dark); padding: 2px 6px; border-radius: 4px;">source ~/.zshrc</code>, or open a fresh terminal window.</li>
-          <li><strong>Test it.</strong> Type <code style="font-family: var(--font-mono); font-size: 14px; background: var(--cream-dark); padding: 2px 6px; border-radius: 4px;">claude</code> from anywhere. Confirm it lands in your home base.</li>
-        </ul>
+        <p class="body-text" style="margin-bottom: 14px;">Every terminal opens wherever your shell happens to start, not your project folder. Fixed by adding one function to a shell config.</p>
+
+        <div class="chip-row">
+          <span class="chip">Name your home base</span>
+          <span class="chip">One function</span>
+          <span class="chip">Reload, test</span>
+        </div>
+
+        <div class="callout-red" style="margin-top: 14px;">
+          Nobody's hand-editing a shell config. Just tell Claude to do it.
+        </div>
 
         <div class="chip-row" style="margin-top: 14px;">
           <span class="chip plain">Later, Week 3: point claude at one project folder</span>
         </div>
       </div>
       <div class="split-right">
-        <div class="term-block">
-          <span class="term-comment"># ~/.zshrc</span><br>
+        <div class="term-block" style="opacity: 0.55; padding: 14px 18px; font-size: 12px; margin-bottom: 14px;">
+          <span class="term-comment"># the manual way. don't.</span><br>
           <span class="term-cmd">claude() {</span><br>
           &nbsp;&nbsp;<span class="term-cmd">cd ~/maria-home</span><br>
           &nbsp;&nbsp;<span class="term-cmd">command claude "$@"</span><br>
           <span class="term-cmd">}</span>
         </div>
-
-        <div class="callout-red" style="margin-top: 16px;">
-          Skip <code style="font-family: var(--font-mono);">command</code> and the function calls itself, not the real program. Every session hangs, recursing forever.
+        <div class="term-block" style="border: 1px solid var(--teal-border);">
+          <span class="term-prompt">$ </span><span class="term-cmd">claude</span><br>
+          <br>
+          <span class="term-cmd">Set up a shortcut so `claude` always starts</span><br>
+          <span class="term-cmd">in my home folder from Week 1, no matter</span><br>
+          <span class="term-cmd">where I am. Add it to my shell config,</span><br>
+          <span class="term-cmd">and test it.</span>
+        </div>
+        <div class="chip-row" style="margin-top: 10px;">
+          <span class="chip plain">Full prompt in the Home Base guide, sent after class</span>
         </div>
       </div>
     </div>
 
     <div class="notes">
-      A shell function named claude shadows the real installed program of the same name. If the function's own body just calls claude again, that calls the function, not the binary, and it never reaches Claude Code. It just recurses until the shell gives up. The command builtin steps around functions and aliases and finds the actual program on PATH instead, so command claude "dollar sign at" calls the real thing after the cd has already moved you home. Tested this live before building the slide: without command the wrapper recurses into itself every time; with it, claude reaches the real binary from any starting folder. Build this together, live, in the session. Nobody should leave with a broken shell config.
+      Show the manual shell function once, deadpan, then react: nobody's doing that by hand. Pivot straight to the prompt, paste it, Claude does it. Same prompt as the Home Base how-to guide sent by WhatsApp after this session. Worth saying once if anyone asks why the prompt calls out "the real claude binary": a shell function named claude shadows the real program, so if its body just calls claude again it recurses into itself and never reaches Claude Code. Claude handles this correctly when it writes the function, this is just the "why" if someone digs in.
     </div>
   </div>
 </div>
 
-<!-- SLIDE 8: VS Code Claude extension -->
-<div class="slide" data-slide="8">
-  <div class="slide-inner">
-    <h2 class="slide-title">The VS Code <span class="teal">extension.</span></h2>
-    <div class="teal-divider"></div>
-
-    <div class="split">
-      <div class="split-left">
-        <p class="body-text" style="margin-bottom: 18px;">Same Claude Code, no terminal visible. A sidebar panel inside VS Code. Also works in Cursor.</p>
-
-        <div class="chip-row">
-          <span class="chip">Sidebar panel</span>
-          <span class="chip">Inline diffs</span>
-          <span class="chip">@-mention files</span>
-          <span class="chip">Plan mode</span>
-        </div>
-      </div>
-      <div class="split-right">
-        <img class="screenshot-img" src="img/week2-4.png" alt="Claude Code extension panel open in VS Code" data-screenshot="4">
-
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- SLIDE 9: Claude Desktop app -->
-<div class="slide" data-slide="9">
-  <div class="slide-inner">
-    <h2 class="slide-title">Claude Desktop. <span class="teal">April 2026.</span></h2>
-    <div class="teal-divider"></div>
-
-    <div class="split">
-      <div class="split-left" style="flex: 1;">
-        <p class="body-text" style="margin-bottom: 18px;">April 2026 redesign. First time it has a real terminal built in. You might not need VS Code at all.</p>
-
-        <div class="chip-row">
-          <span class="chip">Built-in terminal <span class="new-badge">new</span></span>
-          <span class="chip">File editor <span class="new-badge">new</span></span>
-          <span class="chip">Visual diffs</span>
-          <span class="chip">Parallel sessions</span>
-        </div>
-      </div>
-      <div class="split-right" style="flex: 1.35;">
-        <img class="screenshot-img" src="img/week2-5.png" alt="Claude Code desktop app" data-screenshot="5">
-
-        <p class="caption" style="margin-top: 10px; text-align: center;">This is what's replacing VS Code + terminal for many people.</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- SLIDE 10: Cursor + Codex + Google Coding -->
-<div class="slide" data-slide="10">
-  <div class="slide-inner">
-    <h2 class="slide-title">Cursor, Codex &amp; <span class="teal">Google Coding.</span></h2>
-    <div class="teal-divider"></div>
-    <p class="body-text" style="margin-bottom: 24px; max-width: 760px;">Same capabilities, just a different shell. Once you know the pattern, you recognize all of these on sight.</p>
-
-    <div class="card-grid cols-3">
-      <div class="card" style="display: flex; flex-direction: column; gap: 14px;">
-        <div>
-          <div style="font-family: var(--font-mono); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 4px;">Anysphere</div>
-          <h3 style="font-family: var(--font-serif); font-size: 24px; font-weight: 600; color: var(--text);">Cursor</h3>
-          <div style="font-size: 14px; color: var(--text-secondary); margin-top: 6px;">A VS Code fork that runs Claude natively.</div>
-        </div>
-        <div class="chip-row" style="margin: 0;">
-          <span class="chip plain">Runs Claude Code</span>
-          <span class="chip plain">Same config</span>
-        </div>
-      </div>
-      <div class="card" style="display: flex; flex-direction: column; gap: 14px;">
-        <div>
-          <div style="font-family: var(--font-mono); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 4px;">OpenAI</div>
-          <h3 style="font-family: var(--font-serif); font-size: 24px; font-weight: 600; color: var(--text);">Codex App</h3>
-          <div style="font-size: 14px; color: var(--text-secondary); margin-top: 6px;">OpenAI's desktop app over the same idea.</div>
-        </div>
-        <div class="chip-row" style="margin: 0;">
-          <span class="chip plain">Parallel agents</span>
-          <span class="chip plain">Computer use</span>
-        </div>
-      </div>
-      <div class="card" style="display: flex; flex-direction: column; gap: 14px;">
-        <div>
-          <div style="font-family: var(--font-mono); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 4px;">Google</div>
-          <h3 style="font-family: var(--font-serif); font-size: 24px; font-weight: 600; color: var(--text);">Google Coding</h3>
-          <div style="font-size: 14px; color: var(--text-secondary); margin-top: 6px;">Async agent. Hands you back a PR.</div>
-        </div>
-        <div class="chip-row" style="margin: 0;">
-          <span class="chip plain">Async by default</span>
-          <span class="chip plain">Runs in the cloud</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="callout-teal" style="margin-top: 24px; text-align: center;">
-      Different brand, same pattern. The shell changes. The idea doesn't.
-    </div>
-  </div>
-</div>
-
-<!-- SLIDE 11: Codex CLI + Gemini CLI -->
-<div class="slide" data-slide="11">
+<!-- SLIDE 12: Codex CLI + Gemini CLI -->
+<div class="slide" data-slide="12">
   <div class="slide-inner">
     <h2 class="slide-title">Same idea, <span class="teal">different brain.</span></h2>
     <div class="teal-divider"></div>
@@ -790,31 +802,6 @@
       </div>
     </div>
 
-    <p class="caption" style="margin-top: 24px; text-align: center; font-size: 15px;">Learn one, you know them all. The harness is the pattern. The model is just the brain inside.</p>
-  </div>
-</div>
-
-<!-- SLIDE 12: Why we teach it this way (dark) -->
-<div class="slide dark-bg" data-slide="12">
-  <div class="slide-inner" style="max-width: 900px;">
-    <span class="tag dark" style="margin-bottom: 24px;">The honest answer</span>
-    <h2 class="slide-title dark">Why we teach <span class="teal">it this way.</span></h2>
-    <div class="teal-divider"></div>
-
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 8px;">
-      <div class="dark-card">
-        <p><strong>We had to pick one.</strong> VS Code + Claude Code terminal is the most widely used dev setup. Not the only answer. Our answer.</p>
-      </div>
-      <div class="dark-card">
-        <p><strong>The config is portable.</strong> CLAUDE.md, MCP servers, skills, and hooks work across every interface. The interface is a preference.</p>
-      </div>
-      <div class="dark-card">
-        <p><strong>The terminal is the floor.</strong> Pipelines, CI/CD, scripted agents. No visual wrapper can do all of this. Learn the foundation layer.</p>
-      </div>
-      <div class="dark-card">
-        <p><strong>The layers are converging fast.</strong> The Desktop app is catching up. In a year you might never open a terminal. Learn it now so the rest makes sense.</p>
-      </div>
-    </div>
   </div>
 </div>
 
