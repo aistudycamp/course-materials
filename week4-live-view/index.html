@@ -186,11 +186,11 @@ html,body{background:var(--bg);color:var(--ink);font-family:var(--sans);height:1
 
 /* REPORT OUTPUT */
 .report{font-size:13px;line-height:1.6;color:var(--ink);white-space:pre-wrap;}
-.report .sec{font-family:var(--mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.16em;color:var(--orch);font-weight:600;display:block;margin:14px 0 5px;}
+.report .sec{font-family:var(--mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.16em;color:var(--deep);font-weight:600;display:block;margin:14px 0 5px;}
 .report .flag{color:var(--ink);font-weight:600;font-size:14px;}
 .report .miss{display:block;margin-top:14px;padding:10px 12px;background:var(--warn-soft);border-left:3px solid var(--warn);border-radius:0 7px 7px 0;font-size:12.5px;color:var(--ink);}
 .report .land{display:block;background:var(--orch-soft);border-left:3px solid var(--orch);border-radius:0 7px 7px 0;padding:6px 10px;margin:3px 0;}
-.report .land-tag{display:block;font-family:var(--mono);font-size:8.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--orch);font-weight:600;margin-top:4px;}
+.report .land-tag{display:block;font-family:var(--mono);font-size:8.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--deep);font-weight:600;margin-top:4px;}
 
 /* FEED */
 .right{background:var(--panel);border-left:1px solid var(--line);display:grid;grid-template-rows:auto 1fr;overflow:hidden;}
@@ -207,13 +207,23 @@ html,body{background:var(--bg);color:var(--ink);font-family:var(--sans);height:1
 .feed-item:last-child{border-bottom:none;}
 .feed-meta{display:flex;align-items:center;gap:8px;margin-bottom:5px;}
 .feed-source{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.1em;font-weight:600;padding:3px 8px;border-radius:4px;}
-.feed-source.orch{color:#fff;background:var(--orch);}
+.feed-source.orch{color:#fff;background:var(--deep);}
 .feed-source.sub{color:#fff;background:var(--deep);}
 .feed-source.extr{color:#fff;background:var(--dark);}
 .feed-source.gap{color:#fff;background:var(--warn);}
 .feed-time{font-family:var(--mono);font-size:9.5px;color:var(--ink-2);margin-left:auto;}
 .feed-msg{font-size:13px;line-height:1.5;color:var(--ink);}
 .feed-msg em{font-style:italic;color:var(--ink-2);}
+.feed-action{
+  width:100%;margin-top:10px;padding:11px 14px;border:1px solid var(--deep);border-radius:8px;
+  background:var(--deep);color:#fff;font-family:var(--mono);font-size:11px;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;cursor:pointer;
+  animation:actionPulse 1.6s ease-in-out 3;
+}
+.feed-action:hover{background:var(--dark);}
+.feed-action:focus-visible{outline:3px solid var(--orch-glow);outline-offset:3px;}
+@keyframes actionPulse{0%,100%{box-shadow:0 0 0 0 rgba(13,148,136,.18);}50%{box-shadow:0 0 0 4px rgba(13,148,136,0);}}
+@media (prefers-reduced-motion:reduce){.feed-action{animation:none;}}
 
 /* MODAL */
 .modal-back{position:fixed;inset:0;background:rgba(28,25,23,.5);z-index:40;display:none;align-items:center;justify-content:center;padding:30px;}
@@ -274,11 +284,11 @@ html,body{background:var(--bg);color:var(--ink);font-family:var(--sans);height:1
 </div>
 
 <div class="modal-back" id="modalBack">
-  <div class="modal">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modal-head">
       <span class="mt" id="modalTitle"></span>
       <span class="ms" id="modalSub"></span>
-      <button class="modal-close" id="modalClose">&times;</button>
+      <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
     </div>
     <div class="modal-body">
       <div id="modalBody"></div>
@@ -419,7 +429,7 @@ var MOMENTS = {
       {id:"in1",kind:"io",tag:"Your inbox",name:"email",foot:"7 unread",col:0,row:0},
       {id:"orch",kind:"orch",tag:"Main session",name:"<em>Claude Code</em>",foot:"runs it itself",detail:"Runs the morning-brief skill in this session.",col:1,row:0},
       {id:"sp1",kind:"extr",tag:"Skill",name:"morning-brief",foot:"fixed steps",file:"mb",col:2,row:0},
-      {id:"out1",kind:"out",tag:"Output",name:"your brief",foot:"on your screen",col:3,row:0}
+      {id:"out1",kind:"out",tag:"Output",name:"your brief",foot:"after Run",col:3,row:0}
     ],
     wires:[["in1","orch"],["orch","sp1"],["sp1","out1"]],
     notes:[],
@@ -428,7 +438,7 @@ var MOMENTS = {
       {s:"main",c:"orch",m:"Read 7 emails from the inbox."},
       {s:"main",c:"orch",m:"Running <em>morning-brief</em> myself. One source, fixed steps, nobody to send out."},
       {s:"skill",c:"extr",m:"Sorted all 7 into the four fixed sections."},
-      {s:"main",c:"orch",m:"Brief is on your screen. The skill aimed at the same four sections you specified."}
+      {s:"main",c:"orch",m:"Brief is ready.",action:"View brief"}
     ],
     feedAgain:[{s:"skill",c:"extr",m:"Ran it again on a different inbox. The wording changed. The four sections stayed fixed."}],
     seq:[
@@ -437,9 +447,9 @@ var MOMENTS = {
       {t:1000,node:"orch",state:"active"},
       {t:1900,node:"orch",state:"complete",wire:1,feed:2},
       {t:2000,node:"sp1",state:"active"},
-      {t:3200,node:"sp1",state:"complete",wire:2,feed:3},
+      {t:3200,node:"sp1",state:"complete",wire:2},
       {t:3300,node:"out1",state:"active",showOut:0},
-      {t:4100,node:"out1",state:"complete"}
+      {t:4100,node:"out1",state:"complete",feed:3,ready:"brief ready"}
     ]
   },
 
@@ -462,7 +472,7 @@ var MOMENTS = {
       {s:"main",c:"orch",m:"Sending the analyst. It gets the goal, priorities, and source, then chooses how to inspect the inbox."},
       {s:"analyst",c:"sub",m:"Read all six together, as one picture, not one at a time."},
       {s:"analyst",c:"sub",m:"Found it: <em>the page ships Thursday, the prices on it change Friday.</em>"},
-      {s:"main",c:"orch",m:"The priorities did not name this exact conflict. The agent compared the messages and surfaced it. Review the call before trusting it."}
+      {s:"main",c:"orch",m:"Analyst report is ready.",action:"View report"}
     ],
     feedAgain:[{s:"analyst",c:"sub",m:"Ran it again. Different words and order. The judgment can stay the same."}],
     seq:[
@@ -473,7 +483,7 @@ var MOMENTS = {
       {t:2000,node:"sp1",state:"active"},
       {t:3400,node:"sp1",state:"complete",wire:2,feed:3},
       {t:3500,node:"out1",state:"active",showOut:0},
-      {t:4300,node:"out1",state:"complete",feed:4}
+      {t:4300,node:"out1",state:"complete",feed:4,ready:"report ready"}
     ]
   },
 
@@ -496,7 +506,8 @@ var MOMENTS = {
       {s:"main",c:"orch",m:"Same inbox as the agent run. This time the agent uses the skill to format its answer."},
       {s:"analyst",c:"sub",m:"Agent reading. The Thursday and Friday collision leads, same call it made in module 4."},
       {s:"analyst",c:"sub",m:"Now reaching for <em>morning-brief</em> to write it up. The skill does not run on its own here. I am running it."},
-      {s:"main",c:"orch",m:"The agent picked what matters. The skill applied the four-section format."}
+      {s:"main",c:"orch",m:"The agent picked what matters. The skill applied the four-section format."},
+      {s:"main",c:"orch",m:"Brief is ready.",action:"View brief"}
     ],
     feedAgain:[{s:"main",c:"orch",m:"Ran it again. <em>Same four sections, the date collision still leading.</em> Steady where the recipe holds, sharp where the agent decides."}],
     seq:[
@@ -508,7 +519,7 @@ var MOMENTS = {
       {t:3300,feed:2},
       {t:4400,node:"sp1",state:"complete",wire:2,feed:3},
       {t:4500,node:"out1",state:"active",showOut:0},
-      {t:5300,node:"out1",state:"complete"}
+      {t:5300,node:"out1",state:"complete",feed:4,ready:"brief ready"}
     ]
   },
 
@@ -600,7 +611,8 @@ var MOMENTS = {
       {s:"analyst",c:"sub",m:"Reported back: <em>Northwind, third billing cycle, finance lead joining the call.</em>"},
       {s:"slack-digest",c:"extr",m:"Reported back: <em>Marcus stuck on the same account, twice.</em>"},
       {s:"repo-watcher",c:"sub",m:"Reported back: <em>the fix merged, nobody has verified it yet.</em>"},
-      {s:"main",c:"orch",m:"Combine: all three point at Northwind. Save to the dated report path, move items into matching processed folders, then close with 26 items and urgent status."}
+      {s:"main",c:"orch",m:"Combining three reports. Saving the brief and moving processed items."},
+      {s:"main",c:"orch",m:"Brief is ready.",action:"View brief"}
     ],
     feedAgain:[{s:"main",c:"orch",m:"Ran it again on the same morning. The fixed path held. What leads is decided from the specialists' findings. Next, module 8 opens the general system map."}],
     seq:[
@@ -621,7 +633,7 @@ var MOMENTS = {
       {t:5800,node:"sp3",state:"complete",wire:8,feed:4,doc:2,showOut:2},
       {t:6600,node:"out1",state:"active",feed:5},
       {t:7400,doc:3,showOut:3},
-      {t:8200,node:"out1",state:"complete"}
+      {t:8200,node:"out1",state:"complete",feed:6,ready:"brief ready"}
     ]
   }
 };
@@ -838,7 +850,10 @@ function addFeed(item){
   var t=String(n.getHours()).padStart(2,"0")+":"+String(n.getMinutes()).padStart(2,"0")+":"+String(n.getSeconds()).padStart(2,"0");
   var el=document.createElement("div");
   el.className="feed-item";
-  el.innerHTML='<div class="feed-meta"><span class="feed-source '+item.c+'">'+item.s+'</span><span class="feed-time">'+t+'</span></div><div class="feed-msg">'+item.m+'</div>';
+  el.innerHTML='<div class="feed-meta"><span class="feed-source '+item.c+'">'+item.s+'</span><span class="feed-time">'+t+'</span></div><div class="feed-msg">'+item.m+'</div>'+
+    (item.action?'<button class="feed-action" type="button">'+esc(item.action)+'</button>':'');
+  var action=el.querySelector(".feed-action");
+  if(action) action.addEventListener("click",function(){ openNode(MOMENTS[current],"out1"); });
   f.appendChild(el); f.scrollTop=f.scrollHeight;
 }
 
@@ -895,6 +910,10 @@ function run(){
       }
       if(step.feed!==undefined && !again) addFeed(m.feed[step.feed]);
       if(step.showOut!==undefined) showOutput(m, step.showOut);
+      if(step.ready && step.node){
+        var readyText=$("node-"+step.node).querySelector(".n-foot .txt");
+        if(readyText) readyText.textContent=step.ready;
+      }
     }, step.t));
   });
 
