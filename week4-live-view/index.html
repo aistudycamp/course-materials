@@ -1,4 +1,7 @@
-<!-- olive-reviewed: 2026-09-07 -->
+<!doctype html>
+<html lang="en">
+<meta charset="UTF-8">
+<!-- olive-reviewed: 2026-09-08 -->
 <title>Week 4 Live View</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,7 +24,7 @@
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 html,body{background:var(--bg);color:var(--ink);font-family:var(--sans);height:100vh;overflow:hidden;-webkit-font-smoothing:antialiased;}
-.app{display:grid;grid-template-rows:64px 1fr;height:100vh;min-height:620px;}
+.app{display:grid;grid-template-rows:68px 1fr;height:100vh;min-height:620px;}
 
 /* TOPBAR */
 .topbar{background:var(--panel);border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 20px;gap:16px;z-index:10;}
@@ -29,13 +32,13 @@ html,body{background:var(--bg);color:var(--ink);font-family:var(--sans);height:1
 .brand-mark{width:30px;height:30px;background:var(--ink);border-radius:6px;display:grid;place-items:center;color:var(--bg);font-family:var(--mono);font-size:9px;font-weight:600;}
 .brand-text{font-family:var(--mono);font-size:12.5px;font-weight:600;line-height:1;}
 .brand-text em{font-style:normal;color:var(--orch);}
-.brand-sub{font-family:var(--mono);font-size:10px;color:var(--ink-3);letter-spacing:.06em;margin-top:3px;text-transform:uppercase;}
+.brand-sub{font-family:var(--mono);font-size:10px;color:var(--ink-2);letter-spacing:.06em;margin-top:3px;text-transform:uppercase;}
 .top-tabs{display:flex;gap:2px;margin-left:8px;flex-wrap:wrap;}
-.top-tab{font-family:var(--mono);font-size:11px;color:var(--ink-3);padding:7px 10px;border-radius:6px;cursor:pointer;border:none;background:none;transition:all .15s;white-space:nowrap;}
+.top-tab{font-family:var(--mono);font-size:11px;color:var(--ink-2);padding:7px 10px;border-radius:6px;cursor:pointer;border:none;background:none;transition:all .15s;white-space:nowrap;}
 .top-tab:hover{color:var(--ink);background:#F0EDE6;}
 .top-tab.active{color:var(--ink);background:#F0EDE6;font-weight:500;}
-.top-tab .num{font-size:9px;color:var(--ink-4);margin-right:5px;}
-.top-tab.active .num{color:var(--orch);}
+.top-tab .num{font-size:9px;color:var(--ink-2);margin-right:5px;}
+.top-tab.active .num{color:var(--deep);}
 .spacer{flex:1;}
 .ghost-btn{font-family:var(--mono);font-size:11px;color:var(--ink-2);border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:9px 12px;cursor:pointer;}
 .ghost-btn:hover{background:#F0EDE6;color:var(--ink);}
@@ -45,25 +48,26 @@ html,body{background:var(--bg);color:var(--ink);font-family:var(--sans);height:1
 .run-btn:disabled{background:var(--ink-3);cursor:wait;}
 
 /* MAIN */
-.main{display:grid;grid-template-columns:1fr 372px;overflow:hidden;}
-.center{display:grid;grid-template-rows:minmax(260px,0.92fr) minmax(320px,1.08fr);overflow:hidden;}
+.main{display:grid;grid-template-columns:minmax(0,1fr) 360px;overflow:hidden;min-height:0;}
+.center{min-width:0;min-height:0;overflow:hidden;}
 
 /* CANVAS */
-.canvas-wrap{position:relative;overflow:hidden;background:radial-gradient(circle, var(--ink-4) 1px, transparent 1px) 0 0 / 24px 24px, var(--canvas);}
+.canvas-wrap{position:relative;width:100%;height:100%;overflow:hidden;background:radial-gradient(circle, var(--ink-4) 1px, transparent 1px) 0 0 / 24px 24px, var(--canvas);}
 .canvas-wrap::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 600px 400px at 50% 40%, rgba(13,148,136,.05), transparent 60%);}
-.stage-banner{position:absolute;top:13px;left:50%;transform:translateX(-50%);z-index:4;background:var(--canvas);padding:4px 14px;text-align:center;font-family:var(--mono);font-size:9.5px;color:var(--ink-3);letter-spacing:.18em;text-transform:uppercase;white-space:nowrap;max-width:96%;overflow:hidden;text-overflow:ellipsis;}
+.stage-banner{position:absolute;top:20px;left:50%;transform:translateX(-50%);z-index:4;background:var(--canvas);padding:4px 14px;text-align:center;font-family:var(--mono);font-size:9.5px;color:var(--ink-2);letter-spacing:.18em;text-transform:uppercase;white-space:nowrap;max-width:96%;overflow:hidden;text-overflow:ellipsis;}
 .stage-banner em{font-family:var(--serif);font-style:italic;text-transform:none;letter-spacing:0;color:var(--ink-2);font-size:13px;}
 .canvas-svg{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none;}
 .conn-path{fill:none;stroke:var(--ink-4);stroke-width:2;stroke-dasharray:4 4;transition:stroke .3s,stroke-width .3s;}
 .conn-path.active{stroke:var(--orch);stroke-width:3;stroke-dasharray:0;}
 .conn-path.complete{stroke:var(--ink-3);stroke-width:2;stroke-dasharray:0;}
-.lane-note{position:absolute;z-index:3;font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-3);background:var(--canvas);padding:2px 8px;white-space:nowrap;}
+.lane-note{position:absolute;z-index:3;font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-2);background:var(--canvas);padding:2px 8px;white-space:nowrap;}
 .stage-sub{
   position:absolute;top:34px;left:50%;transform:translateX(-50%);z-index:4;
   background:var(--canvas);padding:3px 14px;text-align:center;max-width:92%;
   font-size:12.5px;color:var(--ink-2);line-height:1.4;
 }
 .stage-sub b{color:var(--ink);font-weight:600;}
+.canvas-hint{position:absolute;left:22px;bottom:18px;z-index:4;font-family:var(--mono);font-size:9px;color:var(--ink-2);letter-spacing:.11em;text-transform:uppercase;background:var(--canvas);padding:3px 8px;}
 .frame{
   position:absolute;z-index:1;border:1.5px dashed var(--dark-2);border-radius:18px;
   background:rgba(41,37,36,.035);
@@ -114,7 +118,7 @@ html,body{background:var(--bg);color:var(--ink);font-family:var(--sans);height:1
 .node.compact .n-icon{display:none;}
 .node.compact .n-head{padding:9px 11px;gap:8px;}
 .n-text{flex:1;min-width:0;}
-.n-tag{font-family:var(--mono);font-size:8.5px;text-transform:uppercase;letter-spacing:.14em;color:var(--ink-3);margin-bottom:3px;}
+.n-tag{font-family:var(--mono);font-size:8.5px;text-transform:uppercase;letter-spacing:.14em;color:var(--ink-2);margin-bottom:3px;}
 .node.sub .n-tag{color:var(--sub);}
 .node.extr .n-tag{color:var(--dark-2);}
 .node.active .n-tag{color:var(--orch);}
@@ -126,28 +130,12 @@ html,body{background:var(--bg);color:var(--ink);font-family:var(--sans);height:1
 @keyframes dotPulse{0%,100%{box-shadow:0 0 0 0 var(--orch-glow);}50%{box-shadow:0 0 0 6px rgba(13,148,136,0);}}
 .n-foot{border-top:1px dashed var(--line);padding:5px 12px;display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:9.5px;color:var(--ink-2);}
 .n-foot .txt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.n-file{
+.n-file,.n-view{
   margin-left:auto;flex:none;font-family:var(--mono);font-size:8.5px;letter-spacing:.06em;
-  text-transform:uppercase;border:1px solid var(--orch);background:var(--orch-soft);
-  color:var(--orch);font-weight:600;border-radius:5px;padding:2px 7px;cursor:pointer;
+  text-transform:uppercase;border:1px solid var(--deep);background:var(--orch-soft);
+  color:var(--deep);font-weight:600;border-radius:5px;padding:2px 7px;cursor:pointer;
 }
-.n-file:hover{background:var(--orch);color:#fff;}
-
-/* DOCS */
-.docs{background:var(--panel);border-top:1px solid var(--line);display:grid;grid-template-rows:auto 1fr;overflow:hidden;}
-.docs-head{display:flex;align-items:center;gap:8px;padding:10px 18px;border-bottom:1px solid var(--line);flex-wrap:wrap;}
-.docs-head .lbl{font-family:var(--mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.18em;color:var(--ink-3);font-weight:600;margin-right:4px;}
-.doc-chip{font-family:var(--mono);font-size:11px;color:var(--ink-3);border:1px solid var(--line);background:var(--panel);border-radius:6px;padding:5px 11px;cursor:pointer;transition:all .15s;}
-.doc-chip:hover{color:var(--ink);background:#F0EDE6;}
-.doc-chip.on{color:var(--panel);background:var(--ink);border-color:var(--ink);}
-.docs-body{display:grid;grid-template-columns:0.92fr 1.08fr;overflow:hidden;}
-.doc-col{display:flex;flex-direction:column;overflow:hidden;border-right:1px solid var(--line);min-width:0;background:var(--panel-soft);}
-.doc-col:last-child{border-right:none;background:var(--panel);}
-.doc-col-head{padding:9px 18px 6px;display:flex;align-items:baseline;gap:9px;min-width:0;}
-.doc-col-head .k{font-family:var(--mono);font-size:8.5px;text-transform:uppercase;letter-spacing:.16em;color:var(--ink-3);font-weight:600;flex:none;}
-.doc-col:last-child .doc-col-head .k{color:var(--orch);}
-.doc-col-head .f{font-size:12px;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.doc-body{flex:1;overflow-y:auto;padding:4px 18px 18px;}
+.n-file:hover,.n-view:hover{background:var(--orch);color:#fff;}
 
 /* EMAIL */
 .mail{border:1px solid var(--line-strong);border-left:3px solid var(--ink-4);border-radius:10px;overflow:hidden;margin-bottom:9px;background:var(--panel);box-shadow:0 1px 2px rgba(0,0,0,.04);}
@@ -203,18 +191,17 @@ html,body{background:var(--bg);color:var(--ink);font-family:var(--sans);height:1
 .report .miss{display:block;margin-top:14px;padding:10px 12px;background:var(--warn-soft);border-left:3px solid var(--warn);border-radius:0 7px 7px 0;font-size:12.5px;color:var(--ink);}
 .report .land{display:block;background:var(--orch-soft);border-left:3px solid var(--orch);border-radius:0 7px 7px 0;padding:6px 10px;margin:3px 0;}
 .report .land-tag{display:block;font-family:var(--mono);font-size:8.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--orch);font-weight:600;margin-top:4px;}
-.doc-empty{font-family:var(--serif);font-style:italic;font-size:14px;color:var(--ink-3);padding:24px 0;}
 
 /* FEED */
 .right{background:var(--panel);border-left:1px solid var(--line);display:grid;grid-template-rows:auto 1fr;overflow:hidden;}
 .right-head{padding:15px 20px 13px;border-bottom:1px solid var(--line);}
-.rh-live{font-family:var(--mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.16em;color:var(--orch);font-weight:600;display:flex;align-items:center;gap:7px;margin-bottom:5px;}
+.rh-live{font-family:var(--mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.16em;color:var(--deep);font-weight:600;display:flex;align-items:center;gap:7px;margin-bottom:5px;}
 .rh-live::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--orch);animation:livePulse 1.6s ease-in-out infinite;}
 @keyframes livePulse{0%,100%{opacity:1;}50%{opacity:.4;}}
 .rh-title{font-family:var(--serif);font-size:23px;line-height:1.1;}
 .rh-title em{font-style:italic;color:var(--orch);}
 .right-body{overflow-y:auto;padding:12px 20px 22px;}
-.feed-empty{font-family:var(--serif);font-style:italic;color:var(--ink-3);text-align:center;padding:30px 8px;font-size:15px;line-height:1.5;}
+.feed-empty{font-family:var(--serif);font-style:italic;color:var(--ink-2);text-align:center;padding:30px 8px;font-size:15px;line-height:1.5;}
 .feed-item{padding:10px 0;border-bottom:1px dashed var(--line);opacity:0;transform:translateY(6px);animation:feedIn .35s forwards;}
 @keyframes feedIn{to{opacity:1;transform:none;}}
 .feed-item:last-child{border-bottom:none;}
@@ -224,32 +211,40 @@ html,body{background:var(--bg);color:var(--ink);font-family:var(--sans);height:1
 .feed-source.sub{color:#fff;background:var(--deep);}
 .feed-source.extr{color:#fff;background:var(--dark);}
 .feed-source.gap{color:#fff;background:var(--warn);}
-.feed-time{font-family:var(--mono);font-size:9.5px;color:var(--ink-3);margin-left:auto;}
+.feed-time{font-family:var(--mono);font-size:9.5px;color:var(--ink-2);margin-left:auto;}
 .feed-msg{font-size:13px;line-height:1.5;color:var(--ink);}
 .feed-msg em{font-style:italic;color:var(--ink-2);}
 
 /* MODAL */
 .modal-back{position:fixed;inset:0;background:rgba(28,25,23,.5);z-index:40;display:none;align-items:center;justify-content:center;padding:30px;}
 .modal-back.open{display:flex;}
-.modal{background:var(--panel);border-radius:14px;width:min(620px,100%);max-height:82vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.3);}
+.modal{background:var(--panel);border-radius:14px;width:min(760px,100%);max-height:84vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.3);}
 .modal-head{background:var(--dark);color:#F5F0EB;padding:13px 18px;display:flex;align-items:center;gap:12px;}
 .modal-head .mt{font-family:var(--mono);font-size:12px;font-weight:600;}
 .modal-head .ms{font-size:11.5px;color:rgba(245,240,235,.6);}
 .modal-close{margin-left:auto;background:rgba(245,240,235,.14);color:#F5F0EB;border:none;border-radius:6px;width:26px;height:26px;cursor:pointer;font-size:15px;line-height:1;}
 .modal-close:hover{background:rgba(245,240,235,.28);}
-.modal-body{overflow-y:auto;padding:16px 18px 20px;}
+.modal-body{overflow-y:auto;padding:18px 20px 22px;}
 .modal-body pre{font-family:var(--mono);font-size:11.5px;line-height:1.7;white-space:pre-wrap;color:var(--ink);}
 .modal-note{font-size:12.5px;color:var(--ink-2);line-height:1.55;border-top:1px dashed var(--line);margin-top:14px;padding-top:12px;}
+.modal-body .source-view{max-height:62vh;overflow-y:auto;}
+.modal-body .source-view .mail,.modal-body .source-view .slack-group,.modal-body .source-view .gh,.modal-body .source-view .rep{box-shadow:none;}
+.modal-empty{font-family:var(--serif);font-size:18px;color:var(--ink-2);padding:24px 8px;}
+.node-detail{display:grid;gap:12px;}
+.node-detail .detail-label{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);}
+.node-detail .detail-value{font-family:var(--serif);font-size:23px;line-height:1.2;}
+.node-detail .detail-foot{font-size:14px;color:var(--ink-2);}
 
-@media (max-width:1120px){ .main{grid-template-columns:1fr 310px;} }
+@media (max-width:1120px){ .main{grid-template-columns:minmax(0,1fr) 310px;} }
+@media (max-width:760px){ .topbar{padding:0 12px;gap:9px;} .brand-sub{display:none;} .top-tabs{margin-left:0;} .top-tab{padding:7px 6px;font-size:10px;} .main{grid-template-columns:minmax(0,1fr) 290px;} .right-head,.right-body{padding-left:14px;padding-right:14px;} }
 </style>
 
 <div class="app">
-  <div class="topbar">
+  <header class="topbar">
     <div class="brand">
       <div class="brand-mark">AISC</div>
       <div>
-        <div class="brand-text">Managing <em>Agentic Systems</em></div>
+        <h1 class="brand-text">Managing Agentic Systems</h1>
         <div class="brand-sub">Week 4 · Live View</div>
       </div>
     </div>
@@ -257,40 +252,25 @@ html,body{background:var(--bg);color:var(--ink);font-family:var(--sans);height:1
     <div class="spacer"></div>
     <button class="ghost-btn" id="resetBtn">Reset</button>
     <button class="run-btn" id="runBtn">Run</button>
-  </div>
+  </header>
 
-  <div class="main">
+  <main class="main">
     <div class="center">
       <div class="canvas-wrap" id="canvas">
         <div class="stage-banner" id="stageBanner"></div>
         <div class="stage-sub" id="stageSub"></div>
+        <div class="canvas-hint">Click a node to inspect</div>
         <svg class="canvas-svg" id="wires"></svg>
       </div>
-      <div class="docs">
-        <div class="docs-head">
-          <span class="lbl">Documents</span>
-          <div id="docChips" style="display:flex;gap:6px;flex-wrap:wrap;"></div>
-        </div>
-        <div class="docs-body">
-          <div class="doc-col">
-            <div class="doc-col-head"><span class="k">Went in</span><span class="f" id="inFile"></span></div>
-            <div class="doc-body" id="inBody"></div>
-          </div>
-          <div class="doc-col">
-            <div class="doc-col-head"><span class="k">Came out</span><span class="f" id="outFile"></span></div>
-            <div class="doc-body" id="outBody"></div>
-          </div>
-        </div>
-      </div>
     </div>
-    <div class="right">
+    <aside class="right" aria-label="Example run activity">
       <div class="right-head">
-        <div class="rh-live">Activity</div>
-        <div class="rh-title">What Claude <em>is doing</em></div>
+        <div class="rh-live">Example run</div>
+        <div class="rh-title">Activity</div>
       </div>
-      <div class="right-body" id="feed"><div class="feed-empty">Nothing yet.<br>Press Run.</div></div>
-    </div>
-  </div>
+      <div class="right-body" id="feed"><div class="feed-empty">No activity yet.</div></div>
+    </aside>
+  </main>
 </div>
 
 <div class="modal-back" id="modalBack">
@@ -301,7 +281,7 @@ html,body{background:var(--bg);color:var(--ink);font-family:var(--sans);height:1
       <button class="modal-close" id="modalClose">&times;</button>
     </div>
     <div class="modal-body">
-      <pre id="modalBody"></pre>
+      <div id="modalBody"></div>
       <div class="modal-note" id="modalNote"></div>
     </div>
   </div>
@@ -310,22 +290,22 @@ html,body{background:var(--bg);color:var(--ink);font-family:var(--sans);height:1
 <script>
 /* ============ FILES YOU CAN OPEN ============ */
 var DEFS = {
-  mb: {title:".claude/skills/morning-brief/SKILL.md", sub:"a skill", note:"A skill is a written procedure. Same steps, same order, same shape of output, every time. It has no opinion about what matters.",
-    body:"---\nname: morning-brief\ndescription: Use when the user asks to brief, summarize, or\n  sort through their inbox.\n---\n\n1. Read every email in the inbox.\n2. Sort each one into: Summary, Needs Your Reply,\n   Waiting on Others, FYI Only.\n3. One page. No section over five bullets.\n4. Plain language. No opinion about what matters most.\n5. Show the brief in the conversation."},
-  mb7:{title:".claude/skills/morning-brief/SKILL.md", sub:"the same skill, grown up", note:"Same file as module 2, with the middle steps rewritten. This is what the orchestrator follows, and step 4 is where your brief gets its shape. The specialists run inside step 2.",
-    body:"---\nname: morning-brief\ndescription: Use when the user asks to brief, summarize, or\n  sort through their morning.\n---\n\n1. List what is waiting in email, Slack, and GitHub.\n   If all three are empty, say so and stop.\n2. Send one specialist to each source, at the same time:\n   analyst on email, slack-digest on Slack,\n   repo-watcher on GitHub. Wait for all three.\n3. Combine the three reports. Whatever a specialist\n   flagged as urgent leads the brief.\n4. Format the result in the original four sections:\n   Summary, Needs Your Reply, Waiting on Others, FYI Only.\n5. Save the brief with today's date, then move the\n   processed items out of the inbox.\n6. Never delete or send anything without asking first."},
-  an: {title:".claude/agents/analyst.md", sub:"an agent", note:"An agent gets priorities, not steps. It decides its own path through the work, so two runs can come back shaped differently and both be right.",
+  mb: {title:".claude/skills/morning-brief/SKILL.md", sub:"a skill", note:"Repeatable instructions. Fixed output shape. Review the result.",
+    body:"---\nname: morning-brief\ndescription: Use when the user asks to brief, summarize, or\n  sort through their inbox.\n---\n\n1. Read every email in the inbox.\n2. Open with a short Summary. Then sort the emails into:\n   Needs Your Reply, Waiting on Others, and FYI Only.\n3. One page. No section over five bullets.\n4. Plain language. No opinion about what matters most.\n5. Save as reports/brief-<inbox-name>.md, then show the\n   brief in the conversation."},
+  mb7:{title:".claude/skills/morning-brief/SKILL.md", sub:"the fixed workflow", note:"Fixed path. Specialists make judgments.",
+    body:"---\nname: morning-brief\ndescription: Use when the user asks to brief, summarize, or\n  sort through their morning.\n---\n\n1. List what is waiting in email, Slack, and GitHub.\n   If all three are empty, say so and stop.\n2. Send one specialist to each source, at the same time:\n   analyst on email, slack-digest on Slack,\n   repo-watcher on GitHub. Wait for all three.\n3. Combine the three reports. Whatever a specialist\n   flagged as urgent leads the brief.\n4. Format the result in the original four sections:\n   Summary, Needs Your Reply, Waiting on Others, FYI Only.\n5. Save as reports/YYYY-MM-DD-morning-brief.md and\n   tell the user the path.\n6. Move each processed item into the matching folder:\n   processed/email, processed/slack, or processed/github.\n7. Close with the total item count and urgent status.\n\nNever delete or send anything without asking first."},
+  an: {title:".claude/agents/analyst.md", sub:"an agent", note:"Goal, priorities, tools. Steps chosen during the run. Review the judgment.",
     body:"---\nname: analyst\ndescription: Reads an inbox of email and reports what\n  actually matters.\n---\n\nYou read a whole batch of email as one picture, not one\nmessage at a time.\n\nPriorities, in order:\n1. Anything that puts a customer relationship or revenue\n   at risk. Often a pattern across two or more emails,\n   not one. This leads your report, always.\n2. Requests that commit money, scope, or dates.\n3. Signals that a person is overloaded, blocked, or unhappy.\n4. Everything else, only if it changes what to do today.\n\nWrite it the way it would land in Slack: short lines,\nbullets, one flag on the lead item if something needs\nattention."},
-  sd: {title:".claude/skills/slack-digest/SKILL.md", sub:"a skill", note:"Slack does not need judgment here. It needs a consistent list, so this one is a skill, same as morning-brief.",
+  sd: {title:".claude/skills/slack-digest/SKILL.md", sub:"a skill used by a sub-agent", note:"Reusable Slack instructions. A sub-agent follows them.",
     body:"---\nname: slack-digest\ndescription: Turns a batch of Slack messages into a flat,\n  consistent digest.\n---\n\n1. List every message, grouped by channel.\n2. Same order every time.\n3. One line each: who, when, what they said.\n4. Never rank one message above another."},
-  rw: {title:".claude/agents/repo-watcher.md", sub:"an agent", note:"GitHub needs judgment: most activity is noise, and one item in the middle can be the thing a customer is waiting on. So this one is an agent.",
+  rw: {title:".claude/agents/repo-watcher.md", sub:"an agent", note:"GitHub judgment. Customer blocks first.",
     body:"---\nname: repo-watcher\ndescription: Reads recent GitHub activity and reports what\n  needs attention.\n---\n\nPriorities, in order:\n1. Anything blocking a fix a customer is waiting on.\n2. A deadline in a thread that nothing is moving toward.\n3. Anything a teammate flagged as blocked on someone else.\n4. Routine activity: mention only as a count.\n\nNever explain what a pull request is. Translate it:\n\"the fix is written but stuck\" beats \"PR #479 failing CI\"."}
 };
 
 /* ============ WHAT GOES IN ============ */
 var SOURCES = {
   tuesday: {kind:"email", label:"7 emails, Tuesday morning", items:[
-    {i:"P", from:"Priya Raman", time:"8:12 AM", sub:"Verification email template, ready for your yes", body:"The new template is done and in review. It fixes the spam filter problem for Outlook addresses. Can you give me a yes before end of day?"},
+    {i:"P", from:"Priya Raman", time:"7:52 AM", sub:"Verification email template, ready for your yes", body:"The new template is done and in review. It fixes the spam filter problem for Outlook addresses. Can you give me a yes before end of day?"},
     {i:"M", from:"Meridian Payments", time:"6:03 AM", sub:"Your contract renews in 14 days", body:"Your service agreement renews automatically on the 15th. Submit the updated agreement before then if you want to change plan."},
     {i:"M", from:"Marcus Webb", time:"Mon 6:40 PM", sub:"FYI, filed the analytics ticket", body:"Filed the ticket for the dashboard counting internal test accounts. Not urgent, just wanted it on record."},
     {i:"J", from:"Jordan Whitfield", time:"Mon 4:15 PM", sub:"Following up on our call", body:"Thanks for the time on Friday. I would love to move forward. Do you have 30 minutes Wednesday or Thursday?"},
@@ -334,12 +314,21 @@ var SOURCES = {
     {i:"S", from:"Sofia Alvarez", time:"Sun 8:47 PM", sub:"Checking in on the scope doc", body:"Marcus mentioned the scope doc would land by Monday. Just making sure Wednesday's sign off is still on track."}
   ]},
   wednesday: {kind:"email", label:"6 emails, Wednesday morning", items:[
-    {i:"P", from:"Priya Raman", time:"8:10 AM", sub:"Quick check, can you approve the new template copy?", body:"Before I ship the final version, can you glance at the copy and give me a thumbs up? Two sentences, should take a minute."},
-    {i:"E", from:"Elena Cruz", time:"7:40 AM", sub:"Pricing page is final, shipping Thursday", flag:true, tag:"ships Thursday", body:"Everything is signed off. The new pricing page goes live Thursday morning as planned. Nothing needed from you."},
-    {i:"S", from:"Sam Ortega, Finance", time:"Tue 5:20 PM", sub:"New payment terms go live Friday", flag:true, tag:"prices change Friday", body:"The new payment terms replace the old ones on Friday. Anything customer facing that shows prices should hold until then, otherwise it goes out with numbers we are about to change."},
-    {i:"M", from:"Meridian Payments", time:"Tue 4:00 PM", sub:"One document still missing for renewal", body:"We are missing one signed document to complete your renewal. Please reply with the updated agreement."},
-    {i:"D", from:"Dana Okafor", time:"Tue 2:15 PM", sub:"Funnel chart, need it by Thursday noon", body:"Need the funnel chart for the investor update by Thursday noon. Let me know if that timing works."},
-    {i:"M", from:"Marcus Webb", time:"Tue 10:05 AM", sub:"Support rotation notes, nothing on fire", body:"Quiet week. Two password resets, one billing question I answered directly. Nothing needs a response from you."}
+    {i:"P", from:"Priya", time:"8:10 AM", sub:"Quick check, can you approve the new template copy?", body:"Test batch open rates look normal again. Before I ship the final version, can you glance at the copy and give me a thumbs up? Two sentences, should take a minute."},
+    {i:"E", from:"Elena", time:"7:40 AM", sub:"Pricing page is final, shipping Thursday", flag:true, tag:"ships Thursday", body:"Everything is signed off. The new pricing page goes live Thursday morning as planned. Nothing needed from you."},
+    {i:"S", from:"Sam, Finance", time:"Tue 5:20 PM", sub:"New payment terms go live Friday", flag:true, tag:"prices change Friday", body:"Heads up that the new payment terms replace the old ones on Friday. Anything customer facing that shows prices should hold until then, otherwise it goes out with numbers we are about to change."},
+    {i:"M", from:"Meridian Payments Billing", time:"Tue 4:00 PM", sub:"One document still missing for renewal", body:"We are missing one signed document to complete your renewal. Please reply with the updated agreement at your earliest convenience so we can close this out."},
+    {i:"D", from:"Dana", time:"Tue 2:15 PM", sub:"Funnel chart, need it by Thursday noon", body:"Can you confirm you saw this? Need the funnel chart for the investor update by Thursday noon. Let me know if that timing works on your end."},
+    {i:"M", from:"Marcus", time:"Tue 10:05 AM", sub:"Support rotation notes, nothing on fire", body:"Quiet week on support. Two password reset requests, one billing question I answered directly, one feature request I logged for later. Nothing needs a response from you."}
+  ]},
+
+  thursday: {kind:"email", label:"6 emails, Thursday morning", items:[
+    {i:"T", from:"Tom Reyes, Brightpath IT", time:"Thu 7:10 AM", sub:"Question before we sign off", flag:true, body:"Where is pilot CSV data stored, and how long is it kept? We need an answer in writing before sign off."},
+    {i:"P", from:"Priya", time:"Wed 6:55 PM", sub:"Out tomorrow morning", body:"I am out tomorrow morning. The verification template is live. Nothing needs you before I am back."},
+    {i:"D", from:"Dana", time:"Wed 3:40 PM", sub:"Investor update goes out Friday", body:"I need the funnel chart from Marcus by Thursday noon. Not blocking, but keep it on your radar."},
+    {i:"L", from:"LinkedIn", time:"Wed 11:02 AM", sub:"3 people viewed your profile this week", body:"See who has been checking your profile."},
+    {i:"M", from:"Marcus", time:"Wed 9:15 AM", sub:"Support rotation notes", body:"Quiet week. Nothing needs a response from you."},
+    {i:"N", from:"Northwind Logistics Billing", time:"Tue 5:30 PM", sub:"Your account summary is attached", body:"Monthly account summary. No action needed."}
   ]},
 
   wednesdayNW: {kind:"email", label:"6 emails, Wednesday morning", items:[
@@ -371,9 +360,11 @@ var SOURCES = {
     {num:"Issue #198", title:"ETA on the account sync fix?", who:"Dana, 2 days ago", tone:"bad", pills:[{t:"open",c:""}], comment:"can we get an ETA on #479? renewal call is in two weeks and I want this shipped and verified before then"},
     {num:"PR #77", title:"Bump lodash from 4.17.20 to 4.17.21", who:"dependency bot, 2 days ago", tone:"", pills:[{t:"auto merge",c:""}]}
   ]},
-  githubToday: {kind:"github", label:"2 updates, this morning", items:[
-    {num:"PR #479", title:"Fix account sync silently dropping records on API timeout", who:"Marcus, 3 hours ago", tone:"ok", pills:[{t:"merged",c:"ok"},{t:"checks green",c:"ok"}], comment:"merged. someone should verify against a real Northwind invoice before their renewal call."},
-    {num:"PR #482", title:"Bump email-template dependency to 3.2.1", who:"Priya, 1 hour ago", tone:"ok", pills:[{t:"merged",c:"ok"}]}
+  githubToday: {kind:"github", label:"4 updates, since yesterday", items:[
+    {num:"PR #479", title:"Fix account sync silently dropping records on API timeout", who:"Priya, 3 hours ago", tone:"ok", pills:[{t:"merged",c:"ok"},{t:"checks green",c:"ok"}], comment:"merged and deployed after the test fixture was regenerated."},
+    {num:"Issue #198", title:"Verify the account sync fix on Northwind", who:"Marcus, 2 hours ago", tone:"bad", pills:[{t:"follow-up today",c:"bad"}], comment:"fix is live. still want to verify it against Northwind's actual account before the renewal call."},
+    {num:"PR #483", title:"Add loading state to pricing comparison table", who:"Elena, 1 day ago", tone:"", pills:[{t:"checks passing",c:"ok"},{t:"awaiting review",c:""}]},
+    {num:"PR #77", title:"Bump lodash from 4.17.20 to 4.17.21", who:"dependency bot, 1 day ago", tone:"ok", pills:[{t:"merged",c:"ok"}]}
   ]},
   handoff: {kind:"reports", label:"3 specialist reports", items:[
     {tag:"analyst", line:"Northwind, two emails that only matter together. Third billing cycle."},
@@ -382,52 +373,64 @@ var SOURCES = {
   ]}
 };
 
+SOURCES.systemEmail = {kind:"email", label:"11 emails, two inbox files", items:SOURCES.wednesdayNW.items.concat([
+  {i:"D", from:"Dana", time:"Mon 8:00 AM", sub:"Q3 priorities, recap from Friday", body:"The onboarding revamp is approved. Pricing page ships Thursday. The second support hire waits. No reply needed."},
+  {i:"S", from:"Sam, Finance", time:"Mon 9:20 AM", sub:"Runway model, quick question", body:"Should I model the second support hire in Q3, or move it to Q4 planning? Not blocking today."},
+  {i:"C", from:"Calendly", time:"Sun 6:40 PM", sub:"New booking, Jordan Reyes", body:"Jordan Reyes booked a 30 minute call for Wednesday at 2 PM. Added to your calendar."},
+  {i:"E", from:"Elena", time:"Sun 4:10 PM", sub:"Pricing page, final edits in", body:"Final edits are in. Ready to ship Thursday. Nothing needed before then."},
+  {i:"M", from:"Meridian Payments Billing", time:"Fri 11:00 AM", sub:"Renewal confirmed, thank you", body:"Your renewal has been processed. No further action is needed."}
+])};
+
 /* ============ WHAT COMES OUT ============ */
 var OUT = {
-  brief2:"<span class='sec'>Summary</span>Quiet inbox. One approval needed today, one renewal deadline in two weeks. Nothing on fire.<span class='sec'>Needs your reply</span>• Priya: verification template ready, wants a yes before end of day.\n• Jordan Whitfield: asking for 30 minutes Wednesday or Thursday.\n• Sofia Alvarez: scope doc before Wednesday's sign off.<span class='sec'>Waiting on others</span>• Elena: pricing page draft lands tomorrow.\n• Marcus: analytics ticket filed, nothing needed.<span class='sec'>FYI only</span>• Meridian: contract renews automatically in 14 days.\n• Datawell: 214 sessions, up 12 percent.",
+  brief2:"<span class='sec'>Summary</span>Quiet inbox. One approval needed today, one renewal deadline in two weeks. Nothing on fire.<span class='sec'>Needs your reply</span>• Priya: verification template ready, wants a yes before end of day.\n• Jordan Whitfield: asking for 30 minutes Wednesday or Thursday.<span class='sec'>Waiting on others</span>• Elena: pricing page draft lands tomorrow.\n• Sofia Alvarez: waiting on Marcus's scope doc before Wednesday's sign off.<span class='sec'>FYI only</span>• Marcus: analytics ticket filed, nothing needed.\n• Meridian: contract renews automatically in 14 days.\n• Datawell: 214 sessions, up 12 percent.",
+
+  brief2b:"<span class='sec'>Summary</span>One security answer is needed before sign off. The investor update needs a chart by Thursday noon.<span class='sec'>Needs your reply</span>• Tom, Brightpath: answer where pilot CSV data is stored and how long it is kept.<span class='sec'>Waiting on others</span>• Dana: waiting on Marcus's funnel chart by Thursday noon.<span class='sec'>FYI only</span>• Priya: out tomorrow morning; template is live.\n• Northwind: account summary attached, no action.\n• LinkedIn: profile views.\n• Support rotation: quiet.",
 
   analystOut:"<span class='flag'>Stop Thursday's pricing page.</span>\n\n• Elena ships the new pricing page Thursday morning. Sam's new payment terms replace the old ones on Friday.\n• If it goes out as planned, it publishes prices that are wrong one day later and someone has to pull it back.\n• Neither email says anything is wrong. The two dates do.<span class='sec'>Also worth a look</span>• Dana needs the funnel chart by Thursday noon.\n• Meridian is missing one signed document for renewal.<span class='sec'>Skipped</span>• Two routine notes. No decision needed today.",
 
-  analystOut2:"<span class='flag'>Thursday and Friday collide.</span>\n\n• The pricing page is set to publish Thursday. The payment terms it quotes change Friday.\n• Elena thinks she is clear to ship. Sam thinks everyone knows to wait. Both are being reasonable, and nobody has put the two dates next to each other.\n• One of those dates has to move, today.<span class='sec'>Everything else</span>• Dana wants the funnel chart Thursday noon.\n• Meridian needs one signature to close the renewal.\n• Priya wants a yes on copy. Not urgent.<span class='miss'>Same conclusion, different words and a different order. An agent decides its own shape each run. That is the trade you make for judgment.</span>",
+  analystOut2:"<span class='flag'>Thursday and Friday collide.</span>\n\n• The pricing page is set to publish Thursday. The payment terms it quotes change Friday.\n• Elena thinks she is clear to ship. Sam thinks everyone knows to wait. Both are being reasonable, and nobody has put the two dates next to each other.\n• One of those dates has to move, today.<span class='sec'>Everything else</span>• Dana wants the funnel chart Thursday noon.\n• Meridian needs one signature to close the renewal.\n• Priya wants a yes on copy. Not urgent.",
 
-  brief5:"<span class='sec'>Summary</span>Thursday and Friday collide. The pricing page ships Thursday morning, and the payment terms printed on it change Friday. One of those dates has to move today.<span class='sec'>Needs your reply</span>• Elena: hold the pricing page, or ship it Friday instead.\n• Sam, Finance: confirm the terms date is fixed at Friday.\n• Dana: funnel chart by Thursday noon.\n• Priya: approve the template copy.<span class='sec'>Waiting on others</span>• Meridian: one signed document to close the renewal.<span class='sec'>FYI only</span>• Marcus: support rotation quiet, nothing needed.",
+  brief5:"<span class='sec'>Summary</span>Thursday and Friday collide. The pricing page ships Thursday morning, and the payment terms printed on it change Friday. One of those dates has to move today.<span class='sec'>Needs your reply</span>• Elena: hold the pricing page, or ship it Friday instead.\n• Dana: funnel chart by Thursday noon.\n• Priya: approve the template copy.\n• Meridian: send the signed agreement to close the renewal.<span class='sec'>Waiting on others</span>None.<span class='sec'>FYI only</span>• Sam, Finance: payment terms change Friday; customer-facing prices should hold.\n• Marcus: support rotation quiet, nothing needed.",
 
-  analystNW:"<span class='flag'>Northwind Logistics needs attention today.</span>\n\n• Carla's invoice note and Marcus's scheduling note are the same account. Third cycle with the wrong seat count, and their finance lead is now joining the renewal call.\n• Neither email sounds urgent. Together they read as an account starting to slide.<span class='sec'>Also worth a look</span>• Dana needs the funnel chart by Thursday noon.\n• Meridian is missing one signed document for renewal.<span class='sec'>Skipped</span>• Two routine approval requests. No decision needed today.",
+  analystNW:"<span class='flag'>Northwind Logistics needs attention today.</span>\n\n• Carla's invoice note and Marcus's scheduling note are the same account. Third cycle with the wrong seat count, and their finance lead is now joining the renewal call.\n• Neither email sounds urgent. Together they read as an account starting to slide.<span class='sec'>Also worth a look</span>• Dana needs the funnel chart by Thursday noon.\n• Meridian is missing one signed document for renewal.\n• Priya wants approval on the template copy.\n• Elena asks whether to share the pricing page draft or ship it.",
 
-  analystNW2:"<span class='flag'>Watch Northwind today.</span>\n\n• Two emails, one account: a third invoice cycle with the wrong seat count, and a renewal call their finance lead has suddenly joined.\n• Carla is being polite about it. That is not the same as being fine about it.<span class='sec'>Everything else</span>• Dana wants the funnel chart Thursday noon.\n• Meridian needs one signature to close the renewal.<span class='miss'>Same conclusion, different words and a different order. An agent decides its own shape each run.</span>",
+  analystNW2:"<span class='flag'>Watch Northwind today.</span>\n\n• Two emails, one account: a third invoice cycle with the wrong seat count, and a renewal call their finance lead has suddenly joined.\n• Carla is being polite about it. That is not the same as being fine about it.<span class='sec'>Everything else</span>• Dana wants the funnel chart Thursday noon.\n• Meridian needs one signature to close the renewal.\n• Priya wants approval on the template copy.\n• Elena wants a ship-or-review decision.",
 
-  slackOut:"<span class='sec'>#general</span>• Marcus, 9:12: needs investor deck screenshots today.\n• Elena, 9:15: will grab them after standup.\n• Dana, 3:30: team lunch moved to Thursday.<span class='sec'>#eng</span>• Priya, 9:40: verification template live, open rates normal.\n• Marcus, 11:20: asking for the real status of the account sync fix, Carla pinged again.\n• Elena, 11:24: thinks it is in Priya's queue.\n• Priya, 11:31: not hers, points at Marcus's own PR.\n• Marcus, 4:40: still no answer, checking the repo himself.<span class='sec'>#random</span>• Marcus, 10:02: lunch poll.\n• Priya, 4:05: office plant died.<span class='sec'>Direct message</span>• Sofia, 1:15: confirming Thursday check in.\n\n11 messages listed. Nothing ranked above anything else.",
+  analystSystem:"<span class='flag'>Northwind needs attention today.</span>\n\n• Two Northwind emails point to a third billing error and a renewal call their finance lead will join.\n• The wider inbox adds one staffing decision from Sam.\n• Meridian's renewal is complete. No action needed.<span class='sec'>Also worth a look</span>• Priya wants a copy approval.\n• Dana needs the funnel chart Thursday noon.",
 
-  repoOut:"<span class='flag'>One thing is blocked.</span>\n\n• The account sync fix has a failing check and cannot merge. Marcus says the test fixture is stale and he needs someone with billing database access.\n• Dana asked for an ETA on the same fix. A renewal call is two weeks out.<span class='sec'>Routine</span>• 4 other items, all passing or already closed.",
+  slackOut:"<span class='sec'>#general</span>• Marcus, 9:12: asks someone to grab investor deck screenshots; Dana needs them by end of day.\n• Elena, 9:15: will grab them after standup.\n• Dana, 3:30: team lunch moved to Thursday.<span class='sec'>#eng</span>• Priya, 9:40: verification template live, open rates normal.\n• Marcus, 11:20: asking for the real status of the account sync fix, Carla pinged again.\n• Elena, 11:24: thinks it is in Priya's queue.\n• Priya, 11:31: not hers, points at Marcus's own PR.\n• Marcus, 4:40: still no answer, checking the repo himself.<span class='sec'>#random</span>• Marcus, 10:02: lunch poll.\n• Priya, 4:05: office plant died.<span class='sec'>Direct message</span>• Sofia, 1:15: confirming Thursday check in.\n\n3 channels, 11 messages, 1 DM. Nothing ranked above anything else.",
 
-  repoOut7:"<span class='flag'>Nothing blocking. One thing to verify.</span>\n\n• The account sync fix merged three hours ago. Marcus asks that someone check it against a real Northwind invoice before their renewal call.<span class='sec'>Routine</span>• 1 dependency bump, merged.",
+  repoOut:"<span class='flag'>One thing is blocked.</span>\n\n• The account sync fix has a failing check and cannot merge. Marcus says the test fixture is stale and he needs someone with billing database access.\n• Dana asked for an ETA on the same fix. A renewal call is two weeks out.<span class='sec'>Routine</span>• 4 other items: passing, closed, awaiting review, or set to auto-merge.",
 
-  brief7:"<span class='sec'>Summary</span>Northwind is the one thing that matters today. Three places, one account: billing wrong for a third cycle, a teammate stuck without an answer, and the fix now merged but unverified before their renewal call.<span class='sec'>Needs your reply</span>• Carla Munoz, Northwind: invoice correction, same error as the last two cycles.\n• Priya: approve the template copy.\n• Dana: funnel chart by Thursday noon.<span class='sec'>Waiting on others</span>• Marcus: account sync fix merged this morning, still needs verifying before the renewal call.<span class='sec'>FYI only</span>• Elena: pricing page ships Thursday.\n• Meridian: one document left to close the renewal.<span class='sec'>Filed</span>Saved to your reports folder with today's date. Three items cleared out of the inbox."
+  repoOut7:"<span class='flag'>Nothing blocking. One thing to verify.</span>\n\n• The account sync fix merged three hours ago. Marcus says he will verify it against Northwind's actual account today.<span class='sec'>Routine</span>• 2 other updates: one awaiting review, one dependency bump merged.",
+
+  brief7:"<span class='sec'>Summary</span>Northwind is the one thing that matters today. Three places, one account: billing wrong for a third cycle, a teammate stuck without an answer, and the fix now merged but unverified before their renewal call.<span class='sec'>Needs your reply</span>• Carla Munoz, Northwind: invoice correction, same error as the last two cycles.\n• Sam: decide whether the second support hire belongs in Q3 or Q4.\n• Priya: approve the template copy.\n• Dana: funnel chart by Thursday noon.<span class='sec'>Waiting on others</span>• Marcus: account sync fix merged this morning, still needs verifying before the renewal call.<span class='sec'>FYI only</span>• Elena: pricing page ships Thursday.\n• Meridian: renewal confirmed, no action needed.<span class='land'><span class='land-tag'>Workflow complete</span>Saved to reports/2026-09-08-morning-brief.md.\nMoved 11 email, 11 Slack, and 4 GitHub items into matching processed/ folders.\n26 items processed across three sources. Urgent: Northwind requires attention today.</span>"
 };
 
 /* ============ THE SIX MOMENTS ============ */
 var MOMENTS = {
   m2:{
     tab:"02", label:"Skill",
-    banner:"Module 2 · <em>A skill on an ordinary inbox</em>",
-    sub:"The recipe works. <b>Run it twice and the brief comes back identical.</b> That is the whole promise of a skill.",
+    banner:"Module 2 · A skill on an ordinary inbox",
+    sub:"Fixed steps. Four sections.",
     cols:4,
     nodes:[
       {id:"in1",kind:"io",tag:"Your inbox",name:"email",foot:"7 unread",col:0,row:0},
-      {id:"orch",kind:"orch",tag:"Main session",name:"<em>Claude Code</em>",foot:"runs it itself",col:1,row:0},
+      {id:"orch",kind:"orch",tag:"Main session",name:"<em>Claude Code</em>",foot:"runs it itself",detail:"Runs the morning-brief skill in this session.",col:1,row:0},
       {id:"sp1",kind:"extr",tag:"Skill",name:"morning-brief",foot:"fixed steps",file:"mb",col:2,row:0},
       {id:"out1",kind:"out",tag:"Output",name:"your brief",foot:"on your screen",col:3,row:0}
     ],
     wires:[["in1","orch"],["orch","sp1"],["sp1","out1"]],
     notes:[],
-    docs:[{chip:"morning-brief",src:"tuesday",outFile:"your morning brief",out:"brief2",outAgain:"brief2"}],
+    docs:[{chip:"morning-brief",src:"tuesday",srcAgain:"thursday",outFile:"your morning brief",out:"brief2",outAgain:"brief2b"}],
     feed:[
-      {s:"main",c:"orch",m:"Read 7 emails from your inbox. One ordinary Tuesday."},
+      {s:"main",c:"orch",m:"Read 7 emails from the inbox."},
       {s:"main",c:"orch",m:"Running <em>morning-brief</em> myself. One source, fixed steps, nobody to send out."},
       {s:"skill",c:"extr",m:"Sorted all 7 into the four fixed sections."},
-      {s:"main",c:"orch",m:"Brief is on your screen. Same four sections it will always produce."}
+      {s:"main",c:"orch",m:"Brief is on your screen. The skill aimed at the same four sections you specified."}
     ],
-    feedAgain:[{s:"skill",c:"extr",m:"Ran it again on the same inbox. <em>Identical output.</em> Same sections, same order, same length. That is what a recipe buys you."}],
+    feedAgain:[{s:"skill",c:"extr",m:"Ran it again on a different inbox. The wording changed. The four sections stayed fixed."}],
     seq:[
       {t:0,node:"in1",state:"active",feed:0},
       {t:900,node:"in1",state:"complete",wire:0,feed:1},
@@ -442,26 +445,26 @@ var MOMENTS = {
 
   m4:{
     tab:"04", label:"Agent",
-    banner:"Module 4 · <em>An agent on a Wednesday inbox</em>",
-    sub:"<b>An agent gets priorities, not steps.</b> It reads the whole inbox as one picture, so it can put two dates side by side. Run it twice and the wording changes.",
+    banner:"Module 4 · An agent on a Wednesday inbox",
+    sub:"Goal. Priorities. Judgment.",
     cols:4,
     nodes:[
       {id:"in1",kind:"io",tag:"Your inbox",name:"email",foot:"6 unread",col:0,row:0},
-      {id:"orch",kind:"orch",tag:"Main session",name:"<em>Claude Code</em>",foot:"sends the agent",col:1,row:0},
-      {id:"sp1",kind:"sub",tag:"Agent",name:"analyst",foot:"priorities, not steps",file:"an",col:2,row:0},
+      {id:"orch",kind:"orch",tag:"Main session",name:"<em>Claude Code</em>",foot:"sends the agent",detail:"Sends the inbox to the analyst and waits for its report.",col:1,row:0},
+      {id:"sp1",kind:"sub",tag:"Agent",name:"analyst",foot:"judges",file:"an",col:2,row:0},
       {id:"out1",kind:"out",tag:"Output",name:"what it found",foot:"its own shape",col:3,row:0}
     ],
     wires:[["in1","orch"],["orch","sp1"],["sp1","out1"]],
     notes:[{text:"no fixed format here",col:3}],
     docs:[{chip:"analyst",src:"wednesday",outFile:"analyst report",out:"analystOut",outAgain:"analystOut2"}],
     feed:[
-      {s:"main",c:"orch",m:"Six emails. Two of them contradict each other, and neither one says so."},
-      {s:"main",c:"orch",m:"Sending the <em>analyst</em>. I give it priorities, not steps. It decides its own path."},
+      {s:"main",c:"orch",m:"Six emails. Two dates create a collision that no message names directly."},
+      {s:"main",c:"orch",m:"Sending the analyst. It gets the goal, priorities, and source, then chooses how to inspect the inbox."},
       {s:"analyst",c:"sub",m:"Read all six together, as one picture, not one at a time."},
       {s:"analyst",c:"sub",m:"Found it: <em>the page ships Thursday, the prices on it change Friday.</em>"},
-      {s:"main",c:"orch",m:"Nobody wrote a rule about Thursdays and Fridays. It compared two dates because it was told what to care about, not what to do."}
+      {s:"main",c:"orch",m:"The priorities did not name this exact conflict. The agent compared the messages and surfaced it. Review the call before trusting it."}
     ],
-    feedAgain:[{s:"analyst",c:"sub",m:"Ran it again. <em>Different words, different order, same call.</em> An agent picks its own shape every time. That is the cost of judgment."}],
+    feedAgain:[{s:"analyst",c:"sub",m:"Ran it again. Different words and order. The judgment can stay the same."}],
     seq:[
       {t:0,node:"in1",state:"active",feed:0},
       {t:900,node:"in1",state:"complete",wire:0,feed:1},
@@ -476,24 +479,24 @@ var MOMENTS = {
 
   m5:{
     tab:"05", label:"Stacked",
-    banner:"Module 5 · <em>The agent picks up the skill</em>",
-    sub:"Not a conveyor belt. <b>The agent is the one running</b>, and it reaches for the recipe when it is time to write the answer up.",
+    banner:"Module 5 · The agent uses the skill",
+    sub:"Agent judgment. Skill format.",
     cols:4,
     nodes:[
       {id:"in1",kind:"io",tag:"Your inbox",name:"email",foot:"6 unread",col:0,row:0},
-      {id:"orch",kind:"orch",tag:"Main session",name:"<em>Claude Code</em>",foot:"sends the agent",col:1,row:0},
-      {id:"sp1",kind:"sub",tag:"Agent",name:"analyst",foot:"decides what leads",file:"an",col:2,row:0,
-        nest:{name:"morning-brief",label:"writes up the answer",file:"mb"}},
-      {id:"out1",kind:"out",tag:"Output",name:"your brief",foot:"judgment, in fixed format",col:3,row:0}
+      {id:"orch",kind:"orch",tag:"Main session",name:"<em>Claude Code</em>",foot:"sends the agent",detail:"Sends the inbox to the analyst, then waits for the formatted brief.",col:1,row:0},
+      {id:"sp1",kind:"sub",tag:"Agent",name:"analyst",foot:"judgment",file:"an",col:2,row:0,
+        nest:{name:"morning-brief",label:"format",file:"mb"}},
+      {id:"out1",kind:"out",tag:"Output",name:"your brief",foot:"four sections",col:3,row:0}
     ],
     wires:[["in1","orch"],["orch","sp1"],["sp1","out1"]],
-    notes:[{text:"one dispatch, two tools",col:2}],
+    notes:[{text:"judgment + format",col:2}],
     docs:[{chip:"analyst, holding morning-brief",src:"wednesday",outFile:"your morning brief",out:"brief5",outAgain:"brief5"}],
     feed:[
-      {s:"main",c:"orch",m:"Same inbox as the agent run. One dispatch, but this time it writes up in a fixed format."},
+      {s:"main",c:"orch",m:"Same inbox as the agent run. This time the agent uses the skill to format its answer."},
       {s:"analyst",c:"sub",m:"Agent reading. The Thursday and Friday collision leads, same call it made in module 4."},
       {s:"analyst",c:"sub",m:"Now reaching for <em>morning-brief</em> to write it up. The skill does not run on its own here. I am running it."},
-      {s:"main",c:"orch",m:"Judgment picked what matters. The recipe put it in the shape your reader already knows."}
+      {s:"main",c:"orch",m:"The agent picked what matters. The skill applied the four-section format."}
     ],
     feedAgain:[{s:"main",c:"orch",m:"Ran it again. <em>Same four sections, the date collision still leading.</em> Steady where the recipe holds, sharp where the agent decides."}],
     seq:[
@@ -511,39 +514,39 @@ var MOMENTS = {
 
   m6:{
     tab:"06", label:"Specialists",
-    banner:"Module 6 · <em>Three specialists, sent off alone</em>",
-    sub:"<b>A specialist is not a third thing.</b> It is an agent or a skill, dispatched to work on its own source. Two agents and one skill here.",
+    banner:"Module 6 · Three separate specialist tasks",
+    sub:"Separate context. Three tasks at once.",
     cols:4,
     nodes:[
-      {id:"orch",kind:"orch",tag:"Main session",name:"<em>Claude Code</em>",foot:"sends three, waits",col:0,row:1},
-      {id:"sp1",kind:"sub",tag:"Agent",name:"analyst",foot:"judgment",file:"an",col:1,row:0},
-      {id:"sp2",kind:"extr",tag:"Skill",name:"slack-digest",foot:"fixed steps",file:"sd",col:1,row:1},
-      {id:"sp3",kind:"sub",tag:"Agent",name:"repo-watcher",foot:"judgment",file:"rw",col:1,row:2},
+      {id:"orch",kind:"orch",tag:"Main session",name:"<em>Claude Code</em>",foot:"sends three, waits",detail:"Starts three scoped tasks at once and waits for three reports.",col:0,row:1},
+      {id:"sp1",kind:"sub",tag:"Sub-agent",name:"analyst",foot:"uses agent file",file:"an",col:1,row:0},
+      {id:"sp2",kind:"extr",tag:"Sub-agent",name:"slack-digest",foot:"uses the skill",file:"sd",col:1,row:1},
+      {id:"sp3",kind:"sub",tag:"Sub-agent",name:"repo-watcher",foot:"uses agent file",file:"rw",col:1,row:2},
       {id:"src1",kind:"io",tag:"Reads",name:"email",foot:"6 unread",col:2,row:0},
       {id:"src2",kind:"io",tag:"Reads",name:"slack",foot:"11 messages",col:2,row:1},
       {id:"src3",kind:"io",tag:"Reads",name:"github",foot:"6 updates",col:2,row:2},
-      {id:"out1",kind:"out",tag:"Writes",name:"own report",foot:"filed on its own",col:3,row:0},
-      {id:"out2",kind:"out",tag:"Writes",name:"own report",foot:"filed on its own",col:3,row:1},
-      {id:"out3",kind:"out",tag:"Writes",name:"own report",foot:"filed on its own",col:3,row:2}
+      {id:"out1",kind:"out",tag:"Returns",name:"report",foot:"to main session",col:3,row:0},
+      {id:"out2",kind:"out",tag:"Returns",name:"report",foot:"to main session",col:3,row:1},
+      {id:"out3",kind:"out",tag:"Returns",name:"report",foot:"to main session",col:3,row:2}
     ],
     wires:[["orch","sp1"],["orch","sp2"],["orch","sp3"],["sp1","src1"],["sp2","src2"],["sp3","src3"],["src1","out1"],["src2","out2"],["src3","out3"]],
-    notes:[{text:"three lanes, never touching",col:2}],
+    notes:[{text:"separate working conversations",col:2}],
     docs:[
       {chip:"analyst",src:"wednesdayNW",outFile:"analyst report",out:"analystNW",outAgain:"analystNW2"},
       {chip:"slack-digest",src:"slack",outFile:"slack digest",out:"slackOut",outAgain:"slackOut"},
       {chip:"repo-watcher",src:"github",outFile:"repo-watcher report",out:"repoOut",outAgain:"repoOut"}
     ],
     feed:[
-      {s:"main",c:"orch",m:"Three sources this time. Sending a specialist to each: two agents and one skill, each working alone."},
-      {s:"analyst",c:"sub",m:"Dispatched. An agent, on your email. Nothing else in view."},
-      {s:"slack-digest",c:"extr",m:"Dispatched. A skill, on your Slack. Fixed steps, no ranking."},
-      {s:"repo-watcher",c:"sub",m:"Dispatched. An agent, on your GitHub. Nothing else in view."},
-      {s:"analyst",c:"sub",m:"Done. <em>Northwind, two emails that only matter together.</em> Filed on its own."},
-      {s:"slack-digest",c:"extr",m:"Done. <em>11 messages listed, nothing ranked.</em> Filed on its own."},
-      {s:"repo-watcher",c:"sub",m:"Done. <em>One fix blocked, a customer is waiting.</em> Filed on its own."},
-      {s:"main",c:"orch",m:"Three answers, three separate files. Nobody joined them up. That is module 7's job."}
+      {s:"main",c:"orch",m:"Three sources. Sending three scoped tasks at once."},
+      {s:"analyst",c:"sub",m:"Assigned: analyze the email file and report what matters."},
+      {s:"slack-digest",c:"extr",m:"Assigned: digest the Slack file with the repeatable skill."},
+      {s:"repo-watcher",c:"sub",m:"Assigned: inspect the GitHub file and report what needs attention."},
+      {s:"analyst",c:"sub",m:"Reported back: Northwind, two emails that only matter together."},
+      {s:"slack-digest",c:"extr",m:"Reported back: 11 messages listed, nothing ranked."},
+      {s:"repo-watcher",c:"sub",m:"Reported back: one fix blocked, a customer is waiting."},
+      {s:"main",c:"orch",m:"Three reports returned to the main session. Module 7 combines them."}
     ],
-    feedAgain:[{s:"main",c:"orch",m:"Ran it again. The skill came back identical. The two agents came back reworded. Same difference as modules 2 and 4, now across three sources."}],
+    feedAgain:[{s:"main",c:"orch",m:"Ran it again. The skill kept its requested structure. The agents could phrase their judgments differently. All three reports returned here."}],
     seq:[
       {t:0,node:"orch",state:"active",feed:0},
       {t:900,node:"orch",state:"complete",wire:0,feed:1},
@@ -569,39 +572,37 @@ var MOMENTS = {
 
   m7:{
     tab:"07", label:"System",
-    banner:"Module 7 · <em>The skill is now the whole procedure</em>",
-    sub:"<b>morning-brief grew up.</b> Its steps are the dashed box: read the sources, send the specialists, combine, format, file. The orchestrator follows it.",
+    banner:"Module 7 · Workflow plus agents",
+    sub:"Fixed path. Specialist judgment.",
     cols:4,
-    frame:{nodes:["orch","sp1","sp2","sp3"], label:"morning-brief, grown up", file:"mb7"},
+    frame:{nodes:["orch","sp1","sp2","sp3"], label:"morning-brief", file:"mb7"},
     nodes:[
-      {id:"in1",kind:"io",tag:"Waiting",name:"email",foot:"6 unread",col:0,row:0},
+      {id:"in1",kind:"io",tag:"Waiting",name:"email",foot:"11 unread",col:0,row:0},
       {id:"in2",kind:"io",tag:"Waiting",name:"slack",foot:"11 messages",col:0,row:1},
-      {id:"in3",kind:"io",tag:"Waiting",name:"github",foot:"2 updates",col:0,row:2},
-      {id:"orch",kind:"orch",tag:"Orchestrator",name:"<em>Claude Code</em>",foot:"follows the steps",file:"mb7",col:1,row:1},
-      {id:"sp1",kind:"sub",tag:"Agent",name:"analyst",foot:"step 2, judgment",file:"an",col:2,row:0},
-      {id:"sp2",kind:"extr",tag:"Skill",name:"slack-digest",foot:"step 2, fixed steps",file:"sd",col:2,row:1},
-      {id:"sp3",kind:"sub",tag:"Agent",name:"repo-watcher",foot:"step 2, judgment",file:"rw",col:2,row:2},
-      {id:"out1",kind:"out",tag:"One output",name:"your brief",foot:"steps 3 to 5: combine, format, file",col:3,row:1}
+      {id:"in3",kind:"io",tag:"Waiting",name:"github",foot:"4 updates",col:0,row:2},
+      {id:"orch",kind:"orch",tag:"Orchestrator",name:"<em>Claude Code</em>",foot:"fixed path",file:"mb7",col:1,row:1},
+      {id:"sp1",kind:"sub",tag:"Sub-agent",name:"analyst",foot:"agent file",file:"an",col:2,row:0},
+      {id:"sp2",kind:"extr",tag:"Sub-agent",name:"slack-digest",foot:"skill",file:"sd",col:2,row:1},
+      {id:"sp3",kind:"sub",tag:"Sub-agent",name:"repo-watcher",foot:"agent file",file:"rw",col:2,row:2},
+      {id:"out1",kind:"out",tag:"One output",name:"your brief",foot:"saved brief",col:3,row:1}
     ],
     wires:[["in1","orch"],["in2","orch"],["in3","orch"],["orch","sp1"],["orch","sp2"],["orch","sp3"],["sp1","out1"],["sp2","out1"],["sp3","out1"]],
-    notes:[{text:"the format comes from the skill",col:3}],
+    notes:[],
     docs:[
-      {chip:"analyst",src:"wednesdayNW",outFile:"analyst report",out:"analystNW",outAgain:"analystNW2"},
+      {chip:"analyst",src:"systemEmail",outFile:"analyst report",out:"analystSystem",outAgain:"analystSystem"},
       {chip:"slack-digest",src:"slack",outFile:"slack digest",out:"slackOut",outAgain:"slackOut"},
       {chip:"repo-watcher",src:"githubToday",outFile:"repo-watcher report",out:"repoOut7",outAgain:"repoOut7"},
       {chip:"your brief",src:"handoff",outFile:"your morning brief",out:"brief7",outAgain:"brief7"}
     ],
     feed:[
-      {s:"main",c:"orch",m:"Following <em>morning-brief</em>. Step 1: three places waiting, email, Slack, GitHub."},
-      {s:"main",c:"orch",m:"Step 2 of the skill says send one specialist per source. Dispatching all three at once."},
+      {s:"main",c:"orch",m:"Manual trigger. Checking email, Slack, and GitHub."},
+      {s:"main",c:"orch",m:"Step 2 sends one specialist task per source. All three start together."},
       {s:"analyst",c:"sub",m:"Reported back: <em>Northwind, third billing cycle, finance lead joining the call.</em>"},
       {s:"slack-digest",c:"extr",m:"Reported back: <em>Marcus stuck on the same account, twice.</em>"},
       {s:"repo-watcher",c:"sub",m:"Reported back: <em>the fix merged, nobody has verified it yet.</em>"},
-      {s:"main",c:"orch",m:"Step 3, combine. All three point at one account, so Northwind leads."},
-      {s:"main",c:"orch",m:"Step 4, format. <em>This is where your brief gets its shape</em>, from the same four sections you wrote in module 2."},
-      {s:"main",c:"orch",m:"Step 5, file it with today's date and clear the inbox. The skill ran the whole thing."}
+      {s:"main",c:"orch",m:"Combine: all three point at Northwind. Save to the dated report path, move items into matching processed folders, then close with 26 items and urgent status."}
     ],
-    feedAgain:[{s:"main",c:"orch",m:"Ran it again on the same morning. The sections held. What leads is decided fresh each time by what the specialists find."}],
+    feedAgain:[{s:"main",c:"orch",m:"Ran it again on the same morning. The fixed path held. What leads is decided from the specialists' findings. Next, module 8 opens the general system map."}],
     seq:[
       {t:0,node:"in1",state:"active"},
       {t:100,node:"in2",state:"active"},
@@ -619,8 +620,8 @@ var MOMENTS = {
       {t:4600,node:"sp2",state:"complete",wire:7,feed:3,doc:1,showOut:1},
       {t:5800,node:"sp3",state:"complete",wire:8,feed:4,doc:2,showOut:2},
       {t:6600,node:"out1",state:"active",feed:5},
-      {t:7400,feed:6,doc:3,showOut:3},
-      {t:8200,node:"out1",state:"complete",feed:7}
+      {t:7400,doc:3,showOut:3},
+      {t:8200,node:"out1",state:"complete"}
     ]
   }
 };
@@ -675,13 +676,17 @@ function renderSource(key){
 }
 
 /* MODAL */
+function openModal(title, sub, body, note){
+  $("modalTitle").textContent = title;
+  $("modalSub").textContent = sub || "";
+  $("modalBody").innerHTML = body;
+  $("modalNote").textContent = note || "";
+  $("modalNote").style.display = note ? "block" : "none";
+  $("modalBack").classList.add("open");
+}
 function openDef(key){
   var d = DEFS[key]; if(!d) return;
-  $("modalTitle").textContent = d.title;
-  $("modalSub").textContent = d.sub;
-  $("modalBody").textContent = d.body;
-  $("modalNote").textContent = d.note;
-  $("modalBack").classList.add("open");
+  openModal(d.title, d.sub, "<pre>"+esc(d.body)+"</pre>", d.note);
 }
 $("modalClose").addEventListener("click", function(){ $("modalBack").classList.remove("open"); });
 $("modalBack").addEventListener("click", function(e){ if(e.target === $("modalBack")) $("modalBack").classList.remove("open"); });
@@ -715,15 +720,17 @@ function layout(m){
       '<div class="n-text"><div class="n-tag">'+n.tag+'</div><div class="n-name">'+n.name+'</div></div>'+
       '<div class="n-dot"></div></div>'+
       '<div class="n-foot"><span class="txt">'+n.foot+'</span>'+
-      (n.file?'<button class="n-file" data-file="'+n.file+'">read file</button>':'')+'</div>'+
+      (n.file?'<button class="n-file" data-file="'+n.file+'">read file</button>':'<button class="n-view" type="button">view</button>')+'</div>'+
       (n.nest?'<div class="n-nest"><div class="nn-kicker">holding</div>'+
         '<div class="nn-card"><div class="nn-top"><span class="nn-ic">▤</span><span class="nn-kind">Skill</span></div>'+
         '<div class="nn-name">'+n.nest.name+'</div>'+
         '<div class="nn-foot"><span class="nn-tx">'+n.nest.label+'</span>'+
         '<button class="nn-btn" data-file="'+n.nest.file+'">read file</button></div></div></div>':'');
-    el.addEventListener("click", function(){ selectNodeDoc(m, n.id); });
+    el.addEventListener("click", function(){ openNode(m, n.id); });
     var fb = el.querySelector(".n-file");
     if(fb) fb.addEventListener("click", function(e){ e.stopPropagation(); openDef(n.file); });
+    var vb = el.querySelector(".n-view");
+    if(vb) vb.addEventListener("click", function(e){ e.stopPropagation(); openNode(m, n.id); });
     var nb = el.querySelector(".nn-btn");
     if(nb) nb.addEventListener("click", function(e){ e.stopPropagation(); openDef(n.nest.file); });
     canvas.appendChild(el);
@@ -775,60 +782,52 @@ function nodeBox(id){
 }
 function drawWires(m){
   var svg=$("wires"); svg.innerHTML="";
+  var defs=document.createElementNS("http://www.w3.org/2000/svg","defs");
+  defs.innerHTML='<marker id="arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#78716C"></path></marker>';
+  svg.appendChild(defs);
   m.wires.forEach(function(w,i){
     var a=nodeBox(w[0]), b=nodeBox(w[1]), mid=(a.r+b.l)/2;
     var p=document.createElementNS("http://www.w3.org/2000/svg","path");
     p.setAttribute("d","M "+a.r+" "+a.cy+" C "+mid+" "+a.cy+", "+mid+" "+b.cy+", "+b.l+" "+b.cy);
     p.setAttribute("class","conn-path"); p.id="wire-"+i;
+    p.setAttribute("marker-end","url(#arrow)");
     svg.appendChild(p);
   });
 }
 
-/* DOCS */
-function renderChips(m){
-  var wrap=$("docChips"); wrap.innerHTML="";
-  m.docs.forEach(function(d,i){
-    var b=document.createElement("button");
-    b.className="doc-chip"+(i===0?" on":"");
-    b.textContent=d.chip; b.dataset.i=i;
-    b.addEventListener("click", function(){ selectDoc(m,i); });
-    wrap.appendChild(b);
-  });
-}
-function selectDoc(m,i){
-  var d=m.docs[i];
-  document.querySelectorAll(".doc-chip").forEach(function(c){ c.classList.toggle("on", +c.dataset.i===i); });
-  $("inFile").textContent = SOURCES[d.src].label;
-  $("inBody").innerHTML = renderSource(d.src);
-  $("inBody").scrollTop = 0;
-  if(produced[current] && produced[current][i]){
-    $("outFile").textContent = d.outFile;
-    $("outBody").innerHTML = '<div class="report">'+OUT[produced[current][i]]+'</div>';
-  } else {
-    $("outFile").textContent = "";
-    $("outBody").innerHTML = '<div class="doc-empty">Press Run. What comes out lands here.</div>';
-  }
-  $("outBody").scrollTop = 0;
-}
 function showOutput(m,i){
   var d=m.docs[i];
   var key = (runCount[current]||1) > 1 ? d.outAgain : d.out;
   produced[current] = produced[current] || {};
   produced[current][i] = key;
-  $("outFile").textContent = d.outFile;
-  $("outBody").innerHTML = '<div class="report">'+OUT[key]+'</div>';
-  $("outBody").scrollTop = 0;
 }
-function selectNodeDoc(m,nodeId){
+function docIndexForNode(m,nodeId){
   var map={sp1:0,sp2:1,sp3:2,src1:0,src2:1,src3:2,in1:0,in2:1,in3:2,out1:0,out2:1,out3:2};
   var i=map[nodeId];
   if(m.id==="m5" && nodeId==="sp2") i=0;
   if(nodeId==="out1" && m.docs.length===4) i=3;
-  if(i===undefined) i=0;
-  if(i>=m.docs.length) i=m.docs.length-1;
-  document.querySelectorAll(".node").forEach(function(n){n.classList.remove("selected");});
+  return i;
+}
+function openNode(m,nodeId){
+  var n=m.nodes.find(function(item){return item.id===nodeId;});
+  if(!n) return;
+  document.querySelectorAll(".node").forEach(function(el){el.classList.remove("selected");});
   $("node-"+nodeId).classList.add("selected");
-  selectDoc(m,i);
+  if(n.file){ openDef(n.file); return; }
+  var i=docIndexForNode(m,nodeId);
+  if(i!==undefined && i<m.docs.length){
+    var d=m.docs[i];
+    var srcKey=((runCount[current]||1)>1 && d.srcAgain) ? d.srcAgain : d.src;
+    var source=SOURCES[srcKey];
+    if(n.kind==="out"){
+      var key=produced[current] && produced[current][i];
+      openModal(d.outFile, "Output · "+(key ? "ready" : "after Run"), key ? '<div class="report">'+OUT[key]+'</div>' : '<div class="modal-empty">Run this tab to see the output.</div>', key ? "Click another node to inspect its input or instructions." : "");
+    } else {
+      openModal(n.name.replace(/<[^>]+>/g,""), "Input · "+source.label, '<div class="source-view">'+renderSource(srcKey)+'</div>', "Click another node to inspect its instructions or output.");
+    }
+    return;
+  }
+  openModal(n.name.replace(/<[^>]+>/g,""), n.tag, '<div class="node-detail"><span class="detail-label">Process</span><span class="detail-value">'+n.name+'</span><span class="detail-foot">'+esc(n.detail||n.foot)+'</span></div>', "");
 }
 
 /* FEED */
@@ -859,12 +858,13 @@ function buildTabs(){
 function setMoment(key){
   clearTimers(); running=false; current=key;
   var m=MOMENTS[key]; m.id=key;
+  if(key==="m2") m.nodes[0].foot="7 unread";
   runCount[key]=0; produced[key]={};
   document.querySelectorAll(".top-tab").forEach(function(b){ b.classList.toggle("active", b.dataset.m===key); });
   $("stageBanner").innerHTML=m.banner;
   $("stageSub").innerHTML=m.sub||"";
-  layout(m); renderChips(m); selectDoc(m,0);
-  $("feed").innerHTML='<div class="feed-empty">Nothing yet.<br>Press Run.</div>';
+  layout(m);
+  $("feed").innerHTML='<div class="feed-empty">No activity yet.</div>';
   $("runBtn").disabled=false; $("runBtn").textContent="Run";
 }
 
@@ -874,10 +874,9 @@ function run(){
   var m=MOMENTS[current];
   runCount[current]=(runCount[current]||0)+1;
   var again = runCount[current]>1;
+  if(current==="m2" && again){ m.nodes[0].foot="6 unread"; layout(m); }
   $("runBtn").disabled=true;
   if(!again) $("feed").innerHTML="";
-  $("outBody").innerHTML='<div class="doc-empty">Working...</div>';
-  $("outFile").textContent="";
   document.querySelectorAll(".node").forEach(function(n){n.classList.remove("active","complete","selected");});
   document.querySelectorAll(".conn-path").forEach(function(p){p.classList.remove("active","complete");});
 
@@ -895,7 +894,6 @@ function run(){
         timers.push(setTimeout(function(){ w.classList.remove("active"); w.classList.add("complete"); },900));
       }
       if(step.feed!==undefined && !again) addFeed(m.feed[step.feed]);
-      if(step.doc!==undefined) selectDoc(m, step.doc);
       if(step.showOut!==undefined) showOutput(m, step.showOut);
     }, step.t));
   });
@@ -914,3 +912,4 @@ window.addEventListener("resize", function(){ layout(MOMENTS[current]); });
 buildTabs();
 setMoment("m2");
 </script>
+</html>
