@@ -182,7 +182,7 @@
 </style>
 </head>
 <body>
-<!-- olive-reviewed: 2026-07-29 -->
+<!-- olive-reviewed: 2026-09-09 -->
 <div id="progress"></div>
 <div class="hint">← → to navigate</div>
 
@@ -262,13 +262,14 @@
 <!-- 4 · THE BUILDING BLOCKS (thesis) -->
 <section class="slide">
   <div class="content">
-    <div class="kicker">The whole thing is built from 4 pieces</div>
-    <h2>You already learned three of them this week</h2>
-    <div class="grid4" style="margin-top:34px">
+    <div class="kicker">The whole thing is built from 5 pieces</div>
+    <h2>Five pieces working together</h2>
+    <div class="grid4" style="grid-template-columns:repeat(5,1fr);margin-top:34px">
       <div class="card stripe"><span class="ic">🎓</span><span class="tag">Skills</span><h3>Taught behaviors</h3><p>A workflow you taught once.</p></div>
       <div class="card stripe"><span class="ic">🔌</span><span class="tag">Tools</span><h3>Tool connections</h3><p>MCP servers, CLI tools, and app connectors.</p></div>
-      <div class="card stripe"><span class="ic">🤖</span><span class="tag">Sub-agents</span><h3>Parallel workers</h3><p>Many helpers, each on one slice, at once.</p></div>
-      <div class="card stripe" style="border-top-color:var(--orange)"><span class="ic">🗺️</span><span class="tag" style="color:var(--orange)">The Registry</span><h3>The map</h3><p>The glue. Just a text file.</p></div>
+      <div class="card stripe"><span class="ic">🤖</span><span class="tag">Agents</span><h3>Specialized workers</h3><p>Each handles one slice of work.</p></div>
+      <div class="card stripe"><span class="ic">🪝</span><span class="tag">Hooks</span><h3>Checks and gates</h3><p>Catches stale or unsafe work.</p></div>
+      <div class="card stripe" style="border-top-color:var(--orange)"><span class="ic">🗺️</span><span class="tag" style="color:var(--orange)">The Registry</span><h3>The map</h3><p>Routes each request to the right place.</p></div>
     </div>
   </div>
   <div class="wm">[ ai study camp ]</div><div class="pageno">04</div>
@@ -334,10 +335,10 @@
   <div class="wm">[ ai study camp ]</div><div class="pageno">07</div>
 </section>
 
-<!-- 8 · SUB-AGENTS -->
+<!-- 8 · AGENTS -->
 <section class="slide">
   <div class="content">
-    <div class="kicker">Piece 4 · Sub-agents</div>
+    <div class="kicker">Piece 3 · Agents</div>
     <h2>Agents handle separate slices of work</h2>
     <div class="fan" style="margin-top:30px">
       <div class="node stripe" style="padding:22px"><div style="font-size:26px">🌵</div><div style="margin-top:6px;font-size:17px">Cacti</div><div class="nm">one ask</div></div>
@@ -358,12 +359,12 @@
 <section class="slide">
   <div class="content">
     <div class="kicker">Put it together · the daily brief</div>
-    <h2><span class="mono" style="font-size:38px;color:var(--accent)">/today</span> uses all four at once</h2>
+    <h2><span class="mono" style="font-size:38px;color:var(--accent)">/today</span> uses several pieces at once</h2>
     <div class="today-flow" style="margin-top:24px">
       <div class="col-inputs">
         <div class="ti"><span class="ti-ic">🗺️</span><div><div>Registry</div><div class="ti-sub">knows your projects</div></div></div>
         <div class="ti"><span class="ti-ic">🔌</span><div><div>Tools and connectors</div><div class="ti-sub">calendar · email · slack</div></div></div>
-        <div class="ti"><span class="ti-ic">🤖</span><div><div>Sub-agents</div><div class="ti-sub">a handful, in parallel</div></div></div>
+        <div class="ti"><span class="ti-ic">🤖</span><div><div>Agents</div><div class="ti-sub">specialized workers</div></div></div>
         <div class="ti"><span class="ti-ic">📡</span><div><div>Agent reports</div><div class="ti-sub">overnight monitors</div></div></div>
       </div>
       <div class="conn">→</div>
@@ -395,7 +396,7 @@
       <div class="nstep">
         <div class="num">1</div>
         <div>
-          <div class="slabel">Fires <b>sub-agents</b>, in parallel</div>
+        <div class="slabel">Fires <b>specialized workers</b>, in parallel</div>
           <div class="blocks">
             <span class="blk sub"><span class="bic">🤖</span>calendar + email</span>
             <span class="blk sub"><span class="bic">🤖</span>tasks across all repos</span>
