@@ -162,6 +162,42 @@
   .subskill .sk-name{font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--accent);font-size:15px}
   .subskill .sk-arrow{color:var(--accent);font-weight:600;font-size:13.5px}
   .subskill .blk{background:var(--card)}
+  /* call artifact pipeline */
+  .pipeline-shell{margin-top:28px;background:var(--card);border:1.5px solid var(--accent);border-radius:16px;padding:18px 20px 20px}
+  .pipeline-head{display:flex;align-items:center;justify-content:space-between;gap:18px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+  .pipeline-head .pipeline-label{display:flex;align-items:baseline;gap:12px;min-width:0}
+  .pipeline-head .pipeline-label .nt{font-family:'JetBrains Mono',monospace;font-size:21px;font-weight:600;color:var(--accent)}
+  .pipeline-head .pipeline-label .nl{font-size:14px;color:var(--muted)}
+  .pipeline-legend{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+  .pipeline-legend .legend{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line2);border-radius:999px;padding:5px 9px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;font-weight:600;white-space:nowrap}
+  .pipeline-legend .legend.skill{color:var(--accent);background:var(--accent-soft)}
+  .pipeline-legend .legend.connector{color:var(--orange);background:#D9770612}
+  .pipeline-flow{display:flex;flex-direction:column;gap:12px;padding-top:18px}
+  .pipeline-flow-row{display:grid;grid-template-columns:1fr 28px 1fr 28px 1fr 28px 1fr;gap:8px;align-items:stretch}
+  .pipeline-stage{min-width:0;min-height:112px;background:var(--bg);border:1px solid var(--line2);border-radius:12px;padding:12px 12px 13px;display:flex;flex-direction:column}
+  .pipeline-stage.skill{border-top:3px solid var(--accent)}
+  .pipeline-stage.connector{border-top:3px solid var(--orange)}
+  .pipeline-stage-top{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+  .pipeline-stage-icon{width:27px;height:27px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex:none}
+  .pipeline-stage.skill .pipeline-stage-icon{background:var(--accent-soft);color:var(--accent)}
+  .pipeline-stage.connector .pipeline-stage-icon{background:#D9770612;color:var(--orange)}
+  .pipeline-kind{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:600}
+  .pipeline-stage.skill .pipeline-kind{color:var(--accent)}
+  .pipeline-stage.connector .pipeline-kind{color:var(--orange)}
+  .pipeline-name{font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.25;font-weight:600;overflow-wrap:anywhere}
+  .pipeline-output{font-size:12px;line-height:1.35;color:var(--muted);margin-top:auto;padding-top:9px}
+  .pipeline-arrow{display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:25px;font-weight:700}
+  .pipeline-turn{display:flex;justify-content:center;align-items:center;height:18px;color:var(--accent);font-size:24px;font-weight:700}
+  .pipeline-note{display:flex;justify-content:space-between;gap:18px;margin-top:16px;color:var(--muted);font-size:14px;line-height:1.4}
+  .pipeline-note b{color:var(--fg)}
+  @media(max-width:900px){
+    .pipeline-head{align-items:flex-start;flex-direction:column}
+    .pipeline-legend{justify-content:flex-start}
+    .pipeline-flow-row{grid-template-columns:1fr}
+    .pipeline-arrow{height:20px;transform:rotate(90deg)}
+    .pipeline-turn{display:none}
+    .pipeline-stage{min-height:0}
+  }
   /* cactus growth slide */
   .cg-grow{display:grid;grid-template-columns:0.62fr 90px 1.72fr;align-items:end;gap:0;margin-top:6px}
   .cg-stage{display:flex;flex-direction:column;align-items:center;gap:10px}
@@ -182,7 +218,7 @@
 </style>
 </head>
 <body>
-<!-- olive-reviewed: 2026-09-09 -->
+<!-- olive-reviewed: 2026-09-10 -->
 <div id="progress"></div>
 <div class="hint">← → to navigate</div>
 
@@ -431,7 +467,47 @@
   <div class="wm">[ ai study camp ]</div><div class="pageno">10</div>
 </section>
 
-<!-- 11 · THE ROSTER -->
+<!-- 11 · CALL ARTIFACT PIPELINE -->
+<section class="slide">
+  <div class="content">
+    <div class="kicker">Call artifact pipeline</div>
+    <h2>One call becomes a finished artifact</h2>
+    <div class="pipeline-shell">
+      <div class="pipeline-head">
+        <div class="pipeline-label"><span class="nt">call-artifact</span><span class="nl">one request, many steps</span></div>
+        <div class="pipeline-legend" aria-label="Pipeline legend">
+          <span class="legend skill">🎓 skill</span>
+          <span class="legend connector">🔌 connector</span>
+        </div>
+      </div>
+      <div class="pipeline-flow">
+        <div class="pipeline-flow-row">
+          <div class="pipeline-stage connector"><div class="pipeline-stage-top"><span class="pipeline-stage-icon">🔌</span><span class="pipeline-kind">connector</span></div><div class="pipeline-name">Zoom API</div><div class="pipeline-output">recording + VTT</div></div>
+          <div class="pipeline-arrow">→</div>
+          <div class="pipeline-stage skill"><div class="pipeline-stage-top"><span class="pipeline-stage-icon">🎓</span><span class="pipeline-kind">skill</span></div><div class="pipeline-name">process-call</div><div class="pipeline-output">clean + classify</div></div>
+          <div class="pipeline-arrow">→</div>
+          <div class="pipeline-stage skill"><div class="pipeline-stage-top"><span class="pipeline-stage-icon">🎓</span><span class="pipeline-kind">skill</span></div><div class="pipeline-name">pipeline-process-squad</div><div class="pipeline-output">debrief + takeaways</div></div>
+          <div class="pipeline-arrow">→</div>
+          <div class="pipeline-stage skill"><div class="pipeline-stage-top"><span class="pipeline-stage-icon">🎓</span><span class="pipeline-kind">skill</span></div><div class="pipeline-name">pipeline-trim</div><div class="pipeline-output">start point + ffmpeg</div></div>
+        </div>
+        <div class="pipeline-turn">↓</div>
+        <div class="pipeline-flow-row">
+          <div class="pipeline-stage skill"><div class="pipeline-stage-top"><span class="pipeline-stage-icon">🎓</span><span class="pipeline-kind">skill</span></div><div class="pipeline-name">pipeline-hub</div><div class="pipeline-output">build artifact page</div></div>
+          <div class="pipeline-arrow">→</div>
+          <div class="pipeline-stage connector"><div class="pipeline-stage-top"><span class="pipeline-stage-icon">🔌</span><span class="pipeline-kind">connector</span></div><div class="pipeline-name">Google Drive</div><div class="pipeline-output">file the outputs</div></div>
+          <div class="pipeline-arrow">→</div>
+          <div class="pipeline-stage connector"><div class="pipeline-stage-top"><span class="pipeline-stage-icon">🔌</span><span class="pipeline-kind">connector</span></div><div class="pipeline-name">YouTube API</div><div class="pipeline-output">video + subtitles</div></div>
+          <div class="pipeline-arrow">→</div>
+          <div class="pipeline-stage connector"><div class="pipeline-stage-top"><span class="pipeline-stage-icon">🔌</span><span class="pipeline-kind">connector</span></div><div class="pipeline-name">Vercel</div><div class="pipeline-output">shareable hub</div></div>
+        </div>
+      </div>
+      <div class="pipeline-note"><span><b>Skills</b> transform the call.</span><span><b>Connectors</b> move the outputs.</span></div>
+    </div>
+  </div>
+  <div class="wm">[ ai study camp ]</div><div class="pageno">11</div>
+</section>
+
+<!-- 12 · THE ROSTER -->
 <section class="slide">
   <div class="content">
     <div class="kicker">Bonus · the shape it grew into</div>
@@ -468,7 +544,7 @@
     </div>
     <p class="note" style="margin-top:24px"><b>18 named agents.</b> Some wait for a request. Others run on a schedule.</p>
   </div>
-  <div class="wm">[ ai study camp ]</div><div class="pageno">11</div>
+  <div class="wm">[ ai study camp ]</div><div class="pageno">12</div>
 </section>
 
 <!-- 12 · ENFORCEMENT (agents aren't magic) -->
@@ -502,7 +578,7 @@
     </div>
     <p class="note"><b>Judgment lives in the agent. The guarantee lives in the code.</b></p>
   </div>
-  <div class="wm">[ ai study camp ]</div><div class="pageno">12</div>
+  <div class="wm">[ ai study camp ]</div><div class="pageno">13</div>
 </section>
 
 <!-- 13 · HOOKS -->
@@ -535,7 +611,7 @@
       <div class="card stripe"><span class="tag">No guesswork</span><p style="color:var(--fg);font-size:16px">No fresh read, no status claim.</p></div>
     </div>
   </div>
-  <div class="wm">[ ai study camp ]</div><div class="pageno">13</div>
+  <div class="wm">[ ai study camp ]</div><div class="pageno">14</div>
 </section>
 
 <!-- 14 · THE WHOLE SYSTEM (file tree) -->
@@ -568,7 +644,7 @@
       <div><div class="n">Connections</div><div class="l">tools Cacti can reach</div></div>
     </div>
   </div>
-  <div class="wm">[ ai study camp ]</div><div class="pageno">14</div>
+  <div class="wm">[ ai study camp ]</div><div class="pageno">15</div>
 </section>
 
 <!-- 12 · SHOW ME THE BRICK -->
@@ -593,7 +669,7 @@
       </div>
     </div>
   </div>
-  <div class="wm">[ ai study camp ]</div><div class="pageno">15</div>
+  <div class="wm">[ ai study camp ]</div><div class="pageno">16</div>
 </section>
 
 <!-- 14 · CACTUS GROWTH -->
@@ -661,7 +737,7 @@
       </div>
     </div>
   </div>
-  <div class="wm">[ ai study camp ]</div><div class="pageno">16</div>
+  <div class="wm">[ ai study camp ]</div><div class="pageno">17</div>
 </section>
 
 <!-- 15 · TAKEAWAY -->
@@ -671,16 +747,17 @@
     <h2 style="font-size:52px;color:#fff">This week's pieces, connected</h2>
     <div style="display:flex;align-items:center;gap:16px;margin:34px 0;flex-wrap:wrap">
       <span class="pill" style="background:var(--dark2);border-color:#444;color:#fff">🎓 a skill</span><span class="arrow">+</span>
-      <span class="pill" style="background:var(--dark2);border-color:#444;color:#fff">🔌 an MCP</span><span class="arrow">+</span>
-      <span class="pill" style="background:var(--dark2);border-color:#444;color:#fff">🤖 a sub-agent</span><span class="arrow">+</span>
-      <span class="pill" style="background:var(--dark2);border-color:#444;color:#fff">🗺️ a plain text file</span>
+      <span class="pill" style="background:var(--dark2);border-color:#444;color:#fff">🔌 tools</span><span class="arrow">+</span>
+      <span class="pill" style="background:var(--dark2);border-color:#444;color:#fff">🤖 an agent</span><span class="arrow">+</span>
+      <span class="pill" style="background:var(--dark2);border-color:#444;color:#fff">🪝 a hook</span><span class="arrow">+</span>
+      <span class="pill" style="background:var(--dark2);border-color:#444;color:#fff">🗺️ a map</span>
       <span class="arrow" style="font-size:28px">=</span>
       <span class="pill" style="background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600">🌵 your own OS</span>
     </div>
     <p class="lead">Don't copy mine. <b style="color:#fff">Start with one project, one CLAUDE.md, one good skill.</b> Let it grow as you hit the need.</p>
     <p class="note" style="color:rgba(255,255,255,.55)">Thursday's session · Ben Battles · ask me anything</p>
   </div>
-  <div class="wm">[ ai study camp ]</div><div class="pageno">17</div>
+  <div class="wm">[ ai study camp ]</div><div class="pageno">18</div>
 </section>
 
 <script>
