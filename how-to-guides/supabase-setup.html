@@ -83,13 +83,13 @@
               <div class="term-body">
 <span class="cmd">I just created a Supabase account with a project called ai-study-camp for my course. Set it up so all my course projects can use it:</span>
 <span class="cmd">1. Find my AI Study Camp folder in my home base (create one under learning if it doesn't exist) and create a file in it called supabase.md</span>
-<span class="cmd">2. Walk me through finding my Project URL and anon public key in the Supabase dashboard, then save both in supabase.md, labeled, along with the project name and a line on what this project is for. Never save the service role key or my database password anywhere</span>
-<span class="cmd">3. Walk me through creating a personal access token in the Supabase dashboard, then install the official Supabase MCP server with it, user-scoped so it works in every project. Keep the token in the MCP config only. In future builds you'll use this MCP to create tables and columns for me, so I never write SQL myself</span>
+<span class="cmd">2. Walk me through finding my Project URL and publishable key (called anon public key in older dashboards) in the Supabase dashboard, then save both in supabase.md, labeled, along with the project name and a line on what this project is for. Never save the service role key or my database password anywhere</span>
+<span class="cmd">3. Connect the official Supabase MCP using its browser sign-in flow. Approve access only for this course project, confirm that the connection is active, and keep any MCP credentials out of the project files.</span>
 <span class="cmd">4. Create or update the CLAUDE.md in my AI Study Camp folder with: builds here use my ai-study-camp Supabase project (connection info in supabase.md), Next.js for the frontend, Supabase for the database and login, Vercel for deploys, each build gets its own tables, and schema changes go through the Supabase MCP</span>
 <span class="cmd">5. When you're done, show me the supabase.md file and confirm the MCP is connected</span>
               </div>
             </div>
-            <p>Claude walks you through the dashboard clicks, saves your connection info, and installs the Supabase MCP server. When it finishes, it shows you <code>supabase.md</code> and confirms the MCP is connected. That's the whole setup.</p>
+            <p>Claude walks you through the dashboard clicks, saves your connection info, and connects the Supabase MCP server. When it finishes, it shows you <code>supabase.md</code> and confirms the MCP is connected. That's the whole setup.</p>
           </div>
         </div>
 
@@ -103,12 +103,12 @@
 
         <div class="trouble-item">
           <p class="trouble-error">MCP shows as not connected</p>
-          <p class="trouble-fix">Tokens expire or get revoked. Create a fresh personal access token in the Supabase dashboard and ask Claude to reinstall the Supabase MCP server with it.</p>
+          <p class="trouble-fix">If browser authorization is not active, ask Claude to reconnect the official Supabase MCP and complete the sign-in step again.</p>
         </div>
 
         <div class="trouble-item">
           <p class="trouble-error">"Invalid API key"</p>
-          <p class="trouble-fix">You copied the service role key by mistake, or the string got cut off. Re-copy the anon public key from the dashboard, the full string, and have Claude update supabase.md.</p>
+          <p class="trouble-fix">You copied the service role key by mistake, or the string got cut off. Re-copy the publishable key (called anon public key in older dashboards) from the dashboard, the full string, and have Claude update supabase.md.</p>
         </div>
 
         <div class="trouble-item">

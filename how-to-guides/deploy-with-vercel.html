@@ -61,10 +61,10 @@
       </div>
       <p class="visual-caption">Vercel dashboard showing the import flow</p>
       <p><strong>Auto-deploy on push:</strong> After connecting, every time you push to GitHub, Vercel automatically redeploys. You never have to manually deploy again.</p>
-      <p><strong>Add environment variables from the dashboard:</strong></p>
+      <p><strong>Add the Supabase environment variables from the dashboard:</strong></p>
       <ol>
         <li>Go to your project settings → <strong>Environment Variables</strong></li>
-        <li>Add each variable (like <code>INSTANT_APP_ID</code>) with its value</li>
+        <li>Add <code>NEXT_PUBLIC_SUPABASE_URL</code> and <code>NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY</code> with their values</li>
         <li>Redeploy for the variables to take effect</li>
       </ol>
     </div>
@@ -174,7 +174,7 @@
                 <span class="term-title">zsh</span>
               </div>
               <div class="term-body">
-<span class="cmd">$ vercel env add INSTANT_APP_ID</span>
+<span class="cmd">$ vercel env add NEXT_PUBLIC_SUPABASE_URL</span>
               </div>
             </div>
             <p>Vercel will prompt you for the value and which environments to apply it to. Pick all three (Production, Preview, Development) if unsure.</p>

@@ -96,7 +96,7 @@
             <h2 class="step-title">Claude Wires the App</h2>
           </div>
           <div class="step-body">
-            <p>Inside the app, Claude installs the <code>@supabase/supabase-js</code> library and puts your Project URL and anon public key in <code>.env.local</code>. That's the whole connection. When you deploy to Vercel, the same two values go in the Vercel dashboard.</p>
+            <p>Inside the app, Claude installs the <code>@supabase/supabase-js</code> library and puts your Project URL and publishable key (called anon public key in older dashboards) in <code>.env.local</code>. That's the whole connection. When you deploy to Vercel, the same two values go in the Vercel dashboard.</p>
           </div>
         </div>
 
@@ -106,7 +106,7 @@
     <!-- THE TWO KEYS -->
     <section class="intro-section">
       <h2>The Two Keys</h2>
-      <p>Supabase gives your project two keys, and they are nothing alike. The <strong>anon public key</strong> ships inside every deployed app, so anyone can see it. That's fine, it only does what your access rules allow. The <strong>service role key</strong> bypasses every rule. Never share it, never save it. The course never uses it.</p>
+      <p>Supabase gives your project two keys, and they are nothing alike. The <strong>publishable key (called anon public key in older dashboards)</strong> ships inside every deployed app, so anyone can see it. That's fine, it only does what your access rules allow. The <strong>service role key</strong> bypasses every rule. Never share it, never save it. The course never uses it.</p>
       <div class="tip-box">
         <span class="tip-label">Rule</span>
         <p>If anything asks for the service role key, say no. Claude does its database work through the MCP.</p>
@@ -142,7 +142,7 @@
 
         <div class="trouble-item">
           <p class="trouble-error">"Invalid API key" in the browser</p>
-          <p class="trouble-fix">The app got the wrong key or a cut-off one. Ask Claude to re-copy the anon public key from supabase.md into .env.local and restart the dev server.</p>
+          <p class="trouble-fix">The app got the wrong key or a cut-off one. Ask Claude to re-copy the publishable key (called anon public key in older dashboards) from supabase.md into .env.local and restart the dev server.</p>
         </div>
 
         <div class="trouble-item">
