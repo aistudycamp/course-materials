@@ -74,10 +74,14 @@
     .step-subsection:first-child{margin-top:0}
     .step-subsection .section-head{margin-bottom:18px}
     .step-subsection>h3:first-of-type{margin-top:4px}
-    .stack-flow.four-part{grid-template-columns:1fr 28px 1fr 28px 1fr 28px 1fr}
+    .stack-flow.connected{grid-template-columns:1fr 1fr 1.2fr;gap:14px;position:relative}
+    .stack-flow.connected:before{content:"";position:absolute;left:8%;right:8%;top:50%;border-top:1px solid #9bb9b4}
+    .stack-flow.connected .stack-node{position:relative;z-index:1}
+    .service-group{position:relative;z-index:1;display:grid;gap:8px;padding:10px;background:#f0ebe3;border:1px solid var(--line);border-radius:11px}
+    .service-group small{color:var(--teal-dark);font:700 10px var(--mono);letter-spacing:.1em;text-align:center;text-transform:uppercase}
     .stack-node.auth{border-left-color:var(--orange)}
     .stack-node.auth b{color:#8a5c13}
-    @media(max-width:700px){.stack-flow.four-part{grid-template-columns:1fr;gap:6px}}
+    @media(max-width:700px){.stack-flow.connected{grid-template-columns:1fr;gap:6px}.stack-flow.connected:before{display:none}}
   </style>
 </head>
 <body>
@@ -215,7 +219,7 @@ Review the project for exposed secrets. Show me the files you would commit and s
     const panels = document.querySelectorAll('.panel');
     tabs.forEach(tab => { const name = tab.dataset.tab; tab.setAttribute('role','tab'); tab.setAttribute('aria-controls',name); tab.id = 'tab-' + name; tab.addEventListener('keydown', event => { if (!['ArrowRight','ArrowLeft'].includes(event.key)) return; event.preventDefault(); const next = event.key === 'ArrowRight' ? (tab.nextElementSibling || tabs[0]) : (tab.previousElementSibling || tabs[tabs.length - 1]); next.focus(); showTab(next.dataset.tab); }); });
     panels.forEach(panel => { panel.setAttribute('role','tabpanel'); panel.setAttribute('aria-labelledby','tab-' + panel.id); });
-    function showTab(name, addHistory=true){ tabs.forEach(tab => { const selected = tab.dataset.tab === name; tab.classList.toggle('active',selected); tab.setAttribute('aria-selected',String(selected)); tab.tabIndex = selected ? 0 : -1; }); panels.forEach(panel => { const selected = panel.id === name; panel.classList.toggle('active',selected); panel.hidden = !selected; }); if (addHistory) history.pushState(null, '', '#' + name); window.scrollTo({top:0, behavior:'smooth'}); }
+    function showTab(name, addHistory=true){ tabs.forEach(tab => { const selected = tab.dataset.tab === name; tab.classList.toggle('active',selected); tab.setAttribute('aria-selected',String(selected)); tab.tabIndex = selected ? 0 : -1; }); panels.forEach(panel => { const selected = panel.id === name; panel.classList.toggle('active',selected); panel.hidden = !selected; }); if (addHistory) { history.pushState(null, '', '#' + name); const panel=document.getElementById(name); if (panel) window.scrollTo({top:panel.getBoundingClientRect().top + window.scrollY - 24, behavior:'smooth'}); } else window.scrollTo({top:0, behavior:'smooth'}); }
     tabs.forEach(tab => tab.addEventListener('click', () => showTab(tab.dataset.tab)));
     document.querySelectorAll('[data-jump]').forEach(button => button.addEventListener('click', () => showTab(button.dataset.jump)));
     window.addEventListener('popstate', () => showTab(location.hash.slice(1) || 'overview', false));
@@ -239,13 +243,54 @@ Review the project for exposed secrets. Show me the files you would commit and s
     splitSectionAt(document.querySelector('#step3 > .step3-new'),['Choose the visual direction','Add sign-in and ownership','Build the task flow']);
     splitSectionAt(document.querySelector('#step4 > .step4-new'),['Finish the planned work','Ask Claude to review its own work','Save a working version']);
     splitSectionAt(document.querySelector('#step5 > .step5-new'),['Run the final test','Publish with Vercel','Optional extension']);
+    const overview=document.querySelector('#overview');
+    if (overview) {
+      const overviewCards=[...overview.children];
+      const cardWithHeading=heading => overviewCards.find(card => card.querySelector('h2')?.textContent.trim() === heading);
+      const buildCard=cardWithHeading('Build a full-stack app');
+      const outcome=overview.querySelector(':scope > .callout');
+      const architectureCard=overview.querySelector(':scope > .supabase-stack-card');
+      const learningCard=cardWithHeading('What you are learning');
+      const duplicateArchitecture=overviewCards.find(card => card.querySelector('h2')?.textContent.trim() === 'How a full-stack app looks');
+      [buildCard,outcome,architectureCard,learningCard].filter(Boolean).forEach(card => overview.appendChild(card));
+      if (duplicateArchitecture) duplicateArchitecture.remove();
+    }
+    const firstStep1Section=document.querySelector('#step1 > .step-subsection');
+    if (firstStep1Section) {
+      const title=firstStep1Section.querySelector('h2');
+      if (title) title.textContent='Tech stack';
+      const setupHeading=[...firstStep1Section.querySelectorAll('h3')].find(heading => heading.textContent.trim() === 'What you are setting up');
+      if (setupHeading) setupHeading.textContent='Set up now';
+      const toolGrid=firstStep1Section.querySelector('.grid');
+      if (toolGrid && !firstStep1Section.querySelector('.used-later-heading')) {
+        const cards=[...toolGrid.children];
+        const laterGrid=document.createElement('div'); laterGrid.className='grid';
+        cards.slice(4).forEach(card => laterGrid.appendChild(card));
+        const laterHeading=document.createElement('h3'); laterHeading.className='used-later-heading'; laterHeading.textContent='Used later';
+        firstStep1Section.append(laterHeading,laterGrid);
+      }
+    }
+    const computerSection=[...document.querySelectorAll('#step1 > .step-subsection')].find(section => [...section.querySelectorAll('h3')].some(heading => heading.textContent.trim() === 'Set up your computer'));
+    if (computerSection) {
+      const list=computerSection.querySelector('.step-list');
+      if (list && ![...list.querySelectorAll('li')].some(item => /Install Git\./.test(item.textContent))) { const item=document.createElement('li'); item.innerHTML='<div><strong>Install Git.</strong> Git records versions on your computer.</div>'; list.insertBefore(item,list.children[2] || null); }
+    }
+    const repoSection=[...document.querySelectorAll('#step1 > .step-subsection')].find(section => [...section.querySelectorAll('h3')].some(heading => heading.textContent.trim() === 'Create the online repository'));
+    if (repoSection) { const paragraph=repoSection.querySelector('p'); if (paragraph) paragraph.textContent='GitHub is the online home for this app. In GitHub, create a new private repository named week-2-todo-app. Start it empty, without a README, license, or sample files. Copy the repository URL. Ask Claude to initialize Git in the local folder and connect it to this repository after the first working version is ready.'; }
+    const step2Sections=[...document.querySelectorAll('#step2 > .step-subsection')];
+    const step2Last=step2Sections[step2Sections.length - 1];
+    if (step2Last && ![...step2Last.querySelectorAll('h3')].some(heading => heading.textContent.trim() === 'Step 2 is complete when')) { const heading=document.createElement('h3'); heading.textContent='Step 2 is complete when'; const list=document.createElement('ul'); list.className='checklist'; ['The Supabase project exists.','The tasks table and private row policies are in place.','The app foundation opens at a localhost URL.','PLAN.md is approved.','The working foundation is committed and pushed.'].forEach(text => { const item=document.createElement('li'); item.textContent=text; list.appendChild(item); }); step2Last.append(heading,list); }
+    const step3First=document.querySelector('#step3 > .step3-new');
+    if (step3First) { const intro=step3First.querySelector('.intro'); if (intro) intro.textContent='Use the approved PRD, PLAN.md, and CLAUDE.md to build the app in small pieces. Start with the first screen, then add sign-in and the task flow.'; const prompt=step3First.querySelector('.prompt'); if (prompt) prompt.innerHTML='<span>Tell Claude:</span>\nRead PRD.md, PLAN.md, and CLAUDE.md. Restate the next slice of work. Tell me which files you will change and how I will test the result in the browser. Wait for my approval, then build only that slice.'; }
+    const step5Publish=[...document.querySelectorAll('#step5 > .step5-new')].find(section => [...section.querySelectorAll('h3')].some(heading => heading.textContent.trim() === 'Publish with Vercel'));
+    if (step5Publish) { const commitItem=step5Publish.querySelector('.step-list li:nth-child(2) div'); if (commitItem) commitItem.innerHTML='<strong>Use the saved version.</strong> If you changed files after Step 4, ask Claude to commit and push the new version.'; if (![...step5Publish.querySelectorAll('h3')].some(heading => heading.textContent.trim() === 'Update the Supabase redirect URL')) { const heading=document.createElement('h3'); heading.textContent='Update the Supabase redirect URL'; const paragraph=document.createElement('p'); paragraph.textContent='In Supabase Authentication settings, set the Site URL to your Vercel URL and add that URL to the redirect allow list. Then test sign in and sign out online.'; step5Publish.append(heading,paragraph); } }
     const architecture=document.querySelector('#overview .supabase-stack-card');
     if (architecture) {
       const intro=architecture.querySelector('.muted');
       if (intro) intro.textContent='Supabase is part of the backend for this app. It provides the hosted database, login, API, and access checks. The frontend is the screen in the browser. The app can use Supabase directly for simple requests, so it does not need a separate server for every feature.';
       const flow=architecture.querySelector('.stack-flow');
       const databaseNode=architecture.querySelector('.stack-node.database');
-      if (flow && databaseNode && !flow.querySelector('.stack-node.auth')) { const authArrow=document.createElement('div'); authArrow.className='stack-arrow'; authArrow.setAttribute('aria-hidden','true'); authArrow.textContent='→'; const authNode=document.createElement('div'); authNode.className='stack-node auth'; authNode.innerHTML='<b>Authentication</b><span>Sign in and user identity</span>'; flow.append(authArrow,authNode); flow.classList.add('four-part'); }
+      if (flow && databaseNode && !flow.querySelector('.stack-node.auth')) { const frontendNode=flow.querySelector('.stack-node.frontend'); const backendNode=flow.querySelector('.stack-node.backend'); const authNode=document.createElement('div'); authNode.className='stack-node auth'; authNode.innerHTML='<b>Authentication</b><span>Sign in and user identity</span>'; flow.querySelectorAll('.stack-arrow').forEach(arrow => arrow.remove()); const services=document.createElement('div'); services.className='service-group'; services.innerHTML='<small>Supabase services</small>'; services.append(databaseNode,authNode); flow.replaceChildren(frontendNode,backendNode,services); flow.classList.add('connected'); }
       const nodes=architecture.querySelectorAll('.stack-node');
       const labels=[['Frontend','Browser interface and task actions'],['Backend','Read and write requests and access rules'],['Database','Tasks and saved data'],['Authentication','Sign in and user identity']];
       labels.forEach((label,index) => { if (!nodes[index]) return; nodes[index].querySelector('b').textContent=label[0]; nodes[index].querySelector('span').textContent=label[1]; });
