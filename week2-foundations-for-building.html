@@ -88,7 +88,7 @@
   <div class="topline"></div>
   <header class="hero"><div class="hero-inner"><div class="eyebrow">AI for Building · Week 2</div><h1>Foundations for Building</h1><p class="hero-copy">Move from the desktop app into a development environment. Learn what the parts of a full-stack app do, then build and publish one with Claude Code.</p></div></header>
   <main class="shell">
-    <div class="start"><strong>Your route through Week 2:</strong><ul class="route-list"><li>Step 1: Set up the tech stack and write the PRD.</li><li>Step 2: Create the Supabase foundation, scaffold the app, and write the build plan.</li><li>Step 3: Build the design, core features, and authentication.</li><li>Step 4: Review the full app, ask Claude to review its own work, and save it.</li><li>Step 5: Test the app, deploy it, and share the live URL.</li></ul></div>
+    <div class="start"><strong>Your route through Week 2:</strong><ul class="route-list"><li>Step 1: Install the tools, create the local app folder, connect GitHub, and write the PRD.</li><li>Step 2: Create the Supabase foundation, scaffold the app, and write the build plan.</li><li>Step 3: Build the design, core features, and authentication.</li><li>Step 4: Review the full app, ask Claude to review its own work, and save it.</li><li>Step 5: Test the app, deploy it, and share the live URL.</li></ul></div>
     <nav class="tabs" aria-label="Week 2 sections"><button class="tab active" data-tab="overview">Overview</button><button class="tab" data-tab="step1">Step 1</button><button class="tab" data-tab="step2">Step 2</button><button class="tab" data-tab="step3">Step 3</button><button class="tab" data-tab="step4">Step 4</button><button class="tab" data-tab="step5">Step 5</button><button class="tab" data-tab="references">References</button></nav>
 
     <section class="panel active" id="overview">
@@ -101,7 +101,7 @@
     <section class="panel" id="step1">
       <div class="step-focus"><b>Tool timing</b><span>Set up VS Code, Node.js, GitHub, and Claude Code here. Create the Supabase project in Step 2. Use Vercel in Step 5.</span></div>
       <div class="callout"><b>This step is only for your local workspace.</b><br>Do not create the Supabase project or deploy to Vercel yet. Those belong to later steps, after the app has a plan and a working foundation.</div>
-      <div class="section"><div class="section-head"><span class="number">STEP 1</span><h2>Tech stack and PRD</h2></div><p class="intro">Set up the tools you need to build a web app. Then write the product brief that Claude will use throughout the sprint.</p><div class="resource-grid"><div class="resource"><small>Optional support video</small><strong>Step 1 walkthrough</strong><p>The written steps below are the source of truth. Use the recording for a live walkthrough when it is available.</p></div><div class="resource"><small>Reference · 18 min</small><strong>Mastering AI Coding, Sid Bharath</strong><p>Plan before code, work in small slices, and review each change.</p><div class="links"><a href="https://sidbharath.com/blog/mastering-ai-coding-the-universal-playbook-of-tips-tricks-and-patterns/" target="_blank" rel="noopener">Read article</a></div></div></div>
+      <div class="section"><div class="section-head"><span class="number">STEP 1</span><h2>Install the tools</h2></div><p class="intro">Install the tools you need to build a web app. This page shows what each tool does, then shows when you use it.</p>
         <h3>What you are setting up</h3><div class="grid"><div class="mini"><h3>VS Code</h3><p>The code editor and workspace. It shows the project files and gives you a terminal.</p><div class="links"><a href="https://code.visualstudio.com/download" target="_blank" rel="noopener">Download VS Code</a></div></div><div class="mini"><h3>Git and GitHub</h3><p>Git records versions on your computer. GitHub stores a copy online and lets other tools read the project.</p><div class="links"><a href="https://github.com/signup" target="_blank" rel="noopener">Create a GitHub account</a><a href="https://desktop.github.com/" target="_blank" rel="noopener">GitHub Desktop</a></div></div><div class="mini"><h3>Claude Code</h3><p>The coding agent. It reads the project, edits files, runs commands, and explains what changed.</p><div class="links"><a href="how-to-guides/install-claude-code.html">AISC setup guide</a></div></div><div class="mini"><h3>Node.js</h3><p>Lets JavaScript run outside the browser. Your local development tools and backend use it.</p><div class="links"><a href="https://nodejs.org/en/download" target="_blank" rel="noopener">Download Node.js</a></div></div><div class="mini"><h3>Supabase</h3><p>A hosted service for the app database and user accounts. Create the project in Step 2, not in Step 1. It lives in your Supabase account, not inside a folder.</p><div class="links"><a href="https://supabase.com" target="_blank" rel="noopener">Open Supabase</a></div></div><div class="mini"><h3>Vercel</h3><p>Hosts the finished app at a public URL. Connect it in Step 5, not in Step 1.</p><div class="links"><a href="https://vercel.com/signup" target="_blank" rel="noopener">Create a Vercel account</a></div></div></div>
         <h3>Set up your computer</h3><ol class="step-list"><li><div><strong>Install VS Code.</strong> Open the app after installation.</div></li><li><div><strong>Install Node.js.</strong> Use the current long-term support version from the Node.js download page.</div></li><li><div><strong>Create a GitHub account.</strong> Verify your email. GitHub is where you will store the online copy of the project.</div></li><li><div><strong>Install Claude Code.</strong> Use the AISC guide, complete browser sign-in, then open a fresh terminal.</div></li><li><div><strong>Open your AI Study Camp folder.</strong> Create a <code>week-2-todo-app</code> folder inside it for this project.</div></li></ol><div class="callout"><b>GitHub Desktop is optional.</b><br>You can use it to see repositories and branches visually. Claude can also run the Git commands for you later.</div>
         <h3>Create the online repository</h3><p>GitHub is the online home for this app. In GitHub, create a new private repository named <code>week-2-todo-app</code>. Start it empty, without a README, license, or sample files. Copy the repository URL. You will ask Claude to connect the local folder to this repository after the first working version is ready.</p><div class="callout"><b>Git and GitHub are different.</b><br>Git records versions on your computer. GitHub stores those versions online. This week, Claude can run the Git steps, but you should know whether you are saving locally or sending the work to GitHub.</div><h3>Terminal basics</h3><p>The terminal is a text window for working with files and running local tools. You do not need to memorize the commands. You need to recognize what they do and know that Claude can run them with your approval.</p><div class="resource-grid"><div class="resource"><small>Command</small><strong><code>pwd</code>, <code>ls</code>, <code>cd</code></strong><p>Show where you are, see what is inside, and move into a folder.</p></div><div class="resource"><small>Command</small><strong><code>npm install</code>, <code>npm run dev</code></strong><p>Install the project packages and start the local app.</p></div></div><div class="links"><a href="how-to-guides/week2-terminal-reference.html">Open the terminal reference</a></div>
@@ -258,9 +258,12 @@ Review the project for exposed secrets. Show me the files you would commit and s
     const firstStep1Section=document.querySelector('#step1 > .step-subsection');
     if (firstStep1Section) {
       const title=firstStep1Section.querySelector('h2');
-      if (title) title.textContent='Tech stack';
+      if (title) title.textContent='Install the tools';
+      const intro=firstStep1Section.querySelector('.intro');
+      if (intro) intro.textContent='Install the tools on your computer. This section tells you what each tool does. The next sections show when you use it.';
+      firstStep1Section.querySelectorAll('.resource-grid').forEach(grid => grid.remove());
       const setupHeading=[...firstStep1Section.querySelectorAll('h3')].find(heading => heading.textContent.trim() === 'What you are setting up');
-      if (setupHeading) setupHeading.textContent='Set up now';
+      if (setupHeading) setupHeading.textContent='What these tools do';
       const toolGrid=firstStep1Section.querySelector('.grid');
       if (toolGrid && !firstStep1Section.querySelector('.used-later-heading')) {
         const cards=[...toolGrid.children];
@@ -271,7 +274,6 @@ Review the project for exposed secrets. Show me the files you would commit and s
       }
       firstStep1Section.querySelectorAll('.mini .links').forEach(links => links.remove());
     }
-    const computerSection=[...document.querySelectorAll('#step1 > .step-subsection')].find(section => [...section.querySelectorAll('h3')].some(heading => heading.textContent.trim() === 'Set up your computer'));
     if (computerSection) {
       const list=computerSection.querySelector('.step-list');
       if (list && ![...list.querySelectorAll('li')].some(item => /Install Git\./.test(item.textContent))) { const item=document.createElement('li'); item.innerHTML='<div><strong>Install Git.</strong> Git records versions on your computer. <a href="https://git-scm.com/downloads" target="_blank" rel="noopener">Download Git</a></div>'; list.insertBefore(item,list.children[2] || null); }
@@ -282,23 +284,46 @@ Review the project for exposed secrets. Show me the files you would commit and s
         '<strong>Install Git.</strong> Git records versions on your computer. <a href="https://git-scm.com/downloads" target="_blank" rel="noopener">Download Git</a>',
         '<strong>Create a GitHub account.</strong> GitHub stores the online copy of the project. Verify your email. <a href="https://github.com/signup" target="_blank" rel="noopener">Create a GitHub account</a>',
         '<strong>Install Claude Code.</strong> Complete browser sign-in, then open a fresh terminal. <a href="how-to-guides/install-claude-code.html">Open the AISC setup guide</a>',
-        '<strong>Create the Week 2 project and repository.</strong> Your local folder is <code>week-2-todo-app</code> inside the AI Study Camp folder. In GitHub, create one new private repository with the same name. Leave it empty, then copy its URL. This repository is for the Week 2 to-do app, not for the whole AI Study Camp folder or every exercise. <a href="https://vibe-coding-foundations-hub.vercel.app/decks/github-101" target="_blank" rel="noopener">Open the GitHub 101 visual deck</a>'
+        '<strong>Create the local project folder.</strong> In VS Code, open the AI Study Camp folder and create a new folder named <code>week-2-todo-app</code>. The GitHub repository comes later, after Claude is open in this folder.'
       ];
       setupItems.forEach((item,index) => { if (setupCopy[index]) item.innerHTML='<div>'+setupCopy[index]+'</div>'; });
+    }
+    const computerSection=[...document.querySelectorAll('#step1 > .step-subsection')].find(section => [...section.querySelectorAll('h3')].some(heading => heading.textContent.trim() === 'Set up your computer'));
+    if (computerSection) {
+      const list=computerSection.querySelector('.step-list');
+      const items=list ? [...list.querySelectorAll(':scope > li')] : [];
+      const localItem=items[items.length - 1];
+      if (localItem) localItem.remove();
+      const heading=computerSection.querySelector('h3');
+      if (heading) heading.textContent='Install the tools';
+      const openSection=document.createElement('div');
+      openSection.className=computerSection.className;
+      openSection.classList.add('step-subsection');
+      openSection.innerHTML='<h3>Open VS Code and create the app folder</h3><p>Now create the local home for this Week 2 project. This is where Claude will read and change the files.</p><ol class="step-list"></ol><div class="callout"><b>Open the terminal from this folder.</b><br>In VS Code, choose <strong>Terminal, New Terminal</strong>. Check that the terminal is open inside <code>week-2-todo-app</code> before you start Claude.</div>';
+      const openList=openSection.querySelector('.step-list');
+      ['Open VS Code.','Choose File, Open Folder, and select your AI Study Camp folder.','Open the <code>week-2-todo-app</code> folder.','Choose Terminal, New Terminal.'].forEach((text,index) => { const item=document.createElement('li'); item.innerHTML='<div><strong>'+text+'</strong></div>'; openList.appendChild(item); });
+      computerSection.after(openSection);
+      const desktopCallout=computerSection.querySelector('.callout');
+      if (desktopCallout) desktopCallout.remove();
     }
     const repoSection=[...document.querySelectorAll('#step1 > .step-subsection')].find(section => [...section.querySelectorAll('h3')].some(heading => heading.textContent.trim() === 'Create the online repository'));
     if (repoSection) {
       const repoHeading=repoSection.querySelector('h3');
-      if (repoHeading) repoHeading.textContent='Connect the app to GitHub';
+      if (repoHeading) repoHeading.textContent='Open Claude and connect GitHub';
       const paragraph=repoSection.querySelector('p');
-      if (paragraph) paragraph.textContent='The GitHub repository from Step 6 is the online copy of this one app. Open GitHub, choose New repository, name it week-2-todo-app, choose Private, leave the README, license, and sample-file options off, create it, and copy the HTTPS URL. Claude connects the local folder to it. Nicole\'s original flow started by cloning a repository that already existed. This Week 2 flow starts with your new local to-do app, then connects that app to its own empty GitHub repository.';
+      if (paragraph) paragraph.textContent='Open Claude from the week-2-todo-app folder. Ask Claude to create one private GitHub repository for this app and connect the local folder to it. You do not need to create an empty repository by hand. If Claude needs you to sign in or approve GitHub access, it will stop and tell you what to do.';
+      const terminalHeading=[...repoSection.querySelectorAll('h3')].find(heading => heading.textContent.trim() === 'Terminal basics');
+      if (terminalHeading) {
+        let node=terminalHeading;
+        while (node) { const next=node.nextElementSibling; node.remove(); node=next; }
+      }
       if (!repoSection.querySelector('.github-vocabulary')) {
         const heading=document.createElement('h3'); heading.textContent='What the terms mean';
-        const explanation=document.createElement('p'); explanation.textContent='Git tracks versions in the local project folder. GitHub stores the repository online. They work together, but they are not the same thing.';
+        const explanation=document.createElement('p'); explanation.textContent='Git tracks versions in the local project folder. GitHub stores the repository online. They work together, but they are not the same thing. Nicole\'s original flow started by cloning a repository that already existed. This flow starts with your new local app, then asks Claude to create and connect its GitHub repository.';
         const list=document.createElement('ul'); list.className='plain-list github-vocabulary';
         ['Repository: the project folder and its version history.','Commit: a named snapshot of the files on your computer.','Push: send your commits to GitHub.','Pull: bring newer commits from GitHub to your computer.','Clone: make a local copy of a repository.'].forEach(text => { const item=document.createElement('li'); item.textContent=text; list.appendChild(item); });
         const links=document.createElement('div'); links.className='links'; links.innerHTML='<a href="https://vibe-coding-foundations-hub.vercel.app/decks/github-101" target="_blank" rel="noopener">Open GitHub 101 visual deck</a><a href="how-to-guides/git-basics.html">Open Git basics guide</a>';
-        const prompt=document.createElement('div'); prompt.className='prompt github-prompt'; prompt.innerHTML='<span>Tell Claude:</span>\nThis local folder is my Week 2 to-do app. Initialize Git here and connect it to this empty GitHub repository: [paste the repository URL]. Show me what you will do before you run it. Do not commit <code>.env.local</code>, passwords, or service role keys.';
+        const prompt=document.createElement('div'); prompt.className='prompt github-prompt'; prompt.innerHTML='<span>Tell Claude:</span>\nThis local folder is my Week 2 to-do app. Create a private GitHub repository named week-2-todo-app, initialize Git here, connect this folder to the repository, and show me what you will do before you run it. Do not commit <code>.env.local</code>, passwords, or service role keys.';
         repoSection.append(heading,explanation,list,links,prompt);
       }
     }
