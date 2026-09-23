@@ -45,15 +45,27 @@
     .note p { margin:5px 0 0; }
     .warning { background:var(--orange-soft);border-left-color:var(--orange); }
     .small { color:var(--muted);font-size:14px; }
-    .prompt { border-radius:10px;background:var(--dark);color:#f8f5f0;padding:20px 22px;margin:18px 0; }
-    .prompt-label { display:block;color:#79ddd2;font:600 12px/1.5 var(--mono);letter-spacing:.05em;margin:0 0 10px; }
-    .prompt p { white-space:pre-wrap;font:14px/1.85 var(--mono);margin:0;overflow-wrap:anywhere; }
+    .prompt { border:0;border-radius:10px;background:var(--dark);color:#f8f5f0;padding:0;margin:18px 0; }
+    .prompt summary { padding:16px 20px;color:#79ddd2;font:600 13px/1.5 var(--mono);letter-spacing:.03em; }
+    .prompt[open] summary { border-bottom:1px solid rgba(255,255,255,.14); }
+    .prompt p { white-space:pre-wrap;font:14px/1.8 var(--mono);margin:0;padding:18px 20px;overflow-wrap:anywhere; }
     pre { white-space:pre-wrap;overflow-wrap:anywhere;background:var(--dark);color:#f8f5f0;border-radius:8px;padding:15px 18px;font:14px/1.7 var(--mono);margin:12px 0; }
     pre code { background:transparent;padding:0;font:inherit;color:inherit; }
     .two-col { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px; }
     .mini { padding:18px;background:var(--soft);border:1px solid var(--line);border-radius:10px; }
     .mini h3 { margin:0 0 7px;font-size:18px; }
     .mini p { margin:0;font-size:15px; }
+    .tool-list { list-style:none;padding:0;margin:0; }
+    .tool-list li { display:grid;grid-template-columns:minmax(105px,.75fr) minmax(0,1.8fr);gap:12px;margin:0;padding:9px 0;border-bottom:1px solid var(--line);font-size:15px; }
+    .tool-list li:last-child { border-bottom:0;padding-bottom:0; }
+    .tool-list li:first-child { padding-top:0; }
+    .tool-list strong { color:var(--teal-dark); }
+    .install-list { list-style:none;counter-reset:install;padding:0;margin:18px 0; }
+    .install-list li { counter-increment:install;display:grid;grid-template-columns:34px minmax(130px,.8fr) minmax(0,1.8fr);gap:14px;align-items:start;padding:15px 0;margin:0;border-bottom:1px solid var(--line); }
+    .install-list li:before { content:counter(install);display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--teal-soft);color:var(--teal-dark);font:600 13px var(--mono); }
+    .install-list li:last-child { border-bottom:0; }
+    .install-list strong { display:block;padding-top:1px; }
+    .install-list span { color:var(--muted);font-size:15px;line-height:1.55; }
     .pill { display:inline-block;padding:3px 8px;background:var(--orange-soft);color:#8e4d00;border-radius:999px;font:600 11px/1.6 var(--mono);margin-left:5px;vertical-align:middle; }
     .route { margin-bottom:0; }
     .route li { padding-bottom:10px;border-bottom:1px solid var(--line); }
@@ -86,15 +98,13 @@
     .legend { display:flex;gap:20px;justify-content:center;margin-top:18px;font-size:12px;color:var(--muted); }
     .legend span:before { content:"";display:inline-block;width:9px;height:9px;border-radius:2px;background:var(--teal);margin-right:6px; }
     .legend .new:before { background:var(--orange); }
-    .workspace { display:grid;grid-template-columns:1fr 2fr;margin:20px 0;border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:14px; }
-    .workspace-title { grid-column:1/-1;background:var(--dark);color:#fff;padding:10px 16px;font:13px var(--mono); }
-    .explorer { grid-row:span 2;background:#e5f0e9;padding:18px; }
-    .explorer strong { display:block;margin-bottom:9px; }
-    .explorer code { display:block;background:transparent;font-size:12px; }
-    .editor { background:var(--soft);padding:20px;min-height:100px; }
-    .terminal { padding:18px;background:#302e2b;color:white; }
-    .terminal code { display:block;background:transparent;color:#79ddd2;margin-top:8px; }
+    .vscode-shot { margin:22px 0; }
+    .vscode-shot img { display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:12px; }
+    .visual-key { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px; }
+    .visual-key span { padding:10px 12px;background:var(--soft);border:1px solid var(--line);border-radius:8px;color:var(--muted);font-size:13px;line-height:1.45; }
+    .visual-key strong { display:block;color:var(--teal-dark); }
     .app-map { display:grid;grid-template-columns:minmax(0,1fr) 44px minmax(0,1.4fr);align-items:center;gap:12px;margin:22px 0; }
+    .app-map>* { min-width:0; }
     .frontend-host { border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--soft); }
     .role-card { padding:21px;text-align:center; }
     .role-card h3 { margin:0 0 5px;font-size:19px; }
@@ -109,9 +119,9 @@
     .backend-services .role-card { padding:17px 12px;background:#fff;border-radius:8px; }
     .backend-services h3 { font-size:17px; }
     footer { border-top:1px solid var(--line);padding-top:20px;margin-top:35px;color:var(--muted);font-size:13px; }
-    @media(max-width:700px) { body{font-size:16px}.shell{padding:20px 16px 50px}.hero{padding:32px 20px}.section{padding:23px 20px}.two-col{grid-template-columns:1fr}.app-map{grid-template-columns:1fr}.connection{font-size:22px}.folder-branches{grid-template-columns:1fr;padding:22px 0 0 22px;gap:13px}.folder-branches:before{left:10px;right:auto;top:0;bottom:30px;width:1px;height:auto}.folder-branches:after{display:none}.folder-node:before{left:-13px;top:50%;width:12px;height:1px}.workspace{grid-template-columns:1fr 1.5fr}.explorer{padding:12px}.editor,.terminal{padding:14px}.prompt{padding:17px}.tabs{gap:6px}.tab{padding:8px 12px;font-size:13px} }
+    @media(max-width:700px) { body{font-size:16px}.shell{padding:20px 16px 50px}.hero{padding:32px 20px}.section{padding:23px 20px}.two-col,.visual-key{grid-template-columns:1fr}.tool-list li{grid-template-columns:1fr;gap:2px}.install-list li{grid-template-columns:34px minmax(0,1fr)}.tool-list li strong,.tool-list li span{grid-column:1}.install-list li span{grid-column:2}.app-map{grid-template-columns:minmax(0,1fr)}.backend-services{grid-template-columns:1fr}.connection{font-size:22px}.folder-branches{grid-template-columns:1fr;padding:22px 0 0 22px;gap:13px}.folder-branches:before{left:10px;right:auto;top:0;bottom:30px;width:1px;height:auto}.folder-branches:after{display:none}.folder-node:before{left:-13px;top:50%;width:12px;height:1px}.tabs{gap:6px}.tab{padding:8px 12px;font-size:13px} }
     @media(prefers-reduced-motion:no-preference) { a,button { transition:background-color .15s ease; } }
-    @media print { .hero{padding:20px;background:white;border:0}.hero h1,.hero p:last-child{color:black}.tabs,.next{display:none}.panel[hidden]{display:block!important}.section{break-inside:avoid}.shell{max-width:none;padding:0}.prompt,pre{background:#eee;color:black}.prompt-label{color:black} }
+    @media print { .hero{padding:20px;background:white;border:0}.hero h1,.hero p:last-child{color:black}.tabs,.next{display:none}.panel[hidden]{display:block!important}.section{break-inside:avoid}.shell{max-width:none;padding:0}.prompt,pre{background:#eee;color:black}.prompt summary{color:black}details>:not(summary){display:block!important} }
   </style>
 </head>
 <body>
@@ -147,7 +157,7 @@
             <li>Deploy it and test the version real users will open.</li>
           </ul>
         </div>
-        <p class="small">Workload estimate: 5 to 7 hours for this exercise, depending on setup and troubleshooting. LMS videos and readings are separate. Stop at the end of a section when you need a break.</p>
+        <p class="small">Workload estimate: 5 to 7 hours, depending on setup and troubleshooting. Stop at the end of a section when you need a break.</p>
       </div>
 
       <div class="section">
@@ -197,42 +207,41 @@
     <section class="panel" id="step1" aria-labelledby="step1-title">
       <div class="panel-head">
         <p class="eyebrow">Step 1 · Workspace and plan</p>
-        <h2 id="step1-title">Get ready to build.</h2>
+        <h2 id="step1-title">Workspace and plan</h2>
         <p>First install the tools. Then open your project in VS Code, start Claude in the right folder, save it to GitHub, and decide what you want to build.</p>
       </div>
-      <!-- Optional recording slot: installing tools and using VS Code. Place the recording here, not on the overview. -->
+      <!-- Videos 1 and 2: tools and VS Code; open the app folder and start Claude. -->
       <section class="section">
         <p class="section-label">Understand the pieces</p>
-        <h2>What you are setting up</h2>
+        <h2>Your Week 2 tools</h2>
         <div class="two-col">
-          <div class="mini"><h3>Your workspace</h3><p><strong>VS Code</strong> is the editor where you see your project files and open a terminal. <strong>Claude Code</strong> is the coding agent you talk to inside that terminal.</p></div>
-          <div class="mini"><h3>Your local tools</h3><p><strong>Node.js</strong> runs the app's JavaScript tools on your computer. <strong>Git</strong> records versions of your work. <strong>GitHub</strong> keeps an online copy of those versions.</p></div>
-          <div class="mini"><h3>Your data and login <span class="pill">Step 2</span></h3><p><strong>Supabase</strong> supplies your database, login, and data access rules. You will create the cloud project when the app foundation is ready.</p></div>
-          <div class="mini"><h3>Your public app <span class="pill">Step 5</span></h3><p><strong>Vercel</strong> turns your GitHub code into a website people can visit. You will set it up when the local app works.</p></div>
+          <div class="mini"><h3>Your workspace</h3><ul class="tool-list"><li><strong>VS Code</strong><span>Editor: see files, code, and the terminal.</span></li><li><strong>Claude Code</strong><span>Coding agent: talk to it inside the terminal.</span></li></ul></div>
+          <div class="mini"><h3>Your local tools</h3><ul class="tool-list"><li><strong>Node.js</strong><span>Runs the app's development tools.</span></li><li><strong>Git</strong><span>Saves checkpoints on your computer.</span></li><li><strong>GitHub</strong><span>Keeps an online copy of the project.</span></li></ul></div>
+          <div class="mini"><h3>Your data and login <span class="pill">Step 2</span></h3><ul class="tool-list"><li><strong>Supabase</strong><span>Database, login, and access rules.</span></li></ul></div>
+          <div class="mini"><h3>Your public app <span class="pill">Step 5</span></h3><ul class="tool-list"><li><strong>Vercel</strong><span>Builds and hosts the public website.</span></li></ul></div>
         </div>
       </section>
 
       <section class="section">
         <p class="section-label">Install</p>
         <h2>Set up your computer</h2>
-        <p>If you already have one of these, keep it and check it works. Installing Claude's desktop app in Week 1 does not necessarily install the terminal version of Claude Code.</p>
-        <p>For installation commands below, open <strong>Applications → Utilities → Terminal</strong> on Mac, or <strong>PowerShell</strong> from the Windows Start menu. Paste one command at a time and press Return or Enter. We will move into VS Code's integrated terminal after installing the tools.</p>
-        <ol>
-          <li><strong>Install VS Code.</strong> Open the <a href="https://code.visualstudio.com/download" target="_blank" rel="noopener">VS Code download page</a> and choose your operating system. On Mac, move Visual Studio Code to Applications; on Windows, run the installer. Open the app when installation finishes. VS Code is an IDE: an editor that brings your files, code, and development tools into one window.</li>
-          <li><strong>Install Node.js.</strong> Use the LTS installer from the <a href="https://nodejs.org/en/download" target="_blank" rel="noopener">Node.js download page</a>. LTS means long-term support. Node also includes <code>npm</code>, the tool Claude will use to install your app's dependencies, which are the libraries it needs to run.</li>
-          <li><strong>Install Git.</strong> Use the instructions for your system on the <a href="https://git-scm.com/downloads" target="_blank" rel="noopener">Git download page</a>. On Windows, run the Git for Windows installer with its standard options. On Mac, the download page lists the available installation methods; the Apple command-line tools option can be installed by running <code>xcode-select --install</code> in Terminal and accepting the installer. Git is not the same thing as a GitHub account.</li>
-          <li><strong>Create a GitHub account.</strong> <a href="https://github.com/signup" target="_blank" rel="noopener">Sign up for GitHub</a> and verify your email. Keep your login available: you will authorize Claude to create the online copy of this app.</li>
-          <li><strong>Install Claude Code for the terminal.</strong> Follow the installation box below. You need an account with Claude Code access, such as your supported paid Claude plan or a funded Console account. If you are unsure which account to use, ask the course team before adding billing.</li>
+        <p>Already have a tool? Keep it and check the version. The Claude desktop app from Week 1 is separate from Claude Code in the terminal.</p>
+        <ol class="install-list">
+          <li><strong>VS Code</strong><span><a href="https://code.visualstudio.com/download" target="_blank" rel="noopener">Download for your system</a>. This is the editor where you will open the course folder and terminal.</span></li>
+          <li><strong>Node.js</strong><span>Install the LTS version from <a href="https://nodejs.org/en/download" target="_blank" rel="noopener">Node.js</a>. It includes <code>npm</code>, which installs the app's libraries.</span></li>
+          <li><strong>Git</strong><span>Follow the <a href="https://git-scm.com/downloads" target="_blank" rel="noopener">Git instructions</a> for your system. Git saves checkpoints on your computer.</span></li>
+          <li><strong>GitHub</strong><span><a href="https://github.com/signup" target="_blank" rel="noopener">Create an account</a> and verify your email. GitHub stores the online copy.</span></li>
+          <li><strong>Claude Code</strong><span>Install the terminal version below. Use an account with Claude Code access; ask the course team before adding billing.</span></li>
         </ol>
 
         <h3>Install the terminal version of Claude Code</h3>
-        <p>In the system terminal you opened above, paste the command for your system. These commands download and run Anthropic's installer; use the official addresses shown here.</p>
+        <p>Open Terminal on Mac or PowerShell on Windows. Paste the command for your system.</p>
         <div class="two-col">
           <div><h4>macOS or Linux terminal</h4><pre><code>curl -fsSL https://claude.ai/install.sh | bash</code></pre></div>
           <div><h4>Windows PowerShell</h4><pre><code>irm https://claude.ai/install.ps1 | iex</code></pre></div>
         </div>
         <p class="small">These are terminal commands, not prompts to Claude. Installation details and supported accounts: <a href="https://code.claude.com/docs/en/setup" target="_blank" rel="noopener">Anthropic's official setup documentation</a>.</p>
-        <div class="note"><strong>Check the installations.</strong><p>Close and reopen the terminal after installing. Run <code>node --version</code>, <code>git --version</code>, and <code>claude --version</code>, one at a time. Each should print a version. If a command is not found, restart the terminal and revisit that tool's installation before proceeding. VS Code should open as an app.</p></div>
+        <div class="note"><strong>Check before moving on.</strong><p>Reopen the terminal. Run <code>node --version</code>, <code>git --version</code>, and <code>claude --version</code>. Each should print a version. VS Code should open as an app.</p></div>
       </section>
 
       <section class="section">
@@ -241,17 +250,23 @@
         <p>Open your app folder in VS Code before starting Claude. That folder tells VS Code, the terminal, and Claude which project you are working on.</p>
 
         <h3>Where this app belongs</h3>
-        <p><strong>AI Study Camp</strong> is a folder on your computer for your course work. Use the one you made in Week 1. If you do not have it yet, create a folder with that name in a place you can find again, such as Documents. Keep your existing Week 1 work; do not move or overwrite it.</p>
-        <div class="folder-map" role="img" aria-label="AI Study Camp contains the shared CLAUDE.md and supabase.md notes, existing Week 1 work, and a new week-2-todo-app folder. Only the new app folder becomes this app's Git repository.">
+        <p><strong>AI Study Camp</strong> is the course folder you made in Week 1. Use that folder. If it is missing, create <code>AI Study Camp</code> inside your user home folder, outside cloud-synced Desktop or Documents folders. Keep your existing Week 1 work; do not move or overwrite it.</p>
+        <div class="folder-map" role="img" aria-label="AI Study Camp contains the shared CLAUDE.md and supabase.md notes, existing Week 1 work, and a new week-2-todo-app folder. Only the new app folder is saved as this app's GitHub project.">
           <div class="folder-root">AI Study Camp</div>
           <div class="folder-branches">
             <div class="folder-node"><code>CLAUDE.md</code><code>supabase.md</code><p>Shared course instructions and a safe connection note. The Supabase note is created in Step 2.</p></div>
             <div class="folder-node"><strong>Week 1 exercise</strong><p>Your existing course work. Leave it where it is.</p></div>
-            <div class="folder-node new"><strong>Week 2 app</strong><code>week-2-todo-app</code><p>Create this folder now. App code, PRD, and Git history live here.</p></div>
+            <div class="folder-node new"><strong>Week 2 app</strong><code>week-2-todo-app</code><p>Create this folder now. The app code and PRD live here.</p></div>
           </div>
           <div class="legend"><span>Existing course workspace</span><span class="new">Create now</span></div>
         </div>
-        <p class="small"><code>CLAUDE.md</code> is an instruction file, not a program. Claude Code loads relevant instruction files along the project path. The course-level file can guide this app without putting every course exercise in the app's GitHub repo. Missing that file? Ask Claude to help create a short one after you start the session below.</p>
+        <p class="small"><code>CLAUDE.md</code> gives Claude instructions for this course folder. The Week 2 app gets its own folder and online copy on GitHub.</p>
+
+        <figure class="vscode-shot">
+          <a href="assets/week2/vscode-workspace.png" target="_blank" rel="noopener"><img src="assets/week2/vscode-workspace.png" alt="VS Code showing the AI Study Camp folder in the Explorer, a CLAUDE.md file in the editor, and the integrated terminal below."></a>
+          <figcaption class="visual-key"><span><strong>Left: Explorer</strong>Folders and files</span><span><strong>Center: Editor</strong>The selected file</span><span><strong>Bottom: Terminal</strong>Where Claude Code runs</span></figcaption>
+        </figure>
+        <p class="small">The screenshot shows the course folder. For this exercise, open <code>week-2-todo-app</code> as the project before starting Claude. Ignore the optional Copilot message shown in this terminal; type <code>claude</code> to start Claude Code.</p>
 
         <h3>Open the app folder, then open its terminal</h3>
         <ol>
@@ -261,15 +276,8 @@
           <li><strong>Open that new folder as your project.</strong> Choose File → Open Folder again and select <code>week-2-todo-app</code>. The Explorer should now show that folder as the root of this window.</li>
           <li><strong>Choose Terminal → New Terminal.</strong> A panel opens at the bottom. On Windows, use the dropdown next to the terminal's plus button to select PowerShell. Run <code>pwd</code> on Mac or <code>Get-Location</code> in PowerShell to check: the path should end in <code>week-2-todo-app</code>.</li>
         </ol>
-        <p>In this VS Code terminal, repeat <code>node --version</code>, <code>git --version</code>, and <code>claude --version</code>. Each should print a version here too. If not, close VS Code completely and reopen it before retrying.</p>
-
-        <div class="workspace" role="img" aria-label="VS Code window with week-2-todo-app in the Explorer at left, the editor in the middle, and an integrated terminal at the bottom where you type claude.">
-          <div class="workspace-title">VS Code · week-2-todo-app</div>
-          <div class="explorer"><strong>Explorer</strong><code>week-2-todo-app/</code><p class="small">Your files appear here as Claude creates them.</p></div>
-          <div class="editor"><strong>Editor</strong><p class="small">Click a file on the left to read it here.</p></div>
-          <div class="terminal"><strong>Terminal</strong><code>week-2-todo-app % claude</code><p class="small" style="color:#ddd6ce">Start Claude here, in this project.</p></div>
-        </div>
-        <div class="note"><strong>Before continuing:</strong><p>You can see <code>week-2-todo-app</code> in VS Code, and the terminal path ends in that folder. Do not start Claude from your computer's home folder for this exercise.</p></div>
+        <p>In the VS Code terminal, repeat <code>node --version</code>, <code>git --version</code>, and <code>claude --version</code>. If one fails, close VS Code completely and reopen it.</p>
+        <div class="note"><strong>Checkpoint</strong><p>You can see <code>week-2-todo-app</code> in VS Code, and the terminal path ends in that folder. Do not start Claude from your computer's home folder for this exercise.</p></div>
 
         <details>
           <summary>Terminal basics you need today</summary>
@@ -287,39 +295,39 @@
           <li>Follow the browser sign-in prompts if this is your first terminal session. Return to VS Code after signing in.</li>
           <li>If Claude asks for permission to work in this folder, check that it is <code>week-2-todo-app</code>. Read requests before approving them.</li>
         </ol>
-        <div class="prompt"><span class="prompt-label">Tell Claude</span><p>I am building my Week 2 to-do app. First confirm that your working directory is week-2-todo-app, inside my AI Study Camp folder. Tell me which CLAUDE.md instructions you loaded. Check that Node.js, npm, and Git are available. Do not build anything yet. If the course folder has no CLAUDE.md, help me write a short one without changing my Week 1 work.</p></div>
-        <div class="note"><strong>What you should see:</strong><p>Claude confirms the app folder and reports whether the tools are ready. You are now talking to Claude Code, not VS Code's Copilot chat. If a tool is missing, resolve that before creating the repo.</p></div>
+        <details class="prompt"><summary>Open prompt: check the workspace</summary><p>I am building my Week 2 to-do app. First confirm that your working directory is week-2-todo-app, inside my AI Study Camp folder. Tell me which CLAUDE.md instructions you loaded. Check that Node.js, npm, and Git are available. Do not build anything yet. If the course folder has no CLAUDE.md, help me write a short one without changing my Week 1 work.</p></details>
+        <div class="note"><strong>Checkpoint</strong><p>Claude confirms the app folder and reports whether the tools are ready. You are now talking to Claude Code, not VS Code's Copilot chat. If a tool is missing, resolve that before saving the project online.</p></div>
         <details><summary>If Claude does not start</summary><p>Close the terminal panel and choose Terminal → New Terminal after installing. Check <code>claude --version</code> again. If it still fails, use <a href="https://code.claude.com/docs/en/troubleshooting" target="_blank" rel="noopener">Anthropic's troubleshooting guide</a> or ask the course team with the exact error. Ask the course team before changing system permissions.</p></details>
       </section>
 
       <section class="section">
-        <p class="section-label">Save your work</p>
-        <h2>Create the GitHub repo with Claude</h2>
-        <p>Your local folder already exists. Now you will ask Claude to make an online copy for <strong>this app only</strong>. A repository, or repo, is a project tracked with Git. Do not turn the whole AI Study Camp folder into this app's repository.</p>
+        <p class="section-label">Save your project</p>
+        <h2>Create the online copy with Claude</h2>
+        <p>Ask Claude to save <strong>week-2-todo-app only</strong> on GitHub, not the whole AI Study Camp folder.</p>
         <div class="two-col">
-          <div class="mini"><h3>Git: local version history</h3><p>Think of it as saved snapshots of a document. A <strong>commit</strong> records a version in your project folder, with a message explaining what changed.</p></div>
-          <div class="mini"><h3>GitHub: the online home</h3><p>Like a shared online home for those versions, rather than the tool recording them. A <strong>push</strong> sends your commits to GitHub. Files on your laptop are not online until you push.</p></div>
+          <div class="mini"><h3>Git: Word version history</h3><p>Git saves checkpoints on your computer. Git calls each saved checkpoint a <strong>commit</strong>. It is not an online backup.</p></div>
+          <div class="mini"><h3>GitHub: Google Drive</h3><p>GitHub keeps an online copy of the project. You can open the link and confirm your files are there.</p></div>
         </div>
-        <p>Claude can do the Git commands for you. You still decide what to save, check the result, and approve account authorization.</p>
-        <div class="prompt"><span class="prompt-label">Tell Claude, in the app session</span><p>Create a private GitHub repository called week-2-todo-app for this local project folder, not the parent AI Study Camp folder. Check whether GitHub authentication and the tools you need are available. If not, guide me through installing or authorizing them, one action at a time, before proceeding.
+        <p>You do not need to memorize Git commands. Claude handles the mechanics. You approve account access and check what gets saved.</p>
+        <details class="prompt"><summary>Open prompt: save the project on GitHub</summary><p>Create a private online copy of this project on GitHub called week-2-todo-app. Include this local project folder only, not the parent AI Study Camp folder. Check whether GitHub authentication and the tools you need are available. If not, guide me through installing or authorizing them, one action at a time, before proceeding.
 
-Initialize Git here if needed. Add a short README and a .gitignore that excludes .env files, credentials, node_modules, and build output. Check what will be committed, then ask for my approval before the first commit and push. Do not commit any secret. Show me the GitHub URL when it is done.</p></div>
+Set up local checkpoints here if needed. Add a short README and make sure private settings, credentials, installed libraries, and build output will not be uploaded. Show me which files will be included, then ask for my approval before saving the first checkpoint and online copy. Never upload a secret. Show me the GitHub URL when it is done.</p></details>
         <p>If Claude needs GitHub CLI access, it should guide you through the official tool and browser authorization. You may need to click a sign-in or approval in your browser. Never paste your GitHub password or an access token into a project file.</p>
-        <div class="note"><strong>Check it yourself:</strong><p>Open the GitHub URL Claude gives you. Confirm the repo is private, its name is <code>week-2-todo-app</code>, and the README appears there. That proves the first version was pushed, not just saved locally.</p></div>
-        <p class="small">Want more on Git terms and the diagrams? The <a href="how-to-guides/git-basics.html" target="_blank" rel="noopener">Git and GitHub handout</a> is a reference, not another required task.</p>
+        <div class="note"><strong>Checkpoint</strong><p>Open the GitHub URL Claude gives you. Confirm the project is private, its name is <code>week-2-todo-app</code>, and the README appears there. You now have a local checkpoint and an online copy.</p></div>
+        <p class="small">Want the technical vocabulary later? The <a href="how-to-guides/git-basics.html" target="_blank" rel="noopener">Git and GitHub handout</a> is an optional reference, not another required task.</p>
       </section>
 
       <section class="section">
         <p class="section-label">Plan before building</p>
         <h2>Write your PRD</h2>
-        <p>A <strong>PRD</strong> is a Product Requirements Document. It says who the app is for, what it should do, and how you will know it works. Without one, Claude can produce a working screen that misses the product you meant to build.</p>
-        <p>For this exercise, build a personal to-do app: a signed-in user can add, view, edit, complete, and delete their own tasks. Start with one task list and a style you like. Leave collaboration, payments, calendars, and notifications out of the first version.</p>
+        <p>A <strong>PRD</strong>, or Product Requirements Document, answers three questions:</p>
+        <ul><li><strong>Who is it for?</strong></li><li><strong>What must it do?</strong></li><li><strong>How will you know it works?</strong></li></ul>
+        <p>This PRD covers a personal to-do app with login and five task actions: add, view, edit, complete, and delete.</p>
         <h3>Use Plan mode to think before Claude edits</h3>
-        <p><strong>Plan mode</strong> lets Claude inspect and propose an approach without immediately implementing it. In the terminal, use <code>Shift+Tab</code> to cycle modes until the interface says Plan mode. Ask questions and review the proposal before switching back to an editing mode.</p>
-        <p>You are not trying to write an enormous document. You are trying to make the choices explicit. Ask Claude to interview you one question at a time, point out gaps, and simplify anything that is too much for a first app.</p>
-        <div class="prompt"><span class="prompt-label">Tell Claude in Plan mode</span><p>Help me plan a personal to-do app before we build it. Interview me one question at a time about the user, the main flow, features, and design. The first version needs sign-up, sign-in, sign-out, and the ability to add, view, edit, complete, and delete my own tasks. Tasks must persist after refresh, and users must not access each other's tasks.
+        <p><strong>Plan mode</strong> lets Claude inspect and propose before it edits. Press <code>Shift+Tab</code> until Plan mode appears. Ask Claude to interview you one question at a time, then review the draft.</p>
+        <details class="prompt"><summary>Open prompt: draft the PRD</summary><p>Help me plan a personal to-do app before we build it. Interview me one question at a time about the user, the main flow, features, and design. The first version needs sign-up, sign-in, sign-out, and the ability to add, view, edit, complete, and delete my own tasks. Tasks must persist after refresh, and users must not access each other's tasks.
 
-Use Next.js, React, TypeScript, Tailwind CSS, Supabase for data and login, and Vercel for hosting. Explain unfamiliar terms. Challenge anything that makes this too large for a first app. Draft a short PRD with these sections: User and problem; Main flow; First-version features; Data and privacy; Design; Acceptance checks; Out of scope. Wait for my approval. Do not build the app yet.</p></div>
+Use Next.js, React, TypeScript, Tailwind CSS, Supabase for data and login, and Vercel for hosting. Explain unfamiliar terms. Challenge anything that makes this too large for a first app. Draft a short PRD with these sections: User and problem; Main flow; First-version features; Data and privacy; Design; Acceptance checks; Out of scope. Wait for my approval. Do not build the app yet.</p></details>
         <h3>The PRD template</h3>
         <div class="table-wrap"><table><thead><tr><th>Section</th><th>What to decide</th></tr></thead><tbody>
           <tr><td>User and problem</td><td>Who will use this app? What makes keeping track of tasks hard for them?</td></tr>
@@ -331,36 +339,36 @@ Use Next.js, React, TypeScript, Tailwind CSS, Supabase for data and login, and V
           <tr><td>Out of scope</td><td>The ideas you are explicitly saving for later.</td></tr>
         </tbody></table></div>
         <p>Prefer another format? <a href="https://www.lennysnewsletter.com/p/my-favorite-templates-issue-37" target="_blank" rel="noopener">Lenny's collection of PRD templates</a> has other options. Choose a format that fits the project's scope.</p>
-        <p>Read the draft and correct anything that does not match what you want. After approval, press <code>Shift+Tab</code> until Plan mode is off, then tell Claude: <strong>“Save the approved PRD as PRD.md in this app folder. Do not build yet. Commit and push the plan after checking no secrets are included.”</strong></p>
-        <div class="note"><strong>Stop here and check:</strong><p>Your app folder is open in VS Code, Claude runs in it, the private GitHub repo contains the README and <code>PRD.md</code>, and you can describe the app in one sentence. You have not created Supabase or deployed on Vercel yet.</p></div>
-        <!-- Optional recording slot: planning and approving the PRD. -->
+        <p>Read the draft and correct anything that does not match what you want. After approval, press <code>Shift+Tab</code> until Plan mode is off, then tell Claude: <strong>“Save the approved PRD as PRD.md in this app folder. Do not build yet. Check for secrets, save a local checkpoint, and update the GitHub copy.”</strong></p>
+        <div class="note"><strong>Checkpoint</strong><p>Your app folder is open in VS Code, Claude runs in it, the private online copy contains the README and <code>PRD.md</code>, and you can describe the app in one sentence. You have not created Supabase or deployed on Vercel yet.</p></div>
+        <!-- Video 3: GitHub and the PRD. -->
       </section>
       <div class="next"><a class="back" href="#overview">Back to overview</a><a href="#step2">Continue to Step 2</a></div>
     </section>
 
     <section class="panel" id="step2" aria-labelledby="step2-title">
-      <div class="panel-head"><p class="eyebrow">Step 2 · Foundation</p><h2 id="step2-title">Make the app run, then connect its services.</h2><p>Your workspace and PRD are ready. Now create the starter app, open it in your browser, and set up the database and login service it will use.</p></div>
+      <div class="panel-head"><p class="eyebrow">Step 2 · Foundation</p><h2 id="step2-title">Foundation</h2><p>Your workspace and PRD are ready. Now create the starter app, open it in your browser, and set up the database and login service it will use.</p></div>
       <section class="section">
         <p class="section-label">Starter app</p>
         <h2>Scaffold from your PRD</h2>
-        <p><strong>Scaffolding</strong> means creating the starter files and structure for an app. It is the skeleton, not all the product features. The folder and GitHub repo from Step 1 are the same project you will use here.</p>
+        <p><strong>Scaffolding</strong> means creating the starter files and structure for an app. It is the skeleton, not all the product features. Continue working in the same folder you saved to GitHub in Step 1.</p>
         <h3>The stack, in ordinary language</h3>
         <div class="table-wrap"><table><thead><tr><th>Piece</th><th>What it does</th></tr></thead><tbody>
-          <tr><td>HTML + CSS</td><td>The structure and styling a browser displays. Claude will generate much of this through React and Tailwind.</td></tr>
-          <tr><td>JavaScript / TypeScript</td><td>Code for behavior and logic. TypeScript adds checks that help catch mismatched data before the app runs.</td></tr>
-          <tr><td>React + Next.js</td><td>React builds reusable interface pieces. Next.js is the framework organizing pages, routing, and, when needed, server-side code.</td></tr>
-          <tr><td>Tailwind CSS</td><td>A styling toolkit for layout, colors, spacing, and responsive screens.</td></tr>
-          <tr><td>Node.js + npm</td><td>Run the development tools and install dependencies on your computer. Node is not your database.</td></tr>
+          <tr><td>HTML + CSS</td><td>The page's structure and appearance.</td></tr>
+          <tr><td>JavaScript / TypeScript</td><td>The app's behavior and rules. TypeScript catches some mistakes before the app runs.</td></tr>
+          <tr><td>React + Next.js</td><td>The tools that organize the screens and app code.</td></tr>
+          <tr><td>Tailwind CSS</td><td>A toolkit for colors, spacing, layout, and phone-sized screens.</td></tr>
+          <tr><td>Node.js + npm</td><td>Run the development tools and install the app's libraries.</td></tr>
         </tbody></table></div>
         <details><summary>What about other frontend and backend languages?</summary><p>Other apps might use Vue for the frontend, Python or Java for a backend, or another database. This exercise uses one stack so you can learn how its pieces fit together before comparing alternatives.</p></details>
-        <div class="prompt"><span class="prompt-label">Tell Claude</span><p>Read PRD.md and the relevant CLAUDE.md instructions. Scaffold a Next.js app with React, TypeScript, and Tailwind in this existing week-2-todo-app folder. Preserve PRD.md, README, and the existing Git repo. Do not create a nested app folder or build all features yet.
+        <details class="prompt"><summary>Open prompt: create the starter app</summary><p>Read PRD.md and the relevant CLAUDE.md instructions. Scaffold a Next.js app with React, TypeScript, and Tailwind inside the existing week-2-todo-app folder. Preserve the README, PRD, local checkpoints, and settings that keep private files off GitHub. Do not create a nested app folder or build all features yet. If the scaffolding tool needs an empty folder, use a temporary sibling folder, move the generated app files into week-2-todo-app, confirm they arrived, and then remove the temporary folder.
 
-Briefly explain the main page file, package.json, and where local settings will go. Start the local development server, show me the URL, and pause so I can open it before you continue.</p></div>
+Briefly explain the main page file, package.json, and where local settings will go. Start the local development server, show me the URL, and pause so I can open it before you continue.</p></details>
         <h3>Open the local app</h3>
         <p>Claude should give you a URL such as <code>http://localhost:3000</code>. Open the exact URL it reports in your browser. <strong>Localhost</strong> means your own computer; this is not a public website yet. Leave the development server running while you test.</p>
         <p>If a terminal is occupied by the server logs, use another VS Code terminal tab for Claude. To restart later, ask Claude to start the app again; the usual command is <code>npm run dev</code> from the app folder.</p>
-        <div class="note"><strong>Before continuing:</strong><p>You see a starter page in your browser, not just a terminal saying it worked. Ask Claude to explain the files in the Explorer. If the page will not open, paste the error to Claude and resolve it before adding Supabase.</p></div>
-        <!-- Optional recording slot: scaffold the app and open localhost. -->
+        <div class="note"><strong>Checkpoint</strong><p>You see a starter page in your browser, not just a terminal saying it worked. Ask Claude to explain the files in the Explorer. If the page will not open, paste the error to Claude and resolve it before adding Supabase.</p></div>
+        <!-- Video 4: scaffold the app and open localhost. -->
       </section>
 
       <section class="section">
@@ -375,20 +383,20 @@ Briefly explain the main page file, package.json, and where local settings will 
           <li>Select a nearby region and create the project. Check the plan before agreeing to any charges. Wait for the project dashboard to become available.</li>
           <li>Keep this dashboard tab open. You will return to it to inspect the tasks table and authentication settings.</li>
         </ol>
-        <div class="note"><strong>What you should see:</strong><p>The dashboard shows the <code>ai-study-camp</code> project and sections such as Table Editor and Authentication. You have created the service, not connected the app to it yet.</p></div>
-        <!-- Optional recording slot: Supabase account, project, and dashboard tour. -->
+        <div class="note"><strong>Checkpoint</strong><p>The dashboard shows the <code>ai-study-camp</code> project and sections such as Table Editor and Authentication. You have created the service, not connected the app to it yet.</p></div>
+        <!-- Video 5, part 1: Supabase project and dashboard tour. -->
       </section>
 
       <section class="section">
         <p class="section-label">Connect the coding agent</p>
         <h2>Let Claude help manage Supabase</h2>
         <p>An <strong>MCP connection</strong> gives the coding agent access to tools from another service. Here it lets Claude inspect the course database and propose or apply changes you approve. It is different from the connection your finished app will use to read and write tasks.</p>
-        <div class="prompt"><span class="prompt-label">Tell Claude</span><p>I created the ai-study-camp Supabase cloud project. Guide me through connecting Claude Code to it with Supabase's official MCP, using its browser authorization flow. Scope access to this course project, not my other projects, and explain permissions before I approve them. Do not put MCP tokens, database passwords, or privileged keys in any project file.
+        <details class="prompt"><summary>Open prompt: connect Claude to Supabase</summary><p>I created the ai-study-camp Supabase cloud project. Guide me through connecting Claude Code to it with Supabase's official MCP, using its browser authorization flow. Scope access to this course project, not my other projects, and explain permissions before I approve them. Do not put MCP tokens, database passwords, or privileged keys in any project file.
 
-Pause for my browser actions. After connecting, confirm which project you can access. Do not change any tables yet. If the connection needs a session restart, tell me exactly how to resume here.</p></div>
+Pause for my browser actions. After connecting, confirm which project you can access. Do not change any tables yet. If the connection needs a session restart, tell me exactly how to resume here.</p></details>
         <p>Complete the sign-in and project authorization in your browser when prompted. Use the same account you used to create the project. In Claude Code, type <code>/mcp</code> to check that Supabase is listed and connected. Stop if Claude cannot confirm the project or asks to access unrelated data. Use synthetic course data, not private workplace data.</p>
         <p class="small">The supported setup and security guidance are in <a href="https://supabase.com/docs/guides/ai-tools/mcp" target="_blank" rel="noopener">Supabase's official MCP documentation</a>. Claude should guide the steps rather than ask you to guess configuration values.</p>
-        <div class="note"><strong>Check the distinction:</strong><p>Claude can now help manage the cloud project. Your app is not connected just because MCP works; it still needs the app settings in the next section.</p></div>
+        <div class="note"><strong>Checkpoint</strong><p>Claude can now help manage the cloud project. Your app is not connected just because MCP works; it still needs the app settings in the next section.</p></div>
       </section>
 
       <section class="section">
@@ -403,18 +411,21 @@ Pause for my browser actions. After connecting, confirm which project you can ac
           <tr><td>created_at</td><td>When the task was created, useful for ordering the list.</td></tr>
         </tbody></table></div>
         <p><strong>Authentication is not privacy by itself.</strong> Signing in identifies a user. <strong>Row Level Security (RLS)</strong> is the database rule that restricts which rows they can access. Your tasks table needs rules for reading, adding, updating, and deleting your own tasks. Hiding another person's tasks in the interface is not enough.</p>
-        <div class="prompt"><span class="prompt-label">Tell Claude</span><p>Read PRD.md. Propose the simplest Supabase tasks table for this app, including id, title, completed, user_id, and created_at. Prefix this build's tables with sprint1_, such as sprint1_tasks, so future course apps have separate tables. Check existing tables first; do not overwrite another course build's data.
+        <details class="prompt"><summary>Open prompt: create the tasks table</summary><p>Read PRD.md. Propose the simplest Supabase tasks table for this app, including id, title, completed, user_id, and created_at. Prefix this build's tables with sprint1_, such as sprint1_tasks, so future course apps have separate tables. Check existing tables first; do not overwrite another course build's data.
 
-Explain the schema and the Row Level Security rules in plain language. Each signed-in user must only read, insert, update, and delete tasks they own. Wait for my approval before applying changes through MCP. Then tell me where to inspect the table and its policies in the dashboard.</p></div>
+Explain the schema and the Row Level Security rules in plain language. Each signed-in user must only read, insert, update, and delete tasks they own. Wait for my approval before applying changes through MCP. Then tell me where to inspect the table and its policies in the dashboard.</p></details>
         <p>Approve after you understand the proposal. Open <strong>Table Editor</strong> in Supabase and look for the table name Claude used. Confirm the columns, then ask Claude to show where the RLS policies are enabled. The table may be empty now; the interface for adding tasks comes in Step 3.</p>
+      </section>
 
-        <h3>Connect the app, not just Claude</h3>
+      <section class="section">
+        <p class="section-label">App connection</p>
+        <h2>Connect the app, not just Claude</h2>
         <p>The app needs a <strong>project URL</strong> and a <strong>publishable key</strong> to contact Supabase. These identify the project and allow public client requests; the database policies still control data access. A <strong>secret key</strong>, service role key, or database password is different: it must never be included in browser code.</p>
-        <div class="prompt"><span class="prompt-label">Tell Claude</span><p>Connect this app to the approved Supabase project. Guide me to the project URL and publishable key in the dashboard. Use a publishable key for the browser client, never a secret or service role key.
+        <details class="prompt"><summary>Open prompt: connect the app to Supabase</summary><p>Connect this app to the approved Supabase project. Guide me to the project URL and publishable key in the dashboard. Use a publishable key for the browser client, never a secret or service role key.
 
-Create .env.local inside week-2-todo-app with named placeholders for the variables this app expects, and confirm Git ignores it. Tell me which dashboard value replaces each placeholder. I will fill them in locally; do not print private credentials in this chat. Create or update a safe supabase.md note in the parent AI Study Camp folder with the project name, URL, and setup notes only, not secrets. Keep that parent note outside this app's repo.
+Create .env.local inside week-2-todo-app with named placeholders for the variables this app expects, and confirm it will stay off GitHub. Tell me which dashboard value replaces each placeholder. I will fill them in locally; do not print private credentials in this chat. Create or update a safe supabase.md note in the parent AI Study Camp folder with the project name, URL, and setup notes only, not secrets. Keep that parent note outside this app's online copy.
 
-Update the parent CLAUDE.md without overwriting existing instructions: this course uses Next.js, Supabase, and Vercel; this build owns its own tables; secrets do not go into GitHub. Wait while I fill in the settings. Then reload the app settings and report a specific connection check, without claiming that authenticated task access has been tested yet. Pause before building login or task features.</p></div>
+Update the parent CLAUDE.md without overwriting existing instructions: this course uses Next.js, Supabase, and Vercel; this build owns its own tables; secrets do not go into GitHub. Wait while I fill in the settings. Then reload the app settings and report a specific connection check, without claiming that authenticated task access has been tested yet. Pause before building login or task features.</p></details>
         <h3>Fill in the local settings</h3>
         <ol>
           <li>In Supabase, open the project's Connect dialog or Settings → API Keys. Find the project URL and the publishable key. Ask Claude where to look if the dashboard labels differ.</li>
@@ -422,19 +433,19 @@ Update the parent CLAUDE.md without overwriting existing instructions: this cour
           <li>Save the file with <code>Cmd+S</code> on Mac or <code>Ctrl+S</code> on Windows. Tell Claude the values are filled in without pasting the file into chat.</li>
           <li>Ask Claude to restart the development server if needed, verify that Git ignores the file, and run a small connection check. It should report the result, not private values.</li>
         </ol>
-        <div class="note"><strong>What the check proves:</strong><p>The app can reach the intended Supabase project with valid client settings, without a network or invalid-key error. An empty task result is expected before features and test data exist. Access to each user's tasks is tested after login in Step 3.</p></div>
+        <div class="note"><strong>Checkpoint</strong><p>The app can reach the intended Supabase project with valid client settings, without a network or invalid-key error. An empty task result is expected before features and test data exist. Access to each user's tasks is tested after login in Step 3.</p></div>
         <div class="note warning"><strong>Keep credentials in the right place.</strong><p>App settings go in the app's ignored <code>.env.local</code>, not in the PRD or instruction files. A publishable key is intended for client use, but it does not replace RLS. Never “fix” a permission error by disabling RLS or adding a privileged key to the frontend.</p></div>
-        <details><summary>Where each thing lives</summary><ul><li><strong>Supabase cloud project:</strong> on Supabase, visible in its dashboard.</li><li><strong>AI Study Camp/CLAUDE.md and supabase.md:</strong> shared course notes on your computer, outside this app's repo.</li><li><strong>week-2-todo-app:</strong> app source, PRD, build plan, README, and Git history.</li><li><strong>week-2-todo-app/.env.local:</strong> local app settings, ignored by Git.</li><li><strong>GitHub repo:</strong> the pushed version of the app, without local credentials.</li></ul></details>
+        <details><summary>Where each thing lives</summary><ul><li><strong>Supabase cloud project:</strong> on Supabase, visible in its dashboard.</li><li><strong>AI Study Camp/CLAUDE.md and supabase.md:</strong> shared course notes on your computer, outside the Week 2 app.</li><li><strong>week-2-todo-app:</strong> app source, PRD, build plan, README, and local checkpoints.</li><li><strong>week-2-todo-app/.env.local:</strong> private app settings that stay on your computer.</li><li><strong>GitHub:</strong> the online copy of the app, without local credentials.</li></ul></details>
       </section>
 
       <section class="section">
         <p class="section-label">Agree on the build</p>
         <h2>Turn the PRD into a small implementation plan</h2>
         <p>The PRD describes <strong>what</strong> you want. The implementation plan describes <strong>how</strong> to build it in pieces. Your foundation now runs locally and has a database service ready; you can plan the product features with those pieces in place.</p>
-        <div class="prompt"><span class="prompt-label">Tell Claude in Plan mode</span><p>Read PRD.md and inspect the foundation we created. Draft PLAN.md with small build stages: screen design, login, task list and add, edit/complete/delete, review, then deployment. For each stage, give me the browser check I will use to decide if it works. Note any gaps between the PRD and our database setup. Wait for my approval before implementing features.</p></div>
-        <p>Read the plan, ask questions, and approve it. Press <code>Shift+Tab</code> until Plan mode is off and ask Claude to save <code>PLAN.md</code>. Ask it to check the changed files, commit the working foundation and plan, and push them to GitHub without <code>.env.local</code> or credentials.</p>
-        <div class="note"><strong>Before Step 3:</strong><p>The starter app opens locally. Supabase exists, Claude is connected to the intended project, the tasks table has owner-based RLS, and the app connection is configured. You have approved <code>PLAN.md</code>. Login and task behavior still need to be built.</p></div>
-        <!-- Optional recording slot: data model, app connection, and approving PLAN.md. -->
+        <details class="prompt"><summary>Open prompt: make the build plan</summary><p>Read PRD.md and inspect the foundation we created. Draft PLAN.md with small build stages: screen design, login, task list and add, edit/complete/delete, review, then deployment. For each stage, give me the browser check I will use to decide if it works. Note any gaps between the PRD and our database setup. Wait for my approval before implementing features.</p></details>
+        <p>Read the plan, ask questions, and approve it. Press <code>Shift+Tab</code> until Plan mode is off and ask Claude to save <code>PLAN.md</code>. Ask it to check the changed files, save a local checkpoint, and update the GitHub copy without <code>.env.local</code> or credentials.</p>
+        <div class="note"><strong>Checkpoint</strong><p>The starter app opens locally. Supabase exists, Claude is connected to the intended project, the tasks table has owner-based RLS, and the app connection is configured. You have approved <code>PLAN.md</code>. Login and task behavior still need to be built.</p></div>
+        <!-- Video 5, part 2: data model, app connection, and PLAN.md. -->
       </section>
       <div class="next"><a class="back" href="#step1">Back to Step 1</a><a href="#step3">Continue to Step 3</a></div>
     </section>
@@ -445,62 +456,56 @@ Update the parent CLAUDE.md without overwriting existing instructions: this cour
         <p class="section-label">Design</p>
         <h2>Make the first screen feel like your app</h2>
         <p>Start with the main task screen. Choose a style you enjoy: calm notebook, bright dashboard, or something inspired by a website you like. Give Claude a reference or describe colors, spacing, and the feel you want. Keep the feature scope unchanged.</p>
-        <div class="prompt"><span class="prompt-label">Tell Claude</span><p>Read PRD.md and PLAN.md. Build only the screen-design stage first. Make the task list and input layout work on phone and desktop, with clear empty and loading states. Follow the design direction in my PRD. Do not add extra features. Show me the local URL and pause for my browser review before moving to login.</p></div>
+        <details class="prompt"><summary>Open prompt: build the first screen</summary><p>Read PRD.md and PLAN.md. Build only the screen-design stage first. Make the task list and input layout work on phone and desktop, with clear empty and loading states. Follow the design direction in my PRD. Do not add extra features. Show me the local URL and pause for my browser review before moving to login.</p></details>
         <p><strong>Open the browser:</strong> look at the layout, narrow the window to phone width, and try the visible controls. They may not save data yet. Tell Claude one or two specific changes, such as “Make the Add task button easier to see” rather than “Make it better.”</p>
-        <!-- Optional recording slot: screen design and browser feedback. -->
+        <!-- Video 6, part 1: screen design and browser feedback. -->
       </section>
 
       <section class="section">
         <p class="section-label">Authentication</p>
         <h2>Add sign-up, sign-in, and sign-out</h2>
         <p>Now make the app recognize who is using it. Supabase Auth manages accounts and sessions. A session is the signed-in state the app uses to identify you when requesting your tasks.</p>
-        <h3>Check confirmation email delivery before creating accounts</h3>
-        <p>Supabase's default email sender only sends to addresses belonging to the project's team and has a low send limit. It is not a public signup email service. For two test accounts and other people signing up, use the course's configured mail service if one is available, or set up a custom sender with Claude's guidance.</p>
-        <p><strong>SMTP</strong> is the connection to an email provider that sends your app's confirmation messages. This is an authentication setting in the Supabase dashboard, not a new app backend to build.</p>
-        <div class="prompt"><span class="prompt-label">Tell Claude before signup testing</span><p>Check whether this Supabase project already has custom SMTP configured, without exposing its credentials or changing another app's setup. Explain whether confirmation emails can reach both test addresses I will use.
-
-If it is not configured, guide me one action at a time through choosing an email provider, verifying a sender or domain it supports, and entering its SMTP settings in Supabase Authentication's email settings. Explain any cost or domain requirement before I agree. Keep SMTP credentials in the service dashboard, not in code or course notes. Help me verify delivery before we continue. If I lack the needed sender/domain, stop and tell me what to ask the course team for.</p></div>
-        <p class="small">Email configuration and default sender restrictions: <a href="https://supabase.com/docs/guides/auth/auth-smtp" target="_blank" rel="noopener">Supabase's SMTP guide</a>. If delivery is blocked, resolve it with Claude or the course team before calling signup complete.</p>
-        <div class="prompt"><span class="prompt-label">Tell Claude</span><p>Implement the login stage from PLAN.md using Supabase Auth. Add email/password sign-up, sign-in, and sign-out. Keep task data behind a signed-in session. Explain any Supabase dashboard settings or local redirect URLs I need to configure. Keep email confirmation enabled and tell me how to test it. Do not build all task actions yet. Pause for me to test login in the browser.</p></div>
+        <div class="note warning"><strong>Course setting, not production advice.</strong><p>For this exercise, turn off email confirmation so you can test two accounts without setting up an email provider. A public product should verify email delivery before launch.</p></div>
+        <details class="prompt"><summary>Open prompt: configure course login</summary><p>Guide me to the Supabase Authentication setting that disables email confirmation for this course exercise. Do not change other providers or unrelated project settings. Add a short note to README.md that production signup would need verified email delivery and a proper mail provider. Pause until I confirm the setting is saved.</p></details>
+        <details class="prompt"><summary>Open prompt: build login</summary><p>Implement the login stage from PLAN.md using Supabase Auth. Add email/password sign-up, sign-in, and sign-out. Keep task data behind a signed-in session. Email confirmation is disabled for this course exercise. Do not build all task actions yet. Pause for me to test login in the browser.</p></details>
         <ol>
-          <li>Create a test account with an email you can access. If confirmation is required, open the confirmation email and follow its link.</li>
+          <li>Create a test account with a unique test email and password. Because confirmation is off, you can use reserved addresses such as <code>student1@example.test</code> and <code>student2@example.test</code>; they do not belong to real people or receive mail.</li>
           <li>Sign in, refresh, and check you remain signed in.</li>
           <li>Sign out. Check the app no longer shows the signed-in task screen.</li>
           <li>Try an incorrect password. You should see a readable error, not a blank screen.</li>
         </ol>
-        <details><summary>No confirmation email or the link fails?</summary><p>Check spam, the mail provider's delivery logs, and Supabase Auth logs with Claude. Confirm that the sender is verified and the callback URL matches the app. If you use the restricted default sender for an initial owner-only test, the address must be on the project team; wait if you hit its send limit. Use custom SMTP for the full two-account and public signup checks.</p></details>
         <p>Tell Claude the result of your login checks, including any error text, before moving to task features.</p>
-        <!-- Optional recording slot: login and account testing. -->
+        <!-- Video 6, part 2: login and account testing. -->
       </section>
 
       <section class="section">
         <p class="section-label">Tasks</p>
         <h2>Build the task features in small stages</h2>
         <p>Use this loop every time: <strong>ask → inspect → try it → give feedback → save a working version.</strong> Claude should not race through every stage while you are still reading the first result.</p>
-        <div class="prompt"><span class="prompt-label">Tell Claude</span><p>Continue from PRD.md and PLAN.md. Implement only viewing and adding my own tasks first. Use the signed-in user's identity and the approved Supabase table and policies. Show loading, empty, and error states. After implementing, tell me exactly what to try in the browser and wait for my result before continuing.</p></div>
+        <details class="prompt"><summary>Open prompt: build view and add</summary><p>Continue from PRD.md and PLAN.md. Implement only viewing and adding my own tasks first. Use the signed-in user's identity and the approved Supabase table and policies. Show loading, empty, and error states. After implementing, tell me exactly what to try in the browser and wait for my result before continuing.</p></details>
         <div class="table-wrap"><table><thead><tr><th>Build stage</th><th>Your browser check</th></tr></thead><tbody>
           <tr><td>View + add</td><td>Sign in, add a task, and see it in the list. Refresh: it stays. Check its row in Supabase's Table Editor.</td></tr>
           <tr><td>Edit</td><td>Ask Claude to add editing. Change a title, save it, and refresh: the new title stays.</td></tr>
           <tr><td>Complete</td><td>Ask Claude to add completed status. Mark a task complete, refresh, then undo it.</td></tr>
           <tr><td>Delete</td><td>Ask Claude to add deletion. Remove a task, refresh, and confirm it stays removed.</td></tr>
-          <tr><td>Privacy</td><td>Use a second confirmed test account. It should not see the first account's tasks. Ask Claude to verify the database policies also reject cross-user requests.</td></tr>
+          <tr><td>Privacy</td><td>Use the second test account. It should not see the first account's tasks. Ask Claude to verify the database policies also reject cross-user requests.</td></tr>
         </tbody></table></div>
         <p>For each next action, say <strong>“That check passed. Build only the next stage, then pause for my browser test.”</strong> If it fails, give Claude the exact action, expected result, and observed result. Fix that stage before continuing.</p>
         <details><summary>Optional: make one feature feel more like you</summary><p>After the core checks pass, choose one small extra: a completed-task counter, a satisfying completion animation, or drag-to-reorder. Ask Claude to explain any added library before installing it. If you add reordering, include a database field for order and check that it survives refresh. Keep the extra out of the required path if you are short on time.</p></details>
-        <div class="prompt"><span class="prompt-label">After a stage works</span><p>Review the changed files for credentials, commit this working stage with a clear message, and push to GitHub. Tell me what was saved. Do not move on to the next feature yet.</p></div>
-        <div class="note"><strong>Before Step 4:</strong><p>You can sign in and complete all five task actions. Changes persist after refresh. A second user cannot see your tasks.</p></div>
-        <!-- Optional recording slot: build a feature, check it, and save the working stage. -->
+        <details class="prompt"><summary>Open prompt after each stage passes</summary><p>Review the changed files for credentials. Save this working stage as a named local checkpoint and update the GitHub copy. Tell me what was saved. Do not move on to the next feature yet.</p></details>
+        <div class="note"><strong>Checkpoint</strong><p>You can sign in and complete all five task actions. Changes persist after refresh. A second user cannot see your tasks.</p></div>
+        <!-- Video 7: build, check, and save a task feature. -->
       </section>
       <div class="next"><a class="back" href="#step2">Back to Step 2</a><a href="#step4">Continue to Step 4</a></div>
     </section>
 
     <section class="panel" id="step4" aria-labelledby="step4-title">
-      <div class="panel-head"><p class="eyebrow">Step 4 · Review and polish</p><h2 id="step4-title">Make the working version more dependable.</h2><p>You have the core app. Now check it against the PRD, fix issues, and improve the details people will notice.</p></div>
+      <div class="panel-head"><p class="eyebrow">Step 4 · Review and polish</p><h2 id="step4-title">Review and polish</h2><p>You have the core app. Now check it against the PRD, fix issues, and improve the details people will notice.</p></div>
       <section class="section">
         <p class="section-label">Self-review</p>
         <h2>Ask Claude to review its own work</h2>
         <p>Start with a review of the current version. A self-review can find issues, but it does not prove the app is safe or correct; you still test the important behavior.</p>
-        <div class="prompt"><span class="prompt-label">Tell Claude</span><p>Review this app against PRD.md and PLAN.md before changing anything. Check missing features, task ownership and RLS, auth behavior, exposed credentials, input validation, error/loading/empty states, and mobile usability. Run the build and any available checks. Report the top issues in plain language, separate actual failures from suggestions, and show me how to reproduce each issue. Wait for me to choose what to fix.</p></div>
+        <details class="prompt"><summary>Open prompt: review the app</summary><p>Review this app against PRD.md and PLAN.md before changing anything. Check missing features, task ownership and RLS, auth behavior, exposed credentials, input validation, error/loading/empty states, and mobile usability. Run the build and any available checks. Report the top issues in plain language, separate actual failures from suggestions, and show me how to reproduce each issue. Wait for me to choose what to fix.</p></details>
         <p>Choose the issues that affect the promised app first. Ask Claude to fix <strong>one issue at a time</strong>, then retry the failing behavior. If a proposed fix changes the PRD or adds a feature, decide whether you actually need it.</p>
         <div class="note"><strong>Evidence, not just “fixed.”</strong><p>Ask which check Claude ran and whether it passed. Then repeat the browser action yourself. If it involves permissions, verify the database rule as well as the screen.</p></div>
       </section>
@@ -516,9 +521,9 @@ If it is not configured, guide me one action at a time through choosing an email
           <li><strong>Navigation and login:</strong> signing out and returning to the app behave predictably.</li>
         </ul>
         <p>Change the style if you want to make the app yours, but do not turn polish into a new project. Aim for one coherent design and clear behavior.</p>
-        <div class="prompt"><span class="prompt-label">When the chosen fixes pass</span><p>Run the app's build and available checks again. Review the files for secrets. Commit and push this reviewed version, then summarize any known limitations honestly in README.md. Do not deploy yet.</p></div>
-        <div class="note"><strong>Before Step 5:</strong><p>The app builds, your feature checks still pass after fixes, and the reviewed code is on GitHub. Known limitations are written down. A working course app is not a guarantee of production readiness; broader security, reliability, and eval work comes later.</p></div>
-        <!-- Optional recording slot: self-review, choosing fixes, and checking results. -->
+        <details class="prompt"><summary>Open prompt after the fixes pass</summary><p>Run the app's build and available checks again. Review the files for secrets. Save this reviewed version as a local checkpoint, update the GitHub copy, and summarize any known limitations honestly in README.md. Do not deploy yet.</p></details>
+        <div class="note"><strong>Checkpoint</strong><p>The app builds, your feature checks still pass after fixes, and the reviewed code is on GitHub. Known limitations are written down. A working course app is not a guarantee of production readiness; broader security, reliability, and eval work comes later.</p></div>
+        <!-- Video 8: self-review, choosing fixes, and checking results. -->
       </section>
       <div class="next"><a class="back" href="#step3">Back to Step 3</a><a href="#step5">Continue to Step 5</a></div>
     </section>
@@ -530,29 +535,26 @@ If it is not configured, guide me one action at a time through choosing an email
         <h2>Deploy your GitHub project on Vercel</h2>
         <p><strong>GitHub stores the code.</strong> <strong>Vercel builds and hosts the app.</strong> <strong>Supabase runs the database and authentication.</strong> Deploying does not move your database into GitHub or copy your local environment file to Vercel.</p>
         <ol>
-          <li>Ask Claude to run the build and confirm the latest reviewed code is pushed to <code>week-2-todo-app</code>.</li>
+          <li>Ask Claude to run the build and confirm the latest reviewed code is saved on GitHub under <code>week-2-todo-app</code>.</li>
           <li>Open <a href="https://vercel.com/signup" target="_blank" rel="noopener">Vercel</a> and create an account or sign in. Choose the plan appropriate for your course/personal project and check any charges before proceeding.</li>
-          <li>Choose <strong>Add New → Project</strong>, connect your GitHub account, and authorize access to this app repo. Import <code>week-2-todo-app</code>. Keep the detected Next.js settings unless Claude identifies a reason to change them.</li>
+          <li>Choose <strong>Add New → Project</strong>, connect your GitHub account, and authorize access to this app's online copy. Import <code>week-2-todo-app</code>. Keep the detected Next.js settings unless Claude identifies a reason to change them.</li>
           <li>Before deploying, add the Supabase environment variables described below. Their names must match the code.</li>
           <li>Deploy. Wait for the deployment to finish, then open the public URL Vercel gives you.</li>
         </ol>
         <h3>Add the app settings to Vercel</h3>
         <p>Your ignored <code>.env.local</code> stayed on your computer, as intended. Vercel needs its own copies of the app's project URL and publishable key in the project's <strong>Environment Variables</strong> settings.</p>
-        <div class="prompt"><span class="prompt-label">Tell Claude before deployment</span><p>Inspect the code and tell me the exact environment variable names this app needs on Vercel, and where to get their values in Supabase. Give me names and purpose without printing secrets. Confirm that the browser client only uses the project URL and publishable key, not a service role or secret key. Walk me through adding the settings to Vercel, then pause for me to deploy.</p></div>
+        <details class="prompt"><summary>Open prompt: prepare Vercel settings</summary><p>Inspect the code and tell me the exact environment variable names this app needs on Vercel, and where to get their values in Supabase. Give me names and purpose without printing secrets. Confirm that the browser client only uses the project URL and publishable key, not a service role or secret key. Walk me through adding the settings to Vercel, then pause for me to deploy.</p></details>
         <p class="small">Names often look like <code>NEXT_PUBLIC_SUPABASE_URL</code> and <code>NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY</code>, but follow this app's code rather than guessing. Variables beginning <code>NEXT_PUBLIC_</code> are included in browser code: never use that prefix for a private credential.</p>
         <p>If you add settings after the first deployment, redeploy so the app uses them. If the build fails, open the deployment logs and show Claude the relevant error, with private values removed.</p>
-        <!-- Optional recording slot: importing GitHub into Vercel, environment settings, and deployment. -->
+        <!-- Video 9, part 1: Vercel settings and deployment. -->
       </section>
 
       <section class="section">
         <p class="section-label">Live authentication</p>
-        <h2>Make login work at the public URL</h2>
-        <p>Supabase needs to know where to send users after confirmation or login. Your local address and live address are different. A successful deployment can still have broken login if those settings point to localhost.</p>
-        <div class="prompt"><span class="prompt-label">Tell Claude</span><p>My Vercel deployment is ready. Inspect this app's auth flow. Add only the exact local and public callback URLs this app needs to Supabase's allowed redirects, preserving existing entries for other course apps.
-
-This Supabase project may be shared. Keep its existing Site URL unless we confirm no other app relies on that default and I approve changing it. Make this app pass its own explicit confirmation redirect, such as emailRedirectTo for signup, rather than rely on a shared default. Explain the callback path the code uses. Do not use broad wildcard redirects. Pause for dashboard actions, then give me the live browser checks.</p></div>
-        <p class="small">Redirect configuration: <a href="https://supabase.com/docs/guides/auth/redirect-urls" target="_blank" rel="noopener">Supabase's redirect URL guide</a>. Changing a shared Site URL can affect confirmation or reset links for another course app.</p>
-        <div class="note"><strong>What you should see:</strong><p>Confirmation and login flows return to your live app, not localhost. Sign-out returns you to the correct signed-out screen.</p></div>
+        <h2>Check login on the public URL</h2>
+        <p>The deployed app uses the same Supabase project, but its settings now come from Vercel. Test the live URL separately from localhost.</p>
+        <details class="prompt"><summary>Open prompt: check live login</summary><p>My Vercel deployment is ready. Inspect the live app's email/password auth flow and the environment variable names configured in Vercel. Email confirmation is disabled for this course exercise. Preserve unrelated Supabase settings. Give me the exact live browser checks, then pause while I run them.</p></details>
+        <div class="note"><strong>Checkpoint</strong><p>You can create an account, sign in, refresh, and sign out on the public URL.</p></div>
       </section>
 
       <section class="section">
@@ -560,17 +562,17 @@ This Supabase project may be shared. Keep its existing Site URL unless we confir
         <h2>Test the app someone else will open</h2>
         <ol>
           <li>Open the public URL in a fresh private browser window. Confirm the page loads without your development server running.</li>
-          <li>Create a fresh test account through the live signup form, using an address your configured sender can reach. Open its confirmation email and check that the link returns to the live app. Also test sign-in with an existing confirmed account and sign-out.</li>
+          <li>Create a fresh course-only test account through the live signup form. Test sign-in, refresh, and sign-out.</li>
           <li>Add, edit, complete, and delete tasks. Refresh after each change to check persistence.</li>
           <li>Sign in as a second test user. Check that their list is separate. Ask Claude to verify the owner-based policies remain enabled.</li>
-          <li>Try a phone-width window and bad input. Check for visible errors and no private keys in browser code or the repo.</li>
+          <li>Try a phone-width window and bad input. Check for visible errors and no private keys in browser code or on GitHub.</li>
         </ol>
-        <div class="prompt"><span class="prompt-label">If the live app fails</span><p>The local app worked, but the live version fails at this action: [what I did]. I expected [result], and saw [actual result or error]. Compare the deployed code, environment variable names, and Supabase auth URLs. Explain the likely cause before changing anything. Fix one issue, help me redeploy if needed, and pause for my browser retest.</p></div>
+        <details class="prompt"><summary>Open prompt if the live app fails</summary><p>The local app worked, but the live version fails at this action: [what I did]. I expected [result], and saw [actual result or error]. Compare the deployed code, environment variable names, and Supabase auth settings. Explain the likely cause before changing anything. Fix one issue, help me redeploy if needed, and pause for my browser retest.</p></details>
         <h3>Save and share</h3>
-        <p>Ask Claude to add the live URL and known limitations to your README, check for credentials, and commit and push the final updates. Share your <strong>live app link</strong> on the cohort project board in the LMS. Keep your repository private unless the course asks you to share code.</p>
-        <div class="note"><strong>Done means a tested link.</strong><p>You have a live app with login, a persistent task list, and separate data for each user. You can explain where the interface, data, login, code history, and hosting live. Bring the app and one thing you learned to the group call.</p></div>
+        <p>Ask Claude to add the live URL and known limitations to your README, check for credentials, save a final local checkpoint, and update the GitHub copy. Share your <strong>live app link</strong> on the cohort project board in the LMS. Keep the GitHub copy private unless the course asks you to share code.</p>
+        <div class="note"><strong>Checkpoint</strong><p>You have a live app with login, a persistent task list, and separate data for each user. You can explain where the interface, data, login, saved checkpoints, online copy, and hosting live. Bring the app and one thing you learned to the group call.</p></div>
         <details><summary>Optional, after the core app is finished: add one API feature</summary><p>An API lets your app request information or actions from another service. If you want an extension, choose one small feature and ask Claude to explain the request, response, cost, and failure case before adding it. Private API keys belong in server-side environment settings, never frontend code. The to-do app is complete without this extension.</p></details>
-        <!-- Optional recording slot: live checks, login redirects, and sharing the finished app. -->
+        <!-- Video 9, part 2: live checks and sharing the finished app. -->
       </section>
       <div class="next"><a class="back" href="#step4">Back to Step 4</a><a href="#references">Open references</a></div>
     </section>
