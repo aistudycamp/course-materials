@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- olive-reviewed: 2026-09-30 -->
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -82,6 +83,11 @@
     .next { display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin:27px 0; }
     .next a { padding:11px 18px;border-radius:8px;background:var(--teal-dark);color:white;text-decoration:none;font-weight:600;font-size:15px; }
     .next .back { background:transparent;color:var(--teal-dark);padding-left:0; }
+    .video { margin:24px 0 4px;border-top:1px solid var(--line);padding-top:20px; }
+    .video-label { margin:0 0 10px;color:var(--teal-dark);font:600 12px/1.5 var(--mono);letter-spacing:.08em;text-transform:uppercase; }
+    .video h3 { margin:0 0 13px;font-size:20px; }
+    .video-frame { position:relative;aspect-ratio:16/9;overflow:hidden;border:1px solid var(--line);border-radius:10px;background:var(--dark); }
+    .video-frame iframe { position:absolute;inset:0;width:100%;height:100%;border:0; }
     .folder-map { padding:24px 16px;border:1px solid var(--line);border-radius:12px;margin:22px 0;background:var(--soft); }
     .folder-root { max-width:280px;margin:0 auto;padding:14px;background:var(--dark);border-radius:9px;color:#fff;text-align:center;font-weight:600; }
     .folder-branches { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;position:relative;padding-top:34px; }
@@ -210,7 +216,6 @@
         <h2 id="step1-title">Workspace and plan</h2>
         <p>First install the tools. Then open your project in VS Code, start Claude in the right folder, save it to GitHub, and decide what you want to build.</p>
       </div>
-      <!-- Videos 1 and 2: tools and VS Code; open the app folder and start Claude. -->
       <section class="section">
         <p class="section-label">Understand the pieces</p>
         <h2>Your Week 2 tools</h2>
@@ -242,6 +247,11 @@
         </div>
         <p class="small">These are terminal commands, not prompts to Claude. Installation details and supported accounts: <a href="https://code.claude.com/docs/en/setup" target="_blank" rel="noopener">Anthropic's official setup documentation</a>.</p>
         <div class="note"><strong>Check before moving on.</strong><p>Reopen the terminal. Run <code>node --version</code>, <code>git --version</code>, and <code>claude --version</code>. Each should print a version. VS Code should open as an app.</p></div>
+        <div class="video">
+          <p class="video-label">Video 1</p>
+          <h3>Tools and setup</h3>
+          <div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/eBvelnqdXe8?rel=0" title="Tools and setup" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+        </div>
       </section>
 
       <section class="section">
@@ -298,6 +308,11 @@
         <details class="prompt"><summary>Open prompt: check the workspace</summary><p>I am building my Week 2 to-do app. First confirm that your working directory is week-2-todo-app, inside my AI Study Camp folder. Tell me which CLAUDE.md instructions you loaded. Check that Node.js, npm, and Git are available. Do not build anything yet. If the course folder has no CLAUDE.md, help me write a short one without changing my Week 1 work.</p></details>
         <div class="note"><strong>Checkpoint</strong><p>Claude confirms the app folder and reports whether the tools are ready. You are now talking to Claude Code, not VS Code's Copilot chat. If a tool is missing, resolve that before saving the project online.</p></div>
         <details><summary>If Claude does not start</summary><p>Close the terminal panel and choose Terminal → New Terminal after installing. Check <code>claude --version</code> again. If it still fails, use <a href="https://code.claude.com/docs/en/troubleshooting" target="_blank" rel="noopener">Anthropic's troubleshooting guide</a> or ask the course team with the exact error. Ask the course team before changing system permissions.</p></details>
+        <div class="video">
+          <p class="video-label">Video 2</p>
+          <h3>Folders, VS Code, and Claude</h3>
+          <div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/T8xkezBdza4?rel=0" title="Folders, VS Code, and Claude" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+        </div>
       </section>
 
       <section class="section">
@@ -341,7 +356,11 @@ Use Next.js, React, TypeScript, Tailwind CSS, Supabase for data and login, and V
         <p>Prefer another format? <a href="https://www.lennysnewsletter.com/p/my-favorite-templates-issue-37" target="_blank" rel="noopener">Lenny's collection of PRD templates</a> has other options. Choose a format that fits the project's scope.</p>
         <p>Read the draft and correct anything that does not match what you want. After approval, press <code>Shift+Tab</code> until Plan mode is off, then tell Claude: <strong>“Save the approved PRD as PRD.md in this app folder. Do not build yet. Check for secrets, save a local checkpoint, and update the GitHub copy.”</strong></p>
         <div class="note"><strong>Checkpoint</strong><p>Your app folder is open in VS Code, Claude runs in it, the private online copy contains the README and <code>PRD.md</code>, and you can describe the app in one sentence. You have not created Supabase or deployed on Vercel yet.</p></div>
-        <!-- Video 3: GitHub and the PRD. -->
+        <div class="video">
+          <p class="video-label">Video 3</p>
+          <h3>GitHub and PRD</h3>
+          <div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/ELUAMsDFkiA?rel=0" title="GitHub and PRD" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+        </div>
       </section>
       <div class="next"><a class="back" href="#overview">Back to overview</a><a href="#step2">Continue to Step 2</a></div>
     </section>
@@ -368,7 +387,11 @@ Briefly explain the main page file, package.json, and where local settings will 
         <p>Claude should give you a URL such as <code>http://localhost:3000</code>. Open the exact URL it reports in your browser. <strong>Localhost</strong> means your own computer; this is not a public website yet. Leave the development server running while you test.</p>
         <p>If a terminal is occupied by the server logs, use another VS Code terminal tab for Claude. To restart later, ask Claude to start the app again; the usual command is <code>npm run dev</code> from the app folder.</p>
         <div class="note"><strong>Checkpoint</strong><p>You see a starter page in your browser, not just a terminal saying it worked. Ask Claude to explain the files in the Explorer. If the page will not open, paste the error to Claude and resolve it before adding Supabase.</p></div>
-        <!-- Video 4: scaffold the app and open localhost. -->
+        <div class="video">
+          <p class="video-label">Video 4</p>
+          <h3>Starter app and localhost</h3>
+          <div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/m1Nvyw1Z1bA?rel=0" title="Starter app and localhost" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+        </div>
       </section>
 
       <section class="section">
@@ -384,7 +407,6 @@ Briefly explain the main page file, package.json, and where local settings will 
           <li>Keep this dashboard tab open. You will return to it to inspect the tasks table and authentication settings.</li>
         </ol>
         <div class="note"><strong>Checkpoint</strong><p>The dashboard shows the <code>ai-study-camp</code> project and sections such as Table Editor and Authentication. You have created the service, not connected the app to it yet.</p></div>
-        <!-- Video 5, part 1: Supabase project and dashboard tour. -->
       </section>
 
       <section class="section">
@@ -445,7 +467,11 @@ Update the parent CLAUDE.md without overwriting existing instructions: this cour
         <details class="prompt"><summary>Open prompt: make the tech plan</summary><p>Read PRD.md and inspect the foundation we created. Draft TECH-PLAN.md with small build stages: screen design, login, task list and add, edit/complete/delete, review, then deployment. For each stage, give me the browser check I will use to decide if it works. Note any gaps between the PRD and our database setup. Wait for my approval before implementing features.</p></details>
         <p>Read the tech plan, ask questions, and approve it. Press <code>Shift+Tab</code> until Plan mode is off and ask Claude to save <code>TECH-PLAN.md</code>. Ask it to check the changed files, save a local checkpoint, and update the GitHub copy without <code>.env.local</code> or credentials.</p>
         <div class="note"><strong>Checkpoint</strong><p>The starter app opens locally. Supabase exists, Claude is connected to the intended project, the tasks table has owner-based RLS, and the app connection is configured. You have approved <code>TECH-PLAN.md</code>. Login and task behavior still need to be built.</p></div>
-        <!-- Video 5, part 2: data model, app connection, and TECH-PLAN.md. -->
+        <div class="video">
+          <p class="video-label">Video 5</p>
+          <h3>Supabase and tech plan</h3>
+          <div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/MwZl-vUdUUU?rel=0" title="Supabase and tech plan" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+        </div>
       </section>
       <div class="next"><a class="back" href="#step1">Back to Step 1</a><a href="#step3">Continue to Step 3</a></div>
     </section>
@@ -453,12 +479,21 @@ Update the parent CLAUDE.md without overwriting existing instructions: this cour
     <section class="panel" id="step3" aria-labelledby="step3-title">
       <div class="panel-head"><p class="eyebrow">Step 3 · Build the product</p><h2 id="step3-title">Screens, login, and tasks</h2><p>Give Claude the approved PRD and plan. Work through the features in order, with a browser check between each one.</p></div>
       <section class="section">
+        <p class="section-label">Build walkthrough</p>
+        <h2>Follow the tech plan</h2>
+        <p>This video shows the Step 3 arc: visual direction, sign-up and sign-in, then tasks that save after refresh.</p>
+        <div class="video">
+          <p class="video-label">Video 6</p>
+          <h3>First screen, login, and tasks</h3>
+          <div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/JVIMVzGnnb4?rel=0" title="First screen, login, and tasks" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+        </div>
+      </section>
+      <section class="section">
         <p class="section-label">Design</p>
         <h2>Make the first screen feel like your app</h2>
         <p>Start with the main task screen. Choose a style you enjoy: calm notebook, bright dashboard, or something inspired by a website you like. Give Claude a reference or describe colors, spacing, and the feel you want. Keep the feature scope unchanged.</p>
         <details class="prompt"><summary>Open prompt: build the first screen</summary><p>Read PRD.md and TECH-PLAN.md. Build only the screen-design stage first. Make the task list and input layout work on phone and desktop, with clear empty and loading states. Follow the design direction in my PRD. Do not add extra features. Show me the local URL and pause for my browser review before moving to login.</p></details>
         <p><strong>Open the browser:</strong> look at the layout, narrow the window to phone width, and try the visible controls. They may not save data yet. Tell Claude one or two specific changes, such as “Make the Add task button easier to see” rather than “Make it better.”</p>
-        <!-- Video 6, part 1: screen design and browser feedback. -->
       </section>
 
       <section class="section">
@@ -475,7 +510,6 @@ Update the parent CLAUDE.md without overwriting existing instructions: this cour
           <li>Try an incorrect password. You should see a readable error, not a blank screen.</li>
         </ol>
         <p>Tell Claude the result of your login checks, including any error text, before moving to task features.</p>
-        <!-- Video 6, part 2: login and account testing. -->
       </section>
 
       <section class="section">
@@ -494,7 +528,6 @@ Update the parent CLAUDE.md without overwriting existing instructions: this cour
         <details><summary>Optional: make one feature feel more like you</summary><p>After the core checks pass, choose one small extra: a completed-task counter, a satisfying completion animation, or drag-to-reorder. Ask Claude to explain any added library before installing it. If you add reordering, include a database field for order and check that it survives refresh. Keep the extra out of the required path if you are short on time.</p></details>
         <details class="prompt"><summary>Open prompt after each stage passes</summary><p>Review the changed files for credentials. Save this working stage as a named local checkpoint and update the GitHub copy. Tell me what was saved. Do not move on to the next feature yet.</p></details>
         <div class="note"><strong>Checkpoint</strong><p>You can sign in and complete all five task actions. Changes persist after refresh. A second user cannot see your tasks.</p></div>
-        <!-- Video 7: build, check, and save a task feature. -->
       </section>
       <div class="next"><a class="back" href="#step2">Back to Step 2</a><a href="#step4">Continue to Step 4</a></div>
     </section>
@@ -523,7 +556,11 @@ Update the parent CLAUDE.md without overwriting existing instructions: this cour
         <p>Change the style if you want to make the app yours, but do not turn polish into a new project. Aim for one coherent design and clear behavior.</p>
         <details class="prompt"><summary>Open prompt after the fixes pass</summary><p>Run the app's build and available checks again. Review the files for secrets. Save this reviewed version as a local checkpoint, update the GitHub copy, and summarize any known limitations honestly in README.md. Do not deploy yet.</p></details>
         <div class="note"><strong>Checkpoint</strong><p>The app builds, your feature checks still pass after fixes, and the reviewed code is on GitHub. Known limitations are written down. A working course app is not a guarantee of production readiness; broader security, reliability, and eval work comes later.</p></div>
-        <!-- Video 8: self-review, choosing fixes, and checking results. -->
+        <div class="video">
+          <p class="video-label">Video 7</p>
+          <h3>Review and polish</h3>
+          <div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/l1vaBVckwUo?rel=0" title="Review and polish" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+        </div>
       </section>
       <div class="next"><a class="back" href="#step3">Back to Step 3</a><a href="#step5">Continue to Step 5</a></div>
     </section>
@@ -546,7 +583,6 @@ Update the parent CLAUDE.md without overwriting existing instructions: this cour
         <details class="prompt"><summary>Open prompt: prepare Vercel settings</summary><p>Inspect the code and tell me the exact environment variable names this app needs on Vercel, and where to get their values in Supabase. Give me names and purpose without printing secrets. Confirm that the browser client only uses the project URL and publishable key, not a service role or secret key. Walk me through adding the settings to Vercel, then pause for me to deploy.</p></details>
         <p class="small">Names often look like <code>NEXT_PUBLIC_SUPABASE_URL</code> and <code>NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY</code>, but follow this app's code rather than guessing. Variables beginning <code>NEXT_PUBLIC_</code> are included in browser code: never use that prefix for a private credential.</p>
         <p>If you add settings after the first deployment, redeploy so the app uses them. If the build fails, open the deployment logs and show Claude the relevant error, with private values removed.</p>
-        <!-- Video 9, part 1: Vercel settings and deployment. -->
       </section>
 
       <section class="section">
@@ -572,7 +608,11 @@ Update the parent CLAUDE.md without overwriting existing instructions: this cour
         <p>Ask Claude to add the live URL and known limitations to your README, check for credentials, save a final local checkpoint, and update the GitHub copy. Share your <strong>live app link</strong> on the cohort project board in the LMS. Keep the GitHub copy private unless the course asks you to share code.</p>
         <div class="note"><strong>Checkpoint</strong><p>You have a live app with login, a persistent task list, and separate data for each user. You can explain where the interface, data, login, saved checkpoints, online copy, and hosting live. Bring the app and one thing you learned to the group call.</p></div>
         <details><summary>Optional, after the core app is finished: add one API feature</summary><p>An API lets your app request information or actions from another service. If you want an extension, choose one small feature and ask Claude to explain the request, response, cost, and failure case before adding it. Private API keys belong in server-side environment settings, never frontend code. The to-do app is complete without this extension.</p></details>
-        <!-- Video 9, part 2: live checks and sharing the finished app. -->
+        <div class="video">
+          <p class="video-label">Video 8</p>
+          <h3>Vercel and live app</h3>
+          <div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/sBtXWm9WxIA?rel=0" title="Vercel and live app" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+        </div>
       </section>
       <div class="next"><a class="back" href="#step4">Back to Step 4</a><a href="#references">Open references</a></div>
     </section>
