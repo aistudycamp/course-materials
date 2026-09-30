@@ -152,7 +152,7 @@
           <strong>By the end of this week, you should be able to:</strong>
           <ul>
             <li>Explain what the frontend, backend, database, authentication, and hosting do.</li>
-            <li>Produce a PRD and an implementation plan you have reviewed and approved.</li>
+            <li>Produce a PRD and a tech plan you have reviewed and approved.</li>
             <li>Build a local app with login and tasks that stay saved.</li>
             <li>Deploy it and test the version real users will open.</li>
           </ul>
@@ -194,7 +194,7 @@
         <h2>Your route through Week 2</h2>
         <ol class="route">
           <li><strong>Set up your workspace and plan your app.</strong> Install the tools, get comfortable in VS Code, start Claude inside your app folder, connect GitHub, and write your PRD.</li>
-          <li><strong>Create a working foundation.</strong> Scaffold the app, open it locally, create your Supabase project, and agree on the data and build plan.</li>
+          <li><strong>Create a working foundation.</strong> Scaffold the app, open it locally, create your Supabase project, and agree on the data and tech plan.</li>
           <li><strong>Build the app in small pieces.</strong> Design the screens, add login, and build the task features. Check each piece in your browser.</li>
           <li><strong>Review and improve it.</strong> Ask Claude to review its own work, fix issues you can verify, and polish the everyday experience.</li>
           <li><strong>Publish and test the live version.</strong> Deploy on Vercel, finish the login configuration, and test the public URL.</li>
@@ -435,17 +435,17 @@ Update the parent CLAUDE.md without overwriting existing instructions: this cour
         </ol>
         <div class="note"><strong>Checkpoint</strong><p>The app can reach the intended Supabase project with valid client settings, without a network or invalid-key error. An empty task result is expected before features and test data exist. Access to each user's tasks is tested after login in Step 3.</p></div>
         <div class="note warning"><strong>Keep credentials in the right place.</strong><p>App settings go in the app's ignored <code>.env.local</code>, not in the PRD or instruction files. A publishable key is intended for client use, but it does not replace RLS. Never “fix” a permission error by disabling RLS or adding a privileged key to the frontend.</p></div>
-        <details><summary>Where each thing lives</summary><ul><li><strong>Supabase cloud project:</strong> on Supabase, visible in its dashboard.</li><li><strong>AI Study Camp/CLAUDE.md and supabase.md:</strong> shared course notes on your computer, outside the Week 2 app.</li><li><strong>week-2-todo-app:</strong> app source, PRD, build plan, README, and local checkpoints.</li><li><strong>week-2-todo-app/.env.local:</strong> private app settings that stay on your computer.</li><li><strong>GitHub:</strong> the online copy of the app, without local credentials.</li></ul></details>
+        <details><summary>Where each thing lives</summary><ul><li><strong>Supabase cloud project:</strong> on Supabase, visible in its dashboard.</li><li><strong>AI Study Camp/CLAUDE.md and supabase.md:</strong> shared course notes on your computer, outside the Week 2 app.</li><li><strong>week-2-todo-app:</strong> app source, PRD, tech plan, README, and local checkpoints.</li><li><strong>week-2-todo-app/.env.local:</strong> private app settings that stay on your computer.</li><li><strong>GitHub:</strong> the online copy of the app, without local credentials.</li></ul></details>
       </section>
 
       <section class="section">
         <p class="section-label">Agree on the build</p>
-        <h2>Turn the PRD into a small implementation plan</h2>
-        <p>The PRD describes <strong>what</strong> you want. The implementation plan describes <strong>how</strong> to build it in pieces. Your foundation now runs locally and has a database service ready; you can plan the product features with those pieces in place.</p>
-        <details class="prompt"><summary>Open prompt: make the build plan</summary><p>Read PRD.md and inspect the foundation we created. Draft PLAN.md with small build stages: screen design, login, task list and add, edit/complete/delete, review, then deployment. For each stage, give me the browser check I will use to decide if it works. Note any gaps between the PRD and our database setup. Wait for my approval before implementing features.</p></details>
-        <p>Read the plan, ask questions, and approve it. Press <code>Shift+Tab</code> until Plan mode is off and ask Claude to save <code>PLAN.md</code>. Ask it to check the changed files, save a local checkpoint, and update the GitHub copy without <code>.env.local</code> or credentials.</p>
-        <div class="note"><strong>Checkpoint</strong><p>The starter app opens locally. Supabase exists, Claude is connected to the intended project, the tasks table has owner-based RLS, and the app connection is configured. You have approved <code>PLAN.md</code>. Login and task behavior still need to be built.</p></div>
-        <!-- Video 5, part 2: data model, app connection, and PLAN.md. -->
+        <h2>Turn the PRD into a small tech plan</h2>
+        <p>The PRD describes <strong>what</strong> you want. The tech plan describes <strong>how</strong> to build it in pieces. Your foundation now runs locally and has a database service ready; you can plan the product features with those pieces in place.</p>
+        <details class="prompt"><summary>Open prompt: make the tech plan</summary><p>Read PRD.md and inspect the foundation we created. Draft TECH-PLAN.md with small build stages: screen design, login, task list and add, edit/complete/delete, review, then deployment. For each stage, give me the browser check I will use to decide if it works. Note any gaps between the PRD and our database setup. Wait for my approval before implementing features.</p></details>
+        <p>Read the tech plan, ask questions, and approve it. Press <code>Shift+Tab</code> until Plan mode is off and ask Claude to save <code>TECH-PLAN.md</code>. Ask it to check the changed files, save a local checkpoint, and update the GitHub copy without <code>.env.local</code> or credentials.</p>
+        <div class="note"><strong>Checkpoint</strong><p>The starter app opens locally. Supabase exists, Claude is connected to the intended project, the tasks table has owner-based RLS, and the app connection is configured. You have approved <code>TECH-PLAN.md</code>. Login and task behavior still need to be built.</p></div>
+        <!-- Video 5, part 2: data model, app connection, and TECH-PLAN.md. -->
       </section>
       <div class="next"><a class="back" href="#step1">Back to Step 1</a><a href="#step3">Continue to Step 3</a></div>
     </section>
@@ -456,7 +456,7 @@ Update the parent CLAUDE.md without overwriting existing instructions: this cour
         <p class="section-label">Design</p>
         <h2>Make the first screen feel like your app</h2>
         <p>Start with the main task screen. Choose a style you enjoy: calm notebook, bright dashboard, or something inspired by a website you like. Give Claude a reference or describe colors, spacing, and the feel you want. Keep the feature scope unchanged.</p>
-        <details class="prompt"><summary>Open prompt: build the first screen</summary><p>Read PRD.md and PLAN.md. Build only the screen-design stage first. Make the task list and input layout work on phone and desktop, with clear empty and loading states. Follow the design direction in my PRD. Do not add extra features. Show me the local URL and pause for my browser review before moving to login.</p></details>
+        <details class="prompt"><summary>Open prompt: build the first screen</summary><p>Read PRD.md and TECH-PLAN.md. Build only the screen-design stage first. Make the task list and input layout work on phone and desktop, with clear empty and loading states. Follow the design direction in my PRD. Do not add extra features. Show me the local URL and pause for my browser review before moving to login.</p></details>
         <p><strong>Open the browser:</strong> look at the layout, narrow the window to phone width, and try the visible controls. They may not save data yet. Tell Claude one or two specific changes, such as “Make the Add task button easier to see” rather than “Make it better.”</p>
         <!-- Video 6, part 1: screen design and browser feedback. -->
       </section>
@@ -467,7 +467,7 @@ Update the parent CLAUDE.md without overwriting existing instructions: this cour
         <p>Now make the app recognize who is using it. Supabase Auth manages accounts and sessions. A session is the signed-in state the app uses to identify you when requesting your tasks.</p>
         <div class="note warning"><strong>Course setting, not production advice.</strong><p>For this exercise, turn off email confirmation so you can test two accounts without setting up an email provider. A public product should verify email delivery before launch.</p></div>
         <details class="prompt"><summary>Open prompt: configure course login</summary><p>Guide me to the Supabase Authentication setting that disables email confirmation for this course exercise. Do not change other providers or unrelated project settings. Add a short note to README.md that production signup would need verified email delivery and a proper mail provider. Pause until I confirm the setting is saved.</p></details>
-        <details class="prompt"><summary>Open prompt: build login</summary><p>Implement the login stage from PLAN.md using Supabase Auth. Add email/password sign-up, sign-in, and sign-out. Keep task data behind a signed-in session. Email confirmation is disabled for this course exercise. Do not build all task actions yet. Pause for me to test login in the browser.</p></details>
+        <details class="prompt"><summary>Open prompt: build login</summary><p>Implement the login stage from TECH-PLAN.md using Supabase Auth. Add email/password sign-up, sign-in, and sign-out. Keep task data behind a signed-in session. Email confirmation is disabled for this course exercise. Do not build all task actions yet. Pause for me to test login in the browser.</p></details>
         <ol>
           <li>Create a test account with a unique test email and password. Because confirmation is off, you can use reserved addresses such as <code>student1@example.test</code> and <code>student2@example.test</code>; they do not belong to real people or receive mail.</li>
           <li>Sign in, refresh, and check you remain signed in.</li>
@@ -482,7 +482,7 @@ Update the parent CLAUDE.md without overwriting existing instructions: this cour
         <p class="section-label">Tasks</p>
         <h2>Build the task features in small stages</h2>
         <p>Use this loop every time: <strong>ask → inspect → try it → give feedback → save a working version.</strong> Claude should not race through every stage while you are still reading the first result.</p>
-        <details class="prompt"><summary>Open prompt: build view and add</summary><p>Continue from PRD.md and PLAN.md. Implement only viewing and adding my own tasks first. Use the signed-in user's identity and the approved Supabase table and policies. Show loading, empty, and error states. After implementing, tell me exactly what to try in the browser and wait for my result before continuing.</p></details>
+        <details class="prompt"><summary>Open prompt: build view and add</summary><p>Continue from PRD.md and TECH-PLAN.md. Implement only viewing and adding my own tasks first. Use the signed-in user's identity and the approved Supabase table and policies. Show loading, empty, and error states. After implementing, tell me exactly what to try in the browser and wait for my result before continuing.</p></details>
         <div class="table-wrap"><table><thead><tr><th>Build stage</th><th>Your browser check</th></tr></thead><tbody>
           <tr><td>View + add</td><td>Sign in, add a task, and see it in the list. Refresh: it stays. Check its row in Supabase's Table Editor.</td></tr>
           <tr><td>Edit</td><td>Ask Claude to add editing. Change a title, save it, and refresh: the new title stays.</td></tr>
@@ -505,7 +505,7 @@ Update the parent CLAUDE.md without overwriting existing instructions: this cour
         <p class="section-label">Self-review</p>
         <h2>Ask Claude to review its own work</h2>
         <p>Start with a review of the current version. A self-review can find issues, but it does not prove the app is safe or correct; you still test the important behavior.</p>
-        <details class="prompt"><summary>Open prompt: review the app</summary><p>Review this app against PRD.md and PLAN.md before changing anything. Check missing features, task ownership and RLS, auth behavior, exposed credentials, input validation, error/loading/empty states, and mobile usability. Run the build and any available checks. Report the top issues in plain language, separate actual failures from suggestions, and show me how to reproduce each issue. Wait for me to choose what to fix.</p></details>
+        <details class="prompt"><summary>Open prompt: review the app</summary><p>Review this app against PRD.md and TECH-PLAN.md before changing anything. Check missing features, task ownership and RLS, auth behavior, exposed credentials, input validation, error/loading/empty states, and mobile usability. Run the build and any available checks. Report the top issues in plain language, separate actual failures from suggestions, and show me how to reproduce each issue. Wait for me to choose what to fix.</p></details>
         <p>Choose the issues that affect the promised app first. Ask Claude to fix <strong>one issue at a time</strong>, then retry the failing behavior. If a proposed fix changes the PRD or adds a feature, decide whether you actually need it.</p>
         <div class="note"><strong>Evidence, not just “fixed.”</strong><p>Ask which check Claude ran and whether it passed. Then repeat the browser action yourself. If it involves permissions, verify the database rule as well as the screen.</p></div>
       </section>
@@ -587,7 +587,7 @@ Update the parent CLAUDE.md without overwriting existing instructions: this cour
           <li><a href="https://supabase.com/docs/guides/ai-tools/mcp" target="_blank" rel="noopener">Official Supabase MCP guide</a>: connection options and permissions.</li>
           <li><a href="https://vercel.com/docs/deployments" target="_blank" rel="noopener">Official Vercel deployment guide</a>: deployment settings and troubleshooting.</li>
         </ul>
-        <p class="small">Returning to the project later? Open <code>week-2-todo-app</code> in VS Code, choose Terminal → New Terminal, start <code>claude</code>, and ask it to read <code>PRD.md</code> and <code>PLAN.md</code> before continuing. Ask it to restart the local app if you want to test.</p>
+        <p class="small">Returning to the project later? Open <code>week-2-todo-app</code> in VS Code, choose Terminal → New Terminal, start <code>claude</code>, and ask it to read <code>PRD.md</code> and <code>TECH-PLAN.md</code> before continuing. Ask it to restart the local app if you want to test.</p>
       </div>
       <div class="next"><a class="back" href="#overview">Back to overview</a></div>
     </section>
