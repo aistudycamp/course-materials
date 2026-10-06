@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<!-- olive-reviewed: 2026-10-06 -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Why VS Code and the Terminal · AISC How-To Guides</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .stack{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0 8px}
+    .stack div{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center;font-weight:600;font-size:15px}
+    .stack small{display:block;font-weight:400;color:var(--text-secondary);font-size:13px}
+    .stack-arrow{text-align:center;color:var(--teal);font-size:20px;line-height:1;margin:6px 0}
+    .stack-core{background:var(--teal-bg);border:1px solid var(--teal-border);border-radius:10px;padding:14px;text-align:center;color:var(--teal-dark);font-weight:600;margin-bottom:16px}
+    .moments{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px}
+    .moment{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:20px}
+    .moment h3{font-size:19px;margin-bottom:10px}
+    .moment ul{margin:0 0 0 18px;color:var(--text-secondary);font-size:15px;line-height:1.6}
+    .moment li{margin-bottom:4px}
+    .plain-list{margin:12px 0 16px 20px}
+    .plain-list li{margin-bottom:6px}
+    @media(max-width:640px){.moments,.stack{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner">
+      <span class="logo-mark">[ ai study camp ]</span>
+    </div>
+  </header>
+
+  <!-- PAGE CONTENT -->
+  <main class="page-content">
+
+    <!-- HERO -->
+    <section class="guide-hero">
+      <div class="guide-badge">Week 2</div>
+      <h1 class="guide-title">Why VS Code and the Terminal</h1>
+    </section>
+
+    <!-- SAME CLAUDE -->
+    <section class="intro-section">
+      <h2>Same Claude</h2>
+      <p>The desktop app, the VS Code terminal, and a plain terminal all run the same Claude Code on the same files.</p>
+      <div class="stack" aria-hidden="true">
+        <div>Desktop app<small>Week 1</small></div>
+        <div>VS Code terminal<small>Week 2 onward</small></div>
+        <div>Any terminal<small>Mac or Windows</small></div>
+      </div>
+      <div class="stack-arrow" aria-hidden="true">&darr;</div>
+      <div class="stack-core">Claude Code, working in your project folder</div>
+      <ul class="plain-list">
+        <li>Your CLAUDE.md, skills, and connections work in all three.</li>
+        <li>Nothing you set up in Week 1 is lost.</li>
+        <li>The difference is what you can see and do around Claude.</li>
+      </ul>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- SIX MOMENTS -->
+    <section class="intro-section">
+      <h2>Six Moments in Your Build</h2>
+      <div class="moments">
+
+        <div class="moment">
+          <h3>1. Your app won't start</h3>
+          <ul>
+            <li><code>npm run dev</code> prints a red error.</li>
+            <li>It shows in the terminal, right under Claude.</li>
+            <li>Copy it, paste it to Claude, ask for a fix.</li>
+          </ul>
+        </div>
+
+        <div class="moment">
+          <h3>2. One word is wrong</h3>
+          <ul>
+            <li>Your button says "Add Taks".</li>
+            <li>Click the file in the VS Code sidebar, fix it, save.</li>
+            <li>Five seconds. No prompt, no waiting.</li>
+          </ul>
+        </div>
+
+        <div class="moment">
+          <h3>3. What did Claude change?</h3>
+          <ul>
+            <li>Open the Source Control panel in VS Code.</li>
+            <li>Every changed file is listed.</li>
+            <li>Click one to see before and after.</li>
+          </ul>
+        </div>
+
+        <div class="moment">
+          <h3>4. A guide says "run this"</h3>
+          <ul>
+            <li>Supabase, Vercel, and GitHub docs assume a terminal.</li>
+            <li>So does almost every tutorial and forum answer.</li>
+            <li>You know where it goes, or you hand it to Claude.</li>
+          </ul>
+        </div>
+
+        <div class="moment">
+          <h3>5. <code>claude</code> stops working</h3>
+          <ul>
+            <li>"command not found" after an install or update.</li>
+            <li>The fix is a terminal command.</li>
+            <li>You can read the error, then search it or share it.</li>
+          </ul>
+        </div>
+
+        <div class="moment">
+          <h3>6. You try another agent</h3>
+          <ul>
+            <li>Codex and Gemini CLI run in the same terminal.</li>
+            <li>Same folder, same files, same habits.</li>
+            <li>The Claude desktop app runs only Claude.</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- DESKTOP APP -->
+    <section class="intro-section">
+      <h2>Can I Just Use the Desktop App?</h2>
+      <p>Yes. We teach the VS Code terminal so you learn both.</p>
+      <p>The desktop app is a good pick when you want to:</p>
+      <ul class="plain-list">
+        <li>Review changes in a visual, side-by-side view.</li>
+        <li>Run several Claude sessions at once.</li>
+        <li>Do quick work that doesn't need an editor open.</li>
+      </ul>
+      <p>Switch any time. Your files stay the same in every window.</p>
+    </section>
+
+    <!-- SETUP -->
+    <section class="steps-section">
+      <div class="steps-container">
+
+        <div class="step">
+          <div class="step-header">
+            <div class="step-circle">1</div>
+            <h2 class="step-title">Open Your Folder</h2>
+          </div>
+          <div class="step-body">
+            <p>In VS Code, choose <strong>File &gt; Open Folder</strong> and pick your app folder from your Week 1 home base.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-header">
+            <div class="step-circle">2</div>
+            <h2 class="step-title">Open the Terminal</h2>
+          </div>
+          <div class="step-body">
+            <p>Choose <strong>Terminal &gt; New Terminal</strong>, or press <code>Ctrl</code> + <code>`</code>. It opens inside that folder.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-header">
+            <div class="step-circle">3</div>
+            <h2 class="step-title">Start Claude</h2>
+          </div>
+          <div class="step-body">
+            <div class="terminal">
+              <div class="term-bar">
+                <span class="term-dot r"></span>
+                <span class="term-dot y"></span>
+                <span class="term-dot g"></span>
+                <span class="term-title">terminal</span>
+              </div>
+              <div class="term-body">
+<span class="cmd">claude</span>
+              </div>
+            </div>
+            <p>File tree on the left, your code in the middle, Claude below. You see every file Claude touches.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- MORE -->
+    <section class="intro-section">
+      <div class="tip-box">
+        <span class="tip-label">Related guides</span>
+        <p><a href="week2-terminal-reference.html">Terminal Reference</a>: the commands you need this week.<br>
+        <a href="home-base.html">Home Base</a>: make <code>claude</code> always start in your home folder.<br>
+        <a href="claude-products-explained.html">Claude Products Explained</a>: Chat, Cowork, and Claude Code compared.</p>
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>
