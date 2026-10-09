@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Sources to Follow — AI Study Camp</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .source-list { display: grid; gap: 14px; }
+    .source-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 22px 24px;
+    }
+    .source-kicker {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--teal-dark);
+      margin-bottom: 6px;
+    }
+    .source-card h3 {
+      font-family: var(--font-serif);
+      font-size: 21px;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .source-card p {
+      color: var(--text-secondary);
+      font-size: 15px;
+      line-height: 1.55;
+      margin-bottom: 12px;
+    }
+    .source-links { display: flex; flex-wrap: wrap; gap: 14px; font-size: 14px; }
+    .source-links a { font-weight: 600; }
+    .choice-box {
+      background: var(--dark);
+      border-radius: 10px;
+      color: var(--text-on-dark);
+      padding: 22px 24px;
+      margin-bottom: 36px;
+    }
+    .choice-box h2 {
+      font-family: var(--font-serif);
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+    .choice-box p { color: var(--text-on-dark-muted); margin: 0; font-size: 15px; }
+    @media (max-width: 600px) {
+      .guide-hero { padding: 32px 28px; }
+      .source-card { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- olive-reviewed: 2026-10-09 -->
+  <header class="site-header">
+    <div class="header-inner">
+      <span class="logo-mark">[ ai study camp ]</span>
+    </div>
+  </header>
+
+  <main class="page-content">
+    <section class="guide-hero">
+      <div class="guide-badge">Reference</div>
+      <h1 class="guide-title">AI Sources to Follow</h1>
+      <p class="guide-subtitle">A short list for builders. Pick two sources, not all six.</p>
+    </section>
+
+    <div class="choice-box">
+      <h2>One builder. One wider lens.</h2>
+      <p>Read the builder source when you want something to try. Add a wider lens when you want to understand what changed and why.</p>
+    </div>
+
+    <section class="intro-section">
+      <h2>Start here</h2>
+      <div class="source-list">
+        <article class="source-card">
+          <span class="source-kicker">Builder workflows</span>
+          <h3>AI with Remy</h3>
+          <p>Weekly workflows, tools, and examples from a founder who builds with AI. Good for practical ideas you can test this week.</p>
+          <div class="source-links"><a href="https://www.aiwithremy.com/" target="_blank" rel="noopener noreferrer">Newsletter</a></div>
+        </article>
+
+        <article class="source-card">
+          <span class="source-kicker">Product and building</span>
+          <h3>Full Stack PM, Carl Vellotti</h3>
+          <p>How product people can use coding agents to make prototypes, automations, and internal tools.</p>
+          <div class="source-links"><a href="https://fullstackpm.com/" target="_blank" rel="noopener noreferrer">Newsletter</a></div>
+        </article>
+
+        <article class="source-card">
+          <span class="source-kicker">News and models</span>
+          <h3>Something Big, Matt Shumer</h3>
+          <p>Short takes on model releases, AI news, and what changes in day-to-day work. Good when you want the plain-English version.</p>
+          <div class="source-links">
+            <a href="https://somethingbig.ai/" target="_blank" rel="noopener noreferrer">Newsletter</a>
+            <a href="https://x.com/mattshumer_" target="_blank" rel="noopener noreferrer">X</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <section class="intro-section">
+      <h2>Choose a second lens</h2>
+      <div class="source-list">
+        <article class="source-card">
+          <span class="source-kicker">AI at work</span>
+          <h3>AI with Allie, Allie K. Miller</h3>
+          <p>Business use cases, workplace change, and practical guidance for people who do not live in a terminal.</p>
+          <div class="source-links"><a href="https://aiwithallie.beehiiv.com/" target="_blank" rel="noopener noreferrer">Newsletter</a></div>
+        </article>
+
+        <article class="source-card">
+          <span class="source-kicker">Industry and economy</span>
+          <h3>Exponential View, Azeem Azhar</h3>
+          <p>Longer analysis of AI, technology, economics, and policy. Read it when you want context beyond the latest model release.</p>
+          <div class="source-links"><a href="https://www.exponentialview.co/" target="_blank" rel="noopener noreferrer">Newsletter</a></div>
+        </article>
+
+        <article class="source-card">
+          <span class="source-kicker">Shipping projects</span>
+          <h3>Build to Launch, Jenny Ouyang</h3>
+          <p>Examples from someone who ships AI-assisted products in public. Good for seeing what practice looks like after a first prototype.</p>
+          <div class="source-links"><a href="https://buildtolaunch.ai/" target="_blank" rel="noopener noreferrer">Newsletter</a></div>
+        </article>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
