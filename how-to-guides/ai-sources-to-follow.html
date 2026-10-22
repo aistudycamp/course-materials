@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Sources to Follow — AI Study Camp</title>
+  <title>AI Sources to Follow | AI Study Camp</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -37,21 +37,40 @@
       line-height: 1.55;
       margin-bottom: 12px;
     }
-    .source-links { display: flex; flex-wrap: wrap; gap: 14px; font-size: 14px; }
-    .source-links a { font-weight: 600; }
-    .choice-box {
+    .source-links { display: flex; flex-wrap: wrap; gap: 8px; }
+    .source-links a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 5px 11px;
+      border: 1px solid var(--teal-border);
+      border-radius: 999px;
+      background: var(--teal-bg);
+      color: var(--teal-dark);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1;
+      text-decoration: none;
+    }
+    .source-links a:hover {
+      background: var(--teal);
+      border-color: var(--teal);
+      color: var(--white);
+      text-decoration: none;
+    }
+    .guide-hero {
       background: var(--dark);
-      border-radius: 10px;
-      color: var(--text-on-dark);
-      padding: 22px 24px;
-      margin-bottom: 36px;
+      border-color: var(--dark);
+      box-shadow: none;
     }
-    .choice-box h2 {
-      font-family: var(--font-serif);
-      font-size: 22px;
-      margin-bottom: 8px;
+    .guide-badge {
+      background: rgba(20, 184, 166, 0.14);
+      border-color: rgba(20, 184, 166, 0.38);
+      color: #81e6dc;
+      margin-bottom: 12px;
     }
-    .choice-box p { color: var(--text-on-dark-muted); margin: 0; font-size: 15px; }
+    .guide-title { color: var(--text-on-dark); margin-bottom: 0; }
     @media (max-width: 600px) {
       .guide-hero { padding: 32px 28px; }
       .source-card { padding: 20px; }
@@ -70,13 +89,7 @@
     <section class="guide-hero">
       <div class="guide-badge">Reference</div>
       <h1 class="guide-title">AI Sources to Follow</h1>
-      <p class="guide-subtitle">A short list for builders. Pick two sources, not all six.</p>
     </section>
-
-    <div class="choice-box">
-      <h2>One builder. One wider lens.</h2>
-      <p>Read the builder source when you want something to try. Add a wider lens when you want to understand what changed and why.</p>
-    </div>
 
     <section class="intro-section">
       <h2>Start here</h2>
@@ -113,6 +126,16 @@
       <h2>Choose a second lens</h2>
       <div class="source-list">
         <article class="source-card">
+          <span class="source-kicker">Research and work</span>
+          <h3>One Useful Thing, Ethan Mollick</h3>
+          <p>Research-backed writing about how AI changes work, education, and the choices people make around new tools.</p>
+          <div class="source-links">
+            <a href="https://www.oneusefulthing.org/" target="_blank" rel="noopener noreferrer">Newsletter</a>
+            <a href="https://x.com/emollick" target="_blank" rel="noopener noreferrer">X</a>
+          </div>
+        </article>
+
+        <article class="source-card">
           <span class="source-kicker">AI at work</span>
           <h3>AI with Allie, Allie K. Miller</h3>
           <p>Business use cases, workplace change, and practical guidance for people who do not live in a terminal.</p>
@@ -131,6 +154,33 @@
           <h3>Build to Launch, Jenny Ouyang</h3>
           <p>Examples from someone who ships AI-assisted products in public. Good for seeing what practice looks like after a first prototype.</p>
           <div class="source-links"><a href="https://buildtolaunch.ai/" target="_blank" rel="noopener noreferrer">Newsletter</a></div>
+        </article>
+      </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <section class="intro-section">
+      <h2>Implementation at companies</h2>
+      <div class="source-list">
+        <article class="source-card">
+          <span class="source-kicker">Operator systems</span>
+          <h3>Corey Ganim</h3>
+          <p>AI systems for business owners. Useful for seeing how an operator audits work, picks a problem, and puts a system in place.</p>
+          <div class="source-links">
+            <a href="https://www.coreyganim.com/" target="_blank" rel="noopener noreferrer">Newsletter</a>
+            <a href="https://x.com/coreyganim" target="_blank" rel="noopener noreferrer">X</a>
+          </div>
+        </article>
+
+        <article class="source-card">
+          <span class="source-kicker">Company implementation</span>
+          <h3>Luke Pierce, Boom Automations</h3>
+          <p>How an implementation team finds workflow problems, scopes a build, and puts AI systems into company operations.</p>
+          <div class="source-links">
+            <a href="https://boomautomations.com/" target="_blank" rel="noopener noreferrer">Boom Automations</a>
+            <a href="https://x.com/lukepierceops" target="_blank" rel="noopener noreferrer">X</a>
+          </div>
         </article>
       </div>
     </section>
